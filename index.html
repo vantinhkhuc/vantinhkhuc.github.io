@@ -744,6 +744,155 @@
         window.addEventListener('load', function() {
             initCharts();
         });
+        // Thêm vào cuối file HTML của bạn, trong thẻ <script>
+
+// Load dữ liệu cổ phiếu từ JSON
+async function loadStockData() {
+    try {
+        const response = await fetch('data/stocks.json');
+        const stocks = await response.json();
+        
+        // Cập nhật giao diện
+        const stockGrid = document.querySelector('#hsx .stock-grid');
+        stockGrid.innerHTML = '';
+        
+        stocks.forEach(stock => {
+            const changeClass = stock.change >= 0 ? 'positive' : 'negative';
+            const changeSign = stock.change >= 0 ? '+' : '';
+            
+            stockGrid.innerHTML += `
+                <div class="stock-card">
+                    <div class="stock-name">${stock.symbol}</div>
+                    <div class="stock-price">${stock.price.toLocaleString('vi-VN')} đ</div>
+                    <div class="stock-change ${changeClass}">
+                        ${changeSign}${stock.change}%
+                    </div>
+                </div>
+            `;
+        });
+    } catch (error) {
+        console.error('Error loading stock data:', error);
+    }
+}
+
+// Load VN-Index
+async function loadVNIndex() {
+    try {
+        const response = await fetch('data/vnindex.json');
+        const data = await response.json();
+        
+        // Cập nhật biểu đồ VN-Index
+        if (window.vnIndexChart) {
+            const newData = data.intraday || [];
+            window.vnIndexChart.data.labels = newData.map(d => d.time);
+            window.vnIndexChart.data.datasets[0].data = newData.map(d => d.value);
+            window.vnIndexChart.update();
+        }
+    } catch (error) {
+        console.error('Error loading VN-Index:', error);
+    }
+}
+
+// Load tin tức
+async function loadNews() {
+    try {
+        const response = await fetch('data/news.json');
+        const articles = await response.json();
+        
+        // Phân loại tin tức theo chủ đề
+        const sports = articles.filter(a => 
+            a.title.toLowerCase().includes('bóng đá') || 
+            a.title.toLowerCase().includes('thể thao')
+        );
+        const tech = articles.filter(a => 
+            a.title.toLowerCase().includes('công nghệ') || 
+            a.title.toLowerCase().includes('ai')
+        );
+        const finance = articles.filter(a => 
+            a.title.toLowerCase().includes('tài chính') || 
+            a.title.toLowerCase().includes('chứng khoán')
+        );
+        
+        // Cập nhật giao diện cho từng phần
+        updateNewsSection('sports', sports);
+        updateNewsSection('tech', tech);
+        updateNewsSection('finance', finance);
+    } catch (error) {
+        console.error('Error loading news:', error);
+    }
+}
+
+function updateNewsSection(section, articles) {
+    const sectionMap = {
+        'sports': 0,
+        'tech': 1,
+        'finance': 2
+    };
+    
+    const newsGrids = document.querySelectorAll('.news-grid');
+    const grid = newsGrids[sectionMap[section]];
+    
+    if (grid && articles.length > 0) {
+        grid.innerHTML = '';
+        articles.slice(0, 3).forEach(article => {
+            const date = new Date(article.publishedAt).toLocaleDateString('vi-VN');
+            grid.innerHTML += `
+                <div class="news-card" onclick="window.open('${article.url}', '_blank')">
+                    <h3>${article.title}</h3>
+                    <p>${article.description || ''}</p>
+                    <div class="date">${date}</div>
+                </div>
+            `;
+        });
+    }
+}
+
+// Load dữ liệu vĩ mô
+async function loadMacroData() {
+    try {
+        const response = await fetch('data/macro.json');
+        const data = await response.json();
+        
+        // Cập nhật các card vĩ mô
+        const macroCards = document.querySelectorAll('.macro-card .value');
+        
+        if (data.vietnam && macroCards.length >= 4) {
+            macroCards[0].textContent = `${data.vietnam.gdp_growth}%`;
+            macroCards[1].textContent = `${data.vietnam.inflation}%`;
+            macroCards[2].textContent = data.vietnam.usd_rate.toLocaleString('vi-VN');
+            macroCards[3].textContent = `${data.vietnam.reserves} tỷ USD`;
+        }
+        
+        if (data.world && macroCards.length >= 8) {
+            macroCards[4].textContent = `${data.world.fed_rate}%`;
+            macroCards[5].textContent = `$${data.world.oil_price}`;
+            macroCards[6].textContent = `$${data.world.gold_price}`;
+            macroCards[7].textContent = `$${data.world.bitcoin.toLocaleString('en-US')}`;
+        }
+    } catch (error) {
+        console.error('Error loading macro data:', error);
+    }
+}
+
+// Tự động refresh dữ liệu
+function startAutoRefresh() {
+    // Refresh mỗi 5 phút
+    setInterval(() => {
+        loadStockData();
+        loadVNIndex();
+        loadNews();
+        loadMacroData();
+    }, 5 * 60 * 1000);
+}
+
+// Khởi động khi load trang
+window.addEventListener('load', function() {
+    loadStockData();
+    loadVNIndex();
+    loadNews();
+    loadMacroData();
+    startAutoRefresh();
+});
     </script>
 </body>
 </html
