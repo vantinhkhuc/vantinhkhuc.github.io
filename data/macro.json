@@ -1,1 +1,15 @@
-
+{
+  "vietnam": {
+    "gdp_growth": 6.8,
+    "inflation": 3.2,
+    "usd_rate": 24850,
+    "reserves": 112
+  },
+  "world": {
+    "fed_rate": 5.25,
+    "oil_price": 87.5,
+    "gold_price": 2145,
+    "bitcoin": 68250
+  },
+  "timestamp": "2025-10-01T02:45:19.836321"
+}
