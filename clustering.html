@@ -606,4 +606,287 @@
             <div class="navigation">
                 <button onclick="prevSlide()">← Trước</button>
                 <span class="slide-number">Slide 8/12</span>
-                <button
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <h2>DBSCAN: Ưu & Nhược điểm</h2>
+            </div>
+            <div class="content">
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>✅ Ưu điểm</h4>
+                        <ul>
+                            <li><strong>Không cần chọn K:</strong> Tự động xác định số cụm</li>
+                            <li><strong>Hình dạng linh hoạt:</strong> Phát hiện cụm có hình dạng bất kỳ</li>
+                            <li><strong>Xử lý noise:</strong> Tự động phát hiện và loại bỏ outliers</li>
+                            <li><strong>Robust:</strong> Ít nhạy cảm với thứ tự dữ liệu</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="cons">
+                        <h4>❌ Nhược điểm</h4>
+                        <ul>
+                            <li><strong>Chọn tham số:</strong> Khó chọn ε và MinPts phù hợp</li>
+                            <li><strong>Mật độ khác nhau:</strong> Không tốt với cụm có mật độ khác biệt lớn</li>
+                            <li><strong>Dữ liệu cao chiều:</strong> Khái niệm mật độ khó xác định</li>
+                            <li><strong>Border points:</strong> Có thể gán khác nhau tùy thứ tự xét</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>🎯 Ứng dụng thực tế</h3>
+                <div class="feature-box">
+                    <ul>
+                        <li><strong>Phát hiện bất thường:</strong> Fraud detection, network intrusion</li>
+                        <li><strong>Phân tích không gian:</strong> GIS, phân tích địa lý</li>
+                        <li><strong>Phân đoạn ảnh:</strong> Computer vision, nhận dạng vật thể</li>
+                        <li><strong>Phân tích mạng xã hội:</strong> Phát hiện cộng đồng</li>
+                    </ul>
+                </div>
+                
+                <h3>🔧 Cách chọn tham số</h3>
+                <div class="algorithm-step">
+                    <strong>Chọn MinPts:</strong>
+                    <p>Quy tắc chung: MinPts ≥ số chiều + 1. Với dữ liệu nhiễu nhiều, tăng MinPts.</p>
+                </div>
+                <div class="algorithm-step">
+                    <strong>Chọn ε (K-distance graph):</strong>
+                    <p>Vẽ đồ thị khoảng cách từ mỗi điểm đến điểm thứ k gần nhất, tìm điểm "khuỷu tay".</p>
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="prevSlide()">← Trước</button>
+                <span class="slide-number">Slide 9/12</span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- GAUSSIAN MIXTURE MODEL SLIDES -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>Gaussian Mixture Model (GMM)</h1>
+                <p class="subtitle">Mô hình hỗn hợp Gaussian</p>
+            </div>
+            <div class="content">
+                <h3>🎯 Khái niệm</h3>
+                <p>GMM là mô hình <span class="highlight">xác suất</span> (probabilistic model), giả định dữ liệu được sinh ra từ <strong>hỗn hợp của nhiều phân phối Gaussian</strong>.</p>
+                
+                <div class="feature-box">
+                    <h4>💡 Ý tưởng cốt lõi</h4>
+                    <p>Mỗi cụm được mô hình hóa bằng một phân phối Gaussian với:</p>
+                    <ul>
+                        <li><strong>μ (mean):</strong> Tâm của cụm</li>
+                        <li><strong>Σ (covariance):</strong> Hình dạng và hướng của cụm</li>
+                        <li><strong>π (weight):</strong> Tỷ lệ/tầm quan trọng của cụm</li>
+                    </ul>
+                </div>
+                
+                <h3>🔄 So sánh với K-Means</h3>
+                
+                <table class="comparison-table">
+                    <tr>
+                        <th>Đặc điểm</th>
+                        <th>K-Means</th>
+                        <th>GMM</th>
+                    </tr>
+                    <tr>
+                        <td>Gán cụm</td>
+                        <td>Hard assignment (0 hoặc 1)</td>
+                        <td>Soft assignment (xác suất)</td>
+                    </tr>
+                    <tr>
+                        <td>Hình dạng cụm</td>
+                        <td>Cầu đồng tâm</td>
+                        <td>Ellipsoid, linh hoạt</td>
+                    </tr>
+                    <tr>
+                        <td>Loại mô hình</td>
+                        <td>Deterministic</td>
+                        <td>Probabilistic</td>
+                    </tr>
+                </table>
+                
+                <h3>🎲 Soft Clustering</h3>
+                <p>GMM cho mỗi điểm một <strong>xác suất thuộc về mỗi cụm</strong>, thay vì gán cứng vào một cụm duy nhất.</p>
+                <p>Ví dụ: Điểm A có 70% thuộc cụm 1, 25% cụm 2, 5% cụm 3.</p>
+            </div>
+            <div class="navigation">
+                <button onclick="prevSlide()">← Trước</button>
+                <span class="slide-number">Slide 10/12</span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <h2>GMM: Thuật toán EM</h2>
+            </div>
+            <div class="content">
+                <h3>🔁 Expectation-Maximization (EM)</h3>
+                <p>GMM được huấn luyện bằng thuật toán <strong>EM</strong>, lặp qua 2 bước:</p>
+                
+                <div class="algorithm-step">
+                    <strong>Bước E (Expectation)</strong>
+                    <p>Tính xác suất (trách nhiệm) của mỗi Gaussian đối với mỗi điểm dữ liệu</p>
+                    <div class="formula">
+                        γ<sub>ik</sub> = P(cụm k | điểm i)
+                    </div>
+                    <p style="margin-top: 10px; color: #666;">→ Điểm i có bao nhiêu phần trăm thuộc về cụm k?</p>
+                </div>
+                
+                <div class="algorithm-step">
+                    <strong>Bước M (Maximization)</strong>
+                    <p>Cập nhật tham số của các Gaussian (μ, Σ, π) dựa trên xác suất đã tính</p>
+                    <ul>
+                        <li><strong>μ<sub>k</sub>:</strong> Trung bình có trọng số của các điểm</li>
+                        <li><strong>Σ<sub>k</sub>:</strong> Covariance có trọng số</li>
+                        <li><strong>π<sub>k</sub>:</strong> Tỷ lệ điểm "thuộc" cụm k</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-box">
+                    <h4>🔄 Quy trình:</h4>
+                    <p><strong>Khởi tạo</strong> → <strong>E-step</strong> (tính xác suất) → <strong>M-step</strong> (cập nhật tham số) → Lặp lại cho đến hội tụ</p>
+                </div>
+                
+                <h3>📊 Covariance Type</h3>
+                <div class="algorithm-step">
+                    <strong>Full:</strong> Mỗi cụm có covariance matrix riêng (linh hoạt nhất)
+                </div>
+                <div class="algorithm-step">
+                    <strong>Tied:</strong> Tất cả cụm dùng chung một covariance matrix
+                </div>
+                <div class="algorithm-step">
+                    <strong>Diagonal:</strong> Covariance chỉ có giá trị trên đường chéo (các chiều độc lập)
+                </div>
+                <div class="algorithm-step">
+                    <strong>Spherical:</strong> Covariance là ma trận đơn vị nhân với hằng số (giống K-Means)
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="prevSlide()">← Trước</button>
+                <span class="slide-number">Slide 11/12</span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <h2>GMM: Ưu & Nhược điểm</h2>
+            </div>
+            <div class="content">
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>✅ Ưu điểm</h4>
+                        <ul>
+                            <li><strong>Soft clustering:</strong> Cho biết mức độ chắc chắn của phân cụm</li>
+                            <li><strong>Linh hoạt:</strong> Cụm có thể có hình elip, kích thước khác nhau</li>
+                            <li><strong>Probabilistic:</strong> Cung cấp thông tin xác suất hữu ích</li>
+                            <li><strong>Generative model:</strong> Có thể sinh dữ liệu mới</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="cons">
+                        <h4>❌ Nhược điểm</h4>
+                        <ul>
+                            <li><strong>Chọn K:</strong> Vẫn cần xác định số cụm trước</li>
+                            <li><strong>Chậm:</strong> EM tốn thời gian hơn K-Means</li>
+                            <li><strong>Local optimum:</strong> Có thể hội tụ đến cực tiểu địa phương</li>
+                            <li><strong>Nhạy cảm:</strong> Với khởi tạo và outliers</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>🎯 Khi nào sử dụng GMM?</h3>
+                <div class="feature-box">
+                    <h4>✔️ Phù hợp khi:</h4>
+                    <ul>
+                        <li>Cần biết <strong>xác suất</strong> thuộc cụm, không chỉ nhãn cứng</li>
+                        <li>Các cụm có <strong>hình dạng elip</strong>, không đồng tâm</li>
+                        <li>Cụm có <strong>kích thước/mật độ khác nhau</strong></li>
+                        <li>Cần mô hình sinh (generative model) để tạo dữ liệu mới</li>
+                    </ul>
+                </div>
+                
+                <h3>🔧 Chọn số cụm K</h3>
+                <div class="algorithm-step">
+                    <strong>BIC (Bayesian Information Criterion)</strong>
+                    <p>Cân bằng giữa độ fit của mô hình và độ phức tạp. Chọn K có BIC nhỏ nhất.</p>
+                </div>
+                <div class="algorithm-step">
+                    <strong>AIC (Akaike Information Criterion)</strong>
+                    <p>Tương tự BIC nhưng phạt độ phức tạp ít hơn. Chọn K có AIC nhỏ nhất.</p>
+                </div>
+                
+                <h3>💼 Ứng dụng</h3>
+                <p><strong>Phân tích ảnh:</strong> Image segmentation, background subtraction</p>
+                <p><strong>Nhận dạng giọng nói:</strong> Acoustic modeling</p>
+                <p><strong>Anomaly detection:</strong> Phát hiện điểm có xác suất thấp</p>
+            </div>
+            <div class="navigation">
+                <button onclick="prevSlide()">← Trước</button>
+                <span class="slide-number">Slide 12/12</span>
+                <button onclick="nextSlide()" disabled>Tiếp →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = n;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            if (currentSlide < 0) currentSlide = 0;
+            slides[currentSlide].classList.add('active');
+            
+            updateNavigation();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        function updateNavigation() {
+            const prevButtons = document.querySelectorAll('.navigation button:first-child');
+            const nextButtons = document.querySelectorAll('.navigation button:last-child');
+            const slideNumbers = document.querySelectorAll('.slide-number');
+            
+            prevButtons.forEach(btn => {
+                btn.disabled = currentSlide === 0;
+            });
+            
+            nextButtons.forEach(btn => {
+                btn.disabled = currentSlide === totalSlides - 1;
+            });
+            
+            slideNumbers.forEach(num => {
+                num.textContent = `Slide ${currentSlide + 1}/${totalSlides}`;
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
+
+        // Initialize
+        updateNavigation();
+    </script>
+</body>
+</html>
