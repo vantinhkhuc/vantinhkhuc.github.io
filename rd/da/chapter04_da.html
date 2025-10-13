@@ -227,6 +227,40 @@
             <p style="font-size: 1.2em; margin-top: 30px;">Giảng viên: [Tên giảng viên]</p>
         </div>
 
+        <!-- Slide 1.1: Nội dung-->
+        <div class="slide slide-title">
+            <h1>Nội dung</h1>
+            <div style="text-align: left; max-width: 900px; margin: 40px auto; font-size: 1.1em;">
+                <p style="margin: 15px 0;">✓ <strong>Phần 1:</strong> Phương pháp đánh giá số cluster tối ưu</p>
+                <p style="margin: 15px 0;">✓ <strong>Phần 2:</strong> Mean-Shift, K-modes, K-prototypes - thuật toán & ứng dụng</p>
+                <p style="margin: 15px 0;">✓ <strong>Phần 3:</strong> Business metrics cho clustering trong thực tế</p>
+                <p style="margin: 15px 0;">✓ <strong>Phần 4:</strong> Kỹ năng Data Science & 6 ứng dụng clustering:</p>
+            </div>
+        </div>
+
+        <!-- Slide 1.1: Nội dung-->
+        <div class="slide slide-title">
+            <h1>Phương pháp đánh giá số cluster tối</h1>
+            <div style="text-align: left; max-width: 900px; margin: 40px auto; font-size: 1.1em;">
+                <h3>
+                    <li>01. Tổng quan về đánh giá số cluster</li>
+                    <li>02. Elbow Method</li>
+                    <li>03. Silhouette Score</li>
+                    <li>04. Davies-Bouldin Index (DBI)</li>
+                    <li>05. Calinski-Harabasz Index</li>
+                    <li>06. Bayesian Information Criterion </li>
+                    <li>07. Akaike Information Criterion</li>
+                    <li>08. Gap Statistic</li>
+                    <li>09. Dendrogram Analysis</li>
+                    <li>10. </li>
+                </h3>
+                
+                <p style="margin: 15px 0;">✓ <strong>Phần 2:</strong> Mean-Shift, K-modes, K-prototypes - thuật toán & ứng dụng</p>
+                <p style="margin: 15px 0;">✓ <strong>Phần 3:</strong> Business metrics cho clustering trong thực tế</p>
+                <p style="margin: 15px 0;">✓ <strong>Phần 4:</strong> Kỹ năng Data Science & 6 ứng dụng clustering:</p>
+            </div>
+        </div>
+
         <!-- Slide 2 -->
         <div class="slide">
             <div class="section-header">PHẦN 1: CÁC PHƯƠNG PHÁP ĐÁNH GIÁ SỐ CLUSTER</div>
@@ -386,6 +420,12 @@
                     <li><strong>s(i) ≈ 0:</strong> Điểm nằm giữa 2 cluster</li>
                     <li><strong>s(i) < 0:</strong> Điểm có thể bị phân cụm sai</li>
                 </ul>
+                <h3>Ưu điểm</h3>
+                <ul>
+                    <li>Đánh giá cả độ gắn kết (cohesion) và độ tách biệt (separation)</li>
+                    <li>Dễ hiểu và trực quan</li>
+                    <li>Áp dụng được cho nhiều thuật toán clustering</li>
+                </ul>
             </div>
         </div>
 
@@ -436,30 +476,6 @@
             </div>
         </div>
 
-        <!-- Slide 8 -->
-        <div class="slide">
-            <h2>3. Silhouette Score</h2>
-            <div class="content">
-                <h3>Định nghĩa</h3>
-                <p>Đo lường mức độ tương đồng của một điểm dữ liệu với cluster của nó so với các cluster khác.</p>
-                
-                <div class="formula">
-                    s(i) = (b(i) - a(i)) / max(a(i), b(i))
-                    <br><br>
-                    a(i): khoảng cách TB từ điểm i đến các điểm khác trong cùng cluster
-                    <br>b(i): khoảng cách TB từ điểm i đến các điểm trong cluster gần nhất
-                    <br><br>
-                    Giá trị: -1 đến 1 (càng cao càng tốt)
-                </div>
-                
-                <h3>Ưu điểm</h3>
-                <ul>
-                    <li>Đánh giá cả độ gắn kết (cohesion) và độ tách biệt (separation)</li>
-                    <li>Dễ hiểu và trực quan</li>
-                    <li>Áp dụng được cho nhiều thuật toán clustering</li>
-                </ul>
-            </div>
-        </div>
 
         <!-- Slide 8 -->
         <div class="slide">
@@ -547,268 +563,415 @@
             </div>
         </div>
 
-        <!-- Slide 10 -->
+        
+
+         <!-- Slide 10: CH Index - Lý thuyết -->
         <div class="slide">
-            <h2>4. Davies-Bouldin Index (DBI)</h2>
+            <h2>9. Calinski-Harabasz Index - Lý thuyết</h2>
             <div class="content">
-                <h3>Nguyên lý</h3>
-                <p>Đo lường tỉ lệ giữa độ phân tán trong cluster và khoảng cách giữa các cluster.</p>
+                <h3>Định nghĩa</h3>
+                <p>Calinski-Harabasz Index (còn gọi Variance Ratio Criterion) đo tỉ lệ giữa phân tán giữa các cluster và phân tán trong cluster.</p>
                 
-                <div class="formula">
-                    DB = (1/k) × Σ(i=1 to k) max(i≠j) [(σi + σj) / d(ci, cj)]
-                    <br><br>
-                    σi: độ phân tán TB trong cluster i
-                    <br>d(ci, cj): khoảng cách giữa centroid của cluster i và j
-                    <br><br>
-                    Giá trị thấp hơn là tốt hơn (tối thiểu là 0)
-                </div>
-                
-                <h3>Đặc điểm</h3>
-                <ul>
-                    <li>Không cần ground truth</li>
-                    <li>Tính toán nhanh</li>
-                    <li>Nhạy với outliers</li>
-                    <li>Chỉ áp dụng cho cluster hình cầu</li>
-                </ul>
-            </div>
-        </div>
-        <!-- Slide 10 -->
-        <div class="slide">
-            <h2>9. Calinski-Harabasz Index</h2>
-            <div class="content">
                 <h3>Công thức</h3>
                 <div class="formula">
                     CH = [Tr(Bk) / (k-1)] / [Tr(Wk) / (n-k)]
                     <br><br>
-                    Bk: ma trận phân tán giữa các cluster
-                    <br>Wk: ma trận phân tán trong cluster
-                    <br>n: số điểm dữ liệu | k: số cluster
+                    <strong>Bk:</strong> Between-cluster dispersion matrix (phân tán giữa clusters)
+                    <br><strong>Wk:</strong> Within-cluster dispersion matrix (phân tán trong clusters)
+                    <br><strong>n:</strong> tổng số điểm dữ liệu
+                    <br><strong>k:</strong> số clusters
                     <br><br>
-                    Giá trị cao hơn là tốt hơn
+                    <strong>Giá trị cao hơn = tốt hơn</strong>
                 </div>
                 
-                <h3>Ưu điểm</h3>
+                <h3>Ý nghĩa</h3>
                 <ul>
-                    <li>Tính toán nhanh và đơn giản</li>
-                    <li>Hiệu quả với cluster có mật độ khác nhau</li>
-                    <li>Phù hợp với large datasets</li>
+                    <li><strong>Tử số lớn:</strong> Clusters cách xa nhau (separation tốt)</li>
+                    <li><strong>Mẫu số nhỏ:</strong> Điểm gần centroid (cohesion tốt)</li>
+                    <li>CH cao = clusters compact và well-separated</li>
                 </ul>
             </div>
         </div>
 
-        <!-- Slide 11: CH Index comparison chart -->
+        <!-- Slide 11: CH Index - Minh họa -->
         <div class="slide">
-            <h2>10. CH Index - So sánh các k</h2>
+            <h2>10. CH Index - Minh họa so sánh</h2>
             <div class="content">
                 <h3>Biểu đồ CH Index theo số cluster</h3>
-                <svg width="100%" height="300" style="background: white; border: 2px solid #ddd; border-radius: 8px;">
+                <svg width="100%" height="320" style="background: white; border: 2px solid #ddd; border-radius: 8px;">
                     <!-- Axes -->
-                    <line x1="50" y1="250" x2="550" y2="250" stroke="#333" stroke-width="2"/>
-                    <line x1="50" y1="250" x2="50" y2="30" stroke="#333" stroke-width="2"/>
+                    <line x1="60" y1="270" x2="560" y2="270" stroke="#333" stroke-width="2"/>
+                    <line x1="60" y1="270" x2="60" y2="30" stroke="#333" stroke-width="2"/>
                     
                     <!-- X-axis labels -->
-                    <text x="100" y="270" font-size="14" text-anchor="middle">2</text>
-                    <text x="200" y="270" font-size="14" text-anchor="middle">3</text>
-                    <text x="300" y="270" font-size="14" text-anchor="middle">4</text>
-                    <text x="400" y="270" font-size="14" text-anchor="middle">5</text>
-                    <text x="500" y="270" font-size="14" text-anchor="middle">6</text>
-                    <text x="300" y="295" font-size="16" text-anchor="middle" font-weight="bold">Số cluster (k)</text>
+                    <text x="110" y="295" font-size="14" text-anchor="middle">2</text>
+                    <text x="210" y="295" font-size="14" text-anchor="middle">3</text>
+                    <text x="310" y="295" font-size="14" text-anchor="middle">4</text>
+                    <text x="410" y="295" font-size="14" text-anchor="middle">5</text>
+                    <text x="510" y="295" font-size="14" text-anchor="middle">6</text>
+                    <text x="310" y="320" font-size="16" text-anchor="middle" font-weight="bold">Số cluster (k)</text>
                     
                     <!-- Y-axis label -->
-                    <text x="20" y="140" font-size="16" text-anchor="middle" transform="rotate(-90, 20, 140)" font-weight="bold">CH Score</text>
+                    <text x="25" y="150" font-size="16" text-anchor="middle" transform="rotate(-90, 25, 150)" font-weight="bold">CH Score</text>
+                    
+                    <!-- Grid lines -->
+                    <line x1="60" y1="220" x2="560" y2="220" stroke="#ddd" stroke-width="1" stroke-dasharray="3,3"/>
+                    <line x1="60" y1="170" x2="560" y2="170" stroke="#ddd" stroke-width="1" stroke-dasharray="3,3"/>
+                    <line x1="60" y1="120" x2="560" y2="120" stroke="#ddd" stroke-width="1" stroke-dasharray="3,3"/>
+                    <line x1="60" y1="70" x2="560" y2="70" stroke="#ddd" stroke-width="1" stroke-dasharray="3,3"/>
                     
                     <!-- Bars -->
-                    <rect x="80" y="180" width="40" height="70" fill="#667eea" opacity="0.7"/>
-                    <rect x="180" y="130" width="40" height="120" fill="#667eea" opacity="0.7"/>
-                    <rect x="280" y="90" width="40" height="160" fill="#f5576c" opacity="0.9"/>
-                    <rect x="380" y="140" width="40" height="110" fill="#667eea" opacity="0.7"/>
-                    <rect x="480" y="170" width="40" height="80" fill="#667eea" opacity="0.7"/>
+                    <rect x="85" y="200" width="50" height="70" fill="#667eea" opacity="0.7"/>
+                    <rect x="185" y="155" width="50" height="115" fill="#667eea" opacity="0.7"/>
+                    <rect x="285" y="90" width="50" height="180" fill="#f5576c" opacity="0.9"/>
+                    <rect x="385" y="165" width="50" height="105" fill="#667eea" opacity="0.7"/>
+                    <rect x="485" y="195" width="50" height="75" fill="#667eea" opacity="0.7"/>
                     
-                    <!-- Values -->
-                    <text x="100" y="170" font-size="12" text-anchor="middle" font-weight="bold">156</text>
-                    <text x="200" y="120" font-size="12" text-anchor="middle" font-weight="bold">287</text>
-                    <text x="300" y="80" font-size="12" text-anchor="middle" font-weight="bold" fill="#f5576c">412</text>
-                    <text x="400" y="130" font-size="12" text-anchor="middle" font-weight="bold">265</text>
-                    <text x="500" y="160" font-size="12" text-anchor="middle" font-weight="bold">198</text>
+                    <!-- Values on bars -->
+                    <text x="110" y="190" font-size="13" text-anchor="middle" font-weight="bold">156</text>
+                    <text x="210" y="145" font-size="13" text-anchor="middle" font-weight="bold">287</text>
+                    <text x="310" y="80" font-size="14" text-anchor="middle" font-weight="bold" fill="#f5576c">★ 412</text>
+                    <text x="410" y="155" font-size="13" text-anchor="middle" font-weight="bold">265</text>
+                    <text x="510" y="185" font-size="13" text-anchor="middle" font-weight="bold">198</text>
                     
-                    <!-- Best indicator -->
-                    <text x="300" y="65" font-size="14" fill="#f5576c" font-weight="bold" text-anchor="middle">★ Optimal</text>
+                    <!-- Optimal indicator -->
+                    <line x1="310" y1="85" x2="310" y2="95" stroke="#f5576c" stroke-width="3"/>
+                    <text x="310" y="60" font-size="15" fill="#f5576c" font-weight="bold" text-anchor="middle">Optimal k=4</text>
+                    
+                    <!-- Arrow pointing to optimal -->
+                    <defs>
+                        <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#f5576c"/>
+                        </marker>
+                    </defs>
+                    <line x1="310" y1="65" x2="310" y2="75" stroke="#f5576c" stroke-width="2" marker-end="url(#arrowRed)"/>
                 </svg>
                 <div class="note" style="margin-top: 15px;">
-                    <strong>k = 4 có CH Index cao nhất:</strong> Cluster tách biệt tốt nhất, gọn trong từng nhóm.
+                    <strong>k=4 có CH Index cao nhất (412):</strong> Between-cluster separation tốt nhất, within-cluster cohesion cao nhất. Sau k=4, CH giảm → split không hiệu quả.
                 </div>
             </div>
         </div>
 
-        <!-- Slide 12 -->
+        <!-- Slide 12: CH Index - Visual comparison -->
         <div class="slide">
-            <h2>11. Gap Statistic</h2>
+            <h2>11. CH Index - So sánh trực quan</h2>
             <div class="content">
-                <h3>Nguyên lý</h3>
-                <p>So sánh tổng phân tán trong cluster với phân tán kỳ vọng của dữ liệu ngẫu nhiên.</p>
+                <h3>CH thấp vs CH cao</h3>
+                <div class="grid-2" style="margin-top: 20px;">
+                    <div class="card">
+                        <strong>CH thấp = Clustering kém</strong>
+                        <svg width="100%" height="200" style="background: #f8f9fa;">
+                            <!-- Overlapping clusters -->
+                            <ellipse cx="100" cy="100" rx="50" ry="45" fill="#667eea" opacity="0.2"/>
+                            <ellipse cx="140" cy="100" rx="50" ry="45" fill="#764ba2" opacity="0.2"/>
+                            
+                            <!-- Points scattered widely -->
+                            <circle cx="70" cy="80" r="3" fill="#667eea"/>
+                            <circle cx="85" cy="110" r="3" fill="#667eea"/>
+                            <circle cx="110" cy="95" r="3" fill="#667eea"/>
+                            <circle cx="95" cy="120" r="3" fill="#667eea"/>
+                            
+                            <circle cx="130" cy="85" r="3" fill="#764ba2"/>
+                            <circle cx="145" cy="105" r="3" fill="#764ba2"/>
+                            <circle cx="160" cy="95" r="3" fill="#764ba2"/>
+                            <circle cx="150" cy="115" r="3" fill="#764ba2"/>
+                            
+                            <!-- Centroids -->
+                            <circle cx="100" cy="100" r="6" fill="#667eea" stroke="#fff" stroke-width="2"/>
+                            <circle cx="140" cy="100" r="6" fill="#764ba2" stroke="#fff" stroke-width="2"/>
+                            
+                            <!-- Distance annotation -->
+                            <line x1="100" y1="100" x2="140" y2="100" stroke="#333" stroke-width="1" stroke-dasharray="2,2"/>
+                            <text x="120" y="95" font-size="11" text-anchor="middle">d nhỏ</text>
+                        </svg>
+                        <div style="font-size: 0.85em; margin-top: 10px;">
+                            <strong>Vấn đề:</strong>
+                            <br>• Clusters overlap (separation thấp)
+                            <br>• Points phân tán rộng (cohesion thấp)
+                            <br>• Khoảng cách giữa centroids nhỏ
+                            <br>→ <strong>CH < 100</strong>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <strong>CH cao = Clustering tốt</strong>
+                        <svg width="100%" height="200" style="background: #f8f9fa;">
+                            <!-- Well-separated clusters -->
+                            <ellipse cx="70" cy="100" rx="30" ry="28" fill="#667eea" opacity="0.2"/>
+                            <ellipse cx="170" cy="100" rx="30" ry="28" fill="#764ba2" opacity="0.2"/>
+                            
+                            <!-- Points tightly packed -->
+                            <circle cx="65" cy="95" r="3" fill="#667eea"/>
+                            <circle cx="70" cy="100" r="3" fill="#667eea"/>
+                            <circle cx="75" cy="98" r="3" fill="#667eea"/>
+                            <circle cx="68" cy="105" r="3" fill="#667eea"/>
+                            
+                            <circle cx="165" cy="95" r="3" fill="#764ba2"/>
+                            <circle cx="170" cy="100" r="3" fill="#764ba2"/>
+                            <circle cx="175" cy="98" r="3" fill="#764ba2"/>
+                            <circle cx="168" cy="105" r="3" fill="#764ba2"/>
+                            
+                            <!-- Centroids -->
+                            <circle cx="70" cy="100" r="6" fill="#667eea" stroke="#fff" stroke-width="2"/>
+                            <circle cx="170" cy="100" r="6" fill="#764ba2" stroke="#fff" stroke-width="2"/>
+                            
+                            <!-- Distance annotation -->
+                            <line x1="70" y1="100" x2="170" y2="100" stroke="#333" stroke-width="1" stroke-dasharray="2,2"/>
+                            <text x="120" y="95" font-size="11" text-anchor="middle">d lớn</text>
+                        </svg>
+                        <div style="font-size: 0.85em; margin-top: 10px;">
+                            <strong>Tốt:</strong>
+                            <br>• Clusters cách xa (separation cao)
+                            <br>• Points gần centroid (cohesion cao)
+                            <br>• Khoảng cách giữa centroids lớn
+                            <br>→ <strong>CH > 300</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: BIC - Lý thuyết -->
+        <div class="slide">
+            <h2>12. Bayesian Information Criterion - Lý thuyết</h2>
+            <div class="content">
+                <h3>Định nghĩa</h3>
+                <p>BIC là information criterion cân bằng giữa goodness-of-fit và model complexity.</p>
                 
-                <div class="formula">
-                    Gap(k) = E[log(Wk)] - log(Wk)
-                    <br><br>
-                    E[log(Wk)]: kỳ vọng của log(Wk) từ dữ liệu tham chiếu
-                    <br>Wk: tổng phân tán trong cluster
-                    <br><br>
-                    Chọn k nhỏ nhất: Gap(k) ≥ Gap(k+1) - s(k+1)
-                </div>
-                
-                <h3>Quy trình</h3>
-                <ul>
-                    <li>Tính Wk cho dữ liệu thực với mỗi k</li>
-                    <li>Sinh B bộ dữ liệu tham chiếu ngẫu nhiên</li>
-                    <li>Tính Wk cho mỗi bộ dữ liệu tham chiếu</li>
-                    <li>Tính Gap statistic và độ lệch chuẩn</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Slide 13: Gap Statistic visualization -->
-        <div class="slide">
-            <h2>12. Gap Statistic - Minh họa</h2>
-            <div class="content">
-                <h3>Biểu đồ Gap Statistic với Error Bars</h3>
-                <svg width="100%" height="300" style="background: white; border: 2px solid #ddd; border-radius: 8px;">
-                    <!-- Axes -->
-                    <line x1="50" y1="240" x2="550" y2="240" stroke="#333" stroke-width="2"/>
-                    <line x1="50" y1="240" x2="50" y2="30" stroke="#333" stroke-width="2"/>
-                    
-                    <!-- X-axis -->
-                    <text x="100" y="260" font-size="14" text-anchor="middle">1</text>
-                    <text x="175" y="260" font-size="14" text-anchor="middle">2</text>
-                    <text x="250" y="260" font-size="14" text-anchor="middle">3</text>
-                    <text x="325" y="260" font-size="14" text-anchor="middle">4</text>
-                    <text x="400" y="260" font-size="14" text-anchor="middle">5</text>
-                    <text x="475" y="260" font-size="14" text-anchor="middle">6</text>
-                    <text x="300" y="285" font-size="16" text-anchor="middle" font-weight="bold">Số cluster (k)</text>
-                    
-                    <!-- Y-axis -->
-                    <text x="20" y="135" font-size="16" text-anchor="middle" transform="rotate(-90, 20, 135)" font-weight="bold">Gap(k)</text>
-                    
-                    <!-- Gap curve -->
-                    <polyline points="100,200 175,150 250,110 325,100 400,105 475,108" 
-                              fill="none" stroke="#667eea" stroke-width="3"/>
-                    
-                    <!-- Points with error bars -->
-                    <line x1="100" y1="210" x2="100" y2="190" stroke="#999" stroke-width="1.5"/>
-                    <line x1="175" y1="160" x2="175" y2="140" stroke="#999" stroke-width="1.5"/>
-                    <line x1="250" y1="120" x2="250" y2="100" stroke="#999" stroke-width="1.5"/>
-                    <line x1="325" y1="110" x2="325" y2="90" stroke="#999" stroke-width="1.5"/>
-                    <line x1="400" y1="115" x2="400" y2="95" stroke="#999" stroke-width="1.5"/>
-                    <line x1="475" y1="118" x2="475" y2="98" stroke="#999" stroke-width="1.5"/>
-                    
-                    <circle cx="100" cy="200" r="5" fill="#667eea"/>
-                    <circle cx="175" cy="150" r="5" fill="#667eea"/>
-                    <circle cx="250" cy="110" r="5" fill="#667eea"/>
-                    <circle cx="325" cy="100" r="8" fill="#f5576c" stroke="#fff" stroke-width="2"/>
-                    <circle cx="400" cy="105" r="5" fill="#667eea"/>
-                    <circle cx="475" cy="108" r="5" fill="#667eea"/>
-                    
-                    <!-- Optimal marker -->
-                    <text x="325" y="80" font-size="14" fill="#f5576c" font-weight="bold" text-anchor="middle">Optimal k=4</text>
-                    <line x1="325" y1="85" x2="325" y2="95" stroke="#f5576c" stroke-width="2"/>
-                </svg>
-                <div class="note" style="margin-top: 15px;">
-                    <strong>k=4 thỏa mãn:</strong> Gap(4) ≥ Gap(5) - s(5). Gap tăng mạnh đến k=4, sau đó ổn định.
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 14 -->
-        <div class="slide">
-            <h2>13. BIC & AIC - Information Criteria</h2>
-            <div class="content">
-                <h3>Bayesian Information Criterion (BIC)</h3>
+                <h3>Công thức</h3>
                 <div class="formula">
                     BIC = -2 × log(L) + p × log(n)
                     <br><br>
-                    L: likelihood | p: số tham số | n: số điểm dữ liệu
-                    <br>Giá trị BIC thấp hơn là tốt hơn
+                    <strong>L:</strong> Likelihood của model (xác suất dữ liệu với model)
+                    <br><strong>p:</strong> số tham số của model (complexity)
+                    <br><strong>n:</strong> số điểm dữ liệu (sample size)
+                    <br><br>
+                    <strong>Giá trị thấp hơn = tốt hơn</strong>
                 </div>
                 
-                <h3>Akaike Information Criterion (AIC)</h3>
+                <h3>Hai thành phần</h3>
+                <ul>
+                    <li><strong>-2 × log(L):</strong> Đo lường fit (càng nhỏ = fit càng tốt)</li>
+                    <li><strong>p × log(n):</strong> Penalty cho complexity (càng nhiều tham số = penalty càng lớn)</li>
+                </ul>
+                
+                <h3>Đặc điểm BIC</h3>
+                <ul>
+                    <li>Penalty mạnh với sample size lớn: log(n) tăng nhanh</li>
+                    <li>Ưu tiên model đơn giản (Occam's Razor)</li>
+                    <li>Phù hợp tìm "true model"</li>
+                    <li>Thường dùng với Gaussian Mixture Models (GMM)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 14: AIC - Lý thuyết -->
+        <div class="slide">
+            <h2>13. Akaike Information Criterion - Lý thuyết</h2>
+            <div class="content">
+                <h3>Định nghĩa</h3>
+                <p>AIC là information criterion focus vào prediction accuracy hơn là tìm true model.</p>
+                
+                <h3>Công thức</h3>
                 <div class="formula">
                     AIC = 2p - 2 × log(L)
-                    <br>AICc = AIC + [2p(p+1)] / [n-p-1]  (hiệu chỉnh)
+                    <br><br>
+                    AICc = AIC + [2p(p+1)] / [n-p-1]
+                    <br>(hiệu chỉnh cho small sample)
+                    <br><br>
+                    <strong>p:</strong> số tham số
+                    <br><strong>L:</strong> likelihood
+                    <br><strong>n:</strong> sample size
+                    <br><br>
+                    <strong>Giá trị thấp hơn = tốt hơn</strong>
                 </div>
                 
-                <div class="grid-2" style="margin-top: 15px;">
-                    <div class="card">
-                        <h3>BIC</h3>
-                        <ul style="font-size: 0.85em;">
-                            <li>Penalty mạnh hơn</li>
-                            <li>Ưu tiên model đơn giản</li>
-                            <li>Tốt với n lớn</li>
-                        </ul>
-                    </div>
-                    <div class="card">
-                        <h3>AIC</h3>
-                        <ul style="font-size: 0.85em;">
-                            <li>Penalty nhẹ hơn</li>
-                            <li>Tốt cho prediction</li>
-                            <li>Phù hợp n nhỏ</li>
-                        </ul>
-                    </div>
-                </div>
+                <h3>So sánh AIC vs BIC</h3>
+                <table style="font-size: 0.85em; margin-top: 15px;">
+                    <tr>
+                        <th>Tiêu chí</th>
+                        <th>AIC</th>
+                        <th>BIC</th>
+                    </tr>
+                    <tr>
+                        <td>Penalty term</td>
+                        <td>2p (nhẹ)</td>
+                        <td>p×log(n) (mạnh)</td>
+                    </tr>
+                    <tr>
+                        <td>Model preference</td>
+                        <td>Phức tạp hơn</td>
+                        <td>Đơn giản hơn</td>
+                    </tr>
+                    <tr>
+                        <td>Mục tiêu</td>
+                        <td>Prediction tốt</td>
+                        <td>Tìm true model</td>
+                    </tr>
+                    <tr>
+                        <td>Sample size</td>
+                        <td>Tốt với n nhỏ</td>
+                        <td>Tốt với n lớn</td>
+                    </tr>
+                </table>
             </div>
         </div>
 
-        <!-- Slide 15: BIC/AIC comparison -->
+        <!-- Slide 15: BIC/AIC - Minh họa -->
         <div class="slide">
-            <h2>14. BIC vs AIC - So sánh</h2>
+            <h2>14. BIC vs AIC - Minh họa so sánh</h2>
             <div class="content">
                 <h3>Biểu đồ BIC và AIC theo số cluster</h3>
-                <svg width="100%" height="300" style="background: white; border: 2px solid #ddd; border-radius: 8px;">
+                <svg width="100%" height="320" style="background: white; border: 2px solid #ddd; border-radius: 8px;">
                     <!-- Axes -->
-                    <line x1="50" y1="240" x2="550" y2="240" stroke="#333" stroke-width="2"/>
-                    <line x1="50" y1="240" x2="50" y2="30" stroke="#333" stroke-width="2"/>
+                    <line x1="60" y1="270" x2="560" y2="270" stroke="#333" stroke-width="2"/>
+                    <line x1="60" y1="270" x2="60" y2="30" stroke="#333" stroke-width="2"/>
                     
-                    <!-- Labels -->
-                    <text x="100" y="260" font-size="14" text-anchor="middle">2</text>
-                    <text x="200" y="260" font-size="14" text-anchor="middle">3</text>
-                    <text x="300" y="260" font-size="14" text-anchor="middle">4</text>
-                    <text x="400" y="260" font-size="14" text-anchor="middle">5</text>
-                    <text x="500" y="260" font-size="14" text-anchor="middle">6</text>
-                    <text x="300" y="285" font-size="16" text-anchor="middle" font-weight="bold">Số cluster (k)</text>
-                    <text x="20" y="135" font-size="16" text-anchor="middle" transform="rotate(-90, 20, 135)" font-weight="bold">IC Value</text>
+                    <!-- X-axis labels -->
+                    <text x="120" y="295" font-size="14" text-anchor="middle">2</text>
+                    <text x="220" y="295" font-size="14" text-anchor="middle">3</text>
+                    <text x="320" y="295" font-size="14" text-anchor="middle">4</text>
+                    <text x="420" y="295" font-size="14" text-anchor="middle">5</text>
+                    <text x="520" y="295" font-size="14" text-anchor="middle">6</text>
+                    <text x="310" y="320" font-size="16" text-anchor="middle" font-weight="bold">Số cluster (k)</text>
                     
-                    <!-- BIC curve (lower, more penalty) -->
-                    <polyline points="100,180 200,140 300,120 400,125 500,135" 
-                              fill="none" stroke="#667eea" stroke-width="3"/>
-                    <circle cx="100" cy="180" r="5" fill="#667eea"/>
-                    <circle cx="200" cy="140" r="5" fill="#667eea"/>
-                    <circle cx="300" cy="120" r="7" fill="#667eea"/>
-                    <circle cx="400" cy="125" r="5" fill="#667eea"/>
-                    <circle cx="500" cy="135" r="5" fill="#667eea"/>
+                    <!-- Y-axis label -->
+                    <text x="25" y="150" font-size="16" text-anchor="middle" transform="rotate(-90, 25, 150)" font-weight="bold">IC Value</text>
+                    
+                    <!-- Grid lines -->
+                    <line x1="60" y1="220" x2="560" y2="220" stroke="#ddd" stroke-width="1" stroke-dasharray="3,3"/>
+                    <line x1="60" y1="170" x2="560" y2="170" stroke="#ddd" stroke-width="1" stroke-dasharray="3,3"/>
+                    <line x1="60" y1="120" x2="560" y2="120" stroke="#ddd" stroke-width="1" stroke-dasharray="3,3"/>
+                    
+                    <!-- BIC curve (more conservative) -->
+                    <polyline points="120,200 220,160 320,140 420,145 520,155" 
+                              fill="none" stroke="#667eea" stroke-width="4"/>
+                    <circle cx="120" cy="200" r="6" fill="#667eea"/>
+                    <circle cx="220" cy="160" r="6" fill="#667eea"/>
+                    <circle cx="320" cy="140" r="8" fill="#667eea" stroke="#fff" stroke-width="2"/>
+                    <circle cx="420" cy="145" r="6" fill="#667eea"/>
+                    <circle cx="520" cy="155" r="6" fill="#667eea"/>
                     
                     <!-- AIC curve (allows more clusters) -->
-                    <polyline points="100,190 200,155 300,140 400,138 500,142" 
-                              fill="none" stroke="#764ba2" stroke-width="3" stroke-dasharray="5,5"/>
-                    <circle cx="100" cy="190" r="5" fill="#764ba2"/>
-                    <circle cx="200" cy="155" r="5" fill="#764ba2"/>
-                    <circle cx="300" cy="140" r="5" fill="#764ba2"/>
-                    <circle cx="400" cy="138" r="7" fill="#764ba2"/>
-                    <circle cx="500" cy="142" r="5" fill="#764ba2"/>
+                    <polyline points="120,210 220,175 320,160 420,158 520,165" 
+                              fill="none" stroke="#764ba2" stroke-width="4" stroke-dasharray="8,4"/>
+                    <circle cx="120" cy="210" r="6" fill="#764ba2"/>
+                    <circle cx="220" cy="175" r="6" fill="#764ba2"/>
+                    <circle cx="320" cy="160" r="6" fill="#764ba2"/>
+                    <circle cx="420" cy="158" r="8" fill="#764ba2" stroke="#fff" stroke-width="2"/>
+                    <circle cx="520" cy="165" r="6" fill="#764ba2"/>
+                    
+                    <!-- Annotations -->
+                    <text x="320" y="125" font-size="13" fill="#667eea" font-weight="bold" text-anchor="middle">BIC min = k=4</text>
+                    <line x1="320" y1="130" x2="320" y2="135" stroke="#667eea" stroke-width="2"/>
+                    
+                    <text x="420" y="143" font-size="13" fill="#764ba2" font-weight="bold" text-anchor="middle">AIC min = k=5</text>
+                    <line x1="420" y1="148" x2="420" y2="153" stroke="#764ba2" stroke-width="2"/>
                     
                     <!-- Legend -->
-                    <line x1="420" y1="60" x2="460" y2="60" stroke="#667eea" stroke-width="3"/>
-                    <text x="470" y="65" font-size="14" fill="#667eea" font-weight="bold">BIC (k=4)</text>
+                    <line x1="80" y1="60" x2="120" y2="60" stroke="#667eea" stroke-width="4"/>
+                    <text x="130" y="65" font-size="14" fill="#667eea" font-weight="bold">BIC (conservative)</text>
                     
-                    <line x1="420" y1="80" x2="460" y2="80" stroke="#764ba2" stroke-width="3" stroke-dasharray="5,5"/>
-                    <text x="470" y="85" font-size="14" fill="#764ba2" font-weight="bold">AIC (k=5)</text>
+                    <line x1="80" y1="85" x2="120" y2="85" stroke="#764ba2" stroke-width="4" stroke-dasharray="8,4"/>
+                    <text x="130" y="90" font-size="14" fill="#764ba2" font-weight="bold">AIC (flexible)</text>
                 </svg>
                 <div class="note" style="margin-top: 15px;">
-                    <strong>BIC chọn k=4</strong> (simple model), <strong>AIC chọn k=5</strong> (better fit). BIC conservative hơn.
+                    <strong>BIC chọn k=4</strong> (model đơn giản, penalty mạnh), <strong>AIC chọn k=5</strong> (fit tốt hơn, penalty nhẹ). BIC ưu tiên parsimony, AIC ưu tiên predictive accuracy.
                 </div>
             </div>
         </div>
 
-        <!-- Slide 16 -->
+        <!-- Slide 16: BIC/AIC - Interpretation -->
         <div class="slide">
-            <h2>15. Dendrogram Analysis</h2>
+            <h2>15. BIC & AIC - Khi nào dùng?</h2>
+            <div class="content">
+                <h3>Decision Framework</h3>
+                
+                <div class="grid-2" style="margin-top: 20px;">
+                    <div class="card" style="background: #e3f2fd;">
+                        <h3>Dùng BIC khi:</h3>
+                        <ul style="font-size: 0.9em;">
+                            <li>✓ Sample size lớn (n > 1000)</li>
+                            <li>✓ Muốn tìm "true model"</li>
+                            <li>✓ Ưu tiên model đơn giản</li>
+                            <li>✓ Statistical inference</li>
+                            <li>✓ Business cần giải thích dễ</li>
+                        </ul>
+                        <div style="margin-top: 15px; padding: 10px; background: white; border-radius: 5px;">
+                            <strong>Ví dụ:</strong> Phân khúc khách hàng cho chiến lược dài hạn → cần segments rõ ràng, ổn định
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="background: #f3e5f5;">
+                        <h3>Dùng AIC khi:</h3>
+                        <ul style="font-size: 0.9em;">
+                            <li>✓ Sample size nhỏ/trung bình</li>
+                            <li>✓ Focus vào prediction accuracy</li>
+                            <li>✓ Cho phép model phức tạp hơn</li>
+                            <li>✓ Machine learning tasks</li>
+                            <li>✓ Cần capture nhiều patterns</li>
+                        </ul>
+                        <div style="margin-top: 15px; padding: 10px; background: white; border-radius: 5px;">
+                            <strong>Ví dụ:</strong> Recommendation system → cần detailed segments để personalize tốt
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 25px;">Lưu ý quan trọng</h3>
+                <div class="note">
+                    • Nếu BIC và AIC cho kết quả khác nhau → test cả hai trong business context
+                    <br>• n càng lớn, BIC penalty càng mạnh → gap giữa BIC và AIC càng lớn
+                    <br>• AIC có xu hướng overfitting hơn BIC
+                    <br>• BIC consistent: n→∞ thì chọn đúng model (nếu true model trong candidates)
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Dendrogram - Lý thuyết -->
+        <div class="slide">
+            <h2>16. Dendrogram Analysis - Lý thuyết</h2>
+            <div class="content">
+                <h3>Định nghĩa</h3>
+                <p>Dendrogram là biểu đồ cây thể hiện cấu trúc phân cấp (hierarchical structure) của dữ liệu trong Hierarchical Clustering.</p>
+                
+                <h3>Cách hoạt động</h3>
+                <ul>
+                    <li><strong>Bottom-up (Agglomerative):</strong>
+                        <br>• Bắt đầu: mỗi điểm = 1 cluster riêng
+                        <br>• Mỗi bước: merge 2 clusters gần nhất
+                        <br>• Kết thúc: tất cả thành 1 cluster lớn
+                    </li>
+                    <li style="margin-top: 15px;"><strong>Độ cao (height):</strong>
+                        <br>• Biểu thị khoảng cách/dissimilarity khi merge
+                        <br>• Cao = xa = khác biệt nhiều
+                        <br>• Thấp = gần = tương đồng
+                    </li>
+                </ul>
+                
+                <h3>Linkage methods</h3>
+                <div class="grid-2" style="margin-top: 15px;">
+                    <div class="card">
+                        <strong>Single Linkage:</strong>
+                        <br>Khoảng cách giữa điểm gần nhất
+                    </div>
+                    <div class="card">
+                        <strong>Complete Linkage:</strong>
+                        <br>Khoảng cách giữa điểm xa nhất
+                    </div>
+                    <div class="card">
+                        <strong>Average Linkage:</strong>
+                        <br>Trung bình các khoảng cách
+                    </div>
+                    <div class="card">
+                        <strong>Ward's Method:</strong>
+                        <br>Minimize variance khi merge
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18 -->
+        <div class="slide">
+            <h2>18. Dendrogram Analysis</h2>
             <div class="content">
                 <h3>Hierarchical Clustering Dendrogram</h3>
                 <p>Biểu đồ cây thể hiện cấu trúc phân cấp của dữ liệu.</p>
@@ -868,9 +1031,9 @@
             </div>
         </div>
 
-        <!-- Slide 17 -->
+        <!-- Slide 19 -->
         <div class="slide">
-            <h2>16. So sánh tổng hợp các phương pháp</h2>
+            <h2>19. So sánh tổng hợp các phương pháp</h2>
             <div class="content">
                 <table style="font-size: 0.75em;">
                     <thead>
@@ -939,10 +1102,10 @@
                 </div>
             </div>
         </div>
-        <!-- Slide 12 -->
+        <!-- Slide 20 -->
         <div class="slide">
             <div class="section-header">PHẦN 2: MEAN-SHIFT, K-MODES & K-PROTOTYPES</div>
-            <h2>11. Mean-Shift: Tổng quan</h2>
+            <h2>20. Mean-Shift: Tổng quan</h2>
             <div class="content">
                 <h3>Định nghĩa</h3>
                 <p>Mean-Shift là thuật toán clustering non-parametric dựa trên density estimation, tự động tìm số cluster.</p>
@@ -961,9 +1124,9 @@
             </div>
         </div>
 
-        <!-- Slide 13 -->
+        <!-- Slide 21 -->
         <div class="slide">
-            <h2>12. Mean-Shift: Công thức</h2>
+            <h2>21. Mean-Shift: Công thức</h2>
             <div class="content">
                 <h3>Kernel Density Estimation</h3>
                 <div class="formula">
@@ -982,9 +1145,9 @@
             </div>
         </div>
 
-        <!-- Slide 14 -->
+        <!-- Slide 22 -->
         <div class="slide">
-            <h2>13. Mean-Shift: Thuật toán</h2>
+            <h2>22. Mean-Shift: Thuật toán</h2>
             <div class="content">
                 <h3>Bước thực hiện</h3>
                 <div class="card" style="margin: 15px 0;">
