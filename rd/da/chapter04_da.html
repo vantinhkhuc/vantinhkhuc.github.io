@@ -224,7 +224,7 @@
         <div class="slide active slide-title">
             <h1>Phân Tích Dữ Liệu</h1>
             <p>Clustering & Kỹ năng Data Science</p>
-            <p style="font-size: 1.2em; margin-top: 30px;">Giảng viên: Phạm Thanh Tùng</p>
+            <p style="font-size: 1.2em; margin-top: 30px;">Giảng viên: [Tên giảng viên]</p>
         </div>
 
         <!-- Slide 2 -->
@@ -436,7 +436,32 @@
             </div>
         </div>
 
-        <!-- Slide 5 -->
+        <!-- Slide 8 -->
+        <div class="slide">
+            <h2>3. Silhouette Score</h2>
+            <div class="content">
+                <h3>Định nghĩa</h3>
+                <p>Đo lường mức độ tương đồng của một điểm dữ liệu với cluster của nó so với các cluster khác.</p>
+                
+                <div class="formula">
+                    s(i) = (b(i) - a(i)) / max(a(i), b(i))
+                    <br><br>
+                    a(i): khoảng cách TB từ điểm i đến các điểm khác trong cùng cluster
+                    <br>b(i): khoảng cách TB từ điểm i đến các điểm trong cluster gần nhất
+                    <br><br>
+                    Giá trị: -1 đến 1 (càng cao càng tốt)
+                </div>
+                
+                <h3>Ưu điểm</h3>
+                <ul>
+                    <li>Đánh giá cả độ gắn kết (cohesion) và độ tách biệt (separation)</li>
+                    <li>Dễ hiểu và trực quan</li>
+                    <li>Áp dụng được cho nhiều thuật toán clustering</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 8 -->
         <div class="slide">
             <h2>7. Davies-Bouldin Index (DBI)</h2>
             <div class="content">
@@ -462,6 +487,91 @@
             </div>
         </div>
 
+        <!-- Slide 9: DBI visualization -->
+        <div class="slide">
+            <h2>8. Davies-Bouldin Index - Minh họa</h2>
+            <div class="content">
+                <h3>So sánh Clustering tốt vs xấu</h3>
+                <div class="grid-2" style="margin-top: 20px;">
+                    <div class="card">
+                        <strong>DBI thấp = Tốt</strong>
+                        <svg width="100%" height="180" style="background: #f8f9fa;">
+                            <!-- Cluster 1: tight and separated -->
+                            <circle cx="60" cy="60" r="25" fill="none" stroke="#667eea" stroke-width="2" stroke-dasharray="3,3"/>
+                            <circle cx="55" cy="55" r="4" fill="#667eea"/>
+                            <circle cx="60" cy="60" r="4" fill="#667eea"/>
+                            <circle cx="65" cy="58" r="4" fill="#667eea"/>
+                            <circle cx="58" cy="65" r="4" fill="#667eea"/>
+                            <circle cx="60" cy="60" r="6" fill="#667eea" opacity="0.5"/>
+                            
+                            <!-- Cluster 2: tight and separated -->
+                            <circle cx="180" cy="60" r="25" fill="none" stroke="#764ba2" stroke-width="2" stroke-dasharray="3,3"/>
+                            <circle cx="175" cy="55" r="4" fill="#764ba2"/>
+                            <circle cx="180" cy="60" r="4" fill="#764ba2"/>
+                            <circle cx="185" cy="58" r="4" fill="#764ba2"/>
+                            <circle cx="178" cy="65" r="4" fill="#764ba2"/>
+                            <circle cx="180" cy="60" r="6" fill="#764ba2" opacity="0.5"/>
+                            
+                            <!-- Distance line -->
+                            <line x1="60" y1="60" x2="180" y2="60" stroke="#333" stroke-width="1" stroke-dasharray="2,2"/>
+                            <text x="120" y="55" font-size="11" fill="#333">d(c1,c2)</text>
+                        </svg>
+                        <p style="font-size: 0.85em; margin-top: 10px;">Clusters gọn, cách xa nhau → DBI < 0.5</p>
+                    </div>
+                    <div class="card">
+                        <strong>DBI cao = Xấu</strong>
+                        <svg width="100%" height="180" style="background: #f8f9fa;">
+                            <!-- Cluster 1: loose and overlapping -->
+                            <circle cx="80" cy="80" r="40" fill="none" stroke="#667eea" stroke-width="2" stroke-dasharray="3,3"/>
+                            <circle cx="60" cy="70" r="4" fill="#667eea"/>
+                            <circle cx="70" cy="90" r="4" fill="#667eea"/>
+                            <circle cx="90" cy="75" r="4" fill="#667eea"/>
+                            <circle cx="85" cy="95" r="4" fill="#667eea"/>
+                            <circle cx="80" cy="80" r="6" fill="#667eea" opacity="0.5"/>
+                            
+                            <!-- Cluster 2: loose and overlapping -->
+                            <circle cx="140" cy="80" r="40" fill="none" stroke="#764ba2" stroke-width="2" stroke-dasharray="3,3"/>
+                            <circle cx="120" cy="75" r="4" fill="#764ba2"/>
+                            <circle cx="130" cy="90" r="4" fill="#764ba2"/>
+                            <circle cx="150" cy="70" r="4" fill="#764ba2"/>
+                            <circle cx="155" cy="88" r="4" fill="#764ba2"/>
+                            <circle cx="140" cy="80" r="6" fill="#764ba2" opacity="0.5"/>
+                            
+                            <!-- Distance line -->
+                            <line x1="80" y1="80" x2="140" y2="80" stroke="#333" stroke-width="1" stroke-dasharray="2,2"/>
+                            <text x="110" y="75" font-size="11" fill="#333">d</text>
+                        </svg>
+                        <p style="font-size: 0.85em; margin-top: 10px;">Clusters rộng, gần nhau → DBI > 1.5</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide">
+            <h2>4. Davies-Bouldin Index (DBI)</h2>
+            <div class="content">
+                <h3>Nguyên lý</h3>
+                <p>Đo lường tỉ lệ giữa độ phân tán trong cluster và khoảng cách giữa các cluster.</p>
+                
+                <div class="formula">
+                    DB = (1/k) × Σ(i=1 to k) max(i≠j) [(σi + σj) / d(ci, cj)]
+                    <br><br>
+                    σi: độ phân tán TB trong cluster i
+                    <br>d(ci, cj): khoảng cách giữa centroid của cluster i và j
+                    <br><br>
+                    Giá trị thấp hơn là tốt hơn (tối thiểu là 0)
+                </div>
+                
+                <h3>Đặc điểm</h3>
+                <ul>
+                    <li>Không cần ground truth</li>
+                    <li>Tính toán nhanh</li>
+                    <li>Nhạy với outliers</li>
+                    <li>Chỉ áp dụng cho cluster hình cầu</li>
+                </ul>
+            </div>
+        </div>
         <!-- Slide 10 -->
         <div class="slide">
             <h2>9. Calinski-Harabasz Index</h2>
@@ -829,7 +939,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Slide 12 -->
         <div class="slide">
             <div class="section-header">PHẦN 2: MEAN-SHIFT, K-MODES & K-PROTOTYPES</div>
@@ -1037,7 +1146,190 @@
 
         <!-- Slide 20 -->
         <div class="slide">
-            <h2>19. K-prototypes: Tổng quan</h2>
+            <h2>20. Mean-Shift: Công thức</h2>
+            <div class="content">
+                <h3>Kernel Density Estimation</h3>
+                <div class="formula">
+                    f(x) = (1/n) × Σ(i=1 to n) K((x - xi) / h)
+                    <br><br>
+                    K: kernel function (thường Gaussian) | h: bandwidth | n: số điểm
+                </div>
+                
+                <h3>Mean-Shift Vector</h3>
+                <div class="formula">
+                    m(x) = [Σ xi × K((x - xi) / h)] / [Σ K((x - xi) / h)] - x
+                    <br><br>
+                    Điểm mới: x(t+1) = x(t) + m(x(t))
+                    <br>Lặp cho đến: ||m(x)|| < ε
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 21 -->
+        <div class="slide">
+            <h2>21. Mean-Shift: Thuật toán</h2>
+            <div class="content">
+                <h3>Bước thực hiện</h3>
+                <div class="card" style="margin: 15px 0;">
+                    <strong>1. Khởi tạo:</strong> Chọn mỗi điểm làm seed
+                    <br><strong>2. Tính mean-shift:</strong> Với mỗi seed, tính m(x)
+                    <br><strong>3. Cập nhật:</strong> Di chuyển seed theo m(x)
+                    <br><strong>4. Lặp:</strong> Đến khi hội tụ
+                    <br><strong>5. Gán cluster:</strong> Seeds hội tụ cùng điểm → cùng cluster
+                    <br><strong>6. Hậu xử lý:</strong> Gộp modes gần nhau
+                </div>
+                
+                <h3>Tham số quan trọng</h3>
+                <ul>
+                    <li><span class="highlight">Bandwidth (h):</span> Kiểm soát kích thước cửa sổ</li>
+                    <li>h nhỏ → nhiều cluster nhỏ</li>
+                    <li>h lớn → ít cluster lớn</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 22 -->
+        <div class="slide">
+            <h2>22. Mean-Shift: Ưu nhược điểm</h2>
+            <div class="content">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Ưu điểm ✓</h3>
+                        <ul style="font-size: 0.9em;">
+                            <li>Tự động tìm số cluster</li>
+                            <li>Cluster hình dạng bất kỳ</li>
+                            <li>Robust với outliers</li>
+                            <li>Một tham số chính</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Nhược điểm ✗</h3>
+                        <ul style="font-size: 0.9em;">
+                            <li>Chậm O(n²)</li>
+                            <li>Bandwidth khó chọn</li>
+                            <li>Nhạy với bandwidth</li>
+                            <li>Khó với high dimensions</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 20px;">Ứng dụng thực tế</h3>
+                <ul>
+                    <li><strong>Computer Vision:</strong> Image segmentation, tracking</li>
+                    <li><strong>Phân tích không gian:</strong> Hotspot detection</li>
+                    <li><strong>Video:</strong> Motion analysis</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 23 -->
+        <div class="slide">
+            <h2>23. K-modes: Tổng quan</h2>
+            <div class="content">
+                <h3>Vấn đề với K-means</h3>
+                <p>K-means chỉ xử lý dữ liệu số, không áp dụng cho dữ liệu phân loại (categorical).</p>
+                
+                <h3>K-modes - Giải pháp cho Categorical</h3>
+                <ul>
+                    <li>Mở rộng K-means cho categorical data</li>
+                    <li>Thay mean bằng <span class="highlight">mode</span></li>
+                    <li>Thay Euclidean bằng <span class="highlight">simple matching</span></li>
+                    <li>Phù hợp: phân khúc KH, phân loại SP, survey</li>
+                </ul>
+                
+                <div class="note">
+                    <strong>Ví dụ:</strong> Giới tính {Nam, Nữ}, Trình độ {THPT, ĐH}, Khu vực {Bắc, Trung, Nam}
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 24 -->
+        <div class="slide">
+            <h2>24. K-modes: Dissimilarity</h2>
+            <div class="content">
+                <h3>Simple Matching Dissimilarity</h3>
+                <div class="formula">
+                    d(X, Y) = Σ(j=1 to m) δ(xj, yj)
+                    <br><br>
+                    δ(xj, yj) = 0 nếu xj = yj
+                    <br>δ(xj, yj) = 1 nếu xj ≠ yj
+                </div>
+                
+                <h3>Ví dụ minh họa</h3>
+                <div class="card">
+                    <strong>Customer A:</strong> [Nam, 25-35, IT]
+                    <br><strong>Customer B:</strong> [Nam, 36-45, IT]
+                    <br><br>
+                    d(A, B) = 0 + 1 + 0 = 1
+                </div>
+                
+                <p style="margin-top: 15px;"><strong>Ý nghĩa:</strong> Đếm số attributes khác nhau.</p>
+            </div>
+        </div>
+
+        <!-- Slide 25 -->
+        <div class="slide">
+            <h2>25. K-modes: Thuật toán</h2>
+            <div class="content">
+                <h3>Các bước thực hiện</h3>
+                <div class="card" style="margin: 15px 0;">
+                    <strong>1.</strong> Chọn k modes ngẫu nhiên
+                    <br><strong>2.</strong> Gán điểm vào cluster gần nhất
+                    <br><strong>3.</strong> Cập nhật modes (mode của mỗi attribute)
+                    <br><strong>4.</strong> Kiểm tra hội tụ → dừng hoặc quay lại bước 2
+                </div>
+                
+                <h3>Cập nhật Mode</h3>
+                <div class="formula">
+                    Mode = giá trị xuất hiện nhiều nhất
+                    <br>VD: [Nam, Nam, Nữ, Nam] → Mode = Nam
+                </div>
+                
+                <h3>Cost Function</h3>
+                <div class="formula">
+                    Cost = Σ(i=1 to k) Σ(X ∈ Ci) d(X, Qi)
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 26 -->
+        <div class="slide">
+            <h2>26. K-modes: Ứng dụng</h2>
+            <div class="content">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Cải tiến</h3>
+                        <ul style="font-size: 0.85em;">
+                            <li>Fuzzy K-modes</li>
+                            <li>Weighted K-modes</li>
+                            <li>Fast K-modes</li>
+                            <li>K-modes++</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Ưu & Nhược</h3>
+                        <ul style="font-size: 0.85em;">
+                            <li>✓ Xử lý categorical</li>
+                            <li>✓ Nhanh, scalable</li>
+                            <li>✗ Nhạy khởi tạo</li>
+                            <li>✗ Cần chọn k</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 20px;">Ứng dụng thực tế</h3>
+                <ul>
+                    <li><strong>Marketing:</strong> Phân khúc KH theo demographics</li>
+                    <li><strong>E-commerce:</strong> Phân loại sản phẩm</li>
+                    <li><strong>Healthcare:</strong> Nhóm bệnh nhân</li>
+                    <li><strong>Survey:</strong> Phân tích định tính</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 27 -->
+        <div class="slide">
+            <h2>27. K-prototypes: Tổng quan</h2>
             <div class="content">
                 <h3>Vấn đề Mixed Data</h3>
                 <p>Dữ liệu thường chứa cả <span class="highlight">numerical</span> và <span class="highlight">categorical</span>.</p>
@@ -1058,9 +1350,9 @@
             </div>
         </div>
 
-        <!-- Slide 21 -->
+        <!-- Slide 28 -->
         <div class="slide">
-            <h2>20. K-prototypes: Distance</h2>
+            <h2>28. K-prototypes: Distance</h2>
             <div class="content">
                 <h3>Công thức Distance tổng hợp</h3>
                 <div class="formula">
@@ -1082,9 +1374,9 @@
             </div>
         </div>
 
-        <!-- Slide 22 -->
+        <!-- Slide 29 -->
         <div class="slide">
-            <h2>21. K-prototypes: Thuật toán</h2>
+            <h2>29. K-prototypes: Thuật toán</h2>
             <div class="content">
                 <h3>Các bước</h3>
                 <div class="card" style="margin: 15px 0;">
@@ -1103,9 +1395,9 @@
             </div>
         </div>
 
-        <!-- Slide 23 -->
+        <!-- Slide 30 -->
         <div class="slide">
-            <h2>22. So sánh K-means/modes/prototypes</h2>
+            <h2>30. So sánh K-means/modes/prototypes</h2>
             <div class="content">
                 <table style="font-size: 0.8em;">
                     <thead>
@@ -1155,11 +1447,10 @@
                 </div>
             </div>
         </div>
-
-        <!-- Slide 24 -->
+         <!-- Slide 31 -->
         <div class="slide">
             <div class="section-header">PHẦN 3: ĐÁNH GIÁ CLUSTERING CHO KINH DOANH</div>
-            <h2>23. Business Metrics</h2>
+            <h2>31. Business Metrics</h2>
             <div class="content">
                 <h3>Tại sao cần Business Metrics?</h3>
                 <p>Metrics kỹ thuật không phản ánh giá trị kinh doanh thực.</p>
@@ -1184,9 +1475,9 @@
             </div>
         </div>
 
-        <!-- Slide 25 -->
+        <!-- Slide 32 -->
         <div class="slide">
-            <h2>24. Actionability & Stability</h2>
+            <h2>32. Actionability & Stability</h2>
             <div class="content">
                 <h3>3. Cluster Actionability</h3>
                 <ul>
@@ -1210,9 +1501,9 @@
             </div>
         </div>
 
-        <!-- Slide 26 -->
+        <!-- Slide 33 -->
         <div class="slide">
-            <h2>25. Business Impact Metrics</h2>
+            <h2>33. Business Impact Metrics</h2>
             <div class="content">
                 <h3>5. Conversion Rate</h3>
                 <div class="formula">
@@ -1242,24 +1533,23 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Slide 27 -->
+        </div>   
+        <!-- Slide 34 -->
         <div class="slide">
             <div class="section-header">PHẦN 4: KỸ NĂNG DATA SCIENCE & ỨNG DỤNG CLUSTERING</div>
-            <h2>26. Ứng dụng Clustering: Phân khúc khách hàng</h2>
+            <h2>34. Ứng dụng: Phân khúc khách hàng</h2>
             <div class="content">
                 <h3>Customer Segmentation - Bài toán phổ biến nhất</h3>
-                <p>Sử dụng clustering để chia khách hàng thành các nhóm đồng nhất dựa trên hành vi và đặc điểm.</p>
+                <p>Sử dụng clustering để chia KH thành nhóm đồng nhất dựa trên hành vi và đặc điểm.</p>
                 
                 <h3>Quy trình thực hiện</h3>
-                <div class="card" style="margin: 15px 0;">
-                    <strong>Bước 1:</strong> Thu thập dữ liệu (demographics, transactions, behavior)
-                    <br><strong>Bước 2:</strong> Feature engineering (RFM, CLV, frequency...)
-                    <br><strong>Bước 3:</strong> Chọn thuật toán (K-means cho numerical, K-prototypes cho mixed)
-                    <br><strong>Bước 4:</strong> Đánh giá cluster (technical + business metrics)
-                    <br><strong>Bước 5:</strong> Profiling từng segment
-                    <br><strong>Bước 6:</strong> Triển khai chiến lược marketing riêng
+                <div class="card" style="margin: 15px 0; font-size: 0.9em;">
+                    <strong>1.</strong> Thu thập dữ liệu (demographics, transactions, behavior)
+                    <br><strong>2.</strong> Feature engineering (RFM, CLV, frequency...)
+                    <br><strong>3.</strong> Chọn thuật toán (K-prototypes cho mixed data)
+                    <br><strong>4.</strong> Đánh giá cluster (technical + business)
+                    <br><strong>5.</strong> Profiling từng segment
+                    <br><strong>6.</strong> Triển khai chiến lược marketing riêng
                 </div>
                 
                 <h3>Ví dụ segments</h3>
@@ -1271,9 +1561,11 @@
             </div>
         </div>
 
-        <!-- Slide 28 -->
+        
+
+        <!-- Slide 35 -->
         <div class="slide">
-            <h2>27. Ứng dụng: RFM Analysis với Clustering</h2>
+            <h2>35. Ứng dụng: RFM Analysis</h2>
             <div class="content">
                 <h3>RFM Model</h3>
                 <div class="formula">
@@ -1285,8 +1577,8 @@
                 <h3>Kết hợp RFM + Clustering</h3>
                 <ul>
                     <li>Chuẩn hóa 3 metrics RFM (scale 0-1)</li>
-                    <li>Áp dụng K-means hoặc Hierarchical clustering</li>
-                    <li>Xác định số cluster tối ưu (Silhouette, Elbow)</li>
+                    <li>Áp dụng K-means hoặc Hierarchical</li>
+                    <li>Xác định số cluster tối ưu</li>
                     <li>Gắn nhãn business cho từng cluster</li>
                 </ul>
                 
@@ -1305,23 +1597,22 @@
             </div>
         </div>
 
-        <!-- Slide 29 -->
+        <!-- Slide 36 -->
         <div class="slide">
-            <h2>28. Ứng dụng: Product Recommendation</h2>
+            <h2>36. Ứng dụng: Product Recommendation</h2>
             <div class="content">
                 <h3>Clustering cho Recommendation System</h3>
                 <p>Nhóm sản phẩm hoặc khách hàng tương tự để đề xuất.</p>
                 
                 <h3>Hai hướng tiếp cận</h3>
                 
-                <div class="card" style="margin: 15px 0;">
+                <div class="card" style="margin: 15px 0; font-size: 0.9em;">
                     <strong>1. Item-based Clustering:</strong>
-                    <br>• Cluster sản phẩm theo attributes (category, price, brand)
+                    <br>• Cluster sản phẩm theo attributes
                     <br>• KH mua SP A → recommend SP khác trong cùng cluster
-                    <br>• Dùng: K-modes hoặc K-prototypes
                 </div>
                 
-                <div class="card" style="margin: 15px 0;">
+                <div class="card" style="margin: 15px 0; font-size: 0.9em;">
                     <strong>2. User-based Clustering:</strong>
                     <br>• Cluster KH theo purchase history
                     <br>• KH trong cùng cluster có preference tương tự
@@ -1337,55 +1628,55 @@
             </div>
         </div>
 
-        <!-- Slide 30 -->
+        <!-- Slide 37 -->
         <div class="slide">
-            <h2>29. Ứng dụng: Churn Prediction & Prevention</h2>
+            <h2>37. Ứng dụng: Churn Prediction</h2>
             <div class="content">
                 <h3>Clustering trong Churn Analysis</h3>
                 <p>Xác định nhóm khách hàng có nguy cơ rời bỏ cao.</p>
                 
                 <h3>Quy trình</h3>
-                <div class="card" style="margin: 15px 0;">
-                    <strong>Bước 1:</strong> Feature engineering
-                    <br>• Engagement metrics: login frequency, session duration
+                <div class="card" style="margin: 15px 0; font-size: 0.9em;">
+                    <strong>Feature engineering:</strong>
+                    <br>• Engagement: login frequency, session duration
                     <br>• Transaction: purchase decline, cart abandonment
                     <br>• Support: ticket count, complaint rate
                     <br><br>
-                    <strong>Bước 2:</strong> Clustering + Classification
+                    <strong>Clustering + Classification:</strong>
                     <br>• Cluster KH theo behavior patterns
-                    <br>• Train classification model để predict churn
+                    <br>• Train model để predict churn
                     <br>• Focus resources vào high-risk clusters
                 </div>
                 
-                <h3>Chiến lược Retention theo Cluster</h3>
+                <h3>Chiến lược Retention</h3>
                 <ul>
                     <li><strong>Price-sensitive:</strong> Discounts, loyalty points</li>
                     <li><strong>Service-focused:</strong> Priority support, premium features</li>
-                    <li><strong>Inactive:</strong> Re-engagement emails, special offers</li>
+                    <li><strong>Inactive:</strong> Re-engagement emails, offers</li>
                 </ul>
             </div>
         </div>
 
-        <!-- Slide 31 -->
+        <!-- Slide 38 -->
         <div class="slide">
-            <h2>30. Ứng dụng: Market Basket Analysis</h2>
+            <h2>38. Ứng dụng: Market Basket Analysis</h2>
             <div class="content">
                 <h3>Clustering Products theo Co-purchase</h3>
                 <p>Phân tích sản phẩm nào thường được mua cùng nhau.</p>
                 
                 <h3>Kỹ thuật</h3>
                 <ul>
-                    <li><strong>Association Rules:</strong> Apriori, FP-Growth (if A then B)</li>
-                    <li><strong>Clustering:</strong> Nhóm products theo co-occurrence matrix</li>
-                    <li>Similarity measure: Jaccard, Cosine similarity</li>
+                    <li><strong>Association Rules:</strong> Apriori, FP-Growth</li>
+                    <li><strong>Clustering:</strong> Nhóm products theo co-occurrence</li>
+                    <li>Similarity: Jaccard, Cosine</li>
                 </ul>
                 
-                <div class="card" style="margin: 15px 0;">
-                    <strong>Ví dụ ứng dụng:</strong>
-                    <br>• <strong>Retail:</strong> Store layout optimization (đặt SP liên quan gần nhau)
-                    <br>• <strong>E-commerce:</strong> "Frequently bought together" recommendations
-                    <br>• <strong>Promotion:</strong> Bundle pricing (combo sản phẩm)
-                    <br>• <strong>Inventory:</strong> Stock management (đồng bộ inventory)
+                <div class="card" style="margin: 15px 0; font-size: 0.9em;">
+                    <strong>Ứng dụng:</strong>
+                    <br>• <strong>Retail:</strong> Store layout optimization
+                    <br>• <strong>E-commerce:</strong> "Frequently bought together"
+                    <br>• <strong>Promotion:</strong> Bundle pricing
+                    <br>• <strong>Inventory:</strong> Stock management đồng bộ
                 </div>
                 
                 <h3>Business Impact</h3>
@@ -1397,11 +1688,11 @@
             </div>
         </div>
 
-        <!-- Slide 32 -->
+        <!-- Slide 39 -->
         <div class="slide">
-            <h2>31. Kỹ năng Data Science End-to-End</h2>
+            <h2>39. Kỹ năng Technical End-to-End</h2>
             <div class="content">
-                <h3>Kỹ năng Technical cần thiết</h3>
+                <h3>Kỹ năng cần thiết</h3>
                 
                 <div class="grid-2">
                     <div class="card">
@@ -1409,7 +1700,7 @@
                         <ul style="font-size: 0.85em;">
                             <li>Python: Pandas, NumPy, Scikit-learn</li>
                             <li>R: dplyr, ggplot2, caret</li>
-                            <li>SQL: Query, Join, CTE, Window functions</li>
+                            <li>SQL: Query, Join, Window functions</li>
                             <li>Git: Version control</li>
                         </ul>
                     </div>
@@ -1418,13 +1709,13 @@
                         <ul style="font-size: 0.85em;">
                             <li>Supervised: Regression, Classification</li>
                             <li>Unsupervised: Clustering, PCA</li>
-                            <li>Evaluation: Cross-validation, metrics</li>
+                            <li>Evaluation: Cross-validation</li>
                             <li>Hyperparameter tuning</li>
                         </ul>
                     </div>
                 </div>
                 
-                <h3 style="margin-top: 20px;">Kỹ năng Business Analytics</h3>
+                <h3 style="margin-top: 20px;">Business Analytics</h3>
                 <ul>
                     <li><strong>A/B Testing:</strong> Experimental design, statistical testing</li>
                     <li><strong>Metrics:</strong> Define & track KPIs (CTR, CAC, LTV, ROAS)</li>
@@ -1434,17 +1725,17 @@
             </div>
         </div>
 
-        <!-- Slide 33 -->
+        <!-- Slide 40 -->
         <div class="slide">
-            <h2>32. Data Storytelling & Business Impact</h2>
+            <h2>40. Data Storytelling & Business Impact</h2>
             <div class="content">
                 <h3>Soft Skills quan trọng</h3>
                 
-                <div class="card" style="margin: 15px 0;">
-                    <strong>1. Data Storytelling:</strong>
+                <div class="card" style="margin: 15px 0; font-size: 0.9em;">
+                    <strong>Data Storytelling:</strong>
                     <br>• Chuyển insights thành narrative có ý nghĩa
-                    <br>• Context → Insights → Recommendations → Expected Impact
-                    <br>• Sử dụng visualization hiệu quả (chart types phù hợp)
+                    <br>• Context → Insights → Recommendations → Impact
+                    <br>• Visualization hiệu quả
                     <br>• Focus vào "So what?" và "What next?"
                 </div>
                 
@@ -1467,21 +1758,21 @@
                 <h3 style="margin-top: 20px;">Business Communication</h3>
                 <ul>
                     <li>Translate technical → business language</li>
-                    <li>Stakeholder management (align expectations)</li>
+                    <li>Stakeholder management</li>
                     <li>Present to C-level executives</li>
                     <li>ROI calculation và business case</li>
                 </ul>
             </div>
         </div>
 
-        <!-- Slide 34 -->
+        <!-- Slide 41: Tổng kết -->
         <div class="slide slide-title">
             <h1>Tổng kết</h1>
             <div style="text-align: left; max-width: 900px; margin: 40px auto; font-size: 1.1em;">
                 <p style="margin: 15px 0;">✓ <strong>Phần 1:</strong> 10 phương pháp đánh giá số cluster tối ưu</p>
                 <p style="margin: 15px 0;">✓ <strong>Phần 2:</strong> Mean-Shift, K-modes, K-prototypes - thuật toán & ứng dụng</p>
                 <p style="margin: 15px 0;">✓ <strong>Phần 3:</strong> Business metrics cho clustering trong thực tế</p>
-                <p style="margin: 15px 0;">✓ <strong>Phần 4:</strong> Kỹ năng Data Science & 6 ứng dụng clustering trong kinh doanh:</p>
+                <p style="margin: 15px 0;">✓ <strong>Phần 4:</strong> Kỹ năng Data Science & 6 ứng dụng clustering:</p>
                 <ul style="margin-left: 40px; font-size: 0.95em;">
                     <li>Customer Segmentation</li>
                     <li>RFM Analysis</li>
