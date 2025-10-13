@@ -224,7 +224,7 @@
         <div class="slide active slide-title">
             <h1>Phân Tích Dữ Liệu</h1>
             <p>Clustering & Kỹ năng Data Science</p>
-            <p style="font-size: 1.2em; margin-top: 30px;">Giảng viên: Phạm Thanh Tùng</p>
+            <p style="font-size: 1.2em; margin-top: 30px;">Giảng viên: [Tên giảng viên]</p>
         </div>
 
         <!-- Slide 2 -->
@@ -246,9 +246,60 @@
             </div>
         </div>
 
-        <!-- Slide 3 -->
+        <!-- Slide 3: Visual comparison -->
         <div class="slide">
-            <h2>2. Phương pháp Elbow Method</h2>
+            <h2>2. So sánh số cluster khác nhau</h2>
+            <div class="content">
+                <h3>Minh họa ảnh hưởng của số cluster</h3>
+                <div class="grid-2" style="margin-top: 20px;">
+                    <div class="card">
+                        <strong>k = 2 (Quá ít)</strong>
+                        <svg width="100%" height="180" style="background: #f8f9fa;">
+                            <circle cx="60" cy="60" r="35" fill="#667eea" opacity="0.3"/>
+                            <circle cx="180" cy="120" r="35" fill="#764ba2" opacity="0.3"/>
+                            <circle cx="50" cy="50" r="4" fill="#667eea"/>
+                            <circle cx="60" cy="70" r="4" fill="#667eea"/>
+                            <circle cx="70" cy="55" r="4" fill="#667eea"/>
+                            <circle cx="170" cy="110" r="4" fill="#764ba2"/>
+                            <circle cx="190" cy="130" r="4" fill="#764ba2"/>
+                            <circle cx="180" cy="115" r="4" fill="#764ba2"/>
+                            <circle cx="120" cy="90" r="4" fill="#667eea"/>
+                            <circle cx="110" cy="100" r="4" fill="#764ba2"/>
+                        </svg>
+                        <p style="font-size: 0.85em; margin-top: 10px;">Mất chi tiết, nhóm quá rộng</p>
+                    </div>
+                    <div class="card">
+                        <strong>k = 8 (Quá nhiều)</strong>
+                        <svg width="100%" height="180" style="background: #f8f9fa;">
+                            <circle cx="40" cy="40" r="20" fill="#667eea" opacity="0.3"/>
+                            <circle cx="90" cy="45" r="20" fill="#764ba2" opacity="0.3"/>
+                            <circle cx="140" cy="50" r="20" fill="#f093fb" opacity="0.3"/>
+                            <circle cx="190" cy="45" r="20" fill="#84fab0" opacity="0.3"/>
+                            <circle cx="60" cy="110" r="20" fill="#ffd89b" opacity="0.3"/>
+                            <circle cx="110" cy="115" r="20" fill="#a8edea" opacity="0.3"/>
+                            <circle cx="160" cy="120" r="20" fill="#fed6e3" opacity="0.3"/>
+                            <circle cx="210" cy="115" r="20" fill="#c1dfc4" opacity="0.3"/>
+                            <circle cx="40" cy="40" r="3" fill="#667eea"/>
+                            <circle cx="90" cy="45" r="3" fill="#764ba2"/>
+                            <circle cx="140" cy="50" r="3" fill="#f093fb"/>
+                            <circle cx="190" cy="45" r="3" fill="#84fab0"/>
+                            <circle cx="60" cy="110" r="3" fill="#ffd89b"/>
+                            <circle cx="110" cy="115" r="3" fill="#a8edea"/>
+                            <circle cx="160" cy="120" r="3" fill="#fed6e3"/>
+                            <circle cx="210" cy="115" r="3" fill="#c1dfc4"/>
+                        </svg>
+                        <p style="font-size: 0.85em; margin-top: 10px;">Overfitting, khó diễn giải</p>
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 20px; background: #e8f5e9;">
+                    <strong>k = 4 (Optimal)</strong> - Cân bằng giữa chi tiết và khả năng diễn giải
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <h2>3. Elbow Method - Lý thuyết</h2>
             <div class="content">
                 <h3>Nguyên lý</h3>
                 <p>Tìm điểm "khuỷu tay" (elbow) trên biểu đồ giữa số cluster và WCSS (Within-Cluster Sum of Squares)</p>
@@ -269,7 +320,123 @@
             </div>
         </div>
 
-        <!-- Slide 4 -->
+        <!-- Slide 5: Elbow visualization -->
+        <div class="slide">
+            <h2>4. Elbow Method - Minh họa</h2>
+            <div class="content">
+                <h3>Biểu đồ Elbow Method</h3>
+                <svg width="100%" height="300" style="background: white; border: 2px solid #ddd; border-radius: 8px;">
+                    <!-- Axes -->
+                    <line x1="50" y1="250" x2="550" y2="250" stroke="#333" stroke-width="2"/>
+                    <line x1="50" y1="250" x2="50" y2="30" stroke="#333" stroke-width="2"/>
+                    
+                    <!-- X-axis labels -->
+                    <text x="100" y="270" font-size="14" text-anchor="middle">1</text>
+                    <text x="175" y="270" font-size="14" text-anchor="middle">2</text>
+                    <text x="250" y="270" font-size="14" text-anchor="middle">3</text>
+                    <text x="325" y="270" font-size="14" text-anchor="middle">4</text>
+                    <text x="400" y="270" font-size="14" text-anchor="middle">5</text>
+                    <text x="475" y="270" font-size="14" text-anchor="middle">6</text>
+                    <text x="300" y="295" font-size="16" text-anchor="middle" font-weight="bold">Số cluster (k)</text>
+                    
+                    <!-- Y-axis label -->
+                    <text x="20" y="140" font-size="16" text-anchor="middle" transform="rotate(-90, 20, 140)" font-weight="bold">WCSS</text>
+                    
+                    <!-- Elbow curve -->
+                    <polyline points="100,80 175,120 250,155 325,175 400,185 475,190" 
+                              fill="none" stroke="#667eea" stroke-width="3"/>
+                    
+                    <!-- Points -->
+                    <circle cx="100" cy="80" r="5" fill="#667eea"/>
+                    <circle cx="175" cy="120" r="5" fill="#667eea"/>
+                    <circle cx="250" cy="155" r="5" fill="#667eea"/>
+                    <circle cx="325" cy="175" r="8" fill="#f5576c" stroke="#fff" stroke-width="2"/>
+                    <circle cx="400" cy="185" r="5" fill="#667eea"/>
+                    <circle cx="475" cy="190" r="5" fill="#667eea"/>
+                    
+                    <!-- Elbow indicator -->
+                    <text x="325" y="155" font-size="14" fill="#f5576c" font-weight="bold">← Elbow</text>
+                    <line x1="325" y1="160" x2="325" y2="170" stroke="#f5576c" stroke-width="2"/>
+                </svg>
+                <div class="note" style="margin-top: 20px;">
+                    <strong>Điểm Elbow tại k=4:</strong> Sau điểm này, giảm WCSS không đáng kể. Chọn k=4 là tối ưu.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <h2>5. Silhouette Score - Lý thuyết</h2>
+            <div class="content">
+                <h3>Định nghĩa</h3>
+                <p>Đo lường mức độ tương đồng của một điểm dữ liệu với cluster của nó so với các cluster khác.</p>
+                
+                <div class="formula">
+                    s(i) = (b(i) - a(i)) / max(a(i), b(i))
+                    <br><br>
+                    a(i): khoảng cách TB từ điểm i đến các điểm khác trong cùng cluster
+                    <br>b(i): khoảng cách TB từ điểm i đến các điểm trong cluster gần nhất
+                    <br><br>
+                    Giá trị: -1 đến 1 (càng cao càng tốt)
+                </div>
+                
+                <h3>Diễn giải giá trị</h3>
+                <ul>
+                    <li><strong>s(i) ≈ 1:</strong> Điểm được phân cụm rất tốt, xa các cluster khác</li>
+                    <li><strong>s(i) ≈ 0:</strong> Điểm nằm giữa 2 cluster</li>
+                    <li><strong>s(i) < 0:</strong> Điểm có thể bị phân cụm sai</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 7: Silhouette visualization -->
+        <div class="slide">
+            <h2>6. Silhouette Score - Minh họa</h2>
+            <div class="content">
+                <h3>Silhouette Plot cho k = 3</h3>
+                <svg width="100%" height="280" style="background: white; border: 2px solid #ddd; border-radius: 8px;">
+                    <!-- Cluster 1 bars -->
+                    <text x="20" y="40" font-size="14" font-weight="bold" fill="#667eea">Cluster 1</text>
+                    <rect x="100" y="25" width="250" height="8" fill="#667eea" opacity="0.8"/>
+                    <rect x="100" y="35" width="270" height="8" fill="#667eea" opacity="0.8"/>
+                    <rect x="100" y="45" width="240" height="8" fill="#667eea" opacity="0.8"/>
+                    <rect x="100" y="55" width="260" height="8" fill="#667eea" opacity="0.8"/>
+                    <rect x="100" y="65" width="255" height="8" fill="#667eea" opacity="0.8"/>
+                    
+                    <!-- Cluster 2 bars -->
+                    <text x="20" y="105" font-size="14" font-weight="bold" fill="#764ba2">Cluster 2</text>
+                    <rect x="100" y="90" width="280" height="8" fill="#764ba2" opacity="0.8"/>
+                    <rect x="100" y="100" width="290" height="8" fill="#764ba2" opacity="0.8"/>
+                    <rect x="100" y="110" width="275" height="8" fill="#764ba2" opacity="0.8"/>
+                    <rect x="100" y="120" width="285" height="8" fill="#764ba2" opacity="0.8"/>
+                    
+                    <!-- Cluster 3 bars -->
+                    <text x="20" y="160" font-size="14" font-weight="bold" fill="#f093fb">Cluster 3</text>
+                    <rect x="100" y="145" width="230" height="8" fill="#f093fb" opacity="0.8"/>
+                    <rect x="100" y="155" width="220" height="8" fill="#f093fb" opacity="0.8"/>
+                    <rect x="100" y="165" width="240" height="8" fill="#f093fb" opacity="0.8"/>
+                    <rect x="100" y="175" width="235" height="8" fill="#f093fb" opacity="0.8"/>
+                    <rect x="100" y="185" width="225" height="8" fill="#f093fb" opacity="0.8"/>
+                    <rect x="100" y="195" width="245" height="8" fill="#f093fb" opacity="0.8"/>
+                    
+                    <!-- Axis -->
+                    <line x1="100" y1="210" x2="400" y2="210" stroke="#333" stroke-width="2"/>
+                    <text x="100" y="230" font-size="12">0</text>
+                    <text x="250" y="230" font-size="12">0.5</text>
+                    <text x="400" y="230" font-size="12">1.0</text>
+                    <text x="250" y="250" font-size="14" text-anchor="middle" font-weight="bold">Silhouette Score</text>
+                    
+                    <!-- Average line -->
+                    <line x1="330" y1="20" x2="330" y2="205" stroke="#f5576c" stroke-width="2" stroke-dasharray="5,5"/>
+                    <text x="335" y="15" font-size="12" fill="#f5576c" font-weight="bold">Avg: 0.68</text>
+                </svg>
+                <div class="note" style="margin-top: 15px;">
+                    <strong>Cluster tốt:</strong> Bars dài và đồng đều. <strong>Cluster 2</strong> có Silhouette cao nhất.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8 -->
         <div class="slide">
             <h2>3. Silhouette Score</h2>
             <div class="content">
@@ -916,115 +1083,252 @@
 
         <!-- Slide 27 -->
         <div class="slide">
-            <div class="section-header">PHẦN 4: KỸ NĂNG DATA SCIENCE TRONG MARKETING</div>
-            <h2>26. Kỹ năng Technical</h2>
+            <div class="section-header">PHẦN 4: KỸ NĂNG DATA SCIENCE & ỨNG DỤNG CLUSTERING</div>
+            <h2>26. Ứng dụng Clustering: Phân khúc khách hàng</h2>
             <div class="content">
-                <h3>1. Programming & Data</h3>
-                <div class="grid-2">
-                    <div class="card">
-                        <strong>Python/R:</strong>
-                        <ul style="font-size: 0.8em;">
-                            <li>Pandas: manipulation</li>
-                            <li>Scikit-learn: ML</li>
-                            <li>Matplotlib: viz</li>
-                            <li>Statsmodels: stats</li>
-                        </ul>
-                    </div>
-                    <div class="card">
-                        <strong>SQL:</strong>
-                        <ul style="font-size: 0.8em;">
-                            <li>Query customer data</li>
-                            <li>Join transactions</li>
-                            <li>Aggregate metrics</li>
-                            <li>Window functions</li>
-                        </ul>
-                    </div>
+                <h3>Customer Segmentation - Bài toán phổ biến nhất</h3>
+                <p>Sử dụng clustering để chia khách hàng thành các nhóm đồng nhất dựa trên hành vi và đặc điểm.</p>
+                
+                <h3>Quy trình thực hiện</h3>
+                <div class="card" style="margin: 15px 0;">
+                    <strong>Bước 1:</strong> Thu thập dữ liệu (demographics, transactions, behavior)
+                    <br><strong>Bước 2:</strong> Feature engineering (RFM, CLV, frequency...)
+                    <br><strong>Bước 3:</strong> Chọn thuật toán (K-means cho numerical, K-prototypes cho mixed)
+                    <br><strong>Bước 4:</strong> Đánh giá cluster (technical + business metrics)
+                    <br><strong>Bước 5:</strong> Profiling từng segment
+                    <br><strong>Bước 6:</strong> Triển khai chiến lược marketing riêng
                 </div>
                 
-                <h3>2. Machine Learning</h3>
+                <h3>Ví dụ segments</h3>
                 <ul>
-                    <li><strong>Clustering:</strong> Phân khúc KH</li>
-                    <li><strong>Classification:</strong> Churn, propensity</li>
-                    <li><strong>Regression:</strong> Demand forecast, pricing</li>
-                    <li><strong>Recommendation:</strong> Product recommendation</li>
+                    <li><strong>VIP:</strong> Chi tiêu cao, trung thành → personalized service</li>
+                    <li><strong>At-risk:</strong> Giảm tương tác → retention campaigns</li>
+                    <li><strong>New:</strong> Mới tham gia → onboarding programs</li>
                 </ul>
             </div>
         </div>
 
         <!-- Slide 28 -->
         <div class="slide">
-            <h2>27. Kỹ năng Business & Analytics</h2>
+            <h2>27. Ứng dụng: RFM Analysis với Clustering</h2>
             <div class="content">
-                <h3>3. Marketing Domain</h3>
-                <div class="card" style="margin: 15px 0;">
-                    <strong>Customer Journey:</strong>
-                    <br>Awareness → Consideration → Purchase → Retention → Advocacy
-                    <br><strong>Metrics:</strong> CTR, Conversion, CAC, LTV, ROAS
+                <h3>RFM Model</h3>
+                <div class="formula">
+                    R (Recency): Bao lâu KH mua gần nhất?
+                    <br>F (Frequency): KH mua bao nhiêu lần?
+                    <br>M (Monetary): KH chi bao nhiêu tiền?
                 </div>
                 
-                <h3>4. A/B Testing</h3>
+                <h3>Kết hợp RFM + Clustering</h3>
                 <ul>
-                    <li>Thiết kế experiments (test/control)</li>
-                    <li>Statistical significance (t-test, chi-square)</li>
-                    <li>Sample size calculation</li>
-                    <li>Đánh giá impact và ROI</li>
+                    <li>Chuẩn hóa 3 metrics RFM (scale 0-1)</li>
+                    <li>Áp dụng K-means hoặc Hierarchical clustering</li>
+                    <li>Xác định số cluster tối ưu (Silhouette, Elbow)</li>
+                    <li>Gắn nhãn business cho từng cluster</li>
                 </ul>
                 
-                <h3>5. Marketing Mix Modeling</h3>
-                <ul>
-                    <li>Attribution: Kênh nào đóng góp nhiều?</li>
-                    <li>Budget optimization</li>
-                    <li>Channel effectiveness</li>
-                </ul>
+                <div class="grid-2" style="margin-top: 15px;">
+                    <div class="card">
+                        <strong>Champions:</strong>
+                        <br>R↑ F↑ M↑
+                        <br>→ Reward programs
+                    </div>
+                    <div class="card">
+                        <strong>Hibernating:</strong>
+                        <br>R↓ F↓ M↓
+                        <br>→ Win-back campaigns
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Slide 29 -->
         <div class="slide">
-            <h2>28. Soft Skills & Tools</h2>
+            <h2>28. Ứng dụng: Product Recommendation</h2>
             <div class="content">
-                <h3>6. Data Storytelling</h3>
+                <h3>Clustering cho Recommendation System</h3>
+                <p>Nhóm sản phẩm hoặc khách hàng tương tự để đề xuất.</p>
+                
+                <h3>Hai hướng tiếp cận</h3>
+                
+                <div class="card" style="margin: 15px 0;">
+                    <strong>1. Item-based Clustering:</strong>
+                    <br>• Cluster sản phẩm theo attributes (category, price, brand)
+                    <br>• KH mua SP A → recommend SP khác trong cùng cluster
+                    <br>• Dùng: K-modes hoặc K-prototypes
+                </div>
+                
+                <div class="card" style="margin: 15px 0;">
+                    <strong>2. User-based Clustering:</strong>
+                    <br>• Cluster KH theo purchase history
+                    <br>• KH trong cùng cluster có preference tương tự
+                    <br>• Recommend SP phổ biến trong cluster
+                </div>
+                
+                <h3>Metrics đánh giá</h3>
                 <ul>
-                    <li><strong>Kể chuyện:</strong> Insights → recommendations → actions</li>
-                    <li><strong>Tools:</strong> Tableau, Power BI, Data Studio</li>
-                    <li><strong>Dashboard:</strong> KPIs rõ, actionable, real-time</li>
-                    <li><strong>Presentation:</strong> Communicate với non-technical</li>
+                    <li>Click-through rate (CTR)</li>
+                    <li>Conversion rate</li>
+                    <li>Average order value (AOV)</li>
                 </ul>
-                
-                <h3>7. Business Acumen</h3>
-                <div class="grid-2" style="margin-top: 15px;">
-                    <div class="card">
-                        <strong>Tư duy:</strong>
-                        <br>• Hiểu mục tiêu business
-                        <br>• Data → actions
-                        <br>• ROI-driven
-                        <br>• Prioritize
-                    </div>
-                    <div class="card">
-                        <strong>Collaboration:</strong>
-                        <br>• Marketing team
-                        <br>• Sales, Product
-                        <br>• Stakeholder mgmt
-                        <br>• Agile/Scrum
-                    </div>
-                </div>
-                
-                <div class="note" style="margin-top: 15px;">
-                    <strong>Kết luận:</strong> Cần cân bằng Technical + Business + Communication
-                </div>
             </div>
         </div>
 
         <!-- Slide 30 -->
+        <div class="slide">
+            <h2>29. Ứng dụng: Churn Prediction & Prevention</h2>
+            <div class="content">
+                <h3>Clustering trong Churn Analysis</h3>
+                <p>Xác định nhóm khách hàng có nguy cơ rời bỏ cao.</p>
+                
+                <h3>Quy trình</h3>
+                <div class="card" style="margin: 15px 0;">
+                    <strong>Bước 1:</strong> Feature engineering
+                    <br>• Engagement metrics: login frequency, session duration
+                    <br>• Transaction: purchase decline, cart abandonment
+                    <br>• Support: ticket count, complaint rate
+                    <br><br>
+                    <strong>Bước 2:</strong> Clustering + Classification
+                    <br>• Cluster KH theo behavior patterns
+                    <br>• Train classification model để predict churn
+                    <br>• Focus resources vào high-risk clusters
+                </div>
+                
+                <h3>Chiến lược Retention theo Cluster</h3>
+                <ul>
+                    <li><strong>Price-sensitive:</strong> Discounts, loyalty points</li>
+                    <li><strong>Service-focused:</strong> Priority support, premium features</li>
+                    <li><strong>Inactive:</strong> Re-engagement emails, special offers</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 31 -->
+        <div class="slide">
+            <h2>30. Ứng dụng: Market Basket Analysis</h2>
+            <div class="content">
+                <h3>Clustering Products theo Co-purchase</h3>
+                <p>Phân tích sản phẩm nào thường được mua cùng nhau.</p>
+                
+                <h3>Kỹ thuật</h3>
+                <ul>
+                    <li><strong>Association Rules:</strong> Apriori, FP-Growth (if A then B)</li>
+                    <li><strong>Clustering:</strong> Nhóm products theo co-occurrence matrix</li>
+                    <li>Similarity measure: Jaccard, Cosine similarity</li>
+                </ul>
+                
+                <div class="card" style="margin: 15px 0;">
+                    <strong>Ví dụ ứng dụng:</strong>
+                    <br>• <strong>Retail:</strong> Store layout optimization (đặt SP liên quan gần nhau)
+                    <br>• <strong>E-commerce:</strong> "Frequently bought together" recommendations
+                    <br>• <strong>Promotion:</strong> Bundle pricing (combo sản phẩm)
+                    <br>• <strong>Inventory:</strong> Stock management (đồng bộ inventory)
+                </div>
+                
+                <h3>Business Impact</h3>
+                <ul>
+                    <li>Tăng average basket size</li>
+                    <li>Cross-selling hiệu quả</li>
+                    <li>Tối ưu shelf space</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 32 -->
+        <div class="slide">
+            <h2>31. Kỹ năng Data Science End-to-End</h2>
+            <div class="content">
+                <h3>Kỹ năng Technical cần thiết</h3>
+                
+                <div class="grid-2">
+                    <div class="card">
+                        <strong>Programming:</strong>
+                        <ul style="font-size: 0.85em;">
+                            <li>Python: Pandas, NumPy, Scikit-learn</li>
+                            <li>R: dplyr, ggplot2, caret</li>
+                            <li>SQL: Query, Join, CTE, Window functions</li>
+                            <li>Git: Version control</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <strong>Machine Learning:</strong>
+                        <ul style="font-size: 0.85em;">
+                            <li>Supervised: Regression, Classification</li>
+                            <li>Unsupervised: Clustering, PCA</li>
+                            <li>Evaluation: Cross-validation, metrics</li>
+                            <li>Hyperparameter tuning</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 20px;">Kỹ năng Business Analytics</h3>
+                <ul>
+                    <li><strong>A/B Testing:</strong> Experimental design, statistical testing</li>
+                    <li><strong>Metrics:</strong> Define & track KPIs (CTR, CAC, LTV, ROAS)</li>
+                    <li><strong>Attribution:</strong> Multi-touch attribution modeling</li>
+                    <li><strong>Forecasting:</strong> Time series, demand prediction</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 33 -->
+        <div class="slide">
+            <h2>32. Data Storytelling & Business Impact</h2>
+            <div class="content">
+                <h3>Soft Skills quan trọng</h3>
+                
+                <div class="card" style="margin: 15px 0;">
+                    <strong>1. Data Storytelling:</strong>
+                    <br>• Chuyển insights thành narrative có ý nghĩa
+                    <br>• Context → Insights → Recommendations → Expected Impact
+                    <br>• Sử dụng visualization hiệu quả (chart types phù hợp)
+                    <br>• Focus vào "So what?" và "What next?"
+                </div>
+                
+                <h3>Visualization & Reporting Tools</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <strong>Dashboards:</strong>
+                        <br>• Tableau, Power BI
+                        <br>• Google Data Studio
+                        <br>• Looker, Metabase
+                    </div>
+                    <div class="card">
+                        <strong>Reporting:</strong>
+                        <br>• Jupyter Notebook
+                        <br>• R Markdown
+                        <br>• Executive summaries
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 20px;">Business Communication</h3>
+                <ul>
+                    <li>Translate technical → business language</li>
+                    <li>Stakeholder management (align expectations)</li>
+                    <li>Present to C-level executives</li>
+                    <li>ROI calculation và business case</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 34 -->
         <div class="slide slide-title">
             <h1>Tổng kết</h1>
-            <div style="text-align: left; max-width: 900px; margin: 40px auto; font-size: 1.2em;">
-                <p style="margin: 20px 0;">✓ <strong>Phần 1:</strong> 10 phương pháp đánh giá số cluster tối ưu</p>
-                <p style="margin: 20px 0;">✓ <strong>Phần 2:</strong> Mean-Shift, K-modes, K-prototypes</p>
-                <p style="margin: 20px 0;">✓ <strong>Phần 3:</strong> Business metrics cho clustering</p>
-                <p style="margin: 20px 0;">✓ <strong>Phần 4:</strong> Kỹ năng Data Science cho Marketing</p>
+            <div style="text-align: left; max-width: 900px; margin: 40px auto; font-size: 1.1em;">
+                <p style="margin: 15px 0;">✓ <strong>Phần 1:</strong> 10 phương pháp đánh giá số cluster tối ưu</p>
+                <p style="margin: 15px 0;">✓ <strong>Phần 2:</strong> Mean-Shift, K-modes, K-prototypes - thuật toán & ứng dụng</p>
+                <p style="margin: 15px 0;">✓ <strong>Phần 3:</strong> Business metrics cho clustering trong thực tế</p>
+                <p style="margin: 15px 0;">✓ <strong>Phần 4:</strong> Kỹ năng Data Science & 6 ứng dụng clustering trong kinh doanh:</p>
+                <ul style="margin-left: 40px; font-size: 0.95em;">
+                    <li>Customer Segmentation</li>
+                    <li>RFM Analysis</li>
+                    <li>Product Recommendation</li>
+                    <li>Churn Prediction</li>
+                    <li>Market Basket Analysis</li>
+                    <li>End-to-end Data Science Skills</li>
+                </ul>
             </div>
-            <p style="font-size: 1.3em; margin-top: 50px;">Cảm ơn các bạn!</p>
+            <p style="font-size: 1.3em; margin-top: 40px;">Cảm ơn các bạn đã theo dõi!</p>
         </div>
 
         <div class="controls">
@@ -1032,7 +1336,7 @@
             <button onclick="nextSlide()">Sau →</button>
         </div>
         
-        <div class="slide-number" id="slideNumber">1 / 30</div>
+        <div class="slide-number" id="slideNumber">1 / 34</div>
     </div>
 
     <script>
