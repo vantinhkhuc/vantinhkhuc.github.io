@@ -562,7 +562,7 @@
 
         
 
-         <!-- Slide 10: CH Index - Lý thuyết -->
+        <!-- Slide 10: CH Index - Lý thuyết -->
         <div class="slide">
             <h2>9. Calinski-Harabasz Index - Lý thuyết</h2>
             <div class="content">
@@ -919,6 +919,49 @@
                     <br>• n càng lớn, BIC penalty càng mạnh → gap giữa BIC và AIC càng lớn
                     <br>• AIC có xu hướng overfitting hơn BIC
                     <br>• BIC consistent: n→∞ thì chọn đúng model (nếu true model trong candidates)
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Dendrogram - Lý thuyết -->
+        <div class="slide">
+            <h2>16. Dendrogram Analysis - Lý thuyết</h2>
+            <div class="content">
+                <h3>Định nghĩa</h3>
+                <p>Dendrogram là biểu đồ cây thể hiện cấu trúc phân cấp (hierarchical structure) của dữ liệu trong Hierarchical Clustering.</p>
+                
+                <h3>Cách hoạt động</h3>
+                <ul>
+                    <li><strong>Bottom-up (Agglomerative):</strong>
+                        <br>• Bắt đầu: mỗi điểm = 1 cluster riêng
+                        <br>• Mỗi bước: merge 2 clusters gần nhất
+                        <br>• Kết thúc: tất cả thành 1 cluster lớn
+                    </li>
+                    <li style="margin-top: 15px;"><strong>Độ cao (height):</strong>
+                        <br>• Biểu thị khoảng cách/dissimilarity khi merge
+                        <br>• Cao = xa = khác biệt nhiều
+                        <br>• Thấp = gần = tương đồng
+                    </li>
+                </ul>
+                
+                <h3>Linkage methods</h3>
+                <div class="grid-2" style="margin-top: 15px;">
+                    <div class="card">
+                        <strong>Single Linkage:</strong>
+                        <br>Khoảng cách giữa điểm gần nhất
+                    </div>
+                    <div class="card">
+                        <strong>Complete Linkage:</strong>
+                        <br>Khoảng cách giữa điểm xa nhất
+                    </div>
+                    <div class="card">
+                        <strong>Average Linkage:</strong>
+                        <br>Trung bình các khoảng cách
+                    </div>
+                    <div class="card">
+                        <strong>Ward's Method:</strong>
+                        <br>Minimize variance khi merge
+                    </div>
                 </div>
             </div>
         </div>
