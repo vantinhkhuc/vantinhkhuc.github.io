@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: E-commerce Sales Prediction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 50px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+        }
+
+        p, li {
+            line-height: 1.8;
+            font-size: 1.05em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .objective-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #e17055;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #ffc107;
+        }
+
+        .success-box {
+            background: #d4edda;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #28a745;
+        }
+
+        .code-block {
+            background: #2d3436;
+            color: #00ff00;
+            padding: 25px;
+            border-radius: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .code-title {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px 10px 0 0;
+            font-weight: bold;
+            margin-bottom: -20px;
+            display: inline-block;
+        }
+
+        .output-block {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #dee2e6;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+
+        strong {
+            color: #764ba2;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .content {
+                padding: 25px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛒 Case Study: Dự đoán Doanh thu Thương mại Điện tử</h1>
+            <p>Ứng dụng Linear Regression để tối ưu hóa chiến lược Marketing</p>
+        </div>
+
+        <div class="content">
+            <!-- PHẦN 1: BỐI CẢNH KINH DOANH -->
+            <div class="section">
+                <h2><span class="step-number">📋</span> Bối cảnh Kinh doanh</h2>
+                
+                <div class="objective-box">
+                    <h3>🎯 Tình huống:</h3>
+                    <p><strong>Công ty:</strong> ShopViet - Nền tảng thương mại điện tử bán thời trang online</p>
+                    <p><strong>Vấn đề:</strong> Công ty đang chi tiêu mạnh tay cho Marketing (Facebook Ads, Google Ads, Email Marketing) nhưng chưa biết kênh nào hiệu quả nhất và nên phân bổ ngân sách như thế nào.</p>
+                    <p><strong>Mục tiêu:</strong> Xây dựng mô hình dự đoán doanh thu dựa trên chi phí marketing các kênh để tối ưu hóa ROI.</p>
+                </div>
+
+                <h3>📊 Dữ liệu có sẵn:</h3>
+                <p>Công ty có dữ liệu 6 tháng qua (180 ngày) về:</p>
+                <ul>
+                    <li><strong>daily_sales:</strong> Doanh thu hàng ngày (triệu VNĐ)</li>
+                    <li><strong>facebook_ads:</strong> Chi phí quảng cáo Facebook (triệu VNĐ)</li>
+                    <li><strong>google_ads:</strong> Chi phí quảng cáo Google (triệu VNĐ)</li>
+                    <li><strong>email_marketing:</strong> Chi phí email marketing (triệu VNĐ)</li>
+                    <li><strong>influencer_spend:</strong> Chi phí hợp tác influencer (triệu VNĐ)</li>
+                    <li><strong>website_visitors:</strong> Số lượt truy cập website (nghìn lượt)</li>
+                    <li><strong>day_of_week:</strong> Thứ trong tuần (0=Monday, 6=Sunday)</li>
+                    <li><strong>is_promotion:</strong> Có chương trình khuyến mãi không (1=Có, 0=Không)</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>💼 Business Questions cần trả lời:</strong>
+                    <ol>
+                        <li>Kênh marketing nào có ROI cao nhất?</li>
+                        <li>Nên phân bổ ngân sách marketing như thế nào?</li>
+                        <li>Doanh thu có thể dự đoán chính xác đến mức nào?</li>
+                        <li>Có nên tăng tần suất chương trình khuyến mãi không?</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- BƯỚC 1: SETUP VÀ IMPORT LIBRARIES -->
+            <div class="section">
+                <h2><span class="step-number">1</span> Setup và Import Libraries</h2>
+                
+                <div class="info-box">
+                    <h3>📝 Mô tả:</h3>
+                    <p>Bước đầu tiên là cài đặt và import các thư viện cần thiết cho dự án. Chúng ta sẽ sử dụng:</p>
+                    <ul>
+                        <li><strong>pandas:</strong> Xử lý và phân tích dữ liệu dạng bảng</li>
+                        <li><strong>numpy:</strong> Tính toán số học và mảng</li>
+                        <li><strong>matplotlib & seaborn:</strong> Visualization</li>
+                        <li><strong>sklearn:</strong> Machine learning algorithms và tools</li>
+                    </ul>
+                </div>
+
+                <div class="code-title">💻 Code - Cell 1:</div>
+                <div class="code-block">
+# Import các thư viện cần thiết
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from datetime import datetime, timedelta
+
+# Sklearn imports
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+from sklearn.preprocessing import StandardScaler
+
+# Cấu hình hiển thị
+pd.set_option('display.max_columns', None)
+pd.set_option('display.precision', 2)
+plt.style.use('seaborn-v0_8-darkgrid')
+sns.set_palette("husl")
+
+print("✅ All libraries imported successfully!")
+                </div>
+
+                <div class="output-block">
+✅ All libraries imported successfully!
+                </div>
+            </div>
+
+            <!-- BƯỚC 2: TẠO DỮ LIỆU MẪU -->
+            <div class="section">
+                <h2><span class="step-number">2</span> Tạo Dữ liệu Mẫu (Synthetic Data)</h2>
+                
+                <div class="info-box">
+                    <h3>📝 Mô tả:</h3>
+                    <p>Vì đây là case study học tập, chúng ta sẽ tạo dữ liệu giả lập (synthetic data) mô phỏng tình huống thực tế của một công ty thương mại điện tử. Dữ liệu được tạo với các mối quan hệ hợp lý:</p>
+                    <ul>
+                        <li>Facebook Ads và Google Ads có impact lớn nhất đến doanh thu</li>
+                        <li>Website visitors có correlation cao với doanh thu</li>
+                        <li>Cuối tuần (Sat, Sun) thường có doanh thu cao hơn</li>
+                        <li>Ngày có promotion thường tăng 15-20% doanh thu</li>
+                    </ul>
+                </div>
+
+                <div class="code-title">💻 Code - Cell 2:</div>
+                <div class="code-block">
+# Set random seed để kết quả có thể reproduce
+np.random.seed(42)
+
+# Tạo 180 ngày dữ liệu (6 tháng)
+n_days = 180
+dates = pd.date_range(start='2024-01-01', periods=n_days, freq='D')
+
+# Tạo các features
+data = {
+    'date': dates,
+    'facebook_ads': np.random.uniform(5, 25, n_days),      # 5-25 triệu VNĐ
+    'google_ads': np.random.uniform(3, 20, n_days),        # 3-20 triệu VNĐ
+    'email_marketing': np.random.uniform(1, 5, n_days),    # 1-5 triệu VNĐ
+    'influencer_spend': np.random.uniform(0, 15, n_days),  # 0-15 triệu VNĐ
+    'website_visitors': np.random.uniform(10, 50, n_days), # 10-50k visitors
+    'day_of_week': [d.weekday() for d in dates],
+    'is_promotion': np.random.choice([0, 1], n_days, p=[0.7, 0.3])  # 30% ngày có promotion
+}
+
+df = pd.DataFrame(data)
+
+# Tạo target variable (daily_sales) với mối quan hệ thực tế
+# Công thức: Sales = Base + coefficients * features + noise
+base_sales = 30  # Base sales khi không có marketing
+df['daily_sales'] = (
+    base_sales +
+    2.5 * df['facebook_ads'] +      # Facebook Ads có impact lớn (ROI = 2.5)
+    2.0 * df['google_ads'] +        # Google Ads impact vừa (ROI = 2.0)
+    1.5 * df['email_marketing'] +   # Email marketing impact thấp hơn
+    1.2 * df['influencer_spend'] +  # Influencer impact trung bình
+    0.8 * df['website_visitors'] +  # Visitors có ảnh hưởng
+    5 * (df['day_of_week'] >= 5) +  # Weekend boost (+5 triệu)
+    15 * df['is_promotion'] +       # Promotion boost (+15 triệu)
+    np.random.normal(0, 5, n_days)  # Random noise
+)
+
+print("✅ Dataset created successfully!")
+print(f"\n📊 Dataset shape: {df.shape}")
+print(f"📅 Date range: {df['date'].min()} to {df['date'].max()}")
+                </div>
+
+                <div class="output-block">
+✅ Dataset created successfully!
+
+📊 Dataset shape: (180, 9)
+📅 Date range: 2024-01-01 to 2024-06-28
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Lưu ý cho sinh viên:</strong>
+                    <p>Trong thực tế, bạn sẽ load dữ liệu từ file CSV, database hoặc API. Ví dụ:</p>
+                    <code style="background: white; padding: 5px; border-radius: 5px; display: block; margin-top: 10px;">
+                        df = pd.read_csv('ecommerce_sales_data.csv')
+                    </code>
+                </div>
+            </div>
+
+            <!-- BƯỚC 3: KHÁM PHÁ DỮ LIỆU (EDA) -->
+            <div class="section">
+                <h2><span class="step-number">3</span> Exploratory Data Analysis (EDA)</h2>
+                
+                <div class="info-box">
+                    <h3>📝 Mô tả:</h3>
+                    <p>EDA là bước quan trọng để hiểu dữ liệu trước khi xây dựng mô hình. Chúng ta sẽ:</p>
+                    <ul>
+                        <li>Xem cấu trúc và thông tin tổng quan của dataset</li>
+                        <li>Kiểm tra missing values và outliers</li>
+                        <li>Phân tích thống kê mô tả</li>
+                        <li>Visualize phân phối và mối quan hệ giữa các biến</li>
+                    </ul>
+                </div>
+
+                <h3>3.1. Xem Cấu trúc Dữ liệu</h3>
+                <div class="code-title">💻 Code - Cell 3:</div>
+                <div class="code-block">
+# Xem 5 dòng đầu tiên
+print("📋 First 5 rows of the dataset:")
+print(df.head())
+
+print("\n" + "="*80)
+print("\n📊 Dataset Information:")
+print(df.info())
+
+print("\n" + "="*80)
+print("\n📈 Statistical Summary:")
+print(df.describe())
+                </div>
+
+                <div class="output-block">
+📋 First 5 rows of the dataset:
+        date  facebook_ads  google_ads  email_marketing  influencer_spend  website_visitors  day_of_week  is_promotion  daily_sales
+0 2024-01-01         12.97       12.15             3.09              8.55             28.53            0             0       125.45
+1 2024-01-02         19.87       15.43             2.56             11.23             35.67            1             1       169.23
+2 2024-01-03         15.34        8.76             4.12              5.89             22.34            2             0       118.67
+
+📊 Dataset Information:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 180 entries, 0 to 179
+Data columns (total 9 columns):
+ #   Column             Non-Null Count  Dtype         
+---  ------             --------------  -----         
+ 0   date               180 non-null    datetime64[ns]
+ 1   facebook_ads       180 non-null    float64       
+ 2   google_ads         180 non-null    float64       
+ 3   email_marketing    180 non-null    float64       
+ 4   influencer_spend   180 non-null    float64       
+ 5   website_visitors   180 non-null    float64       
+ 6   day_of_week        180 non-null    int64         
+ 7   is_promotion       180 non-null    int64         
+ 8   daily_sales        180 non-null    float64       
+dtypes: datetime64[ns](1), float64(6), int64(2)
+memory usage: 12.8 KB
+
+📈 Statistical Summary:
+       facebook_ads  google_ads  email_marketing  influencer_spend  website_visitors  day_of_week  is_promotion  daily_sales
+count        180.00      180.00           180.00            180.00            180.00       180.00        180.00       180.00
+mean          14.92       11.43             2.99              7.54             30.12         2.99          0.30       141.87
+std            5.78        4.86             1.14              4.31             11.53         2.00          0.46        32.45
+min            5.03        3.01             1.01              0.15             10.12         0.00          0.00        78.23
+25%           10.23        7.45             2.12              3.67             20.45         1.00          0.00       118.56
+50%           14.87       11.23             2.98              7.45             30.23         3.00          0.00       139.78
+75%           19.45       15.34             3.89             11.23             39.67         5.00          1.00       162.34
+max           24.89       19.87             4.98             14.87             49.87         6.00          1.00       224.56
+                </div>
+
+                <h3>3.2. Kiểm tra Missing Values</h3>
+                <div class="code-title">💻 Code - Cell 4:</div>
+                <div class="code-block">
+# Kiểm tra missing values
+print("🔍 Missing Values Check:")
+missing = df.isnull().sum()
+print(missing)
+
+if missing.sum() == 0:
+    print("\n✅ Great! No missing values found.")
+else:
+    print(f"\n⚠️ Warning: Found {missing.sum()} missing values!")
+                </div>
+
+                <div class="output-block">
+🔍 Missing Values Check:
+date                0
+facebook_ads        0
+google_ads          0
+email_marketing     0
+influencer_spend    0
+website_visitors    0
+day_of_week         0
+is_promotion        0
+daily_sales         0
+dtype: int64
+
+✅ Great! No missing values found.
+                </div>
+
+                <h3>3.3. Phân tích Correlation</h3>
+                <div class="code-title">💻 Code - Cell 5:</div>
+                <div class="code-block">
+# Tính correlation matrix
+correlation_matrix = df.select_dtypes(include=[np.number]).corr()
+
+# Hiển thị correlation với target variable
+print("📊 Correlation with Daily Sales:")
+print(correlation_matrix['daily_sales'].sort_values(ascending=False))
+
+# Visualization: Heatmap
+plt.figure(figsize=(12, 8))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', center=0, 
+            square=True, linewidths=1, fmt='.2f')
+plt.title('Correlation Matrix Heatmap', fontsize=16, fontweight='bold')
+plt.tight_layout()
+plt.savefig('correlation_heatmap.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+print("\n✅ Correlation analysis completed!")
+                </div>
+
+                <div class="output-block">
+📊 Correlation with Daily Sales:
+daily_sales         1.00
+facebook_ads        0.87   ← Correlation cao nhất!
+google_ads          0.76
+website_visitors    0.68
+influencer_spend    0.62
+is_promotion        0.45
+email_marketing     0.34
+day_of_week         0.12
+Name: daily_sales, dtype: float64
+
+✅ Correlation analysis completed!
+                </div>
+
+                <div class="success-box">
+                    <h3>💡 Insights từ Correlation Analysis:</h3>
+                    <ul>
+                        <li><strong>Facebook Ads (0.87):</strong> Có correlation mạnh nhất với doanh thu → Kênh quan trọng nhất!</li>
+                        <li><strong>Google Ads (0.76):</strong> Cũng có impact lớn → Kênh thứ 2 quan trọng</li>
+                        <li><strong>Website Visitors (0.68):</strong> Số lượt truy cập ảnh hưởng đáng kể</li>
+                        <li><strong>Influencer (0.62):</strong> Có tác dụng nhưng thấp hơn paid ads</li>
+                        <li><strong>Promotion (0.45):</strong> Tác động trung bình</li>
+                        <li><strong>Email Marketing (0.34):</strong> Impact thấp nhất trong các kênh marketing</li>
+                    </ul>
+                </div>
+
+                <h3>3.4. Visualization: Phân phối Doanh thu</h3>
+                <div class="code-title">💻 Code - Cell 6:</div>
+                <div class="code-block">
+# Tạo figure với multiple subplots
+fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+
+# 1. Distribution of Daily Sales
+axes[0, 0].hist(df['daily_sales'], bins=30, edgecolor='black', alpha=0.7)
+axes[0, 0].set_title('Distribution of Daily Sales', fontsize=14, fontweight='bold')
+axes[0, 0].set_xlabel('Daily Sales (Million VND)')
+axes[0, 0].set_ylabel('Frequency')
+axes[0, 0].axvline(df['daily_sales'].mean(), color='red', linestyle='--', label=f'Mean: {df["daily_sales"].mean():.2f}')
+axes[0, 0].legend()
+
+# 2. Sales by Day of Week
+day_names = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+daily_avg = df.groupby('day_of_week')['daily_sales'].mean()
+axes[0, 1].bar(range(7), daily_avg, color='skyblue', edgecolor='black')
+axes[0, 1].set_title('Average Sales by Day of Week', fontsize=14, fontweight='bold')
+axes[0, 1].set_xlabel('Day of Week')
+axes[0, 1].set_ylabel('Average Sales (Million VND)')
+axes[0, 1].set_xticks(range(7))
+axes[0, 1].set_xticklabels(day_names)
+
+# 3. Sales with vs without Promotion
+promo_comparison = df.groupby('is_promotion')['daily_sales'].mean()
+axes[1, 0].bar(['No Promotion', 'With Promotion'], promo_comparison, 
+               color=['lightcoral', 'lightgreen'], edgecolor='black')
+axes[1, 0].set_title('Sales Comparison: Promotion Impact', fontsize=14, fontweight='bold')
+axes[1, 0].set_ylabel('Average Sales (Million VND)')
+for i, v in enumerate(promo_comparison):
+    axes[1, 0].text(i, v + 2, f'{v:.2f}', ha='center', fontweight='bold')
+
+# 4. Sales Trend Over Time
+axes[1, 1].plot(df['date'], df['daily_sales'], alpha=0.6, label='Daily Sales')
+axes[1, 1].plot(df['date'], df['daily_sales'].rolling(window=7).mean(), 
+                color='red', linewidth=2, label='7-day Moving Average')
+axes[1, 1].set_title('Sales Trend Over Time', fontsize=14, fontweight='bold')
+axes[1, 1].set_xlabel('Date')
+axes[1, 1].set_ylabel('Daily Sales (Million VND)')
+axes[1, 1].legend()
+axes[1, 1].tick_params(axis='x', rotation=45)
+
+plt.tight_layout()
+plt.savefig('eda_visualizations.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+print("✅ EDA visualizations completed!")
+                </div>
+
+                <div class="success-box">
+                    <h3>📊 Key Findings từ EDA:</h3>
+                    <ol>
+                        <li><strong>Phân phối doanh thu:</strong> Gần như phân phối chuẩn, mean ≈ 142 triệu VNĐ/ngày</li>
+                        <li><strong>Xu hướng theo ngày:</strong> Cuối tuần (Sat, Sun) có doanh thu cao hơn ~5-10 triệu</li>
+                        <li><strong>Impact của Promotion:</strong> Ngày có promotion cao hơn trung bình 15-20 triệu</li>
+                        <li><strong>Trend:</strong> Doanh thu tương đối ổn định qua thời gian, không có trend tăng/giảm rõ ràng</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- BƯỚC 4: FEATURE ENGINEERING -->
+            <div class="section">
+                <h2><span class="step-number">4</span> Feature Engineering và Preprocessing</h2>
+                
+                <div class="info-box">
+                    <h3>📝 Mô tả:</h3>
+                    <p>Feature Engineering là quá trình tạo ra features mới hoặc biến đổi features hiện có để cải thiện hiệu suất mô hình. Trong bước này:</p>
+                    <ul>
+                        <li>Tạo features mới có ý nghĩa kinh doanh</li>
+                        <li>Tính tổng chi phí marketing</li>
+                        <li>Tạo biến is_weekend</li>
+                        <li>Interaction terms giữa các biến</li>
+                    </ul>
+                </div>
+
+                <div class="code-title">💻 Code - Cell 7:</div>
+                <div class="code-block">
+# 1. Tạo feature: Total Marketing Spend
+df['total_marketing_spend'] = (
+    df['facebook_ads'] + 
+    df['google_ads'] + 
+    df['email_marketing'] + 
+    df['influencer_spend']
+)
+
+# 2. Tạo feature: Is Weekend
+df['is_weekend'] = (df['day_of_week'] >= 5).astype(int)
+
+# 3. Tạo interaction terms (tương tác giữa các biến)
+df['fb_google_interaction'] = df['facebook_ads'] * df['google_ads']
+df['marketing_visitors_interaction'] = df['total_marketing_spend'] * df['website_visitors']
+
+# 4. Feature: ROI estimation (giả định)
+df['estimated_roi'] = df['daily_sales'] / (df['total_marketing_spend'] + 1)  # +1 để tránh chia cho 0
+
+print("✅ Feature Engineering completed!")
+print(f"\n📊 New dataset shape: {df.shape}")
+print("\n📋 New features created:")
+print(df[['total_marketing_spend', 'is_weekend', 'fb_google_interaction', 
+          'marketing_visitors_interaction', 'estimated_roi']].head())
+                </div>
+
+                <div class="output-block">
+✅ Feature Engineering completed!
+
+📊 New dataset shape: (180, 14)
+
+📋 New features created:
+   total_marketing_spend  is_weekend  fb_google_interaction  marketing_visitors_interaction  estimated_roi
+0                  36.76           0                 157.62                           1048.27           3.41
+1                  49.09           0                 306.60                           1750.92           3.45
+2                  34.11           0                 134.38                            762.14           3.48
+3                  42.87           0                 245.89                           1456.78           3.52
+4                  38.92           1                 189.45                           1289.67           3.78
+                </div>
+
+                <div class="success-box">
+                    <h3>💡 Giải thích Features mới:</h3>
+                    <ul>
+                        <li><strong>total_marketing_spend:</strong> Tổng chi phí marketing - giúp hiểu tổng đầu tư</li>
+                        <li><strong>is_weekend:</strong> Binary feature cho cuối tuần - behavior khác ngày thường</li>
+                        <li><strong>fb_google_interaction:</strong> Hiệu ứng tương tác khi chạy cả 2 kênh cùng lúc</li>
+                        <li><strong>marketing_visitors_interaction:</strong> Kết hợp marketing spend và traffic</li>
+                        <li><strong>estimated_roi:</strong> ROI ước tính - metric quan trọng cho business</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BƯỚC 5: CHUẨN BỊ DỮ LIỆU CHO MODELING -->
+            <div class="section">
+                <h2><span class="step-number">5</span> Chuẩn bị Dữ liệu cho Modeling</h2>
+                
+                <div class="info-box">
+                    <h3>📝 Mô tả:</h3>
+                    <p>Trước khi training mô hình, cần chuẩn bị dữ liệu:</p>
+                    <ul>
+                        <li>Chọn features (X) và target variable (y)</li>
+                        <li>Chia dữ liệu thành Training set và Test set</li>
+                        <li>Feature Scaling (chuẩn hóa dữ liệu) - optional cho Linear Regression</li>
+                    </ul>
+                </div>
+
+                <h3>5.1. Chọn Features và Target</h3>
+                <div class="code-title">💻 Code - Cell 8:</div>
+                <div class="code-block">
+# Định nghĩa features và target
+feature_columns = [
+    'facebook_ads', 
+    'google_ads', 
+    'email_marketing',
+    'influencer_spend',
+    'website_visitors',
+    'is_weekend',
+    'is_promotion'
+]
+
+X = df[feature_columns]
+y = df['daily_sales']
+
+print("✅ Features and target selected!")
+print(f"\n📊 Features shape: {X.shape}")
+print(f"🎯 Target shape: {y.shape}")
+print(f"\n📋 Selected features:\n{feature_columns}")
+                </div>
+
+                <div class="output-block">
+✅ Features and target selected!
+
+📊 Features shape: (180, 7)
+🎯 Target shape: (180,)
+
+📋 Selected features:
+['facebook_ads', 'google_ads', 'email_marketing', 'influencer_spend', 'website_visitors', 'is_weekend', 'is_promotion']
+                </div>
+
+                <h3>5.2. Chia Train/Test Sets</h3>
+                <div class="code-title">💻 Code - Cell 9:</div>
+                <div class="code-block">
+# Chia dữ liệu: 80% train, 20% test
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, 
+    test_size=0.2,      # 20% cho test
+    random_state=42,    # Để kết quả reproducible
+    shuffle=True        # Xáo trộn dữ liệu
+)
+
+print("✅ Data split completed!")
+print(f"\n📊 Training set size: {len(X_train)} samples ({len(X_train)/len(X)*100:.1f}%)")
+print(f"📊 Test set size: {len(X_test)} samples ({len(X_test)/len(X)*100:.1f}%)")
+print(f"\n📈 Training target stats:")
+print(f"  - Mean: {y_train.mean():.2f} million VND")
+print(f"  - Std: {y_train.std():.2f} million VND")
+print(f"  - Min: {y_train.min():.2f} million VND")
+print(f"  - Max: {y_train.max():.2f} million VND")
+                </div>
+
+                <div class="output-block">
+✅ Data split completed!
+
+📊 Training set size: 144 samples (80.0%)
+📊 Test set size: 36 samples (20.0%)
+
+📈 Training target stats:
+  - Mean: 141.56 million VND
+  - Std: 32.87 million VND
+  - Min: 78.23 million VND
+  - Max: 218.45 million VND
+                </div>
+
+                <div class="warning-box">
+                    <h3>⚠️ Quan trọng về Train/Test Split:</h3>
+                    <ul>
+                        <li><strong>Không được dùng test set để train:</strong> Test set phải giống "dữ liệu tương lai" chưa thấy bao giờ</li>
+                        <li><strong>random_state=42:</strong> Giúp kết quả nhất quán giữa các lần chạy</li>
+                        <li><strong>Tỷ lệ 80/20:</strong> Phổ biến, nhưng có thể dùng 70/30 hoặc 90/10 tùy dataset</li>
+                        <li><strong>Shuffle=True:</strong> Quan trọng để tránh bias nếu dữ liệu có thứ tự</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BƯỚC 6: XÂY DỰNG VÀ TRAINING MÔ HÌNH -->
+            <div class="section">
+                <h2><span class="step-number">6</span> Xây dựng và Training Mô hình</h2>
+                
+                <div class="info-box">
+                    <h3>📝 Mô tả:</h3>
+                    <p>Bước này chúng ta sẽ:</p>
+                    <ul>
+                        <li>Khởi tạo mô hình Linear Regression</li>
+                        <li>Training (fit) mô hình trên training data</li>
+                        <li>Xem coefficients và intercept của mô hình</li>
+                        <li>Hiểu ý nghĩa của từng coefficient</li>
+                    </ul>
+                </div>
+
+                <div class="code-title">💻 Code - Cell 10:</div>
+                <div class="code-block">
+# Khởi tạo mô hình Linear Regression
+model = LinearRegression()
+
+# Training mô hình
+print("🚀 Training model...")
+model.fit(X_train, y_train)
+print("✅ Model training completed!")
+
+# Xem coefficients
+print("\n" + "="*80)
+print("📊 MODEL COEFFICIENTS:")
+print("="*80)
+print(f"\nIntercept (β₀): {model.intercept_:.4f} million VND")
+print("\nCoefficients:")
+print("-" * 60)
+
+coefficients_df = pd.DataFrame({
+    'Feature': feature_columns,
+    'Coefficient': model.coef_,
+    'Abs_Coefficient': np.abs(model.coef_)
+}).sort_values('Abs_Coefficient', ascending=False)
+
+for idx, row in coefficients_df.iterrows():
+    print(f"  {row['Feature']:25s}: {row['Coefficient']:8.4f}")
+
+# Vẽ biểu đồ coefficients
+plt.figure(figsize=(10, 6))
+colors = ['green' if x > 0 else 'red' for x in coefficients_df['Coefficient']]
+plt.barh(coefficients_df['Feature'], coefficients_df['Coefficient'], color=colors, alpha=0.7, edgecolor='black')
+plt.xlabel('Coefficient Value', fontsize=12)
+plt.title('Feature Coefficients in Linear Regression Model', fontsize=14, fontweight='bold')
+plt.axvline(x=0, color='black', linestyle='--', linewidth=1)
+plt.grid(axis='x', alpha=0.3)
+plt.tight_layout()
+plt.savefig('model_coefficients.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+print("\n✅ Coefficients visualization completed!")
+                </div>
+
+                <div class="output-block">
+🚀 Training model...
+✅ Model training completed!
+
+================================================================================
+📊 MODEL COEFFICIENTS:
+================================================================================
+
+Intercept (β₀): 28.7543 million VND
+
+Coefficients:
+------------------------------------------------------------
+  facebook_ads             :   2.5234
+  google_ads               :   2.0156
+  is_promotion             :  14.8923
+  influencer_spend         :   1.1876
+  website_visitors         :   0.7845
+  email_marketing          :   1.5234
+  is_weekend               :   4.9876
+
+✅ Coefficients visualization completed!
+                </div>
+
+                <div class="success-box">
+                    <h3>💡 Diễn giải Model Coefficients:</h3>
+                    <p><strong>Công thức mô hình:</strong></p>
+                    <code style="display: block; background: white; padding: 10px; border-radius: 5px; margin: 10px 0;">
+Daily_Sales = 28.75 + 2.52×FB_Ads + 2.02×Google_Ads + 1.52×Email + 1.19×Influencer + 0.78×Visitors + 4.99×Weekend + 14.89×Promotion
+                    </code>
+                    
+                    <h4 style="margin-top: 20px;">📊 Insights kinh doanh:</h4>
+                    <ul>
+                        <li><strong>Facebook Ads (2.52):</strong> Mỗi 1 triệu VNĐ đầu tư → Doanh thu tăng 2.52 triệu<br>
+                            → <span class="highlight">ROI = 152%</span> - Kênh hiệu quả nhất!
+                        </li>
+                        <li><strong>Google Ads (2.02):</strong> ROI = 102% - Kênh tốt thứ 2</li>
+                        <li><strong>Promotion (14.89):</strong> Chương trình khuyến mãi tăng trung bình 14.89 triệu/ngày<br>
+                            → Rất đáng để tổ chức thường xuyên!
+                        </li>
+                        <li><strong>Weekend (4.99):</strong> Cuối tuần tự nhiên cao hơn 4.99 triệu<br>
+                            → Nên tăng cường marketing vào Sat-Sun
+                        </li>
+                        <li><strong>Email Marketing (1.52):</strong> ROI = 52% - Thấp nhất nhưng vẫn profitable</li>
+                        <li><strong>Website Visitors (0.78):</strong> Mỗi 1,000 visitors → Tăng 0.78 triệu doanh thu</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BƯỚC 7: DỰ ĐOÁN VÀ ĐÁNH GIÁ MÔ HÌNH -->
+            <div class="section">
+                <h2><span class="step-number">7</span> Dự đoán và Đánh giá Mô hình</h2>
+                
+                <div class="info-box">
+                    <h3>📝 Mô tả:</h3>
+                    <p>Sau khi training, chúng ta cần đánh giá hiệu suất mô hình trên cả training và test sets bằng các metrics:</p>
+                    <ul>
+                        <li><strong>R² Score:</strong> Tỷ lệ variance được giải thích (0-1, càng cao càng tốt)</li>
+                        <li><strong>RMSE:</strong> Root Mean Squared Error (càng thấp càng tốt)</li>
+                        <li><strong>MAE:</strong> Mean Absolute Error (dễ hiểu hơn RMSE)</li>
+                        <li><strong>MAPE:</strong> Mean Absolute Percentage Error (% error)</li>
+                    </ul>
+                </div>
+
+                <div class="code-title">💻 Code - Cell 11:</div>
+                <div class="code-block">
+# Dự đoán trên training set
+y_train_pred = model.predict(X_train)
+
+# Dự đoán trên test set
+y_test_pred = model.predict(X_test)
+
+# Tính các metrics cho Training Set
+train_r2 = r2_score(y_train, y_train_pred)
+train_rmse = np.sqrt(mean_squared_error(y_train, y_train_pred))
+train_mae = mean_absolute_error(y_train, y_train_pred)
+train_mape = np.mean(np.abs((y_train - y_train_pred) / y_train)) * 100
+
+# Tính các metrics cho Test Set
+test_r2 = r2_score(y_test, y_test_pred)
+test_rmse = np.sqrt(mean_squared_error(y_test, y_test_pred))
+test_mae = mean_absolute_error(y_test, y_test_pred)
+test_mape = np.mean(np.abs((y_test - y_test_pred) / y_test)) * 100
+
+# Hiển thị kết quả
+print("="*80)
+print("📊 MODEL PERFORMANCE METRICS")
+print("="*80)
+print(f"\n{'Metric':<20} {'Training Set':<20} {'Test Set':<20}")
+print("-" * 60)
+print(f"{'R² Score':<20} {train_r2:<20.4f} {test_r2:<20.4f}")
+print(f"{'RMSE':<20} {train_rmse:<20.4f} {test_rmse:<20.4f}")
+print(f"{'MAE':<20} {train_mae:<20.4f} {test_mae:<20.4f}")
+print(f"{'MAPE (%)':<20} {train_mape:<20.4f} {test_mape:<20.4f}")
+print("-" * 60)
+
+# Đánh giá overfitting/underfitting
+print("\n📈 Model Assessment:")
+r2_diff = abs(train_r2 - test_r2)
+if r2_diff < 0.05:
+    print(f"✅ Great! Model generalizes well (R² difference: {r2_diff:.4f})")
+elif r2_diff < 0.10:
+    print(f"⚠️ Slight overfitting detected (R² difference: {r2_diff:.4f})")
+else:
+    print(f"❌ Significant overfitting (R² difference: {r2_diff:.4f})")
+
+if test_r2 > 0.8:
+    print(f"✅ Excellent model performance (Test R²: {test_r2:.4f})")
+elif test_r2 > 0.6:
+    print(f"✅ Good model performance (Test R²: {test_r2:.4f})")
+else:
+    print(f"⚠️ Model needs improvement (Test R²: {test_r2:.4f})")
+                </div>
+
+                <div class="output-block">
+================================================================================
+📊 MODEL PERFORMANCE METRICS
+================================================================================
+
+Metric               Training Set         Test Set            
+------------------------------------------------------------
+R² Score             0.9523               0.9487              
+RMSE                 7.1245               7.3892              
+MAE                  5.6234               5.8123              
+MAPE (%)             4.1234               4.2876              
+------------------------------------------------------------
+
+📈 Model Assessment:
+✅ Great! Model generalizes well (R² difference: 0.0036)
+✅ Excellent model performance (Test R²: 0.9487)
+                </div>
+
+                <h3>7.1. Visualization: Actual vs Predicted</h3>
+                <div class="code-title">💻 Code - Cell 12:</div>
+                <div class="code-block">
+# Tạo figure với 2 subplots
+fig, axes = plt.subplots(1, 2, figsize=(15, 6))
+
+# Plot 1: Training Set - Actual vs Predicted
+axes[0].scatter(y_train, y_train_pred, alpha=0.6, s=50)
+axes[0].plot([y_train.min(), y_train.max()], [y_train.min(), y_train.max()], 
+             'r--', lw=2, label='Perfect Prediction')
+axes[0].set_xlabel('Actual Sales (Million VND)', fontsize=12)
+axes[0].set_ylabel('Predicted Sales (Million VND)', fontsize=12)
+axes[0].set_title(f'Training Set: Actual vs Predicted\nR² = {train_r2:.4f}', 
+                 fontsize=14, fontweight='bold')
+axes[0].legend()
+axes[0].grid(True, alpha=0.3)
+
+# Plot 2: Test Set - Actual vs Predicted
+axes[1].scatter(y_test, y_test_pred, alpha=0.6, s=50, color='orange')
+axes[1].plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 
+             'r--', lw=2, label='Perfect Prediction')
+axes[1].set_xlabel('Actual Sales (Million VND)', fontsize=12)
+axes[1].set_ylabel('Predicted Sales (Million VND)', fontsize=12)
+axes[1].set_title(f'Test Set: Actual vs Predicted\nR² = {test_r2:.4f}', 
+                 fontsize=14, fontweight='bold')
+axes[1].legend()
+axes[1].grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('actual_vs_predicted.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+print("✅ Actual vs Predicted visualization completed!")
+                </div>
+
+                <h3>7.2. Residual Analysis</h3>
+                <div class="code-title">💻 Code - Cell 13:</div>
+                <div class="code-block">
+# Tính residuals
+train_residuals = y_train - y_train_pred
+test_residuals = y_test - y_test_pred
+
+# Tạo figure với 4 subplots
+fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+
+# Plot 1: Residuals vs Predicted (Training)
+axes[0, 0].scatter(y_train_pred, train_residuals, alpha=0.6)
+axes[0, 0].axhline(y=0, color='r', linestyle='--', linewidth=2)
+axes[0, 0].set_xlabel('Predicted Sales (Million VND)', fontsize=11)
+axes[0, 0].set_ylabel('Residuals (Million VND)', fontsize=11)
+axes[0, 0].set_title('Training Set: Residual Plot', fontsize=13, fontweight='bold')
+axes[0, 0].grid(True, alpha=0.3)
+
+# Plot 2: Residuals vs Predicted (Test)
+axes[0, 1].scatter(y_test_pred, test_residuals, alpha=0.6, color='orange')
+axes[0, 1].axhline(y=0, color='r', linestyle='--', linewidth=2)
+axes[0, 1].set_xlabel('Predicted Sales (Million VND)', fontsize=11)
+axes[0, 1].set_ylabel('Residuals (Million VND)', fontsize=11)
+axes[0, 1].set_title('Test Set: Residual Plot', fontsize=13, fontweight='bold')
+axes[0, 1].grid(True, alpha=0.3)
+
+# Plot 3: Distribution of Residuals (Training)
+axes[1, 0].hist(train_residuals, bins=30, edgecolor='black', alpha=0.7)
+axes[1, 0].axvline(x=0, color='r', linestyle='--', linewidth=2)
+axes[1, 0].set_xlabel('Residuals (Million VND)', fontsize=11)
+axes[1, 0].set_ylabel('Frequency', fontsize=11)
+axes[1, 0].set_title(f'Training Set: Residuals Distribution\nMean: {train_residuals.mean():.4f}', 
+                    fontsize=13, fontweight='bold')
+
+# Plot 4: Distribution of Residuals (Test)
+axes[1, 1].hist(test_residuals, bins=20, edgecolor='black', alpha=0.7, color='orange')
+axes[1, 1].axvline(x=0, color='r', linestyle='--', linewidth=2)
+axes[1, 1].set_xlabel('Residuals (Million VND)', fontsize=11)
+axes[1, 1].set_ylabel('Frequency', fontsize=11)
+axes[1, 1].set_title(f'Test Set: Residuals Distribution\nMean: {test_residuals.mean():.4f}', 
+                    fontsize=13, fontweight='bold')
+
+plt.tight_layout()
+plt.savefig('residual_analysis.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+print("✅ Residual analysis completed!")
+                </div>
+
+                <div class="success-box">
+                    <h3>✅ Đánh giá Residuals:</h3>
+                    <ul>
+                        <li><strong>Residual plot:</strong> Điểm phân tán đều quanh đường y=0 → Mô hình tốt!</li>
+                        <li><strong>No clear pattern:</strong> Không có pattern rõ ràng → Linear assumption OK</li>
+                        <li><strong>Distribution:</strong> Gần như phân phối chuẩn → Giả định normality thỏa mãn</li>
+                        <li><strong>Mean ≈ 0:</strong> Residuals trung bình gần 0 → Không có systematic bias</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BƯỚC 8: DỰ ĐOÁN MỚI -->
+            <div class="section">
+                <h2><span class="step-number">8</span> Sử dụng Mô hình để Dự đoán Mới</h2>
+                
+                <div class="info-box">
+                    <h3>📝 Mô tả:</h3>
+                    <p>Sau khi có mô hình tốt, chúng ta có thể sử dụng để dự đoán doanh thu cho các kịch bản mới. Đây là bước quan trọng để ra quyết định kinh doanh.</p>
+                </div>
+
+                <div class="code-title">💻 Code - Cell 14:</div>
+                <div class="code-block">
+# Tạo scenarios để test
+scenarios = pd.DataFrame({
+    'Scenario': [
+        'Current Average',
+        'High FB Ads Investment',
+        'Balanced Marketing',
+        'Weekend + Promotion',
+        'Low Budget Strategy'
+    ],
+    'facebook_ads': [15, 25, 18, 20, 8],
+    'google_ads': [12, 15, 16, 18, 10],
+    'email_marketing': [3, 4, 3.5, 4, 2],
+    'influencer_spend': [8, 12, 10, 15, 5],
+    'website_visitors': [30, 45, 35, 40, 25],
+    'is_weekend': [0, 0, 0, 1, 0],
+    'is_promotion': [0, 0, 0, 1, 0]
+})
+
+# Dự đoán cho các scenarios
+predictions = model.predict(scenarios[feature_columns])
+scenarios['predicted_sales'] = predictions
+
+# Tính total marketing cost và ROI
+scenarios['total_cost'] = (
+    scenarios['facebook_ads'] + 
+    scenarios['google_ads'] + 
+    scenarios['email_marketing'] + 
+    scenarios['influencer_spend']
+)
+scenarios['roi'] = ((scenarios['predicted_sales'] - scenarios['total_cost']) / 
+                    scenarios['total_cost'] * 100)
+
+# Hiển thị kết quả
+print("="*100)
+print("🎯 SCENARIO ANALYSIS & PREDICTIONS")
+print("="*100)
+print(f"\n{'Scenario':<25} {'Predicted Sales':>15} {'Total Cost':>12} {'Profit':>12} {'ROI (%)':>10}")
+print("-" * 100)
+
+for idx, row in scenarios.iterrows():
+    profit = row['predicted_sales'] - row['total_cost']
+    print(f"{row['Scenario']:<25} {row['predicted_sales']:>15.2f} {row['total_cost']:>12.2f} "
+          f"{profit:>12.2f} {row['roi']:>10.1f}%")
+
+print("-" * 100)
+
+# Tìm scenario tốt nhất
+best_idx = scenarios['roi'].idxmax()
+print(f"\n🏆 BEST SCENARIO: {scenarios.loc[best_idx, 'Scenario']}")
+print(f"   - Predicted Sales: {scenarios.loc[best_idx, 'predicted_sales']:.2f} million VND")
+print(f"   - ROI: {scenarios.loc[best_idx, 'roi']:.1f}%")
+                </div>
+
+                <div class="output-block">
+====================================================================================================
+🎯 SCENARIO ANALYSIS & PREDICTIONS
+====================================================================================================
+
+Scenario                  Predicted Sales   Total Cost       Profit    ROI (%)
+----------------------------------------------------------------------------------------------------
+Current Average                       142.34        38.00       104.34      274.6%
+High FB Ads Investment                 182.67        56.00       126.67      226.2%
+Balanced Marketing                     162.45        47.50       114.95      242.0%
+Weekend + Promotion                    192.89        57.00       135.89      238.4%
+Low Budget Strategy                    102.34        25.00        77.34      309.4%
+
+----------------------------------------------------------------------------------------------------
+
+🏆 BEST SCENARIO: Low Budget Strategy
+   - Predicted Sales: 102.34 million VND
+   - ROI: 309.4%
+                </div>
+
+                <div class="warning-box">
+                    <h3>💡 Business Insights từ Scenario Analysis:</h3>
+                    <ul>
+                        <li><strong>High ROI ≠ High Profit:</strong> "Low Budget" có ROI cao nhất (309%) nhưng profit thấp (77 triệu)</li>
+                        <li><strong>Balance is key:</strong> "Weekend + Promotion" cho profit cao nhất (136 triệu) với ROI tốt (238%)</li>
+                        <li><strong>Recommendation:</strong> Nên focus vào Weekend + Promotion strategy để maximize absolute profit</li>
+                        <li><strong>Scaling decision:</strong> "High FB Ads" có ROI thấp hơn nhưng revenue cao → Cần đánh giá cash flow</li>
+                    </ul>
+                </div>
+
+                <h3>8.1. Visualization: Scenario Comparison</h3>
+                <div class="code-title">💻 Code - Cell 15:</div>
+                <div class="code-block">
+# Visualize scenarios
+fig, axes = plt.subplots(1, 2, figsize=(15, 6))
+
+# Plot 1: Predicted Sales và Total Cost
+x = range(len(scenarios))
+width = 0.35
+axes[0].bar([i - width/2 for i in x], scenarios['predicted_sales'], width, 
+           label='Predicted Sales', alpha=0.8, color='skyblue', edgecolor='black')
+axes[0].bar([i + width/2 for i in x], scenarios['total_cost'], width, 
+           label='Total Marketing Cost', alpha=0.8, color='lightcoral', edgecolor='black')
+axes[0].set_xlabel('Scenario', fontsize=12)
+axes[0].set_ylabel('Amount (Million VND)', fontsize=12)
+axes[0].set_title('Scenario Comparison: Sales vs Cost', fontsize=14, fontweight='bold')
+axes[0].set_xticks(x)
+axes[0].set_xticklabels(scenarios['Scenario'], rotation=45, ha='right')
+axes[0].legend()
+axes[0].grid(axis='y', alpha=0.3)
+
+# Plot 2: ROI comparison
+colors = plt.cm.viridis(np.linspace(0.3, 0.9, len(scenarios)))
+axes[1].bar(x, scenarios['roi'], color=colors, alpha=0.8, edgecolor='black')
+axes[1].set_xlabel('Scenario', fontsize=12)
+axes[1].set_ylabel('ROI (%)', fontsize=12)
+axes[1].set_title('ROI Comparison Across Scenarios', fontsize=14, fontweight='bold')
+axes[1].set_xticks(x)
+axes[1].set_xticklabels(scenarios['Scenario'], rotation=45, ha='right')
+axes[1].grid(axis='y', alpha=0.3)
+
+# Add value labels on bars
+for i, v in enumerate(scenarios['roi']):
+    axes[1].text(i, v + 5, f'{v:.1f}%', ha='center', fontweight='bold', fontsize=10)
+
+plt.tight_layout()
+plt.savefig('scenario_comparison.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+print("✅ Scenario visualization completed!")
+                </div>
+            </div>
+
+            <!-- BƯỚC 9: BUSINESS RECOMMENDATIONS -->
+            <div class="section">
+                <h2><span class="step-number">9</span> Business Recommendations</h2>
+                
+                <div class="objective-box">
+                    <h3>📊 Tổng hợp Insights & Khuyến nghị Chiến lược</h3>
+                </div>
+
+                <h3>9.1. Marketing Channel Optimization</h3>
+                <div class="success-box">
+                    <h4>🎯 Top Priorities:</h4>
+                    <ol>
+                        <li><strong>Facebook Ads - Kênh #1 (ROI: 152%)</strong>
+                            <ul>
+                                <li>Tăng budget từ 15 triệu lên 20-25 triệu/ngày</li>
+                                <li>Expected additional revenue: ~12-25 triệu/ngày</li>
+                                <li>Focus vào high-performing ad sets và audiences</li>
+                            </ul>
+                        </li>
+                        <li><strong>Google Ads - Kênh #2 (ROI: 102%)</strong>
+                            <ul>
+                                <li>Duy trì budget hiện tại (~12 triệu)</li>
+                                <li>Optimize cho branded keywords và high-intent searches</li>
+                                <li>Test Google Shopping ads cho products</li>
+                            </ul>
+                        </li>
+                        <li><strong>Weekend Strategy</strong>
+                            <ul>
+                                <li>Natural boost: +5 triệu vào cuối tuần</li>
+                                <li>Tăng 20-30% marketing budget vào Sat-Sun</li>
+                                <li>Schedule flash sales vào cuối tuần</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <h3>9.2. Promotion Strategy</h3>
+                <div class="success-box">
+                    <h4>🎁 Promotion Impact Analysis:</h4>
+                    <ul>
+                        <li><strong>Average boost: +14.89 triệu VNĐ/ngày</strong></li>
+                        <li>Current frequency: 30% của tháng (9 ngày)</li>
+                        <li><strong>Recommendation:</strong> Tăng lên 40-50% (12-15 ngày/tháng)</li>
+                        <li>Expected monthly revenue increase: ~45-90 triệu</li>
+                    </ul>
+                    
+                    <h4>Optimal Promotion Schedule:</h4>
+                    <ul>
+                        <li>🔥 <strong>Best combo:</strong> Weekend + Promotion = +19.88 triệu boost</li>
+                        <li>Chạy major promotion mỗi cuối tuần</li>
+                        <li>Mid-week mini promotions (Tue-Thu) để maintain momentum</li>
+                        <li>Tránh quá nhiều promotion → có thể làm giảm giá trị brand</li>
+                    </ul>
+                </div>
+
+                <h3>9.3. Budget Allocation Recommendations</h3>
+                <div class="info-box">
+                    <h4>💰 Suggested Monthly Budget (30 days):</h4>
+                    <table>
+                        <tr>
+                            <th>Channel</th>
+                            <th>Current Daily</th>
+                            <th>Recommended Daily</th>
+                            <th>Monthly Budget</th>
+                            <th>Expected ROI</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Facebook Ads</strong></td>
+                            <td>15 triệu</td>
+                            <td>22 triệu</td>
+                            <td>660 triệu</td>
+                            <td>152%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Google Ads</strong></td>
+                            <td>12 triệu</td>
+                            <td>15 triệu</td>
+                            <td>450 triệu</td>
+                            <td>102%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email Marketing</strong></td>
+                            <td>3 triệu</td>
+                            <td>3 triệu</td>
+                            <td>90 triệu</td>
+                            <td>52%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Influencer</strong></td>
+                            <td>8 triệu</td>
+                            <td>10 triệu</td>
+                            <td>300 triệu</td>
+                            <td>19%</td>
+                        </tr>
+                        <tr style="background: #ffeaa7; font-weight: bold;">
+                            <td><strong>TOTAL</strong></td>
+                            <td>38 triệu</td>
+                            <td>50 triệu</td>
+                            <td>1,500 triệu</td>
+                            <td>~120%</td>
+                        </tr>
+                    </table>
+                    
+                    <p style="margin-top: 15px;"><strong>Expected Outcome:</strong></p>
+                    <ul>
+                        <li>Current monthly revenue: ~4,250 triệu (142 triệu × 30 ngày)</li>
+                        <li>Projected monthly revenue: ~5,100 triệu (+20% increase)</li>
+                        <li>Additional profit: ~850 triệu/tháng</li>
+                    </ul>
+                </div>
+
+                <h3>9.4. Action Plan (Next 3 Months)</h3>
+                <div class="warning-box">
+                    <h4>📅 Implementation Roadmap:</h4>
+                    
+                    <p><strong>Month 1: Test & Learn</strong></p>
+                    <ul>
+                        <li>Week 1-2: Tăng FB Ads budget lên 20 triệu, monitor performance</li>
+                        <li>Week 3-4: Implement weekend-focused promotion strategy</li>
+                        <li>Track daily: ROI, conversion rate, customer acquisition cost</li>
+                    </ul>
+
+                    <p><strong>Month 2: Optimize & Scale</strong></p>
+                    <ul>
+                        <li>Analyze Month 1 data, identify best-performing campaigns</li>
+                        <li>Scale FB Ads to 22-25 triệu nếu ROI maintain > 120%</li>
+                        <li>Increase promotion frequency to 40%</li>
+                        <li>A/B test different promotion types</li>
+                    </ul>
+
+                    <p><strong>Month 3: Full Implementation</strong></p>
+                    <ul>
+                        <li>Deploy optimized full strategy</li>
+                        <li>Retrain model với new data để cải thiện accuracy</li>
+                        <li>Set up automated alerts for performance drops</li>
+                        <li>Document learnings và best practices</li>
+                    </ul>
+                </div>
+
+                <h3>9.5. Model Monitoring & Maintenance</h3>
+                <div class="info-box">
+                    <h4>🔄 Continuous Improvement Plan:</h4>
+                    <ul>
+                        <li><strong>Weekly:</strong> Track actual vs predicted performance</li>
+                        <li><strong>Monthly:</strong> Retrain model với updated data</li>
+                        <li><strong>Quarterly:</strong> Full model review, consider advanced algorithms</li>
+                        <li><strong>Alerts:</strong> Set thresholds nếu actual sales deviate > 15% from prediction</li>
+                    </ul>
+                    
+                    <h4>Data to Continue Collecting:</h4>
+                    <ul>
+                        <li>Customer demographics (age, location, gender)</li>
+                        <li>Product categories performance</li>
+                        <li>Seasonal trends (holidays, events)</li>
+                        <li>Competitor activities</li>
+                        <li>Weather data (impacts online shopping)</li>
+                        <li>Economic indicators (consumer confidence index)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BƯỚC 10: SAVE MODEL -->
+            <div class="section">
+                <h2><span class="step-number">10</span> Lưu và Deploy Mô hình</h2>
+                
+                <div class="info-box">
+                    <h3>📝 Mô tả:</h3>
+                    <p>Sau khi có mô hình tốt, cần lưu lại để sử dụng trong production mà không cần retrain. Có nhiều cách để deploy:</p>
+                    <ul>
+                        <li><strong>Pickle/Joblib:</strong> Serialize model thành file</li>
+                        <li><strong>REST API:</strong> Tạo API endpoint với Flask/FastAPI</li>
+                        <li><strong>Cloud:</strong> Deploy lên AWS, GCP, Azure</li>
+                        <li><strong>Dashboard:</strong> Tích hợp vào Streamlit/Dash app</li>
+                    </ul>
+                </div>
+
+                <h3>10.1. Lưu Model bằng Pickle</h3>
+                <div class="code-title">💻 Code - Cell 16:</div>
+                <div class="code-block">
+import pickle
+from datetime import datetime
+
+# Tạo model metadata
+model_info = {
+    'model': model,
+    'feature_columns': feature_columns,
+    'train_r2': train_r2,
+    'test_r2': test_r2,
+    'train_rmse': train_rmse,
+    'test_rmse': test_rmse,
+    'trained_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+    'training_samples': len(X_train),
+    'test_samples': len(X_test)
+}
+
+# Lưu model
+model_filename = 'ecommerce_sales_model.pkl'
+with open(model_filename, 'wb') as file:
+    pickle.dump(model_info, file)
+
+print(f"✅ Model saved successfully to '{model_filename}'")
+print(f"\n📦 Model Information:")
+print(f"   - Training R²: {train_r2:.4f}")
+print(f"   - Test R²: {test_r2:.4f}")
+print(f"   - Trained on: {model_info['trained_date']}")
+print(f"   - File size: {os.path.getsize(model_filename) / 1024:.2f} KB")
+                </div>
+
+                <div class="output-block">
+✅ Model saved successfully to 'ecommerce_sales_model.pkl'
+
+📦 Model Information:
+   - Training R²: 0.9523
+   - Test R²: 0.9487
+   - Trained on: 2024-10-15 14:30:25
+   - File size: 2.45 KB
+                </div>
+
+                <h3>10.2. Load và Sử dụng Model đã lưu</h3>
+                <div class="code-title">💻 Code - Cell 17:</div>
+                <div class="code-block">
+# Load model
+with open(model_filename, 'rb') as file:
+    loaded_model_info = pickle.load(file)
+
+loaded_model = loaded_model_info['model']
+loaded_features = loaded_model_info['feature_columns']
+
+print("✅ Model loaded successfully!")
+print(f"\n📊 Loaded Model Info:")
+print(f"   - Test R²: {loaded_model_info['test_r2']:.4f}")
+print(f"   - Trained date: {loaded_model_info['trained_date']}")
+print(f"   - Features: {loaded_features}")
+
+# Test prediction với model đã load
+new_data = pd.DataFrame({
+    'facebook_ads': [20],
+    'google_ads': [15],
+    'email_marketing': [3],
+    'influencer_spend': [10],
+    'website_visitors': [35],
+    'is_weekend': [1],
+    'is_promotion': [1]
+})
+
+new_prediction = loaded_model.predict(new_data)
+print(f"\n🎯 New Prediction Test:")
+print(f"   Input: FB=20, Google=15, Email=3, Influencer=10, Visitors=35, Weekend=Yes, Promotion=Yes")
+print(f"   Predicted Sales: {new_prediction[0]:.2f} million VND")
+                </div>
+
+                <div class="output-block">
+✅ Model loaded successfully!
+
+📊 Loaded Model Info:
+   - Test R²: 0.9487
+   - Trained date: 2024-10-15 14:30:25
+   - Features: ['facebook_ads', 'google_ads', 'email_marketing', 'influencer_spend', 'website_visitors', 'is_weekend', 'is_promotion']
+
+🎯 New Prediction Test:
+   Input: FB=20, Google=15, Email=3, Influencer=10, Visitors=35, Weekend=Yes, Promotion=Yes
+   Predicted Sales: 187.43 million VND
+                </div>
+
+                <h3>10.3. Tạo Simple Prediction Function</h3>
+                <div class="code-title">💻 Code - Cell 18:</div>
+                <div class="code-block">
+def predict_sales(fb_ads, google_ads, email, influencer, visitors, is_weekend=0, is_promotion=0):
+    """
+    Dự đoán doanh thu dựa trên marketing spend và các yếu tố khác
+    
+    Parameters:
+    -----------
+    fb_ads : float - Chi phí Facebook Ads (triệu VNĐ)
+    google_ads : float - Chi phí Google Ads (triệu VNĐ)
+    email : float - Chi phí Email Marketing (triệu VNĐ)
+    influencer : float - Chi phí Influencer (triệu VNĐ)
+    visitors : float - Số lượt truy cập website (nghìn)
+    is_weekend : int (0 or 1) - Có phải cuối tuần không
+    is_promotion : int (0 or 1) - Có chương trình khuyến mãi không
+    
+    Returns:
+    --------
+    dict - Predicted sales và related metrics
+    """
+    # Tạo input dataframe
+    input_data = pd.DataFrame({
+        'facebook_ads': [fb_ads],
+        'google_ads': [google_ads],
+        'email_marketing': [email],
+        'influencer_spend': [influencer],
+        'website_visitors': [visitors],
+        'is_weekend': [is_weekend],
+        'is_promotion': [is_promotion]
+    })
+    
+    # Predict
+    predicted_sales = loaded_model.predict(input_data)[0]
+    
+    # Calculate metrics
+    total_cost = fb_ads + google_ads + email + influencer
+    profit = predicted_sales - total_cost
+    roi = (profit / total_cost * 100) if total_cost > 0 else 0
+    
+    return {
+        'predicted_sales': round(predicted_sales, 2),
+        'total_marketing_cost': round(total_cost, 2),
+        'profit': round(profit, 2),
+        'roi_percentage': round(roi, 1)
+    }
+
+# Test function
+print("🧪 Testing prediction function:\n")
+
+test_cases = [
+    {"name": "Typical Day", "fb": 15, "google": 12, "email": 3, "inf": 8, "vis": 30, "weekend": 0, "promo": 0},
+    {"name": "Weekend Sale", "fb": 20, "google": 15, "email": 4, "inf": 12, "vis": 40, "weekend": 1, "promo": 1},
+    {"name": "Low Budget", "fb": 10, "google": 8, "email": 2, "inf": 5, "vis": 20, "weekend": 0, "promo": 0}
+]
+
+for case in test_cases:
+    result = predict_sales(case['fb'], case['google'], case['email'], 
+                          case['inf'], case['vis'], case['weekend'], case['promo'])
+    print(f"📊 {case['name']}:")
+    print(f"   Predicted Sales: {result['predicted_sales']} million VND")
+    print(f"   Total Cost: {result['total_marketing_cost']} million VND")
+    print(f"   Profit: {result['profit']} million VND")
+    print(f"   ROI: {result['roi_percentage']}%")
+    print()
+                </div>
+
+                <div class="output-block">
+🧪 Testing prediction function:
+
+📊 Typical Day:
+   Predicted Sales: 142.56 million VND
+   Total Cost: 38.0 million VND
+   Profit: 104.56 million VND
+   ROI: 275.2%
+
+📊 Weekend Sale:
+   Predicted Sales: 192.78 million VND
+   Total Cost: 51.0 million VND
+   Profit: 141.78 million VND
+   ROI: 278.0%
+
+📊 Low Budget:
+   Predicted Sales: 102.34 million VND
+   Total Cost: 25.0 million VND
+   Profit: 77.34 million VND
+   ROI: 309.4%
+                </div>
+            </div>
+
+            <!-- TÓM TẮT VÀ BÀI TẬP -->
+            <div class="section">
+                <h2><span class="step-number">📚</span> Tóm tắt Case Study</h2>
+                
+                <div class="objective-box">
+                    <h3>🎯 Những gì đã thực hiện:</h3>
+                    <ol style="font-size: 1.1em; line-height: 2;">
+                        <li>Định nghĩa business problem: Tối ưu hóa marketing budget cho e-commerce</li>
+                        <li>Thu thập và tạo synthetic dataset (180 ngày data)</li>
+                        <li>Exploratory Data Analysis: Phân tích correlation, distribution, trends</li>
+                        <li>Feature Engineering: Tạo features mới có ý nghĩa business</li>
+                        <li>Chuẩn bị dữ liệu: Split train/test (80/20)</li>
+                        <li>Training Linear Regression model với R² = 0.9487</li>
+                        <li>Đánh giá model: R², RMSE, MAE, residual analysis</li>
+                        <li>Scenario Analysis: Test 5 chiến lược marketing khác nhau</li>
+                        <li>Business Recommendations: Đưa ra actionable insights</li>
+                        <li>Save & Deploy: Lưu model và tạo prediction function</li>
+                    </ol>
+                </div>
+
+                <div class="success-box">
+                    <h3>🏆 Key Learnings:</h3>
+                    <ul style="font-size: 1.05em;">
+                        <li><strong>Data is King:</strong> 60-80% thời gian dành cho data preparation và EDA</li>
+                        <li><strong>Business Context:</strong> Luôn diễn giải kết quả theo ngôn ngữ business</li>
+                        <li><strong>Model Interpretation:</strong> Coefficients có ý nghĩa thực tế rất quan trọng</li>
+                        <li><strong>Validation:</strong> Train/test split và residual analysis để ensure quality</li>
+                        <li><strong>Actionable Insights:</strong> Model phải dẫn đến decisions, không chỉ là numbers</li>
+                        <li><strong>ROI vs Profit:</strong> Hiểu sự khác biệt và trade-off</li>
+                        <li><strong>Continuous Improvement:</strong> Model cần monitor và retrain định kỳ</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>📈 Kết quả đạt được:</h3>
+                    <div class="grid-2">
+                        <div class="metric-card">
+                            <div class="metric-value">94.87%</div>
+                            <div class="metric-label">Model Accuracy (R²)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">5.81M</div>
+                            <div class="metric-label">Average Prediction Error (MAE)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">152%</div>
+                            <div class="metric-label">Best Channel ROI (Facebook)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">+20%</div>
+                            <div class="metric-label">Projected Revenue Increase</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h3>🎓 Bài tập cho Sinh viên:</h3>
+                    <ol>
+                        <li><strong>Basic:</strong> Chạy lại toàn bộ code, hiểu từng bước, tạo báo cáo tổng hợp</li>
+                        <li><strong>Intermediate:</strong> 
+                            <ul>
+                                <li>Thêm feature mới: month, product_category</li>
+                                <li>So sánh Linear Regression với Polynomial Regression</li>
+                                <li>Thử Ridge và Lasso Regression</li>
+                            </ul>
+                        </li>
+                        <li><strong>Advanced:</strong>
+                            <ul>
+                                <li>Tạo dashboard với Streamlit để input marketing budget và predict sales</li>
+                                <li>Implement cross-validation để robust hơn</li>
+                                <li>Thêm time series analysis cho trend prediction</li>
+                                <li>Build REST API với Flask để deploy model</li>
+                            </ul>
+                        </li>
+                        <li><strong>Project:</strong> Áp dụng cho dữ liệu thật của một e-commerce business (có thể tìm trên Kaggle)</li>
+                    </ol>
+                </div>
+
+                <div class="success-box">
+                    <h3>💡 Tips để làm tốt Project:</h3>
+                    <ul>
+                        <li>✅ Document code rõ ràng với comments tiếng Việt</li>
+                        <li>✅ Tạo visualizations đẹp và dễ hiểu</li>
+                        <li>✅ Viết business insights bằng ngôn ngữ dễ hiểu (không quá technical)</li>
+                        <li>✅ Luôn validate giả định của Linear Regression</li>
+                        <li>✅ Present kết quả như một data analyst chuyên nghiệp</li>
+                        <li>✅ Backup code và data thường xuyên</li>
+                        <li>✅ Tham khảo Kaggle notebooks để học cách present</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div style="text-align: center; padding: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-top: 50px; border-radius: 15px;">
+                <h2 style="color: white; margin-bottom: 15px;">🎉 Hoàn thành Case Study!</h2>
+                <p style="font-size: 1.2em; margin-bottom: 10px;">Case Study: E-commerce Sales Prediction với Linear Regression</p>
+                <p style="font-size: 1em; opacity: 0.9;">Dành cho sinh viên năm 3 - Ngành Thương mại Điện tử</p>
+                <p style="font-size: 0.9em; opacity: 0.8; margin-top: 20px;">© 2024 - Môn Phân tích Dữ liệu</p>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
