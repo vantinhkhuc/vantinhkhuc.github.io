@@ -25,13 +25,13 @@ jobs:
         pip install requests pandas beautifulsoup4
         
     - name: Fetch and update data
-      run: python scripts/update_data.py
+      run: python scripts/update_finance_data.py
       env:
         VIETSTOCK_API_KEY: ${{ secrets.VIETSTOCK_API_KEY }}
         
     - name: Commit and push changes
       run: |
-        git config --local user.email "action@github.com"
+        git config --local user.email "tungit@github.com"
         git config --local user.name "GitHub Action"
         git add data/*.json
         git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update data $(date)" && git push)
