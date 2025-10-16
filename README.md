@@ -1,6 +1,6 @@
 ### 2. `README.md`
 
-```markdown
+
 # 💼 Finance Portal
 
 Website phân tích tài chính và tin tức toàn diện cho nhà đầu tư Việt Nam.
@@ -23,4 +23,4 @@ Website phân tích tài chính và tin tức toàn diện cho nhà đầu tư V
 - Thông tin cá nhân
 - Kinh nghiệm giảng dạy
 - Công trình nghiên cứu
-```
+
