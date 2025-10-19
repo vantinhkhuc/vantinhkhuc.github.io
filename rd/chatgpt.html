@@ -1,1 +1,391 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Template Slide — GitHub Pages (PPT-like)</title>
+  <!-- Montserrat font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #ffffff;
+      --panel: #d45500; /* primary orange */
+      --accent: #ff7a1a; /* lighter orange */ /* lighter blue accent */
+      --muted: #6b7280;
+      --text: #000000;
+      --border: #dfe7ee;
+      --card-bg: #ffffff;
+      --shadow: 0 6px 20px rgba(11,19,32,0.08);
+      --radius: 18px;
+      --max-w: 1100px;
+      font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+
+    /* Page layout */
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#ffffff 0%, #fff7f0 60%);color:var(--text)}
+    .deck{margin-top:60px;max-width:var(--max-w);margin:28px auto;padding:24px;}
+
+    /* Slide frame */
+    .slide{position:relative;background:var(--card-bg);border-radius:16px;border:6px solid var(--panel);box-shadow:var(--shadow);padding:36px 44px;min-height:620px;display:flex;flex-direction:column;gap:18px}
+
+    /* Header bar like the original PPT */
+    .header{display:flex;align-items:center;gap:16px}
+    .logo{width:88px;height:56px;border-radius:8px;background:linear-gradient(90deg,var(--panel),var(--accent));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    .title-block{flex:1}
+    .title-main{font-size:28px;font-weight:700;color:var(--panel);letter-spacing:0.6px}
+    .subtitle{font-size:13px;color:var(--muted);margin-top:6px}
+
+    /* Large slide title (for Title slide) */
+    .hero{display:flex;align-items:center;gap:28px}
+    .hero .left{flex:1}
+    .hero h1{font-size:46px;margin:0;color:var(--panel);line-height:1.02}
+    .hero p{margin:10px 0 0;color:var(--muted)}
+
+    /* Two-column, content */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+    .content p{margin:0 0 12px 0;line-height:1.6;color:#111827}
+    .content h3{margin:0 0 10px;font-size:20px;color:var(--panel)}
+
+    /* Section slide */
+    .section{display:flex;align-items:center;justify-content:center;height:380px;border-radius:12px;background:linear-gradient(90deg, rgba(11,60,93,0.06), rgba(11,99,166,0.03));border:1px dashed var(--border)}
+    .section h2{font-size:36px;color:var(--panel);margin:0}
+
+    /* Footer style */
+    .footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:12px}
+    .meta{font-size:13px;color:var(--muted)}
+
+    /* Small helpers */
+    .muted{color:var(--muted)}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;background:var(--panel);color:#fff;text-decoration:none;font-weight:600}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .two-col{grid-template-columns:1fr}
+      .hero h1{font-size:34px}
+      .slide{padding:22px}
+      .logo{width:64px;height:44px}
+    }
+
+    /* Small table style */
+    table{width:100%;border-collapse:collapse}
+    table th, table td{padding:10px;border:1px solid var(--border);text-align:left}
+    table th{background:linear-gradient(90deg,#fbfdff,#f4f8fc);font-weight:600;color:var(--panel)}
+
+    /* Simple code block */
+    pre{background:#0b132040;padding:12px;border-radius:8px;overflow:auto;color:#031025}
+
+    /* Slide navigator (floating) */
+    .navigator{position:fixed;right:22px;bottom:22px;display:flex;gap:12px;z-index:999}
+    .navbtn{background:var(--panel);color:#fff;border:none;padding:12px 18px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.15);cursor:pointer;font-weight:600;font-size:14px;transition:0.3s}
+    .navbtn:hover{transform:translateY(-2px);opacity:0.9}
+    .navbtn:active{transform:scale(0.97)}
+
+    /* Slide transition */
+    .slide{opacity:0;transform:scale(0.92);transition:all 0.5s ease;display:none}
+    .slide.active{opacity:1;transform:scale(1);display:block}
+
+  
+    /* Dark mode overrides */
+    body.dark{background:linear-gradient(180deg,#0b0f12 0%, #071018 60%);color:#e6e6e6}
+    body.dark .slide{background:#07101a;border-color:#ff7a1a;box-shadow:0 6px 30px rgba(0,0,0,0.6)}
+    body.dark .title-main, body.dark .hero h1, body.dark .section h2{color:var(--accent)}
+    body.dark .muted{color:#c7c7c7}
+    body.dark .btn{background:var(--accent);color:#000}
+    body.dark #slidenum{background:#111;color:var(--accent)}
+
+  </style>
+</head>
+<body>
+  <div class="topbar" style="width:100%;background:#ff7a1a;color:#fff;padding:6px 20px 12px 20px;font-weight:600;font-size:14px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;line-height:1.4;box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <img src="logo_huflit_transparent.png" alt="HUFLIT" style="height:34px;object-fit:contain;border:2px solid #ff7a1a;border-radius:6px;padding:2px;background:#fff;">
+      <span>TRƯỜNG ĐẠI HỌC NGOẠI NGỮ - TIN HỌC TP.HCM (HUFLIT)</span>
+    </div>
+    <div style="font-size:13px;font-weight:500;opacity:0.95;">KHOA CÔNG NGHỆ THÔNG TIN – HỌC PHẦN: ĐẠI SỐ TUYẾN TÍNH</div>
+    <div style="width:100%;height:2px;background:#ffffff;margin-top:4px;opacity:0.75;border-radius:2px;"></div>
+  </div>
+    <div style="font-size:13px;font-weight:500;opacity:0.95;">KHOA CÔNG NGHỆ THÔNG TIN – HỌC PHẦN: ĐẠI SỐ TUYẾN TÍNH</div>
+  </div>
+  <div class="deck">
+
+    <!-- Slide 1: Title -->
+    <section class="slide" data-slide="0" id="slide-0">
+      <div class="header">
+        <div class="logo" style="background:none;padding:0"><img src="logo_huflit_transparent.png" alt="HUFLIT" style="height:48px;object-fit:contain;border:2px solid var(--panel);border-radius:8px;padding:2px;background:#fff;"></div>
+        <div class="title-block">
+          <div class="title-main">ĐẠI SỐ TUYẾN TÍNH — Linear Algebra</div>
+          <div class="subtitle">Day 05 · MA TRẬN — PHẦN 1 · Các phép toán Ma trận</div>
+        </div>
+        <div class="muted">TS. ĐINH HÙNG — PHẠM THANH TÙNG</div>
+      </div>
+
+      <div class="hero">
+        <div class="left">
+          <h1>MA TRẬN – PHẦN 1</h1>
+          <p>1: Các phép toán ma trận • 2: Tính chất của các phép toán ma trận</p>
+        </div>
+        <div style="width:320px">
+          <div style="background:linear-gradient(180deg,var(--accent),var(--panel));height:220px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700">Day 05</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="meta">Mục tiêu: Giải thích các phép toán ma trận — Slide mẫu HTML</div>
+        <div><a class="btn" href="#">Tải PPTX mẫu</a></div>
+      </div>
+    </section>
+
+    <!-- Slide 2: Section -->
+    <section class="slide" data-slide="1" id="slide-1">
+      <div class="header">
+        <div class="logo" style="background:none;padding:0"><img src="logo_huflit_transparent.png" alt="HUFLIT" style="height:48px;object-fit:contain;border:2px solid var(--panel);border-radius:8px;padding:2px;background:#fff;"></div>
+        <div class="title-block">
+          <div class="title-main">Các phép toán Ma trận</div>
+          <div class="subtitle">1.1 — Hai ma trận bằng nhau / 1.2 — Cộng, trừ, nhân vô hướng</div>
+        </div>
+        <div class="muted">Slide 2</div>
+      </div>
+
+      <div class="section" style="margin-top:18px">
+        <h2>1.1 Hai ma trận bằng nhau</h2>
+      </div>
+
+      <div class="footer"><div class="meta">Phần 1 • Các phép toán</div><div class="muted">Trang 2/8</div></div>
+    </section>
+
+    <!-- Slide 3: Content (single column) -->
+    <section class="slide" data-slide="2" id="slide-2">
+      <div class="header">
+        <div class="logo" style="background:none;padding:0"><img src="logo_huflit_transparent.png" alt="HUFLIT" style="height:48px;object-fit:contain;border:2px solid var(--panel);border-radius:8px;padding:2px;background:#fff;"></div>
+        <div class="title-block"><div class="title-main">Định nghĩa và Ví dụ</div><div class="subtitle">Hai ma trận bằng nhau khi mọi phần tử tương ứng bằng nhau</div></div>
+        <div class="muted">Ví dụ</div>
+      </div>
+
+      <div class="content">
+        <h3>Định nghĩa</h3>
+        <p>Một ma trận A = [a<sub>ij</sub>] bằng ma trận B = [b<sub>ij</sub>] nếu với mọi i, j ta có a<sub>ij</sub> = b<sub>ij</sub>.</p>
+
+        <h3>Ví dụ minh họa</h3>
+        <pre> A = [[1,2],[3,4]]
+ B = [[1,2],[3,4]]  ⇒  A = B</pre>
+      </div>
+
+      <div class="footer"><div class="meta">Ghi chú: dùng slide này để trình bày định nghĩa + ví dụ</div><div class="muted">Trang 3/8</div></div>
+    </section>
+
+    <!-- Slide 4: Two-column -->
+    <section class="slide" data-slide="3" id="slide-3">
+      <div class="header">
+        <div class="logo" style="background:none;padding:0"><img src="logo_huflit_transparent.png" alt="HUFLIT" style="height:48px;object-fit:contain;border:2px solid var(--panel);border-radius:8px;padding:2px;background:#fff;"></div>
+        <div class="title-block"><div class="title-main">Cộng, Trừ và Nhân vô hướng</div><div class="subtitle">Các tính chất cơ bản</div></div>
+        <div class="muted">Slide 4</div>
+      </div>
+
+      <div class="two-col">
+        <div class="content">
+          <h3>Quy tắc cộng</h3>
+          <p>Hai ma trận cùng kích thước A, B thì A + B được định nghĩa bằng cách cộng từng phần tử tương ứng.</p>
+          <p><strong>Tính chất:</strong> giao hoán, kết hợp với phép cộng vô hướng.</p>
+        </div>
+        <div class="content">
+          <h3>Nhân vô hướng</h3>
+          <p>c·A là ma trận thu được khi nhân mọi phần tử của A với c.</p>
+          <p>Sử dụng để tóm tắt các ví dụ nhanh, hoặc đặt công thức.</p>
+        </div>
+      </div>
+
+      <div class="footer"><div class="meta">Sử dụng layout two-column để so sánh/đối chiếu</div><div class="muted">Trang 4/8</div></div>
+    </section>
+
+    <!-- Slide 5: Table -->
+    <section class="slide" data-slide="4" id="slide-4">
+      <div class="header">
+        <div class="logo" style="background:none;padding:0"><img src="logo_huflit_transparent.png" alt="HUFLIT" style="height:48px;object-fit:contain;border:2px solid var(--panel);border-radius:8px;padding:2px;background:#fff;"></div>
+        <div class="title-block"><div class="title-main">Các phép toán — Tổng kết</div><div class="subtitle">Bảng tóm tắt công thức</div></div>
+        <div class="muted">Slide 5</div>
+      </div>
+
+      <div style="margin-top:12px">
+        <table>
+          <thead><tr><th>Phép toán</th><th>Biểu diễn</th><th>Ghi chú</th></tr></thead>
+          <tbody>
+            <tr><td>Cộng</td><td>A+B</td><td>Cần cùng kích thước</td></tr>
+            <tr><td>Nhân</td><td>A·B</td><td>Số cột A = số hàng B</td></tr>
+            <tr><td>Nhân vô hướng</td><td>cA</td><td>Nhân từng phần tử</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="footer"><div class="meta">Bảng trông giống sách giáo khoa nhưng thiết kế hiện đại</div><div class="muted">Trang 5/8</div></div>
+    </section>
+
+    <!-- Slide 6: Image + caption -->
+    <section class="slide" data-slide="5" id="slide-5">
+      <div class="header">
+        <div class="logo" style="background:none;padding:0"><img src="logo_huflit_transparent.png" alt="HUFLIT" style="height:48px;object-fit:contain;border:2px solid var(--panel);border-radius:8px;padding:2px;background:#fff;"></div>
+        <div class="title-block"><div class="title-main">Minh họa đồ thị</div><div class="subtitle">Sử dụng hình ảnh để giải thích</div></div>
+        <div class="muted">Slide 6</div>
+      </div>
+
+      <div style="display:flex;gap:20px;align-items:flex-start;margin-top:8px">
+        <div style="flex:1;background:#f4f7fb;border-radius:10px;height:340px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border)">Hình ảnh / Đồ thị</div>
+        <div style="width:320px">
+          <h3>Chú thích</h3>
+          <p class="muted">Giải thích nhanh về biểu diễn đồ thị, các trục, và thông điệp chính.</p>
+        </div>
+      </div>
+
+      <div class="footer"><div class="meta">Dùng layout này khi có hình/biểu đồ</div><div class="muted">Trang 6/8</div></div>
+    </section>
+
+    <!-- Slide 7: Thank you / Closing -->
+    <section class="slide" data-slide="6" id="slide-6">
+      <div class="header">
+        <div class="logo" style="background:none;padding:0"><img src="logo_huflit_transparent.png" alt="HUFLIT" style="height:48px;object-fit:contain;border:2px solid var(--panel);border-radius:8px;padding:2px;background:#fff;"></div>
+        <div class="title-block"><div class="title-main">Kết luận & Liên hệ</div><div class="subtitle">Cảm ơn — Questions?</div></div>
+        <div class="muted">Slide cuối</div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;height:420px">
+        <h2 style="color:var(--panel);font-size:34px;margin:0">Cảm ơn!</h2>
+        <p class="muted">TS. ĐINH HÙNG — pham.tung@example.edu</p>
+        <div style="display:flex;gap:10px"><a class="btn" href="#">Tải slide PDF</a><a class="btn" href="#" style="background:var(--accent)">Xem mã nguồn</a></div>
+      </div>
+
+      <div class="footer"><div class="meta">Template HTML — Giữ màu & viền theo mẫu PPT</div><div class="muted">Sử dụng trên GitHub Pages: đặt file này làm index.html</div></div>
+    </section>
+
+  </div>
+
+  <!-- Notes Panel -->
+  <div id="notesPanel" style="position:fixed;right:22px;top:80px;width:360px;max-height:70%;background:#fff;border-radius:10px;padding:12px;box-shadow:0 10px 30px rgba(0,0,0,0.15);display:none;z-index:1001;overflow:auto">
+    <h4 style="margin:0 0 8px;color:var(--panel)">Speaker Notes</h4>
+    <textarea id="notesArea" style="width:100%;height:240px;border:1px solid var(--border);border-radius:8px;padding:10px;font-family:inherit"></textarea>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button id="saveNote" class="navbtn" style="background:var(--panel)">Save</button>
+      <button id="closeNotes" class="navbtn" style="background:#fff;color:var(--panel);border:1px solid var(--panel)">Close</button>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div id="progress" style="position:fixed;left:0;bottom:0;height:6px;background:var(--accent);width:0%;transition:width 0.3s;z-index:900"></div>
+
+  <!-- Slide Number Indicator -->
+  <div id="slidenum" style="position:fixed;right:22px;bottom:60px;font-size:14px;font-weight:600;color:var(--panel);background:#fff;padding:6px 12px;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,0.1);z-index:900">Slide 1 / 7</div>
+
+  <!-- Table of Contents -->
+  <div id="toc" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1000;">
+    <div style="background:#fff;border-radius:12px;padding:20px;width:420px;max-height:70%;overflow:auto;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+      <h3 style="margin-top:0;color:var(--panel);text-align:center">Mục lục</h3>
+      <ul id="toc-list" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;"></ul>
+      <button onclick="toggleTOC()" style="margin-top:15px;width:100%;padding:8px 0;background:var(--panel);color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer">Đóng</button>
+    </div>
+  </div>
+
+  <!-- Navigator -->
+  <div class="navigator">
+    <button class="navbtn" id="prev">◀ Prev</button>
+    <button class="navbtn" id="next">Next ▶</button>
+    <input id="jumpInput" type="number" min="1" max="99" placeholder="Go to" style="width:72px;padding:8px;border-radius:8px;border:1px solid var(--border);font-weight:600">
+    <button class="navbtn" id="jumpBtn" style="background:#fff;color:var(--panel);border:1px solid var(--panel)">Go</button>
+    <button class="navbtn" id="toggleDark" title="Toggle dark mode">🌓</button>
+    <button class="navbtn" id="toggleNotes" title="Speaker notes">📝 Notes</button>
+  </div>
+
+  <script>
+    // Simple slide navigation
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    let idx = 0;
+    function show(i){
+      slides.forEach((s,si)=>{
+        s.classList.remove('active');
+        s.style.display = 'none';
+        if(si===i){
+          s.style.display = 'block';
+          setTimeout(()=>s.classList.add('active'),10);
+        }
+      });
+      location.hash = `slide-${i}`;
+    }
+    document.getElementById('next').addEventListener('click', ()=>{ idx = Math.min(idx+1, slides.length-1); show(idx); updateProgress(); updateSlideNumber(); updateNotesArea();});
+    document.getElementById('prev').addEventListener('click', ()=>{ idx = Math.max(idx-1, 0); show(idx); updateProgress(); updateSlideNumber(); updateNotesArea();});
+
+    // Jump to slide by number
+    document.getElementById('jumpBtn').addEventListener('click', ()=>{
+      const v = parseInt(document.getElementById('jumpInput').value);
+      if(!isNaN(v)){
+        const target = Math.max(0, Math.min(v-1, slides.length-1));
+        idx = target; show(idx); updateProgress(); updateSlideNumber(); updateNotesArea();
+      }
+    });
+
+    // Dark mode toggle
+    const darkBtn = document.getElementById('toggleDark');
+    darkBtn.addEventListener('click', ()=>{
+      document.body.classList.toggle('dark');
+    });
+
+    // Notes panel
+    const notesPanel = document.getElementById('notesPanel');
+    const notesArea = document.getElementById('notesArea');
+    document.getElementById('toggleNotes').addEventListener('click', ()=>{
+      notesPanel.style.display = notesPanel.style.display === 'block' ? 'none' : 'block';
+      if(notesPanel.style.display === 'block') updateNotesArea();
+    });
+    document.getElementById('closeNotes').addEventListener('click', ()=>{notesPanel.style.display='none'});
+    document.getElementById('saveNote').addEventListener('click', ()=>{
+      slides[idx].dataset.notes = notesArea.value;
+      // persist to localStorage
+      localStorage.setItem('slides_notes_'+idx, notesArea.value);
+    });
+
+    function updateNotesArea(){
+      const v = slides[idx].dataset.notes || localStorage.getItem('slides_notes_'+idx) || '';
+      notesArea.value = v;
+    }
+
+    // show from hash
+    window.addEventListener('load', ()=>{
+      const h = location.hash.replace('#slide-','');
+      const i = Number.isFinite(+h) ? +h : 0;
+      idx = Math.max(0, Math.min(i, slides.length-1));
+      show(idx); updateProgress(); updateSlideNumber(); updateNotesArea();
+    });
+
+    function updateProgress(){
+      const percent = ((idx+1)/slides.length)*100;
+      document.getElementById('progress').style.width = percent + '%';
+    }
+    function updateSlideNumber(){
+      document.getElementById('slidenum').textContent = `Slide ${idx+1} / ${slides.length}`;
+    }
+
+    function toggleTOC(){
+      const toc = document.getElementById('toc');
+      toc.style.display = toc.style.display === 'flex' ? 'none' : 'flex';
+    }
+    function buildTOC(){
+      const list = document.getElementById('toc-list');
+      slides.forEach((s,i)=>{
+        const li = document.createElement('li');
+        li.innerHTML = `<button style="width:100%;text-align:left;padding:6px 10px;border:1px solid var(--border);background:#fff;border-radius:6px;cursor:pointer">Slide ${i+1}: ${s.querySelector('.title-main')?.textContent||'Untitled'}</button>`;
+        li.onclick=()=>{idx=i;show(idx);updateProgress();updateSlideNumber();toggleTOC();};
+        list.appendChild(li);
+      });
+    }
+
+    buildTOC();
+
+    // keyboard navigation
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowRight' || e.key==='PageDown' || e.key===' ') document.getElementById('next').click();
+      if(e.key === 'ArrowLeft' || e.key==='PageUp') document.getElementById('prev').click();
+      if(e.key === 'Home') { idx = 0; show(idx); updateProgress(); updateSlideNumber(); updateNotesArea(); }
+      if(e.key === 'End') { idx = slides.length-1; show(idx); updateProgress(); updateSlideNumber(); updateNotesArea(); }
+      if(e.key === 't' || e.key === 'T') toggleTOC();
+      if(e.key === 'n' || e.key === 'N') { notesPanel.style.display = notesPanel.style.display==='block'?'none':'block'; if(notesPanel.style.display==='block') updateNotesArea(); }
+    });
+  </script>
+</body>
+</html>
 
