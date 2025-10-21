@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More Tools and Techniques for Evaluating Regression Models</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css">
+    <style>
+        .reveal {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: bold;
+        }
+        .reveal h1 {
+            font-size: 2.5em;
+            color: #42b983;
+        }
+        .reveal h2 {
+            font-size: 1.8em;
+            color: #42b983;
+        }
+        .reveal h3 {
+            font-size: 1.4em;
+            color: #64b5f6;
+        }
+        .reveal section {
+            text-align: left;
+        }
+        .reveal .center {
+            text-align: center;
+        }
+        .formula {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.3em;
+            text-align: center;
+            border-left: 4px solid #42b983;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.8em;
+        }
+        .comparison-table th {
+            background: #42b983;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .comparison-table tr:hover {
+            background: rgba(66, 185, 131, 0.1);
+        }
+        .highlight-box {
+            background: rgba(66, 185, 131, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #42b983;
+        }
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+        .advantage {
+            color: #4caf50;
+        }
+        .disadvantage {
+            color: #f44336;
+        }
+        .code-container {
+            margin: 15px 0;
+        }
+        pre code {
+            max-height: 500px;
+            border-radius: 8px;
+        }
+        .step-box {
+            background: rgba(100, 181, 246, 0.2);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #64b5f6;
+        }
+        .emoji {
+            font-size: 1.5em;
+        }
+        .small-text {
+            font-size: 0.8em;
+            color: #aaa;
+        }
+        ul, ol {
+            margin-left: 30px;
+        }
+        li {
+            margin: 10px 0;
+        }
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid rgba(66, 185, 131, 0.3);
+        }
+        .key-point {
+            font-size: 1.2em;
+            color: #ffd700;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- Slide: RFE Comparison -->
+            <section>
+                <h2>📈 So sánh: Tất cả biến vs RFE</h2>
+                <div class="code-container">
+                    <pre><code class="python">from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+import numpy as np
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Mô hình 1: Tất cả đặc trưng
+model_all = LinearRegression()
+model_all.fit(X_train, y_train)
+y_pred_all = model_all.predict(X_test)
+
+# Mô hình 2: Chỉ dùng RFE features
+X_train_rfe = X_train[selected_features]
+X_test_rfe = X_test[selected_features]
+model_rfe = LinearRegression()
+model_rfe.fit(X_train_rfe, y_train)
+y_pred_rfe = model_rfe.predict(X_test_rfe)
+
+# So sánh
+print("Tất cả biến (8 features):")
+print(f"  MAE: {mean_absolute_error(y_test, y_pred_all):.3f}")
+print(f"  RMSE: {np.sqrt(mean_squared_error(y_test, y_pred_all)):.3f}")
+print(f"  R²: {r2_score(y_test, y_pred_all):.3f}")
+
+print("\nRFE (4 features):")
+print(f"  MAE: {mean_absolute_error(y_test, y_pred_rfe):.3f}")
+print(f"  RMSE: {np.sqrt(mean_squared_error(y_test, y_pred_rfe)):.3f}")
+print(f"  R²: {r2_score(y_test, y_pred_rfe):.3f}")</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide: RFECV -->
+            <section>
+                <h2>🔍 RFECV - Tự động tìm số lượng tối ưu</h2>
+                <h3>RFE with Cross-Validation</h3>
+
+                <div class="highlight-box">
+                    <p><strong>Vấn đề:</strong> Làm sao biết nên chọn bao nhiêu đặc trưng?</p>
+                    <p class="key-point">→ RFECV tự động thử nhiều số lượng và chọn tốt nhất!</p>
+                </div>
+
+                <div class="code-container" style="margin-top: 30px;">
+                    <pre><code class="python">from sklearn.feature_selection import RFECV
+
+# RFECV với 5-fold cross-validation
+rfecv = RFECV(
+    estimator=LinearRegression(),
+    cv=5,
+    scoring='neg_mean_squared_error',
+    min_features_to_select=1
+)
+rfecv.fit(X, y)
+
+print(f"Số lượng đặc trưng tối ưu: {rfecv.n_features_}")
+print(f"Đặc trưng được chọn: {X.columns[rfecv.support_].tolist()}")
+
+# Vẽ biểu đồ
+import matplotlib.pyplot as plt
+plt.figure(figsize=(10, 6))
+plt.plot(range(1, len(rfecv.cv_results_['mean_test_score']) + 1),
+         -rfecv.cv_results_['mean_test_score'])
+plt.xlabel('Số lượng đặc trưng')
+plt.ylabel('Cross-validation MSE')
+plt.title('RFECV: Tìm số lượng đặc trưng tối ưu')
+plt.grid(True)
+plt.show()</code></pre>
+                </div>
+            </section>
+
+            <!-- PHẦN 3: Tree-based Models -->
+            <section class="center" data-background-gradient="linear-gradient(45deg, #2c3e50, #3498db)">
+                <h1>PHẦN 3</h1>
+                <h2>🌲 Mô hình dựa trên Cây</h2>
+                <h3>Decision Tree, Random Forest, Gradient Boosting</h3>
+            </section>
+
+            <!-- Slide: Decision Tree Intro -->
+            <section>
+                <h2>🌳 Decision Tree Regression</h2>
+                <h3>Cây quyết định cho hồi quy</h3>
+
+                <div class="two-columns">
+                    <div>
+                        <h3>Nguyên lý hoạt động</h3>
+                        <ul>
+                            <li>Phân chia không gian dữ liệu thành các vùng</li>
+                            <li>Mỗi lá dự đoán = giá trị trung bình trong vùng</li>
+                            <li>Tiêu chí phân chia: Giảm phương sai</li>
+                        </ul>
+
+                        <div class="step-box" style="margin-top: 30px;">
+                            <p><strong>Ví dụ:</strong> Dự đoán giá nhà</p>
+                            <p class="small-text">
+                                Nếu diện tích > 100m² → Chi nhánh trái<br>
+                                Nếu số phòng > 3 → Chi nhánh phải<br>
+                                ...
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="advantage">✅ Ưu điểm</h3>
+                        <ul>
+                            <li>Dễ hiểu và giải thích</li>
+                            <li>Không cần chuẩn hóa dữ liệu</li>
+                            <li>Xử lý được cả số và categorical</li>
+                            <li>Tự động feature interaction</li>
+                        </ul>
+
+                        <h3 class="disadvantage">❌ Nhược điểm</h3>
+                        <ul>
+                            <li>Dễ overfitting</li>
+                            <li>Không ổn định (nhạy với data)</li>
+                            <li>Dự đoán có thể không mượt</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide: Decision Tree Code -->
+            <section>
+                <h2>💻 Decision Tree - Code</h2>
+                <div class="code-container">
+                    <pre><code class="python">from sklearn.tree import DecisionTreeRegressor
+from sklearn.model_selection import train_test_split
+import numpy as np
+
+# Load data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Huấn luyện Decision Tree
+dt_model = DecisionTreeRegressor(
+    max_depth=5,              # Độ sâu tối đa
+    min_samples_split=20,     # Tối thiểu để split
+    min_samples_leaf=10,      # Tối thiểu tại mỗi lá
+    random_state=42
+)
+dt_model.fit(X_train, y_train)
+
+# Dự đoán
+y_pred = dt_model.predict(X_test)
+
+# Đánh giá
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+mae = mean_absolute_error(y_test, y_pred)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y_test, y_pred)
+
+print(f"MAE: {mae:.3f}")
+print(f"RMSE: {rmse:.3f}")
+print(f"R²: {r2:.3f}")</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide: DT Hyperparameters -->
+            <section>
+                <h2>⚙️ Decision Tree - Hyperparameters quan trọng</h2>
+                
+                <div class="metric-card">
+                    <h3>max_depth</h3>
+                    <p>Độ sâu tối đa của cây</p>
+                    <p class="small-text">Nhỏ → Underfit | Lớn → Overfit | None → Không giới hạn</p>
+                </div>
+
+                <div class="metric-card">
+                    <h3>min_samples_split</h3>
+                    <p>Số mẫu tối thiểu để được phép phân chia node</p>
+                    <p class="small-text">Lớn → Ít phân chia → Đơn giản hơn | Nhỏ → Phức tạp hơn</p>
+                </div>
+
+                <div class="metric-card">
+                    <h3>min_samples_leaf</h3>
+                    <p>Số mẫu tối thiểu ở mỗi node lá</p>
+                    <p class="small-text">Lớn → Mượt mà hơn | Nhỏ → Chi tiết hơn</p>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <p class="key-point">🎯 Chiến lược: Bắt đầu với max_depth nhỏ (3-5) rồi tăng dần!</p>
+                </div>
+            </section>
+
+            <!-- Slide: Random Forest Intro -->
+            <section>
+                <h2>🌲🌲🌲 Random Forest Regression</h2>
+                <h3>Rừng cây quyết định</h3>
+
+                <div class="highlight-box">
+                    <p class="key-point">Ý tưởng: "Sức mạnh của tập thể!"</p>
+                    <p>Ensemble của nhiều Decision Trees → Kết quả trung bình</p>
+                </div>
+
+                <div class="two-columns" style="margin-top: 30px;">
+                    <div>
+                        <h3>Cơ chế hoạt động</h3>
+                        <div class="step-box">
+                            <p><strong>1. Bootstrap Sampling</strong></p>
+                            <p class="small-text">Tạo nhiều tập train khác nhau (có hoàn lại)</p>
+                        </div>
+                        <div class="step-box">
+                            <p><strong>2. Random Features</strong></p>
+                            <p class="small-text">Mỗi split chỉ xét subset ngẫu nhiên các biến</p>
+                        </div>
+                        <div class="step-box">
+                            <p><strong>3. Training</strong></p>
+                            <p class="small-text">Huấn luyện nhiều cây độc lập</p>
+                        </div>
+                        <div class="step-box">
+                            <p><strong>4. Prediction</strong></p>
+                            <p class="small-text">Trung bình kết quả của tất cả cây</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="advantage">✅ Ưu điểm</h3>
+                        <ul>
+                            <li>Rất chính xác</li>
+                            <li>Giảm overfitting so với DT</li>
+                            <li>Ổn định, robust</li>
+                            <li>Feature importance tự động</li>
+                            <li>Xử lý tốt dữ liệu nhiễu</li>
+                        </ul>
+
+                        <h3 class="disadvantage">❌ Nhược điểm</h3>
+                        <ul>
+                            <li>Chậm hơn DT (nhiều cây)</li>
+                            <li>Khó giải thích</li>
+                            <li>Tốn bộ nhớ</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide: Random Forest Code -->
+            <section>
+                <h2>💻 Random Forest - Code</h2>
+                <div class="code-container">
+                    <pre><code class="python">from sklearn.ensemble import RandomForestRegressor
+import pandas as pd
+
+# Huấn luyện Random Forest
+rf_model = RandomForestRegressor(
+    n_estimators=100,      # Số lượng cây
+    max_depth=10,          # Độ sâu mỗi cây
+    min_samples_split=5,   # Tối thiểu để split
+    max_features='sqrt',   # Số biến xét ở mỗi split
+    random_state=42,
+    n_jobs=-1              # Dùng tất cả CPU cores
+)
+rf_model.fit(X_train, y_train)
+
+# Dự đoán và đánh giá
+y_pred = rf_model.predict(X_test)
+mae = mean_absolute_error(y_test, y_pred)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y_test, y_pred)
+
+print(f"MAE: {mae:.3f} | RMSE: {rmse:.3f} | R²: {r2:.3f}")
+
+# Feature Importance
+importances = pd.DataFrame({
+    'Feature': X.columns,
+    'Importance': rf_model.feature_importances_
+}).sort_values('Importance', ascending=False)
+
+print("\nTop 5 Features:")
+print(importances.head())</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide: RF Feature Importance -->
+            <section>
+                <h2>📊 Random Forest - Feature Importance</h2>
+                
+                <div class="highlight-box">
+                    <p><strong>Feature Importance:</strong> Đo lường đóng góp của mỗi biến vào dự đoán</p>
+                    <p class="small-text">Càng cao → Càng quan trọng</p>
+                </div>
+
+                <div class="code-container">
+                    <pre><code class="python">import matplotlib.pyplot as plt
+
+# Vẽ biểu đồ Feature Importance
+plt.figure(figsize=(10, 6))
+importances_sorted = importances.head(10)
+plt.barh(importances_sorted['Feature'], importances_sorted['Importance'])
+plt.xlabel('Importance')
+plt.title('Top 10 Feature Importance - Random Forest')
+plt.gca().invert_yaxis()
+plt.tight_layout()
+plt.show()
+
+# So sánh với RFE
+print("\nSo sánh:")
+print("RFE chọn:", selected_features.tolist())
+print("RF Top 4:", importances.head(4)['Feature'].tolist())</code></pre>
+                </div>
+
+                <div class="step-box" style="margin-top: 30px;">
+                    <p><span class="emoji">💡</span> <strong>Insight:</strong> Feature Importance từ RF có thể khác với RFE!</p>
+                    <p class="small-text">RF xem xét non-linear relationships, RFE dựa trên linear model</p>
+                </div>
+            </section>
+
+            <!-- Slide: Gradient Boosting Intro -->
+            <section>
+                <h2>🚀 Gradient Boosting Regression</h2>
+                <h3>Tăng cường Gradient</h3>
+
+                <div class="highlight-box">
+                    <p class="key-point">Ý tưởng: "Học từ sai lầm!"</p>
+                    <p>Xây dựng cây tuần tự, mỗi cây sửa lỗi của cây trước</p>
+                </div>
+
+                <div class="two-columns" style="margin-top: 30px;">
+                    <div>
+                        <h3>Cơ chế hoạt động</h3>
+                        <div class="step-box">
+                            <p><strong>1. Cây đầu tiên</strong></p>
+                            <p class="small-text">Dự đoán giá trị trung bình đơn giản</p>
+                        </div>
+                        <div class="step-box">
+                            <p><strong>2. Tính residuals</strong></p>
+                            <p class="small-text">Sai số = y_true - y_pred</p>
+                        </div>
+                        <div class="step-box">
+                            <p><strong>3. Cây tiếp theo</strong></p>
+                            <p class="small-text">Học dự đoán residuals</p>
+                        </div>
+                        <div class="step-box">
+                            <p><strong>4. Lặp lại</strong></p>
+                            <p class="small-text">n_estimators lần</p>
+                        </div>
+                        <div class="step-box">
+                            <p><strong>5. Kết quả cuối</strong></p>
+                            <p class="small-text">Tổng tất cả cây × learning_rate</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="advantage">✅ Ưu điểm</h3>
+                        <ul>
+                            <li><strong>Rất chính xác</strong> - Thường tốt nhất</li>
+                            <li>Linh hoạt với nhiều loss functions</li>
+                            <li>Feature importance tốt</li>
+                            <li>Xử lý được missing values</li>
+                        </ul>
+
+                        <h3 class="disadvantage">❌ Nhược điểm</h3>
+                        <ul>
+                            <li>Dễ overfit nếu không tune kỹ</li>
+                            <li>Chậm (training tuần tự)</li>
+                            <li>Nhiều hyperparameters</li>
+                            <li>Khó giải thích</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide: Gradient Boosting Code -->
+            <section>
+                <h2>💻 Gradient Boosting - Code</h2>
+                <div class="code-container">
+                    <pre><code class="python">from sklearn.ensemble import GradientBoostingRegressor
+
+# Huấn luyện Gradient Boosting
+gb_model = GradientBoostingRegressor(
+    n_estimators=100,      # Số lượng cây
+    learning_rate=0.1,     # Tốc độ học (quan trọng!)
+    max_depth=3,           # Độ sâu mỗi cây (thường nhỏ 3-5)
+    min_samples_split=20,
+    min_samples_leaf=10,
+    subsample=0.8,         # Tỷ lệ sample cho mỗi cây
+    random_state=42
+)
+gb_model.fit(X_train, y_train)
+
+# Dự đoán và đánh giá
+y_pred = gb_model.predict(X_test)
+mae = mean_absolute_error(y_test, y_pred)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y_test, y_pred)
+
+print(f"MAE: {mae:.3f}")
+print(f"RMSE: {rmse:.3f}")
+print(f"R²: {r2:.3f}")</code></pre>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 20px;">
+                    <p><span class="emoji">⚠️</span> <strong>Lưu ý:</strong> learning_rate nhỏ (0.01-0.1) + nhiều cây = Tốt hơn nhưng chậm hơn</p>
+                </div>
+            </section>
+
+            <!-- Slide: GB Hyperparameters -->
+            <section>
+                <h2>⚙️ Gradient Boosting - Key Hyperparameters</h2>
+                
+                <div class="metric-card">
+                    <h3>learning_rate (η)</h3>
+                    <p><strong>Tốc độ học:</strong> Shrinkage factor cho mỗi cây</p>
+                    <ul class="small-text">
+                        <li>Nhỏ (0.01-0.05): Chính xác hơn, cần nhiều cây, chậm</li>
+                        <li>Trung bình (0.1): Cân bằng tốt</li>
+                        <li>Lớn (0.3+): Nhanh nhưng dễ overfit</li>
+                    </ul>
+                </div>
+
+                <div class="metric-card">
+                    <h3>n_estimators</h3>
+                    <p><strong>Số lượng cây:</strong> Nhiều cây → Tốt hơn (đến một điểm)</p>
+                    <p class="small-text">Tip: learning_rate nhỏ → cần n_estimators lớn</p>
+                </div>
+
+                <div class="metric-card">
+                    <h3>max_depth</h3>
+                    <p><strong>Độ sâu:</strong> Thường nhỏ (3-5) cho GB</p>
+                    <p class="small-text">GB dùng "weak learners" - cây nông tốt hơn</p>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 20px;">
+                    <p class="key-point">🎯 Công thức vàng: learning_rate ↓ thì n_estimators ↑</p>
+                </div>
+            </section>
+
+            <!-- Slide: Compare Tree Models -->
+            <section>
+                <h2>⚖️ So sánh các mô hình Tree-based</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Tiêu chí</th>
+                            <th>Decision Tree</th>
+                            <th>Random Forest</th>
+                            <th>Gradient Boosting</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Độ chính xác</strong></td>
+                            <td>⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tốc độ training</strong></td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Khả năng giải thích</strong></td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐</td>
+                            <td>⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Chống overfit</strong></td>
+                            <td>⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Khi nào dùng</strong></td>
+                            <td>Baseline, cần giải thích</td>
+                            <td>Dữ liệu phức tạp, robust</td>
+                            <td>Cần độ chính xác cao nhất</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Training</strong></td>
+                            <td>Single tree</td>
+                            <td>Parallel (nhiều cây)</td>
+                            <td>Sequential (tuần tự)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <p class="key-point">💡 Khuyến nghị: Thử cả 3! Mỗi model có điểm mạnh riêng</p>
+                </div>
+            </section>
+
+            <!-- PHẦN 4: Model Comparison -->
+            <section class="center" data-background-gradient="linear-gradient(45deg, #614385, #516395)">
+                <h1>PHẦN 4</h1>
+                <h2>🏆 So sánh và Lựa chọn Mô hình</h2>
+                <h3>Framework đánh giá toàn diện</h3>
+            </section>
+
+            <!-- Slide: Evaluation Framework -->
+            <section>
+                <h2>🎯 Framework đánh giá Mô hình</h2>
+                
+                <div class="step-box">
+                    <h3>Bước 1: Chia dữ liệu</h3>
+                    <p>Train/Test split hoặc Cross-Validation (tốt hơn!)</p>
+                </div>
+
+                <div class="step-box">
+                    <h3>Bước 2: Huấn luyện nhiều mô hình</h3>
+                    <p>Linear, Tree-based, Ensemble...</p>
+                </div>
+
+                <div class="step-box">
+                    <h3>Bước 3: Đánh giá với nhiều metrics</h3>
+                    <p>MAE, RMSE, R², Training time, Prediction time</p>
+                </div>
+
+                <div class="step-box">
+                    <h3>Bước 4: So sánh kết quả</h3>
+                    <p>Tạo bảng so sánh, visualization</p>
+                </div>
+
+                <div class="step-box">
+                    <h3>Bước 5: Lựa chọn mô hình tốt nhất</h3>
+                    <p>Cân nhắc: Accuracy, Speed, Interpretability, Business needs</p>
+                </div>
+            </section>
+
+            <!-- Slide: Comprehensive Comparison Code -->
+            <section>
+                <h2>💻 So sánh toàn diện - Code (1/2)</h2>
+                <div class="code-container">
+                    <pre><code class="python">from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+import pandas as pd
+import time
+
+# Danh sách mô hình
+models = {
+    'Linear Regression': LinearRegression(),
+    'Ridge Regression': Ridge(alpha=1.0),
+    'Decision Tree': DecisionTreeRegressor(max_depth=5, random_state=42),
+    'Random Forest': RandomForestRegressor(n_estimators=100, 
+                                           max_depth=10, 
+                                           random_state=42),
+    'Gradient Boosting': GradientBoostingRegressor(n_estimators=100,
+                                                    learning_rate=0.1,
+                                                    max_depth=3,
+                                                    random_state=42)
+}
+
+results = []</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide: Comprehensive Comparison Code 2 -->
+            <section>
+                <h2>💻 So sánh toàn diện - Code (2/2)</h2>
+                <div class="code-container">
+                    <pre><code class="python">for name, model in models.items():
+    print(f"Training {name}...")
+    
+    # Training time
+    start_time = time.time()
+    model.fit(X_train, y_train)
+    train_time = time.time() - start_time
+    
+    # Prediction time
+    start_time = time.time()
+    y_pred = model.predict(X_test)
+    pred_time = time.time() - start_time
+    
+    # Metrics
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
+    
+    # Cross-validation R²
+    cv_scores = cross_val_score(model, X, y, cv=5, 
+                                 scoring='r2')
+    
+    results.append({
+        'Model': name,
+        'MAE': mae,
+        'RMSE': rmse,
+        'R²': r2,
+        'CV R² Mean': cv_scores.mean(),
+        'CV R² Std': cv_scores.std(),
+        'Train Time (s)': train_time,
+        'Pred Time (s)': pred_time
+    })
+
+# Tạo DataFrame
+comparison_df = pd.DataFrame(results)
+comparison_df = comparison_df.sort_values('RMSE')
+print(comparison_df)</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide: Example Results -->
+            <section>
+                <h2>📊 Kết quả so sánh (Ví dụ)</h2>
+                
+                <table class="comparison-table" style="font-size: 0.7em;">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>MAE</th>
+                            <th>RMSE</th>
+                            <th>R²</th>
+                            <th>CV R²</th>
+                            <th>Train(s)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(255 Slide 1: Title -->
+            <section class="center">
+                <h1>📊 More Tools and Techniques for Evaluating Regression Models</h1>
+                <h3>Phân tích dữ liệu trong Kinh doanh</h3>
+                <p style="margin-top: 50px;">
+                    <strong>Thời lượng:</strong> 150 phút<br>
+                    <strong>Ngôn ngữ:</strong> Python + Scikit-learn
+                </p>
+                <p class="small-text" style="margin-top: 50px;">
+                    Nhấn phím mũi tên hoặc Space để chuyển slide<br>
+                    Nhấn 'F' để toàn màn hình | 'Esc' để xem tổng quan
+                </p>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>🎯 Mục tiêu buổi học</h2>
+                <div class="highlight-box">
+                    <p>Sau buổi học này, sinh viên có thể:</p>
+                    <ul>
+                        <li><strong>Hiểu và áp dụng</strong> các thước đo đánh giá độ chính xác của mô hình hồi quy</li>
+                        <li><strong>Tính toán và giải thích</strong> MAE và RMSE</li>
+                        <li><strong>Sử dụng</strong> Recursive Feature Elimination (RFE) để lựa chọn đặc trưng</li>
+                        <li><strong>So sánh và đánh giá</strong> các mô hình hồi quy dựa trên cây quyết định</li>
+                        <li><strong>Lựa chọn mô hình</strong> phù hợp nhất cho bài toán cụ thể</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 3: Agenda -->
+            <section>
+                <h2>📋 Nội dung buổi học</h2>
+                <div class="two-columns">
+                    <div>
+                        <h3>Phần 1 (40')</h3>
+                        <ul>
+                            <li>Giới thiệu</li>
+                            <li>MAE - Mean Absolute Error</li>
+                            <li>RMSE - Root Mean Squared Error</li>
+                            <li>So sánh MAE vs RMSE</li>
+                        </ul>
+                        
+                        <h3>Phần 2 (45')</h3>
+                        <ul>
+                            <li>Feature Selection</li>
+                            <li>Recursive Feature Elimination</li>
+                            <li>RFECV</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Phần 3 (40')</h3>
+                        <ul>
+                            <li>Decision Tree Regression</li>
+                            <li>Random Forest Regression</li>
+                            <li>Gradient Boosting</li>
+                            <li>So sánh các mô hình</li>
+                        </ul>
+                        
+                        <h3>Phần 4 (15')</h3>
+                        <ul>
+                            <li>Framework đánh giá</li>
+                            <li>Lựa chọn mô hình</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PHẦN 1: EVALUATION METRICS -->
+            <section class="center" data-background-gradient="linear-gradient(45deg, #1e3c72, #2a5298)">
+                <h1>PHẦN 1</h1>
+                <h2>📏 Các thước đo đánh giá</h2>
+                <h3>MAE & RMSE</h3>
+            </section>
+
+            <!-- Slide: Why More Metrics -->
+            <section>
+                <h2>❓ Tại sao cần nhiều thước đo?</h2>
+                <div class="highlight-box">
+                    <p class="key-point">R² và RSS không đủ!</p>
+                </div>
+                <ul>
+                    <li><strong>R²</strong>: Chỉ cho biết tỷ lệ phương sai được giải thích
+                        <ul>
+                            <li>Không cho biết độ lớn sai số thực tế</li>
+                            <li>Khó so sánh giữa các dataset khác nhau</li>
+                        </ul>
+                    </li>
+                    <li><strong>RSS</strong>: Phụ thuộc vào số lượng mẫu
+                        <ul>
+                            <li>Khó diễn giải với người không chuyên</li>
+                            <li>Không có đơn vị thực tế</li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="step-box" style="margin-top: 30px;">
+                    <p><span class="emoji">💡</span> <strong>Giải pháp:</strong> Sử dụng MAE và RMSE - các metric dễ hiểu, có đơn vị giống biến mục tiêu</p>
+                </div>
+            </section>
+
+            <!-- Slide: MAE Theory -->
+            <section>
+                <h2>📊 MAE - Mean Absolute Error</h2>
+                <h3>Sai số tuyệt đối trung bình</h3>
+                
+                <div class="formula">
+                    MAE = (1/n) × Σ|y<sub>i</sub> - ŷ<sub>i</sub>|
+                </div>
+
+                <div class="two-columns">
+                    <div>
+                        <h3 class="advantage">✅ Ưu điểm</h3>
+                        <ul>
+                            <li>Dễ hiểu và diễn giải</li>
+                            <li>Cùng đơn vị với biến mục tiêu</li>
+                            <li>Ít bị ảnh hưởng bởi outliers</li>
+                            <li>Robust với dữ liệu nhiễu</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="disadvantage">❌ Nhược điểm</h3>
+                        <ul>
+                            <li>Không phân biệt mức độ nghiêm trọng của sai số</li>
+                            <li>Không phạt nặng các sai số lớn</li>
+                            <li>Có thể bỏ qua các dự đoán sai nghiêm trọng</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 20px;">
+                    <p><strong>Ví dụ:</strong> Dự đoán giá nhà với MAE = 500 triệu VNĐ<br>
+                    → Trung bình sai lệch 500 triệu so với giá thực tế</p>
+                </div>
+            </section>
+
+            <!-- Slide: MAE Code -->
+            <section>
+                <h2>💻 MAE - Thực hành với Python</h2>
+                <div class="code-container">
+                    <pre><code class="python">from sklearn.metrics import mean_absolute_error
+import numpy as np
+
+# Dữ liệu thực tế và dự đoán
+y_true = np.array([3.5, 4.2, 2.8, 5.1, 3.9])
+y_pred = np.array([3.2, 4.5, 2.9, 4.8, 4.1])
+
+# Tính MAE
+mae = mean_absolute_error(y_true, y_pred)
+print(f"MAE: {mae:.2f}")
+
+# Tính MAE thủ công
+manual_mae = np.mean(np.abs(y_true - y_pred))
+print(f"MAE (manual): {manual_mae:.2f}")
+
+# Output:
+# MAE: 0.26
+# MAE (manual): 0.26</code></pre>
+                </div>
+                
+                <div class="highlight-box">
+                    <p><span class="emoji">🎯</span> <strong>Bài tập:</strong> Tính MAE cho dữ liệu của bạn và giải thích ý nghĩa!</p>
+                </div>
+            </section>
+
+            <!-- Slide: RMSE Theory -->
+            <section>
+                <h2>📈 RMSE - Root Mean Squared Error</h2>
+                <h3>Căn bậc hai của trung bình bình phương sai số</h3>
+                
+                <div class="formula">
+                    RMSE = √[(1/n) × Σ(y<sub>i</sub> - ŷ<sub>i</sub>)²]
+                </div>
+
+                <div class="two-columns">
+                    <div>
+                        <h3 class="advantage">✅ Ưu điểm</h3>
+                        <ul>
+                            <li>Phạt nặng các sai số lớn</li>
+                            <li>Nhạy cảm với outliers</li>
+                            <li>Cùng đơn vị với biến mục tiêu</li>
+                            <li>Thường dùng trong tối ưu hóa</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="disadvantage">❌ Nhược điểm</h3>
+                        <ul>
+                            <li>Khó giải thích hơn MAE</li>
+                            <li>Rất nhạy cảm với outliers</li>
+                            <li>Có thể bị chi phối bởi vài giá trị lớn</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step-box" style="margin-top: 20px;">
+                    <p><strong>💡 Khi nào dùng RMSE?</strong></p>
+                    <ul>
+                        <li>Khi sai số lớn cần được phạt nặng (y tế, tài chính)</li>
+                        <li>Khi muốn mô hình tránh các dự đoán sai quá xa</li>
+                        <li>Khi dữ liệu không có nhiều outliers</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide: RMSE Code -->
+            <section>
+                <h2>💻 RMSE - Thực hành với Python</h2>
+                <div class="code-container">
+                    <pre><code class="python">from sklearn.metrics import mean_squared_error
+import numpy as np
+
+# Dữ liệu
+y_true = np.array([3.5, 4.2, 2.8, 5.1, 3.9])
+y_pred = np.array([3.2, 4.5, 2.9, 4.8, 4.1])
+
+# Tính RMSE
+rmse = np.sqrt(mean_squared_error(y_true, y_pred))
+print(f"RMSE: {rmse:.2f}")
+
+# Tính RMSE thủ công
+manual_rmse = np.sqrt(np.mean((y_true - y_pred)**2))
+print(f"RMSE (manual): {manual_rmse:.2f}")
+
+# So sánh với MAE
+mae = mean_absolute_error(y_true, y_pred)
+print(f"MAE: {mae:.2f}")
+print(f"RMSE/MAE ratio: {rmse/mae:.2f}")
+
+# Output:
+# RMSE: 0.28
+# RMSE (manual): 0.28
+# MAE: 0.26
+# RMSE/MAE ratio: 1.08</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide: MAE vs RMSE Comparison -->
+            <section>
+                <h2>⚖️ So sánh MAE vs RMSE</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Tiêu chí</th>
+                            <th>MAE</th>
+                            <th>RMSE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Công thức</strong></td>
+                            <td>Σ|error| / n</td>
+                            <td>√(Σerror² / n)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Độ nhạy outliers</strong></td>
+                            <td>Thấp ⭐</td>
+                            <td>Cao ⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dễ giải thích</strong></td>
+                            <td>Cao ⭐⭐⭐</td>
+                            <td>Trung bình ⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phạt sai số lớn</strong></td>
+                            <td>Tuyến tính</td>
+                            <td>Bậc 2 (nặng hơn)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Khi nào dùng</strong></td>
+                            <td>Nhiều outliers, cần diễn giải</td>
+                            <td>Cần phạt nặng sai số lớn</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <p class="key-point">⚡ Quy tắc vàng: RMSE ≥ MAE (luôn đúng!)</p>
+                    <p>Khi RMSE ≈ MAE: Sai số phân bố đều<br>
+                    Khi RMSE >> MAE: Có nhiều outliers hoặc sai số lớn</p>
+                </div>
+            </section>
+
+            <!-- Slide: Practical Example -->
+            <section>
+                <h2>🏠 Ví dụ thực tế: Dự đoán giá nhà</h2>
+                
+                <div class="metric-card">
+                    <h3>Mô hình A</h3>
+                    <p>MAE = 500 triệu | RMSE = 520 triệu | Ratio = 1.04</p>
+                    <p class="small-text">→ Sai số khá đều, ít outliers</p>
+                </div>
+
+                <div class="metric-card">
+                    <h3>Mô hình B</h3>
+                    <p>MAE = 500 triệu | RMSE = 800 triệu | Ratio = 1.60</p>
+                    <p class="small-text">→ Có nhiều dự đoán sai rất xa, cần cải thiện!</p>
+                </div>
+
+                <div class="step-box" style="margin-top: 30px;">
+                    <p><strong>🤔 Câu hỏi:</strong> Bạn chọn mô hình nào?</p>
+                    <p><strong>Trả lời:</strong> Mô hình A! Vì sai số ổn định hơn, đáng tin cậy hơn trong thực tế</p>
+                </div>
+            </section>
+
+            <!-- PHẦN 2: RFE -->
+            <section class="center" data-background-gradient="linear-gradient(45deg, #134e5e, #71b280)">
+                <h1>PHẦN 2</h1>
+                <h2>🎯 Feature Selection</h2>
+                <h3>Recursive Feature Elimination</h3>
+            </section>
+
+            <!-- Slide: Why Feature Selection -->
+            <section>
+                <h2>🤔 Tại sao cần lựa chọn đặc trưng?</h2>
+                
+                <div class="two-columns">
+                    <div>
+                        <h3>⚠️ Vấn đề</h3>
+                        <ul>
+                            <li><strong>Curse of Dimensionality</strong>
+                                <ul><li>Quá nhiều biến → dữ liệu thưa</li></ul>
+                            </li>
+                            <li><strong>Overfitting</strong>
+                                <ul><li>Mô hình học noise thay vì pattern</li></ul>
+                            </li>
+                            <li><strong>Thời gian training</strong>
+                                <ul><li>Càng nhiều biến → càng chậm</li></ul>
+                            </li>
+                            <li><strong>Khó giải thích</strong>
+                                <ul><li>Business không hiểu mô hình</li></ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>✅ Lợi ích</h3>
+                        <ul>
+                            <li><strong>Giảm overfitting</strong>
+                                <ul><li>Mô hình tổng quát hóa tốt hơn</li></ul>
+                            </li>
+                            <li><strong>Tăng hiệu suất</strong>
+                                <ul><li>Training và prediction nhanh hơn</li></ul>
+                            </li>
+                            <li><strong>Dễ giải thích</strong>
+                                <ul><li>Tập trung vào biến quan trọng</li></ul>
+                            </li>
+                            <li><strong>Giảm chi phí</strong>
+                                <ul><li>Thu thập ít dữ liệu hơn</li></ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <p class="key-point">🎯 Mục tiêu: Chọn tập con đặc trưng tốt nhất!</p>
+                    <p>Tốt nhất = Đủ thông tin + Ít biến nhất + Không redundant</p>
+                </div>
+            </section>
+
+            <!-- Slide: Feature Selection Methods -->
+            <section>
+                <h2>🛠️ Các phương pháp lựa chọn đặc trưng</h2>
+                
+                <div class="step-box">
+                    <h3>1. Filter Methods</h3>
+                    <p>Đánh giá từng biến độc lập (correlation, chi-square, ...)</p>
+                    <p class="small-text">✅ Nhanh | ❌ Không xem xét tương tác giữa các biến</p>
+                </div>
+
+                <div class="step-box">
+                    <h3>2. Wrapper Methods</h3>
+                    <p>Sử dụng mô hình để đánh giá tập con (RFE, Forward/Backward Selection)</p>
+                    <p class="small-text">✅ Xem xét tương tác | ❌ Chậm, tốn tài nguyên</p>
+                </div>
+
+                <div class="step-box">
+                    <h3>3. Embedded Methods</h3>
+                    <p>Lựa chọn trong quá trình training (Lasso, Tree-based importance)</p>
+                    <p class="small-text">✅ Cân bằng tốc độ và hiệu quả | ❌ Phụ thuộc mô hình</p>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 20px;">
+                    <p><strong>Hôm nay tập trung:</strong> <span class="key-point">RFE (Wrapper Method)</span></p>
+                </div>
+            </section>
+
+            <!-- Slide: RFE Concept -->
+            <section>
+                <h2>🔄 Recursive Feature Elimination (RFE)</h2>
+                <h3>Loại bỏ đặc trưng đệ quy</h3>
+
+                <div class="step-box">
+                    <p><strong>Bước 1:</strong> Huấn luyện mô hình với TẤT CẢ đặc trưng</p>
+                </div>
+                <div class="step-box">
+                    <p><strong>Bước 2:</strong> Xếp hạng các đặc trưng theo tầm quan trọng</p>
+                    <p class="small-text">(dựa vào coefficients hoặc feature importance)</p>
+                </div>
+                <div class="step-box">
+                    <p><strong>Bước 3:</strong> Loại bỏ đặc trưng ÍT quan trọng nhất</p>
+                </div>
+                <div class="step-box">
+                    <p><strong>Bước 4:</strong> Lặp lại Bước 1-3 cho đến khi đạt số lượng mong muốn</p>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <p><span class="emoji">💡</span> <strong>Ý tưởng:</strong> Loại bỏ dần các biến "yếu nhất" để giữ lại biến "mạnh nhất"</p>
+                </div>
+            </section>
+
+            <!-- Slide: RFE Code Basic -->
+            <section>
+                <h2>💻 RFE - Code cơ bản</h2>
+                <div class="code-container">
+                    <pre><code class="python">from sklearn.feature_selection import RFE
+from sklearn.linear_model import LinearRegression
+from sklearn.datasets import fetch_california_housing
+import pandas as pd
+
+# Load dữ liệu
+data = fetch_california_housing()
+X = pd.DataFrame(data.data, columns=data.feature_names)
+y = data.target
+
+# Khởi tạo mô hình
+model = LinearRegression()
+
+# RFE: Chọn 4 đặc trưng tốt nhất
+rfe = RFE(estimator=model, n_features_to_select=4)
+rfe.fit(X, y)
+
+# Xem đặc trưng được chọn
+selected_features = X.columns[rfe.support_]
+print("Đặc trưng được chọn:", selected_features.tolist())
+
+# Xem ranking (1 = tốt nhất)
+ranking = pd.DataFrame({
+    'Feature': X.columns,
+    'Ranking': rfe.ranking_
+}).sort_values('Ranking')
+print("\n", ranking)</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide: RFE Output Example -->
+            <section>
+                <h2>📊 RFE - Kết quả ví dụ</h2>
+                
+                <div class="highlight-box">
+                    <h3>Đặc trưng được chọn:</h3>
+                    <p style="font-size: 1.2em;">['MedInc', 'AveRooms', 'AveOccup', 'Latitude']</p>
+                </div>
+
+                <table class="comparison-table" style="margin-top: 30px;">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Ranking</th>
+                            <th>Selected</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(66, 185, 131, 0.2);">
+                            <td>MedInc</td>
+                            <td>1</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr style="background: rgba(66, 185, 131, 0.2);">
+                            <td>AveRooms</td>
+                            <td>1</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr style="background: rgba(66, 185, 131, 0.2);">
+                            <td>Latitude</td>
+                            <td>1</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr style="background: rgba(66, 185, 131, 0.2);">
+                            <td>AveOccup</td>
+                            <td>1</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td>Longitude</td>
+                            <td>2</td>
+                            <td>❌</td>
+                        </tr>
+                        <tr>
+                            <td>HouseAge</td>
+                            <td>3</td>
+                            <td>❌</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!--
