@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning cho Phân tích Kinh doanh</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            min-height: 600px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            line-height: 2;
+        }
+
+        li {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #764ba2;
+        }
+
+        .code-block {
+            background: #2d3436;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .formula {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.3em;
+            margin: 20px 0;
+            border: 2px solid #667eea;
+        }
+
+        .example-box {
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            text-align: center;
+            color: white;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+
+        .process-step {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        .metric-box {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        strong {
+            color: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1 style="text-align: center; font-size: 3em; margin-top: 100px;">Machine Learning cho Phân tích Kinh doanh</h1>
+            <p class="subtitle" style="text-align: center; margin-top: 30px; font-size: 1.5em;">Áp dụng Predictive Analytics và Linear Regression</p>
+            <p style="text-align: center; margin-top: 50px; font-size: 1.2em; color: #666;">Môn: Phân tích Dữ liệu<br>Dành cho sinh viên năm 3</p>
+        </div>
+
+        <!-- PHẦN 1: MACHINE LEARNING TRONG KINH DOANH (12 slides) -->
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <h1>Giới thiệu về Predictive Analytics</h1>
+            <h3>Predictive Analytics là gì?</h3>
+            <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 20px;">Predictive Analytics là việc sử dụng dữ liệu lịch sử, thuật toán thống kê và kỹ thuật machine learning để dự đoán kết quả tương lai.</p>
+            
+            <div class="highlight">
+                <strong>Mục tiêu:</strong> Chuyển đổi dữ liệu thành thông tin có giá trị để hỗ trợ ra quyết định kinh doanh
+            </div>
+
+            <h3>Tại sao quan trọng trong Kinh doanh?</h3>
+            <ul>
+                <li>Dự đoán nhu cầu khách hàng</li>
+                <li>Tối ưu hóa chiến lược marketing</li>
+                <li>Giảm rủi ro tài chính</li>
+                <li>Cải thiện hiệu quả vận hành</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <h1>Ứng dụng Predictive Analytics</h1>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🏪 Bán lẻ</h3>
+                    <ul>
+                        <li>Dự đoán nhu cầu sản phẩm</li>
+                        <li>Quản lý tồn kho</li>
+                        <li>Phân tích hành vi mua sắm</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🏦 Tài chính</h3>
+                    <ul>
+                        <li>Đánh giá rủi ro tín dụng</li>
+                        <li>Phát hiện gian lận</li>
+                        <li>Dự đoán giá cổ phiếu</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🎯 Marketing</h3>
+                    <ul>
+                        <li>Phân khúc khách hàng</li>
+                        <li>Dự đoán tỷ lệ churn</li>
+                        <li>Tối ưu giá bán</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🏭 Sản xuất</h3>
+                    <ul>
+                        <li>Bảo trì dự phòng</li>
+                        <li>Kiểm soát chất lượng</li>
+                        <li>Tối ưu chuỗi cung ứng</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <h1>Machine Learning vs Traditional Analytics</h1>
+            <table>
+                <tr>
+                    <th>Đặc điểm</th>
+                    <th>Traditional Analytics</th>
+                    <th>Machine Learning</th>
+                </tr>
+                <tr>
+                    <td><strong>Phương pháp</strong></td>
+                    <td>Dựa trên quy tắc định sẵn</td>
+                    <td>Học từ dữ liệu</td>
+                </tr>
+                <tr>
+                    <td><strong>Khả năng mở rộng</strong></td>
+                    <td>Hạn chế với dữ liệu lớn</td>
+                    <td>Xử lý tốt big data</td>
+                </tr>
+                <tr>
+                    <td><strong>Độ chính xác</strong></td>
+                    <td>Phụ thuộc vào quy tắc</td>
+                    <td>Cải thiện theo thời gian</td>
+                </tr>
+                <tr>
+                    <td><strong>Tự động hóa</strong></td>
+                    <td>Cần can thiệp thủ công</td>
+                    <td>Tự động học và cải thiện</td>
+                </tr>
+                <tr>
+                    <td><strong>Độ phức tạp</strong></td>
+                    <td>Phù hợp bài toán đơn giản</td>
+                    <td>Xử lý được bài toán phức tạp</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <h1>Quy trình giải quyết vấn đề Kinh doanh với ML</h1>
+            <div class="process-step">1. Hiểu vấn đề kinh doanh (Business Understanding)</div>
+            <ul>
+                <li>Xác định mục tiêu kinh doanh rõ ràng</li>
+                <li>Thảo luận với stakeholders</li>
+            </ul>
+
+            <div class="process-step">2. Thu thập và chuẩn bị dữ liệu (Data Collection & Preparation)</div>
+            <ul>
+                <li>Xác định nguồn dữ liệu cần thiết</li>
+                <li>Làm sạch và xử lý dữ liệu</li>
+            </ul>
+
+            <div class="process-step">3. Khám phá và phân tích dữ liệu (Exploratory Data Analysis)</div>
+            <ul>
+                <li>Hiểu cấu trúc và phân phối dữ liệu</li>
+                <li>Phát hiện patterns và insights</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <h1>Quy trình giải quyết vấn đề (tiếp)</h1>
+            <div class="process-step">4. Feature Engineering</div>
+            <ul>
+                <li>Tạo các biến mới có ý nghĩa</li>
+                <li>Chọn lọc features quan trọng</li>
+            </ul>
+
+            <div class="process-step">5. Xây dựng và huấn luyện mô hình (Model Building & Training)</div>
+            <ul>
+                <li>Chọn thuật toán phù hợp</li>
+                <li>Train mô hình trên training data</li>
+            </ul>
+
+            <div class="process-step">6. Đánh giá mô hình (Model Evaluation)</div>
+            <ul>
+                <li>Kiểm tra hiệu suất trên test data</li>
+                <li>So sánh với baseline</li>
+            </ul>
+
+            <div class="process-step">7. Triển khai và giám sát (Deployment & Monitoring)</div>
+            <ul>
+                <li>Đưa mô hình vào production</li>
+                <li>Theo dõi và cải thiện liên tục</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide">
+            <h1>Xác định vấn đề Kinh doanh</h1>
+            <h3>Câu hỏi quan trọng cần trả lời:</h3>
+            <div class="highlight">
+                <ul>
+                    <li><strong>Vấn đề kinh doanh cụ thể là gì?</strong><br>Ví dụ: "Làm thế nào để tăng doanh thu bán hàng?"</li>
+                    <li><strong>Ai là người hưởng lợi từ giải pháp?</strong><br>Management, Sales team, Customers...</li>
+                    <li><strong>Dữ liệu nào có sẵn?</strong><br>Historical sales, customer data, market trends...</li>
+                    <li><strong>Giải pháp ML có phù hợp không?</strong><br>Có dữ liệu đủ? Có pattern để học?</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide">
+            <h1>Chuyển đổi từ Business Problem sang ML Problem</h1>
+            <div class="example-box">
+                <h3>Ví dụ: Bài toán Bán lẻ</h3>
+                <table>
+                    <tr>
+                        <th>Business Problem</th>
+                        <th>ML Problem</th>
+                    </tr>
+                    <tr>
+                        <td>Làm sao để tăng doanh thu?</td>
+                        <td>Dự đoán doanh thu tương lai dựa trên các yếu tố</td>
+                    </tr>
+                    <tr>
+                        <td>Loại: Descriptive → Predictive</td>
+                        <td>Loại: Regression</td>
+                    </tr>
+                    <tr>
+                        <td>Input: Lịch sử bán hàng, marketing, mùa vụ</td>
+                        <td>Features: advertising_spend, season, promotion</td>
+                    </tr>
+                    <tr>
+                        <td>Output: Insights để ra quyết định</td>
+                        <td>Target: sales_amount (biến liên tục)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide">
+            <h1>Success Metrics - Định nghĩa thành công</h1>
+            <h3>Tại sao cần Success Metrics?</h3>
+            <p style="font-size: 1.1em; line-height: 1.8;">Success metrics giúp đo lường mức độ thành công của dự án ML và đảm bảo nó phù hợp với mục tiêu kinh doanh.</p>
+
+            <div class="grid-2" style="margin-top: 30px;">
+                <div class="card">
+                    <h3>📊 Business Metrics</h3>
+                    <ul>
+                        <li>ROI (Return on Investment)</li>
+                        <li>Tăng trưởng doanh thu (%)</li>
+                        <li>Giảm chi phí vận hành</li>
+                        <li>Customer satisfaction</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🎯 Technical Metrics</h3>
+                    <ul>
+                        <li>Accuracy, Precision, Recall</li>
+                        <li>R² Score (for regression)</li>
+                        <li>RMSE, MAE</li>
+                        <li>Model training time</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide">
+            <h1>Thiết lập Success Metrics</h1>
+            <div class="example-box">
+                <h3>Ví dụ: Dự án dự đoán Doanh thu</h3>
+                <div class="metric-box">
+                    <strong>Business Goal:</strong> Tăng 15% doanh thu trong 6 tháng
+                </div>
+                <div class="metric-box">
+                    <strong>ML Goal:</strong> R² Score ≥ 0.85 và RMSE < 10% của trung bình doanh thu
+                </div>
+                <div class="metric-box">
+                    <strong>Operational Goal:</strong> Dự đoán trong < 2 giây, cập nhật model hàng tuần
+                </div>
+            </div>
+
+            <div class="highlight" style="margin-top: 30px;">
+                <strong>Lưu ý:</strong> Technical metrics phải liên kết trực tiếp với Business metrics để đảm bảo giá trị thực tế!
+            </div>
+        </div>
+
+        <!-- Slide 11 -->
+        <div class="slide">
+            <h1>Các loại Success Metrics phổ biến</h1>
+            <h3>1. Regression Problems</h3>
+            <ul>
+                <li><strong>MAE (Mean Absolute Error):</strong> Trung bình sai số tuyệt đối</li>
+                <li><strong>RMSE (Root Mean Squared Error):</strong> Căn bậc hai trung bình bình phương sai số</li>
+                <li><strong>R² Score:</strong> Tỷ lệ phương sai được giải thích (0-1)</li>
+                <li><strong>MAPE:</strong> Mean Absolute Percentage Error</li>
+            </ul>
+
+            <h3>2. Classification Problems</h3>
+            <ul>
+                <li><strong>Accuracy:</strong> Tỷ lệ dự đoán đúng</li>
+                <li><strong>Precision:</strong> Độ chính xác của dự đoán positive</li>
+                <li><strong>Recall:</strong> Khả năng tìm ra tất cả positive cases</li>
+                <li><strong>F1-Score:</strong> Trung bình điều hòa của Precision và Recall</li>
+            </ul>
+        </div>
+
+        <!-- Slide 12 -->
+        <div class="slide">
+            <h1>Case Study: Dự đoán Doanh thu Cửa hàng</h1>
+            <div class="highlight">
+                <h3>📋 Tình huống:</h3>
+                <p>Một chuỗi cửa hàng bán lẻ muốn dự đoán doanh thu hàng tuần để tối ưu hóa tồn kho và nhân sự.</p>
+            </div>
+
+            <div class="example-box">
+                <h3>Bước 1: Định nghĩa vấn đề</h3>
+                <ul>
+                    <li><strong>Business Problem:</strong> Tồn kho dư thừa/thiếu hụt gây lãng phí</li>
+                    <li><strong>ML Problem:</strong> Regression - dự đoán sales amount</li>
+                </ul>
+
+                <h3>Bước 2: Success Metrics</h3>
+                <ul>
+                    <li><strong>Business:</strong> Giảm 20% chi phí tồn kho trong Q4</li>
+                    <li><strong>Technical:</strong> RMSE < $5,000, R² > 0.80</li>
+                </ul>
+
+                <h3>Bước 3: Dữ liệu cần thiết</h3>
+                <ul>
+                    <li>Lịch sử doanh thu 2 năm, ngày lễ, chương trình khuyến mãi, thời tiết</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 13 -->
+        <div class="slide">
+            <h1>Tóm tắt Phần 1</h1>
+            <div class="highlight">
+                <h3>🎯 Key Takeaways:</h3>
+                <ul>
+                    <li><strong>Predictive Analytics</strong> giúp doanh nghiệp dự đoán tương lai từ dữ liệu quá khứ</li>
+                    <li><strong>Quy trình ML</strong> bao gồm 7 bước từ hiểu vấn đề đến triển khai</li>
+                    <li><strong>Chuyển đổi</strong> business problem sang ML problem là bước quan trọng</li>
+                    <li><strong>Success Metrics</strong> phải bao gồm cả business và technical metrics</li>
+                    <li><strong>Alignment</strong> giữa ML goals và Business goals là chìa khóa thành công</li>
+                </ul>
+            </div>
+
+            <div class="example-box" style="margin-top: 30px;">
+                <strong>💡 Nhớ rằng:</strong> ML không phải là mục đích, mà là công cụ để giải quyết vấn đề kinh doanh thực tế!
+            </div>
+        </div>
+
+        <!-- PHẦN 2: REGRESSION & LINEAR REGRESSION (12 slides) -->
+
+        <!-- Slide 14 -->
+        <div class="slide">
+            <h1>Giới thiệu về Regression</h1>
+            <h3>Regression là gì?</h3>
+            <p style="font-size: 1.2em; line-height: 1.8;">Regression là phương pháp supervised learning dùng để dự đoán giá trị liên tục (continuous value) dựa trên các biến độc lập.</p>
+
+            <div class="highlight">
+                <strong>Mục tiêu:</strong> Tìm mối quan hệ giữa biến phụ thuộc (dependent variable) và các biến độc lập (independent variables)
+            </div>
+
+            <h3>Phân loại bài toán:</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🔵 Regression</h3>
+                    <p>Output: Giá trị liên tục</p>
+                    <p><strong>Ví dụ:</strong> Dự đoán giá nhà, nhiệt độ, doanh thu</p>
+                </div>
+                <div class="card">
+                    <h3>🟢 Classification</h3>
+                    <p>Output: Nhãn/Class rời rạc</p>
+                    <p><strong>Ví dụ:</strong> Spam/Not spam, Mua/Không mua</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15 -->
+        <div class="slide">
+            <h1>Các loại Regression phổ biến</h1>
+            <ul style="font-size: 1.1em;">
+                <li><strong>Linear Regression:</strong> Mối quan hệ tuyến tính giữa X và y<br>
+                    <span style="color: #666;">→ Đơn giản, dễ hiểu, phù hợp cho bài toán cơ bản</span>
+                </li>
+                <li><strong>Polynomial Regression:</strong> Mối quan hệ phi tuyến bậc cao<br>
+                    <span style="color: #666;">→ Xử lý được quan hệ phức tạp hơn</span>
+                </li>
+                <li><strong>Ridge & Lasso Regression:</strong> Linear regression có regularization<br>
+                    <span style="color: #666;">→ Tránh overfitting, feature selection</span>
+                </li>
+                <li><strong>Decision Tree Regression:</strong> Dựa trên cây quyết định<br>
+                    <span style="color: #666;">→ Xử lý được non-linear, không cần chuẩn hóa</span>
+                </li>
+                <li><strong>Support Vector Regression (SVR):</strong> Dựa trên SVM<br>
+                    <span style="color: #666;">→ Hiệu quả với dữ liệu nhiều chiều</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Slide 16 -->
+        <div class="slide">
+            <h1>Linear Regression - Khái niệm</h1>
+            <p style="font-size: 1.2em; line-height: 1.8;">Linear Regression mô hình hóa mối quan hệ tuyến tính giữa một hoặc nhiều biến độc lập (X) và một biến phụ thuộc (y).</p>
+
+            <div class="formula">
+                y = β₀ + β₁x₁ + β₂x₂ + ... + βₙxₙ + ε
+            </div>
+
+            <div class="highlight">
+                <strong>Trong đó:</strong>
+                <ul>
+                    <li><strong>y:</strong> Biến phụ thuộc (target variable) - giá trị cần dự đoán</li>
+                    <li><strong>x₁, x₂, ..., xₙ:</strong> Các biến độc lập (features)</li>
+                    <li><strong>β₀:</strong> Intercept (hệ số chặn) - giá trị y khi tất cả x = 0</li>
+                    <li><strong>β₁, β₂, ..., βₙ:</strong> Coefficients (hệ số góc) - độ ảnh hưởng của mỗi feature</li>
+                    <li><strong>ε:</strong> Error term (sai số ngẫu nhiên)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 17 -->
+        <div class="slide">
+            <h1>Linear Regression - Phân loại</h1>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Simple Linear Regression</h3>
+                    <p style="margin: 15px 0;">Chỉ có 1 biến độc lập</p>
+                    <div class="formula" style="font-size: 1.2em;">
+                        y = β₀ + β₁x + ε
+                    </div>
+                    <div class="example-box">
+                        <strong>Ví dụ:</strong><br>
+                        Dự đoán doanh thu (y) dựa trên chi phí quảng cáo (x)
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Multiple Linear Regression</h3>
+                    <p style="margin: 15px 0;">Có nhiều biến độc lập</p>
+                    <div class="formula" style="font-size: 1.2em;">
+                        y = β₀ + β₁x₁ + β₂x₂ + ... + ε
+                    </div>
+                    <div class="example-box">
+                        <strong>Ví dụ:</strong><br>
+                        Dự đoán giá nhà dựa trên diện tích, số phòng, vị trí
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18 -->
+        <div class="slide">
+            <h1>Cách hoạt động của Linear Regression</h1>
+            <h3>Mục tiêu: Tìm đường thẳng "tốt nhất" (Best Fit Line)</h3>
+            
+            <div class="example-box">
+                <p style="font-size: 1.1em;">Cho tập dữ liệu gồm n điểm dữ liệu (x, y), chúng ta cần tìm đường thẳng sao cho:</p>
+                <div class="formula">
+                    Tổng khoảng cách từ các điểm đến đường thẳng là nhỏ nhất
+                </div>
+            </div>
+
+            <h3>Phương pháp: Ordinary Least Squares (OLS)</h3>
+            <div class="highlight">
+                <strong>Cost Function (Hàm mất mát):</strong>
+                <div class="formula">
+                    J(β) = (1/2n) Σ(yᵢ - ŷᵢ)²
+                </div>
+                <p style="margin-top: 15px;">Trong đó:</p>
+                <ul>
+                    <li><strong>yᵢ:</strong> Giá trị thực tế</li>
+                    <li><strong>ŷᵢ:</strong> Giá trị dự đoán (= β₀ + β₁x₁ + ...)</li>
+                    <li><strong>Mục tiêu:</strong> Minimize J(β)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 19 -->
+        <div class="slide">
+            <h1>Giả định của Linear Regression</h1>
+            <p style="font-size: 1.1em; margin-bottom: 20px;">Để Linear Regression hoạt động tốt, dữ liệu cần thỏa mãn các giả định sau:</p>
+
+            <ul style="font-size: 1.05em;">
+                <li><strong>1. Linearity (Tính tuyến tính):</strong><br>
+                    Mối quan hệ giữa X và y là tuyến tính
+                </li>
+                <li><strong>2. Independence (Độc lập):</strong><br>
+                    Các quan sát độc lập với nhau (không có autocorrelation)
+                </li>
+                <li><strong>3. Homoscedasticity (Phương sai đồng nhất):</strong><br>
+                    Phương sai của sai số là không đổi
+                </li>
+                <li><strong>4. Normality (Phân phối chuẩn):</strong><br>
+                    Sai số tuân theo phân phối chuẩn
+                </li>
+                <li><strong>5. No Multicollinearity:</strong><br>
+                    Các biến độc lập không có tương quan cao với nhau
+                </li>
+            </ul>
+
+            <div class="highlight" style="margin-top: 20px;">
+                <strong>⚠️ Lưu ý:</strong> Vi phạm các giả định này có thể dẫn đến dự đoán không chính xác!
+            </div>
+        </div>
+
+        <!-- Slide 20 -->
+        <div class="slide">
+            <h1>Ví dụ minh họa: Simple Linear Regression</h1>
+            <div class="example-box">
+                <h3>📊 Bài toán: Dự đoán Doanh thu từ Chi phí Quảng cáo</h3>
+                <p><strong>Dataset:</strong> 10 cửa hàng với chi phí quảng cáo và doanh thu tương ứng</p>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Cửa hàng</th>
+                    <th>Chi phí QC (triệu VNĐ)</th>
+                    <th>Doanh thu (triệu VNĐ)</th>
+                </tr>
+                <tr><td>1</td><td>10</td><td>50</td></tr>
+                <tr><td>2</td><td>15</td><td>65</td></tr>
+                <tr><td>3</td><td>20</td><td>80</td></tr>
+                <tr><td>4</td><td>25</td><td>90</td></tr>
+                <tr><td>5</td><td>30</td><td>105</td></tr>
+            </table>
+
+            <div class="highlight" style="margin-top: 20px;">
+                <strong>Mục tiêu:</strong> Tìm phương trình: <code>Doanh thu = β₀ + β₁ × Chi_phí_QC</code>
+            </div>
+        </div>
+
+        <!-- Slide 21 -->
+        <div class="slide">
+            <h1>Ví dụ minh họa (tiếp) - Kết quả</h1>
+            <div class="example-box">
+                <h3>🎯 Kết quả sau khi train model:</h3>
+                <div class="formula">
+                    Doanh thu = 25.5 + 2.65 × Chi_phí_QC
+                </div>
+            </div>
+
+            <div class="highlight">
+                <h3>Diễn giải kết quả:</h3>
+                <ul>
+                    <li><strong>β₀ = 25.5:</strong> Khi chi phí quảng cáo = 0, doanh thu dự kiến là 25.5 triệu<br>
+                        <span style="color: #666;">(Có thể là doanh thu từ khách hàng cũ, word-of-mouth...)</span>
+                    </li>
+                    <li><strong>β₁ = 2.65:</strong> Mỗi triệu VNĐ tăng chi phí quảng cáo → Doanh thu tăng 2.65 triệu<br>
+                        <span style="color: #666;">→ ROI = 2.65 (hay 265%)</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="example-box" style="margin-top: 20px;">
+                <strong>💰 Dự đoán:</strong> Nếu chi 40 triệu cho quảng cáo:<br>
+                <code>Doanh thu = 25.5 + 2.65 × 40 = 131.5 triệu VNĐ</code>
+            </div>
+        </div>
+
+        <!-- Slide 22 -->
+        <div class="slide">
+            <h1>Ví dụ minh họa: Multiple Linear Regression</h1>
+            <div class="example-box">
+                <h3>🏠 Bài toán: Dự đoán Giá Nhà</h3>
+                <p><strong>Features:</strong> Diện tích (m²), Số phòng ngủ, Tuổi nhà (năm)</p>
+            </div>
+
+            <table style="font-size: 0.95em;">
+                <tr>
+                    <th>Diện tích</th>
+                    <th>Số phòng</th>
+                    <th>Tuổi nhà</th>
+                    <th>Giá (tỷ VNĐ)</th>
+                </tr>
+                <tr><td>80</td><td>2</td><td>5</td><td>3.5</td></tr>
+                <tr><td>100</td><td>3</td><td>3</td><td>5.0</td></tr>
+                <tr><td>120</td><td>3</td><td>10</td><td>4.8</td></tr>
+                <tr><td>150</td><td>4</td><td>2</td><td>7.2</td></tr>
+            </table>
+
+            <div class="highlight" style="margin-top: 20px;">
+                <strong>Model:</strong>
+                <div class="formula">
+                    Giá = β₀ + β₁×Diện_tích + β₂×Số_phòng + β₃×Tuổi_nhà
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 23 -->
+        <div class="slide">
+            <h1>Multiple Regression - Kết quả & Diễn giải</h1>
+            <div class="example-box">
+                <h3>🎯 Model sau khi train:</h3>
+                <div class="formula">
+                    Giá = 0.5 + 0.035×Diện_tích + 0.4×Số_phòng - 0.08×Tuổi_nhà
+                </div>
+            </div>
+
+            <div class="highlight">
+                <h3>📊 Diễn giải coefficients:</h3>
+                <ul>
+                    <li><strong>β₁ = 0.035:</strong> Cố định số phòng và tuổi nhà, mỗi m² tăng → giá tăng 35 triệu VNĐ</li>
+                    <li><strong>β₂ = 0.4:</strong> Cố định diện tích và tuổi, mỗi phòng thêm → giá tăng 0.4 tỷ</li>
+                    <li><strong>β₃ = -0.08:</strong> Cố định các yếu tố khác, mỗi năm cũ hơn → giá giảm 80 triệu</li>
+                </ul>
+            </div>
+
+            <div class="example-box" style="margin-top: 20px;">
+                <strong>💡 Dự đoán:</strong> Nhà 110m², 3 phòng, 7 năm tuổi:<br>
+                <code>Giá = 0.5 + 0.035×110 + 0.4×3 - 0.08×7 = 4.49 tỷ VNĐ</code>
+            </div>
+        </div>
+
+        <!-- Slide 24 -->
+        <div class="slide">
+            <h1>Ưu điểm và Hạn chế của Linear Regression</h1>
+            <div class="grid-2">
+                <div class="card" style="background: #d4edda; border-color: #28a745;">
+                    <h3>✅ Ưu điểm</h3>
+                    <ul>
+                        <li>Đơn giản, dễ hiểu và dễ triển khai</li>
+                        <li>Tốc độ training nhanh</li>
+                        <li>Dễ dàng diễn giải kết quả</li>
+                        <li>Hoạt động tốt khi quan hệ là tuyến tính</li>
+                        <li>Ít tham số, ít overfitting</li>
+                        <li>Cơ sở cho nhiều thuật toán phức tạp</li>
+                    </ul>
+                </div>
+                <div class="card" style="background: #f8d7da; border-color: #dc3545;">
+                    <h3>❌ Hạn chế</h3>
+                    <ul>
+                        <li>Giả định quan hệ tuyến tính</li>
+                        <li>Nhạy cảm với outliers</li>
+                        <li>Yêu cầu các giả định thống kê</li>
+                        <li>Không xử lý tốt non-linear</li>
+                        <li>Multicollinearity gây vấn đề</li>
+                        <li>Cần feature scaling phù hợp</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 25 -->
+        <div class="slide">
+            <h1>Tóm tắt Phần 2: Regression</h1>
+            <div class="highlight">
+                <h3>🎯 Key Takeaways:</h3>
+                <ul>
+                    <li><strong>Regression</strong> dùng để dự đoán giá trị liên tục</li>
+                    <li><strong>Linear Regression</strong> mô hình hóa quan hệ tuyến tính: y = β₀ + β₁x₁ + ...</li>
+                    <li><strong>Simple vs Multiple:</strong> 1 biến độc lập vs nhiều biến độc lập</li>
+                    <li><strong>OLS (Ordinary Least Squares):</strong> Minimize tổng bình phương sai số</li>
+                    <li><strong>Coefficients</strong> cho biết mức độ ảnh hưởng của từng feature</li>
+                    <li><strong>Giả định:</strong> Linearity, Independence, Homoscedasticity, Normality, No Multicollinearity</li>
+                </ul>
+            </div>
+
+            <div class="example-box" style="margin-top: 30px;">
+                <strong>💡 Nhớ:</strong> Linear Regression đơn giản nhưng mạnh mẽ - nên là baseline đầu tiên cho bài toán regression!
+            </div>
+        </div>
+
+        <!-- PHẦN 3: CÁC BƯỚC QUAN TRỌNG TRONG QUY TRÌNH MODELING (5 slides) -->
+
+        <!-- Slide 26 -->
+        <div class="slide">
+            <h1>Quy trình Modeling: Tổng quan</h1>
+            <div class="process-step">Bước 1: Thu thập và Chuẩn bị Dữ liệu (Data Collection & Preparation)</div>
+            
+            <div class="process-step">Bước 2: Khám phá Dữ liệu (Exploratory Data Analysis - EDA)</div>
+            
+            <div class="process-step">Bước 3: Feature Engineering và Preprocessing</div>
+            
+            <div class="process-step">Bước 4: Chia tách Dữ liệu (Train/Validation/Test Split)</div>
+            
+            <div class="process-step">Bước 5: Xây dựng và Đánh giá Mô hình (Model Building & Evaluation)</div>
+
+            <div class="highlight" style="margin-top: 30px;">
+                <strong>⚡ Quan trọng:</strong> Mỗi bước đều ảnh hưởng trực tiếp đến chất lượng cuối cùng của mô hình!
+            </div>
+        </div>
+
+        <!-- Slide 27 -->
+        <div class="slide">
+            <h1>Bước 1: Thu thập và Chuẩn bị Dữ liệu</h1>
+            <h3>1.1. Data Collection (Thu thập dữ liệu)</h3>
+            <ul>
+                <li>Xác định nguồn dữ liệu: Database, APIs, Files, Web scraping</li>
+                <li>Đảm bảo dữ liệu đủ lớn và đại diện</li>
+                <li>Kiểm tra quyền truy cập và tính hợp pháp</li>
+            </ul>
+
+            <h3>1.2. Data Cleaning (Làm sạch dữ liệu)</h3>
+            <ul>
+                <li><strong>Missing values:</strong> Xử lý giá trị thiếu (imputation, xóa bỏ)</li>
+                <li><strong>Duplicates:</strong> Loại bỏ dữ liệu trùng lặp</li>
+                <li><strong>Outliers:</strong> Phát hiện và xử lý ngoại lệ</li>
+                <li><strong>Data types:</strong> Đảm bảo kiểu dữ liệu đúng</li>
+                <li><strong>Inconsistencies:</strong> Chuẩn hóa format (dates, text...)</li>
+            </ul>
+
+            <div class="highlight">
+                <strong>💡 Rule of thumb:</strong> Data cleaning chiếm 60-80% thời gian của data science project!
+            </div>
+        </div>
+
+        <!-- Slide 28 -->
+        <div class="slide">
+            <h1>Bước 2: Exploratory Data Analysis (EDA)</h1>
+            <h3>Mục đích: Hiểu sâu về dữ liệu trước khi modeling</h3>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>📊 Descriptive Statistics</h3>
+                    <ul>
+                        <li>Mean, median, mode</li>
+                        <li>Standard deviation</li>
+                        <li>Min, max, quartiles</li>
+                        <li>Correlation matrix</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>📈 Visualization</h3>
+                    <ul>
+                        <li>Histograms (phân phối)</li>
+                        <li>Scatter plots (quan hệ)</li>
+                        <li>Box plots (outliers)</li>
+                        <li>Heatmap (correlation)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="example-box" style="margin-top: 20px;">
+                <h3>🔍 Câu hỏi cần trả lời trong EDA:</h3>
+                <ul>
+                    <li>Features nào có correlation cao với target?</li>
+                    <li>Có missing values hay outliers không?</li>
+                    <li>Phân phối của các biến như thế nào?</li>
+                    <li>Có multicollinearity giữa các features không?</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 29 -->
+        <div class="slide">
+            <h1>Bước 3: Feature Engineering & Preprocessing</h1>
+            <h3>3.1. Feature Engineering</h3>
+            <ul>
+                <li><strong>Feature Creation:</strong> Tạo features mới từ features hiện có<br>
+                    <span style="color: #666;">VD: BMI = weight / (height²), Total_rooms = bedrooms + bathrooms</span>
+                </li>
+                <li><strong>Feature Selection:</strong> Chọn features quan trọng nhất<br>
+                    <span style="color: #666;">VD: Correlation analysis, Feature importance</span>
+                </li>
+                <li><strong>Feature Transformation:</strong> Biến đổi features<br>
+                    <span style="color: #666;">VD: Log transformation, Polynomial features</span>
+                </li>
+            </ul>
+
+            <h3>3.2. Data Preprocessing</h3>
+            <ul>
+                <li><strong>Scaling:</strong> StandardScaler, MinMaxScaler</li>
+                <li><strong>Encoding:</strong> One-Hot Encoding, Label Encoding (cho categorical)</li>
+                <li><strong>Handling Imbalance:</strong> Oversampling, Undersampling (nếu cần)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 30 -->
+        <div class="slide">
+            <h1>Bước 4: Chia tách Dữ liệu (Data Splitting)</h1>
+            <h3>Tại sao cần chia dữ liệu?</h3>
+            <p style="font-size: 1.1em; line-height: 1.8;">Để đánh giá mô hình một cách khách quan trên dữ liệu mà mô hình chưa từng thấy (unseen data).</p>
+
+            <div class="highlight">
+                <h3>📦 Cách chia phổ biến:</h3>
+                <ul>
+                    <li><strong>Training Set (60-80%):</strong> Dùng để train mô hình</li>
+                    <li><strong>Validation Set (10-20%):</strong> Dùng để tune hyperparameters</li>
+                    <li><strong>Test Set (10-20%):</strong> Đánh giá cuối cùng, KHÔNG được dùng trong quá trình training</li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+from sklearn.model_selection import train_test_split
+
+# Chia train/test (80/20)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+            </div>
+
+            <div class="example-box">
+                <strong>⚠️ Lưu ý:</strong> Luôn shuffle data và sử dụng random_state để tái tạo kết quả!
+            </div>
+        </div>
+
+        <!-- Slide 31 -->
+        <div class="slide">
+            <h1>Bước 5: Xây dựng và Đánh giá Mô hình</h1>
+            <h3>5.1. Model Training</h3>
+            <ul>
+                <li>Chọn thuật toán phù hợp với bài toán</li>
+                <li>Fit mô hình trên training data</li>
+                <li>Tune hyperparameters trên validation set</li>
+            </ul>
+
+            <h3>5.2. Model Evaluation</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Regression Metrics</h3>
+                    <ul>
+                        <li><strong>R² Score:</strong> 0-1, cao hơn tốt hơn</li>
+                        <li><strong>RMSE:</strong> Càng thấp càng tốt</li>
+                        <li><strong>MAE:</strong> Dễ diễn giải</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Diagnostic Checks</h3>
+                    <ul>
+                        <li>Residual analysis</li>
+                        <li>Learning curves</li>
+                        <li>Cross-validation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight" style="margin-top: 20px;">
+                <strong>🎯 Mục tiêu:</strong> Balance giữa bias và variance, tránh overfitting/underfitting
+            </div>
+        </div>
+
+        <!-- PHẦN 4: XÂY DỰNG VÀ TRIỂN KHAI LINEAR REGRESSION (6 slides) -->
+
+        <!-- Slide 32 -->
+        <div class="slide">
+            <h1>Xây dựng Linear Regression với Python</h1>
+            <h3>Libraries cần thiết:</h3>
+            <div class="code-block">
+# Import libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+from sklearn.preprocessing import StandardScaler
+            </div>
+
+            <div class="highlight">
+                <h3>🔧 Scikit-learn: Thư viện ML phổ biến nhất</h3>
+                <ul>
+                    <li>API đơn giản, nhất quán</li>
+                    <li>Tích hợp nhiều thuật toán</li>
+                    <li>Documentation chi tiết</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 33 -->
+        <div class="slide">
+            <h1>Bước 1: Load và Khám phá Dữ liệu</h1>
+            <div class="code-block">
+# Load data
+df = pd.read_csv('sales_data.csv')
+
+# Khám phá cơ bản
+print(df.head())          # 5 dòng đầu
+print(df.info())          # Thông tin tổng quan
+print(df.describe())      # Thống kê mô tả
+
+# Kiểm tra missing values
+print(df.isnull().sum())
+
+# Correlation matrix
+correlation = df.corr()
+sns.heatmap(correlation, annot=True, cmap='coolwarm')
+plt.show()
+            </div>
+
+            <div class="example-box">
+                <strong>💡 Tips:</strong> Dành thời gian hiểu dữ liệu sẽ giúp bạn build mô hình tốt hơn!
+            </div>
+        </div>
+
+        <!-- Slide 34 -->
+        <div class="slide">
+            <h1>Bước 2: Chuẩn bị Dữ liệu</h1>
+            <div class="code-block">
+# Xử lý missing values
+df = df.dropna()  # Hoặc df.fillna(method='ffill')
+
+# Chọn features và target
+X = df[['advertising_spend', 'promotion', 'competition']]
+y = df['sales']
+
+# Chia train/test
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Feature scaling (optional cho Linear Regression)
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+print(f"Train size: {len(X_train)}, Test size: {len(X_test)}")
+            </div>
+
+            <div class="highlight">
+                <strong>⚠️ Quan trọng:</strong> fit_transform trên train, chỉ transform trên test!
+            </div>
+        </div>
+
+        <!-- Slide 35 -->
+        <div class="slide">
+            <h1>Bước 3: Training Mô hình</h1>
+            <div class="code-block">
+# Khởi tạo model
+model = LinearRegression()
+
+# Training (fit) model
+model.fit(X_train, y_train)
+
+# Xem coefficients
+print("Intercept (β₀):", model.intercept_)
+print("Coefficients (β₁, β₂, ...):", model.coef_)
+
+# Feature names và coefficients
+feature_names = X.columns
+for name, coef in zip(feature_names, model.coef_):
+    print(f"{name}: {coef:.4f}")
+            </div>
+
+            <div class="example-box">
+                <h3>📊 Output ví dụ:</h3>
+                <pre style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px;">
+Intercept (β₀): 25.5
+advertising_spend: 2.65
+promotion: 1.85
+competition: -0.92
+                </pre>
+            </div>
+        </div>
+
+        <!-- Slide 36 -->
+        <div class="slide">
+            <h1>Bước 4: Dự đoán và Đánh giá</h1>
+            <div class="code-block">
+# Dự đoán trên test set
+y_pred = model.predict(X_test)
+
+# Tính các metrics
+r2 = r2_score(y_test, y_pred)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+mae = mean_absolute_error(y_test, y_pred)
+
+print(f"R² Score: {r2:.4f}")
+print(f"RMSE: {rmse:.4f}")
+print(f"MAE: {mae:.4f}")
+
+# So sánh actual vs predicted
+comparison = pd.DataFrame({
+    'Actual': y_test,
+    'Predicted': y_pred,
+    'Difference': y_test - y_pred
+})
+print(comparison.head(10))
+            </div>
+        </div>
+
+        <!-- Slide 37 -->
+        <div class="slide">
+            <h1>Bước 5: Visualization và Residual Analysis</h1>
+            <div class="code-block">
+# 1. Actual vs Predicted plot
+plt.figure(figsize=(10, 6))
+plt.scatter(y_test, y_pred, alpha=0.6)
+plt.plot([y_test.min(), y_test.max()], 
+         [y_test.min(), y_test.max()], 
+         'r--', lw=2)
+plt.xlabel('Actual Sales')
+plt.ylabel('Predicted Sales')
+plt.title('Actual vs Predicted Sales')
+plt.show()
+
+# 2. Residual plot
+residuals = y_test - y_pred
+plt.figure(figsize=(10, 6))
+plt.scatter(y_pred, residuals, alpha=0.6)
+plt.axhline(y=0, color='r', linestyle='--')
+plt.xlabel('Predicted Values')
+plt.ylabel('Residuals')
+plt.title('Residual Plot')
+plt.show()
+            </div>
+        </div>
+
+        <!-- PHẦN 5: DIỄN GIẢI KẾT QUẢ VÀ RÚT RA INSIGHTS (6 slides) -->
+
+        <!-- Slide 38 -->
+        <div class="slide">
+            <h1>Diễn giải R² Score</h1>
+            <div class="formula">
+                R² = 1 - (SS_res / SS_tot)
+            </div>
+            <p style="text-align: center; margin: 20px 0; font-size: 1.1em;">
+                Tỷ lệ phương sai của biến phụ thuộc được giải thích bởi mô hình
+            </p>
+
+            <div class="highlight">
+                <h3>📊 Cách hiểu R² Score:</h3>
+                <ul>
+                    <li><strong>R² = 0.85:</strong> Mô hình giải thích được 85% sự biến thiên của dữ liệu</li>
+                    <li><strong>Giá trị:</strong> 0 đến 1 (càng cao càng tốt)</li>
+                    <li><strong>R² = 1:</strong> Perfect fit (hiếm khi xảy ra, cẩn thận overfitting)</li>
+                    <li><strong>R² = 0:</strong> Mô hình không tốt hơn dự đoán bằng mean</li>
+                    <li><strong>R² < 0:</strong> Mô hình tệ hơn cả baseline</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <strong>💼 Business Context:</strong> R² = 0.82 nghĩa là mô hình dự đoán doanh thu chính xác 82%, còn 18% bị ảnh hưởng bởi các yếu tố khác chưa có trong model.
+            </div>
+        </div>
+
+        <!-- Slide 39 -->
+        <div class="slide">
+            <h1>Diễn giải Coefficients</h1>
+            <div class="example-box">
+                <h3>🏪 Case Study: Dự đoán Doanh thu</h3>
+                <div class="code-block">
+Model: Sales = 25.5 + 2.65*Ad_Spend + 1.85*Promotion - 0.92*Competition
+R² = 0.84, RMSE = 5.2
+                </div>
+            </div>
+
+            <div class="highlight">
+                <h3>📈 Insights từ Coefficients:</h3>
+                <ul>
+                    <li><strong>Advertising Spend (2.65):</strong><br>
+                        → Mỗi 1 triệu VNĐ tăng chi phí quảng cáo → Doanh thu tăng 2.65 triệu<br>
+                        → <strong>ROI = 165%</strong> - Đáng giá để đầu tư!
+                    </li>
+                    <li><strong>Promotion (1.85):</strong><br>
+                        → Có chương trình khuyến mãi → Doanh thu tăng trung bình 1.85 triệu<br>
+                        → Nên tổ chức promotion thường xuyên
+                    </li>
+                    <li><strong>Competition (-0.92):</strong><br>
+                        → Mỗi đối thủ cạnh tranh thêm → Doanh thu giảm 0.92 triệu<br>
+                        → Cần chiến lược để differentiate
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 40 -->
+        <div class="slide">
+            <h1>Phân tích Residuals</h1>
+            <h3>Residual = Actual - Predicted</h3>
+            <p style="font-size: 1.1em; line-height: 1.8;">Phân tích residuals giúp kiểm tra giả định và phát hiện vấn đề của mô hình.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>✅ Residuals tốt</h3>
+                    <ul>
+                        <li>Phân phối gần chuẩn</li>
+                        <li>Mean ≈ 0</li>
+                        <li>Không có pattern</li>
+                        <li>Homoscedastic (phương sai đồng nhất)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>❌ Dấu hiệu vấn đề</h3>
+                    <ul>
+                        <li>Có pattern rõ ràng</li>
+                        <li>Heteroscedasticity</li>
+                        <li>Outliers lớn</li>
+                        <li>Non-normal distribution</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight" style="margin-top: 20px;">
+                <strong>🔍 Actions:</strong>
+                <ul>
+                    <li>Pattern trong residuals → Thử polynomial regression hoặc add features</li>
+                    <li>Heteroscedasticity → Transform data (log, sqrt)</li>
+                    <li>Outliers → Investigate và xử lý</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 41 -->
+        <div class="slide">
+            <h1>Rút ra Business Insights</h1>
+            <div class="highlight">
+                <h3>🎯 Từ Model đến Action:</h3>
+                <ol style="font-size: 1.05em;">
+                    <li><strong>Identify Key Drivers</strong><br>
+                        Feature nào có impact lớn nhất? → Prioritize resources
+                    </li>
+                    <li><strong>Quantify Impact</strong><br>
+                        Coefficients cho biết ROI cụ thể → Data-driven decisions
+                    </li>
+                    <li><strong>Scenario Analysis</strong><br>
+                        "What-if" scenarios: Nếu tăng budget 20% thì doanh thu tăng bao nhiêu?
+                    </li>
+                    <li><strong>Identify Gaps</strong><br>
+                        R² = 0.82 → 18% chưa giải thích được → Tìm features mới
+                    </li>
+                </ol>
+            </div>
+
+            <div class="example-box" style="margin-top: 20px;">
+                <strong>💰 Example Business Actions:</strong>
+                <ul>
+                    <li>Tăng advertising budget vì ROI cao (2.65x)</li>
+                    <li>Tập trung vào differentiation để giảm impact của competition</li>
+                    <li>Schedule promotions vào thời điểm có coefficient cao</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 42 -->
+        <div class="slide">
+            <h1>Limitations và Cách cải thiện</h1>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>⚠️ Limitations</h3>
+                    <ul>
+                        <li><strong>Causation ≠ Correlation</strong><br>
+                            Mô hình chỉ cho biết correlation, không chứng minh causation
+                        </li>
+                        <li><strong>Extrapolation Risk</strong><br>
+                            Dự đoán ngoài phạm vi training data không đáng tin
+                        </li>
+                        <li><strong>Feature Limitations</strong><br>
+                            Chỉ tốt bằng features được cung cấp
+                        </li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🚀 Cách cải thiện</h3>
+                    <ul>
+                        <li><strong>Add More Features</strong><br>
+                            Thu thập thêm dữ liệu relevant
+                        </li>
+                        <li><strong>Feature Engineering</strong><br>
+                            Tạo interaction terms, polynomial
+                        </li>
+                        <li><strong>Try Advanced Models</strong><br>
+                            Ridge, Lasso, Random Forest
+                        </li>
+                        <li><strong>More Data</strong><br>
+                            Tăng kích thước dataset
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 43 -->
+        <div class="slide">
+            <h1>Model Deployment: Đưa vào Production</h1>
+            <h3>Các bước triển khai:</h3>
+            <div class="process-step">1. Model Serialization</div>
+            <div class="code-block">
+import pickle
+
+# Save model
+with open('sales_model.pkl', 'wb') as f:
+    pickle.dump(model, f)
+
+# Load model
+with open('sales_model.pkl', 'rb') as f:
+    loaded_model = pickle.load(f)
+            </div>
+
+            <div class="process-step">2. Create Prediction API/Service</div>
+            <ul>
+                <li>Flask/FastAPI cho REST API</li>
+                <li>Docker containerization</li>
+                <li>Cloud deployment (AWS, GCP, Azure)</li>
+            </ul>
+
+            <div class="process-step">3. Monitoring & Maintenance</div>
+            <ul>
+                <li>Track prediction accuracy theo thời gian</li>
+                <li>Retrain model định kỳ với dữ liệu mới</li>
+                <li>A/B testing cho model updates</li>
+            </ul>
+        </div>
+
+        <!-- Slide 44 -->
+        <div class="slide">
+            <h1>Best Practices & Tips</h1>
+            <div class="highlight">
+                <h3>✨ Best Practices:</h3>
+                <ul>
+                    <li><strong>Start Simple:</strong> Luôn bắt đầu với Linear Regression làm baseline</li>
+                    <li><strong>Understand Data:</strong> EDA kỹ lưỡng trước khi modeling</li>
+                    <li><strong>Feature Engineering:</strong> Đây là nơi tạo ra sự khác biệt lớn nhất</li>
+                    <li><strong>Cross-Validation:</strong> Sử dụng CV để đánh giá robust hơn</li>
+                    <li><strong>Document Everything:</strong> Code, decisions, assumptions</li>
+                    <li><strong>Think Business:</strong> Luôn liên kết technical metrics với business value</li>
+                </ul>
+            </div>
+
+            <div class="example-box" style="margin-top: 20px;">
+                <strong>⚡ Pro Tips:</strong>
+                <ul>
+                    <li>Sử dụng version control (Git) cho code và data</li>
+                    <li>Set random_state để reproducible results</li>
+                    <li>Validate assumptions trước khi trust kết quả</li>
+                    <li>Communicate với stakeholders bằng ngôn ngữ business</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 45 -->
+        <div class="slide">
+            <h1>Tổng kết toàn bộ khóa học</h1>
+            <div class="highlight">
+                <h3>🎓 Những gì đã học:</h3>
+                <ol style="font-size: 1.05em; line-height: 2;">
+                    <li><strong>Predictive Analytics:</strong> Ứng dụng ML trong kinh doanh</li>
+                    <li><strong>Quy trình ML:</strong> 7 bước từ business problem đến deployment</li>
+                    <li><strong>Success Metrics:</strong> Định nghĩa và đo lường thành công</li>
+                    <li><strong>Regression Theory:</strong> Concepts và assumptions</li>
+                    <li><strong>Linear Regression:</strong> Simple & Multiple, công thức, giả định</li>
+                    <li><strong>Modeling Process:</strong> Data prep, EDA, feature engineering, splitting, evaluation</li>
+                    <li><strong>Python Implementation:</strong> Scikit-learn, visualization</li>
+                    <li><strong>Interpretation:</strong> Coefficients, R², residuals, business insights</li>
+                </ol>
+            </div>
+
+            <div class="example-box" style="margin-top: 30px; text-align: center;">
+                <h3>🚀 Next Steps:</h3>
+                <p style="font-size: 1.1em;">Thực hành với real datasets, tham gia Kaggle competitions, và áp dụng vào projects thực tế!</p>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+            <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+        </div>
+        <div class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">45</span>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = document.querySelectorAll('.slide').length;
+        
+        document.getElementById('totalSlides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n > totalSlides) currentSlide = totalSlides;
+            if (n < 1) currentSlide = 1;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide - 1].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = currentSlide;
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function changeSlide(n) {
+            currentSlide += n;
+            showSlide(currentSlide);
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') changeSlide(-1);
+            if (event.key === 'ArrowRight') changeSlide(1);
+        });
+        
+        // Initialize
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
