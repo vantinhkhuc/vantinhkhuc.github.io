@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Machine Learning cho Phân tích Kinh doanh</title>
+    <title>Supervised Learning: Customer Churn Prediction</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -46,21 +46,21 @@
         }
 
         h1 {
-            color: #667eea;
+            color: #1e3c72;
             font-size: 2.5em;
             margin-bottom: 30px;
-            border-bottom: 4px solid #667eea;
+            border-bottom: 4px solid #1e3c72;
             padding-bottom: 15px;
         }
 
         h2 {
-            color: #764ba2;
+            color: #2a5298;
             font-size: 2em;
             margin-bottom: 25px;
         }
 
         h3 {
-            color: #667eea;
+            color: #1e3c72;
             font-size: 1.5em;
             margin: 25px 0 15px 0;
         }
@@ -83,11 +83,11 @@
         }
 
         .highlight {
-            background: linear-gradient(120deg, #ffeaa7 0%, #fdcb6e 100%);
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
             padding: 20px;
             border-radius: 10px;
             margin: 20px 0;
-            border-left: 5px solid #764ba2;
+            border-left: 5px solid #1e3c72;
         }
 
         .code-block {
@@ -108,15 +108,39 @@
             text-align: center;
             font-size: 1.3em;
             margin: 20px 0;
-            border: 2px solid #667eea;
+            border: 2px solid #1e3c72;
         }
 
         .example-box {
-            background: #e8f4f8;
+            background: #fff3cd;
             padding: 20px;
             border-radius: 10px;
             margin: 20px 0;
-            border-left: 5px solid #667eea;
+            border-left: 5px solid #ffc107;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #17a2b8;
+        }
+
+        .success-box {
+            background: #d4edda;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #28a745;
+        }
+
+        .warning-box {
+            background: #f8d7da;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #dc3545;
         }
 
         .controls {
@@ -127,7 +151,7 @@
         }
 
         button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             border: none;
             padding: 15px 40px;
@@ -135,12 +159,12 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
         }
 
-        button:hover {
+        button:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 8px 25px rgba(30, 60, 114, 0.6);
         }
 
         button:disabled {
@@ -162,6 +186,13 @@
             margin: 20px 0;
         }
 
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
         .card {
             background: #f8f9fa;
             padding: 20px;
@@ -170,7 +201,7 @@
         }
 
         .process-step {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             padding: 15px;
             border-radius: 10px;
@@ -191,12 +222,12 @@
         }
 
         th {
-            background: #667eea;
+            background: #1e3c72;
             color: white;
         }
 
         .metric-box {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
             padding: 20px;
             border-radius: 10px;
             margin: 15px 0;
@@ -205,7 +236,20 @@
         }
 
         strong {
-            color: #764ba2;
+            color: #1e3c72;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .visual-diagram {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            border: 3px solid #1e3c72;
         }
     </style>
 </head>
@@ -213,1208 +257,2560 @@
     <div class="container">
         <!-- Slide 1: Title -->
         <div class="slide active">
-            <h1 style="text-align: center; font-size: 3em; margin-top: 100px;">Machine Learning cho Phân tích Kinh doanh</h1>
-            <p class="subtitle" style="text-align: center; margin-top: 30px; font-size: 1.5em;">Áp dụng Predictive Analytics và Linear Regression</p>
-            <p style="text-align: center; margin-top: 50px; font-size: 1.2em; color: #666;">Môn: Phân tích Dữ liệu<br>Dành cho sinh viên năm 3</p>
+            <h1 class="center" style="font-size: 3em; margin-top: 80px;">Supervised Learning:<br>Predicting Customer Churn</h1>
+            <p class="subtitle center" style="margin-top: 40px; font-size: 1.5em;">Classification with Logistic Regression</p>
+            <p class="center" style="margin-top: 50px; font-size: 1.2em; color: #666;">
+                Phân tích Dữ liệu trong Kinh doanh<br>
+                Dành cho sinh viên năm 3 - Thương mại Điện tử
+            </p>
         </div>
 
-        <!-- PHẦN 1: MACHINE LEARNING TRONG KINH DOANH (12 slides) -->
+        <!-- PHẦN 1: GIỚI THIỆU (Slides 2-6) -->
 
         <!-- Slide 2 -->
         <div class="slide">
-            <h1>Giới thiệu về Predictive Analytics</h1>
-            <h3>Predictive Analytics là gì?</h3>
-            <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 20px;">Predictive Analytics là việc sử dụng dữ liệu lịch sử, thuật toán thống kê và kỹ thuật machine learning để dự đoán kết quả tương lai.</p>
-            
+            <h1>Mục tiêu Học tập</h1>
             <div class="highlight">
-                <strong>Mục tiêu:</strong> Chuyển đổi dữ liệu thành thông tin có giá trị để hỗ trợ ra quyết định kinh doanh
+                <h3>🎯 Sau khi hoàn thành bài học, sinh viên có khả năng:</h3>
             </div>
-
-            <h3>Tại sao quan trọng trong Kinh doanh?</h3>
-            <ul>
-                <li>Dự đoán nhu cầu khách hàng</li>
-                <li>Tối ưu hóa chiến lược marketing</li>
-                <li>Giảm rủi ro tài chính</li>
-                <li>Cải thiện hiệu quả vận hành</li>
-            </ul>
+            <ol style="font-size: 1.15em; line-height: 2.2;">
+                <li><strong>Hiểu và áp dụng Supervised Learning</strong> cho bài toán classification</li>
+                <li><strong>Thực hiện classification tasks</strong> sử dụng Logistic Regression</li>
+                <li><strong>Triển khai pipeline OSEMN</strong> (Obtain, Scrub, Explore, Model, iNterpret)</li>
+                <li><strong>Phân tích mối quan hệ</strong> giữa biến target và explanatory variables</li>
+                <li><strong>Lựa chọn features hiệu quả</strong> để xây dựng predictive models</li>
+                <li><strong>Xây dựng và đánh giá churn model</strong> với Logistic Regression baseline</li>
+                <li><strong>Giải thích business insights</strong> từ kết quả mô hình</li>
+            </ol>
         </div>
 
         <!-- Slide 3 -->
         <div class="slide">
-            <h1>Ứng dụng Predictive Analytics</h1>
-            <div class="grid-2">
-                <div class="card">
-                    <h3>🏪 Bán lẻ</h3>
-                    <ul>
-                        <li>Dự đoán nhu cầu sản phẩm</li>
-                        <li>Quản lý tồn kho</li>
-                        <li>Phân tích hành vi mua sắm</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>🏦 Tài chính</h3>
-                    <ul>
-                        <li>Đánh giá rủi ro tín dụng</li>
-                        <li>Phát hiện gian lận</li>
-                        <li>Dự đoán giá cổ phiếu</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>🎯 Marketing</h3>
-                    <ul>
-                        <li>Phân khúc khách hàng</li>
-                        <li>Dự đoán tỷ lệ churn</li>
-                        <li>Tối ưu giá bán</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>🏭 Sản xuất</h3>
-                    <ul>
-                        <li>Bảo trì dự phòng</li>
-                        <li>Kiểm soát chất lượng</li>
-                        <li>Tối ưu chuỗi cung ứng</li>
-                    </ul>
-                </div>
+            <h1>Customer Churn là gì?</h1>
+            <div class="example-box">
+                <h3>📉 Định nghĩa:</h3>
+                <p style="font-size: 1.2em; line-height: 1.8;">
+                    <strong>Customer Churn (Tỷ lệ rời bỏ khách hàng)</strong> là tỷ lệ khách hàng ngừng sử dụng sản phẩm/dịch vụ của công ty trong một khoảng thời gian nhất định.
+                </p>
+            </div>
+
+            <h3>💼 Ví dụ thực tế:</h3>
+            <ul>
+                <li><strong>Telecom:</strong> Khách hàng hủy gói cước và chuyển sang nhà mạng khác</li>
+                <li><strong>E-commerce:</strong> Khách hàng không mua hàng trong 6 tháng</li>
+                <li><strong>Streaming (Netflix, Spotify):</strong> Khách hàng hủy subscription</li>
+                <li><strong>SaaS:</strong> Doanh nghiệp không renew license phần mềm</li>
+                <li><strong>Banking:</strong> Khách hàng đóng tài khoản</li>
+            </ul>
+
+            <div class="highlight">
+                <h3>💡 Tại sao Churn quan trọng?</h3>
+                <ul>
+                    <li><strong>Chi phí:</strong> Tìm khách hàng mới tốn gấp <strong>5-25 lần</strong> so với giữ khách cũ!</li>
+                    <li><strong>Doanh thu:</strong> Giảm 5% churn rate → Tăng 25-95% lợi nhuận</li>
+                    <li><strong>Cạnh tranh:</strong> Thị trường bão hòa → Giữ chân khách hàng là then chốt</li>
+                </ul>
             </div>
         </div>
 
         <!-- Slide 4 -->
         <div class="slide">
-            <h1>Machine Learning vs Traditional Analytics</h1>
-            <table>
-                <tr>
-                    <th>Đặc điểm</th>
-                    <th>Traditional Analytics</th>
-                    <th>Machine Learning</th>
-                </tr>
-                <tr>
-                    <td><strong>Phương pháp</strong></td>
-                    <td>Dựa trên quy tắc định sẵn</td>
-                    <td>Học từ dữ liệu</td>
-                </tr>
-                <tr>
-                    <td><strong>Khả năng mở rộng</strong></td>
-                    <td>Hạn chế với dữ liệu lớn</td>
-                    <td>Xử lý tốt big data</td>
-                </tr>
-                <tr>
-                    <td><strong>Độ chính xác</strong></td>
-                    <td>Phụ thuộc vào quy tắc</td>
-                    <td>Cải thiện theo thời gian</td>
-                </tr>
-                <tr>
-                    <td><strong>Tự động hóa</strong></td>
-                    <td>Cần can thiệp thủ công</td>
-                    <td>Tự động học và cải thiện</td>
-                </tr>
-                <tr>
-                    <td><strong>Độ phức tạp</strong></td>
-                    <td>Phù hợp bài toán đơn giản</td>
-                    <td>Xử lý được bài toán phức tạp</td>
-                </tr>
-            </table>
+            <h1>Business Impact của Customer Churn</h1>
+            <div class="grid-2">
+                <div class="card" style="background: #f8d7da;">
+                    <h3>❌ Tác động Tiêu cực</h3>
+                    <ul>
+                        <li><strong>Mất doanh thu:</strong> Giảm MRR (Monthly Recurring Revenue)</li>
+                        <li><strong>Chi phí cao:</strong> CAC (Customer Acquisition Cost) tăng</li>
+                        <li><strong>Brand reputation:</strong> Khách hàng rời đi thường chia sẻ trải nghiệm xấu</li>
+                        <li><strong>Morale:</strong> Team sales/support bị ảnh hưởng</li>
+                        <li><strong>Growth:</strong> Khó đạt mục tiêu tăng trưởng</li>
+                    </ul>
+                </div>
+                <div class="card" style="background: #d4edda;">
+                    <h3>✅ Lợi ích khi Giảm Churn</h3>
+                    <ul>
+                        <li><strong>Tăng LTV:</strong> Lifetime Value của khách hàng</li>
+                        <li><strong>Ổn định doanh thu:</strong> Predictable revenue stream</li>
+                        <li><strong>Word-of-mouth:</strong> Khách hàng hài lòng giới thiệu người mới</li>
+                        <li><strong>Cross-sell/Upsell:</strong> Cơ hội bán thêm sản phẩm</li>
+                        <li><strong>Competitive advantage:</strong> Tạo lợi thế cạnh tranh</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>📊 Thống kê thực tế:</h3>
+                <ul>
+                    <li>Average churn rate: <strong>5-7%/năm</strong> (B2C), <strong>10-15%/năm</strong> (B2B SaaS)</li>
+                    <li>Tỷ lệ giữ chân khách hàng tăng 5% → Lợi nhuận tăng 25-95%</li>
+                    <li>70% khách hàng rời đi vì cảm thấy không được quan tâm</li>
+                    <li>90% khách hàng churn có thể ngăn chặn được nếu phát hiện sớm!</li>
+                </ul>
+            </div>
         </div>
 
         <!-- Slide 5 -->
         <div class="slide">
-            <h1>Quy trình giải quyết vấn đề Kinh doanh với ML</h1>
-            <div class="process-step">1. Hiểu vấn đề kinh doanh (Business Understanding)</div>
-            <ul>
-                <li>Xác định mục tiêu kinh doanh rõ ràng</li>
-                <li>Thảo luận với stakeholders</li>
-            </ul>
+            <h1>ML giải quyết Churn như thế nào?</h1>
+            <div class="visual-diagram">
+                <h3 style="color: #1e3c72;">Traditional Approach vs ML Approach</h3>
+            </div>
 
-            <div class="process-step">2. Thu thập và chuẩn bị dữ liệu (Data Collection & Preparation)</div>
-            <ul>
-                <li>Xác định nguồn dữ liệu cần thiết</li>
-                <li>Làm sạch và xử lý dữ liệu</li>
-            </ul>
+            <div class="grid-2" style="margin-top: 30px;">
+                <div class="card" style="background: #fff3cd;">
+                    <h3>📊 Traditional Approach</h3>
+                    <ul>
+                        <li><strong>Reactive:</strong> Chờ khách hàng rời đi rồi mới biết</li>
+                        <li><strong>Manual rules:</strong> "Nếu không mua > 3 tháng → Churn"</li>
+                        <li><strong>One-size-fits-all:</strong> Áp dụng cùng 1 chiến lược cho tất cả</li>
+                        <li><strong>Limited insights:</strong> Không biết lý do churn</li>
+                        <li><strong>Low accuracy:</strong> Nhiều false positives/negatives</li>
+                    </ul>
+                </div>
+                <div class="card" style="background: #d1ecf1;">
+                    <h3>🤖 ML Approach</h3>
+                    <ul>
+                        <li><strong>Proactive:</strong> Dự đoán churn TRƯỚC KHI xảy ra</li>
+                        <li><strong>Data-driven:</strong> Model tự học từ patterns trong data</li>
+                        <li><strong>Personalized:</strong> Risk score cho từng khách hàng</li>
+                        <li><strong>Explainable:</strong> Hiểu WHY khách hàng có nguy cơ churn</li>
+                        <li><strong>High accuracy:</strong> Precision 80-90% với model tốt</li>
+                    </ul>
+                </div>
+            </div>
 
-            <div class="process-step">3. Khám phá và phân tích dữ liệu (Exploratory Data Analysis)</div>
-            <ul>
-                <li>Hiểu cấu trúc và phân phối dữ liệu</li>
-                <li>Phát hiện patterns và insights</li>
-            </ul>
+            <div class="success-box">
+                <h3>✨ ML Churn Prediction giúp:</h3>
+                <ol>
+                    <li><strong>Early Warning:</strong> Cảnh báo sớm khách hàng có risk cao</li>
+                    <li><strong>Targeted Retention:</strong> Tập trung nguồn lực vào đúng khách hàng</li>
+                    <li><strong>Personalized Offers:</strong> Đưa ra offers phù hợp với từng người</li>
+                    <li><strong>ROI Optimization:</strong> Chi tiêu marketing hiệu quả hơn</li>
+                </ol>
+            </div>
         </div>
 
         <!-- Slide 6 -->
         <div class="slide">
-            <h1>Quy trình giải quyết vấn đề (tiếp)</h1>
-            <div class="process-step">4. Feature Engineering</div>
-            <ul>
-                <li>Tạo các biến mới có ý nghĩa</li>
-                <li>Chọn lọc features quan trọng</li>
-            </ul>
+            <h1>Classification vs Regression</h1>
+            <div class="highlight">
+                <h3>🔍 Phân biệt 2 loại bài toán Supervised Learning:</h3>
+            </div>
 
-            <div class="process-step">5. Xây dựng và huấn luyện mô hình (Model Building & Training)</div>
-            <ul>
-                <li>Chọn thuật toán phù hợp</li>
-                <li>Train mô hình trên training data</li>
-            </ul>
+            <table>
+                <tr>
+                    <th>Đặc điểm</th>
+                    <th>Regression</th>
+                    <th>Classification</th>
+                </tr>
+                <tr>
+                    <td><strong>Output</strong></td>
+                    <td>Giá trị liên tục (continuous)</td>
+                    <td>Nhãn/Class rời rạc (discrete)</td>
+                </tr>
+                <tr>
+                    <td><strong>Ví dụ Output</strong></td>
+                    <td>150.5, 2.3 triệu, 35.2°C</td>
+                    <td>Yes/No, A/B/C, 0/1</td>
+                </tr>
+                <tr>
+                    <td><strong>Bài toán</strong></td>
+                    <td>Dự đoán giá nhà, doanh thu</td>
+                    <td>Spam/Not spam, Churn/Not churn</td>
+                </tr>
+                <tr>
+                    <td><strong>Algorithms</strong></td>
+                    <td>Linear Regression, Ridge, Lasso</td>
+                    <td>Logistic Regression, SVM, Trees</td>
+                </tr>
+                <tr>
+                    <td><strong>Metrics</strong></td>
+                    <td>R², RMSE, MAE</td>
+                    <td>Accuracy, Precision, Recall, F1</td>
+                </tr>
+            </table>
 
-            <div class="process-step">6. Đánh giá mô hình (Model Evaluation)</div>
-            <ul>
-                <li>Kiểm tra hiệu suất trên test data</li>
-                <li>So sánh với baseline</li>
-            </ul>
+            <div class="example-box">
+                <h3>📱 Ví dụ Churn Prediction:</h3>
+                <ul>
+                    <li><strong>Input (Features):</strong> Tuổi khách hàng, số tháng sử dụng, số lần complain, monthly charges...</li>
+                    <li><strong>Output (Target):</strong> <strong>Churn = 1</strong> (khách hàng sẽ rời đi), <strong>Churn = 0</strong> (khách hàng ở lại)</li>
+                    <li><strong>Task:</strong> Classification (binary classification - 2 classes)</li>
+                </ul>
+            </div>
 
-            <div class="process-step">7. Triển khai và giám sát (Deployment & Monitoring)</div>
-            <ul>
-                <li>Đưa mô hình vào production</li>
-                <li>Theo dõi và cải thiện liên tục</li>
-            </ul>
+            <div class="info-box">
+                <strong>💡 Lưu ý:</strong> Churn prediction là <strong>Binary Classification</strong> - chỉ có 2 classes (Churn hoặc Not Churn). Có thể mở rộng thành Multi-class classification để phân loại mức độ risk (Low/Medium/High).
+            </div>
         </div>
+
+        <!-- PHẦN 2: OSEMN PIPELINE (Slides 7-11) -->
 
         <!-- Slide 7 -->
         <div class="slide">
-            <h1>Xác định vấn đề Kinh doanh</h1>
-            <h3>Câu hỏi quan trọng cần trả lời:</h3>
+            <h1>OSEMN Pipeline - Tổng quan</h1>
             <div class="highlight">
+                <h3>🔄 OSEMN - Framework chuẩn cho Data Science Projects</h3>
+                <p style="font-size: 1.1em; margin-top: 10px;">OSEMN (phát âm "awesome") là quy trình 5 bước để giải quyết bài toán ML</p>
+            </div>
+
+            <div class="process-step">O - Obtain: Thu thập Dữ liệu</div>
+            <p style="margin-left: 20px; font-size: 1.05em;">Thu thập data từ databases, APIs, files, web scraping...</p>
+
+            <div class="process-step">S - Scrub: Làm sạch Dữ liệu</div>
+            <p style="margin-left: 20px; font-size: 1.05em;">Xử lý missing values, outliers, duplicates, inconsistencies...</p>
+
+            <div class="process-step">E - Explore: Khám phá Dữ liệu (EDA)</div>
+            <p style="margin-left: 20px; font-size: 1.05em;">Visualize, analyze patterns, correlations, distributions...</p>
+
+            <div class="process-step">M - Model: Xây dựng Mô hình</div>
+            <p style="margin-left: 20px; font-size: 1.05em;">Feature engineering, train models, tune hyperparameters...</p>
+
+            <div class="process-step">iN - iNterpret: Diễn giải Kết quả</div>
+            <p style="margin-left: 20px; font-size: 1.05em;">Evaluate metrics, explain results, derive business insights...</p>
+
+            <div class="success-box">
+                <strong>✨ Tại sao dùng OSEMN?</strong>
                 <ul>
-                    <li><strong>Vấn đề kinh doanh cụ thể là gì?</strong><br>Ví dụ: "Làm thế nào để tăng doanh thu bán hàng?"</li>
-                    <li><strong>Ai là người hưởng lợi từ giải pháp?</strong><br>Management, Sales team, Customers...</li>
-                    <li><strong>Dữ liệu nào có sẵn?</strong><br>Historical sales, customer data, market trends...</li>
-                    <li><strong>Giải pháp ML có phù hợp không?</strong><br>Có dữ liệu đủ? Có pattern để học?</li>
+                    <li>Cấu trúc rõ ràng, dễ follow</li>
+                    <li>Đảm bảo không bỏ sót bước quan trọng</li>
+                    <li>Dễ communicate với team và stakeholders</li>
+                    <li>Industry standard - được sử dụng rộng rãi</li>
                 </ul>
             </div>
         </div>
 
         <!-- Slide 8 -->
         <div class="slide">
-            <h1>Chuyển đổi từ Business Problem sang ML Problem</h1>
-            <div class="example-box">
-                <h3>Ví dụ: Bài toán Bán lẻ</h3>
-                <table>
-                    <tr>
-                        <th>Business Problem</th>
-                        <th>ML Problem</th>
-                    </tr>
-                    <tr>
-                        <td>Làm sao để tăng doanh thu?</td>
-                        <td>Dự đoán doanh thu tương lai dựa trên các yếu tố</td>
-                    </tr>
-                    <tr>
-                        <td>Loại: Descriptive → Predictive</td>
-                        <td>Loại: Regression</td>
-                    </tr>
-                    <tr>
-                        <td>Input: Lịch sử bán hàng, marketing, mùa vụ</td>
-                        <td>Features: advertising_spend, season, promotion</td>
-                    </tr>
-                    <tr>
-                        <td>Output: Insights để ra quyết định</td>
-                        <td>Target: sales_amount (biến liên tục)</td>
-                    </tr>
-                </table>
+            <h1>O - Obtain: Thu thập Dữ liệu</h1>
+            <h3>🎯 Mục tiêu: Có được dataset phù hợp cho bài toán</h3>
+
+            <div class="info-box">
+                <h3>📊 Dataset cho Churn Prediction cần có:</h3>
+                <ol>
+                    <li><strong>Target variable:</strong> Churn (0/1, Yes/No)</li>
+                    <li><strong>Customer Demographics:</strong> Tuổi, giới tính, địa điểm...</li>
+                    <li><strong>Usage Behavior:</strong> Frequency, recency, monetary value...</li>
+                    <li><strong>Service Information:</strong> Contract type, payment method, tenure...</li>
+                    <li><strong>Support Interactions:</strong> Số lần complaint, tickets...</li>
+                </ol>
+            </div>
+
+            <h3>🔍 Nguồn dữ liệu phổ biến:</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>Internal Sources</h4>
+                    <ul>
+                        <li>CRM systems (Salesforce)</li>
+                        <li>Transaction databases</li>
+                        <li>Customer service logs</li>
+                        <li>Web analytics (Google Analytics)</li>
+                        <li>Mobile app data</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>External Sources</h4>
+                    <ul>
+                        <li>Market research data</li>
+                        <li>Social media sentiment</li>
+                        <li>Third-party demographics</li>
+                        <li>Economic indicators</li>
+                        <li>Competitor analysis</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="code-block">
+# Python: Load data
+import pandas as pd
+
+# Từ CSV file
+df = pd.read_csv('telecom_churn.csv')
+
+# Từ database
+import sqlalchemy
+engine = sqlalchemy.create_engine('postgresql://...')
+df = pd.read_sql('SELECT * FROM customers', engine)
+
+print(f"Dataset shape: {df.shape}")
+print(f"Columns: {df.columns.tolist()}")
             </div>
         </div>
 
         <!-- Slide 9 -->
         <div class="slide">
-            <h1>Success Metrics - Định nghĩa thành công</h1>
-            <h3>Tại sao cần Success Metrics?</h3>
-            <p style="font-size: 1.1em; line-height: 1.8;">Success metrics giúp đo lường mức độ thành công của dự án ML và đảm bảo nó phù hợp với mục tiêu kinh doanh.</p>
+            <h1>S - Scrub: Làm sạch Dữ liệu</h1>
+            <h3>🧹 Data Cleaning - Bước tốn nhiều thời gian nhất (60-80%)</h3>
 
-            <div class="grid-2" style="margin-top: 30px;">
+            <div class="warning-box">
+                <strong>⚠️ Garbage In, Garbage Out!</strong><br>
+                Data quality quyết định model quality. Không thể có model tốt từ data tồi!
+            </div>
+
+            <h3>📋 Checklist làm sạch data:</h3>
+            <div class="grid-2">
                 <div class="card">
-                    <h3>📊 Business Metrics</h3>
+                    <h4>1️⃣ Missing Values</h4>
                     <ul>
-                        <li>ROI (Return on Investment)</li>
-                        <li>Tăng trưởng doanh thu (%)</li>
-                        <li>Giảm chi phí vận hành</li>
-                        <li>Customer satisfaction</li>
+                        <li><strong>Drop:</strong> Nếu < 5% data</li>
+                        <li><strong>Impute:</strong> Mean/median/mode</li>
+                        <li><strong>Predict:</strong> Dùng ML để predict</li>
+                    </ul>
+                    
+                    <h4>2️⃣ Duplicates</h4>
+                    <ul>
+                        <li>Tìm và xóa records trùng lặp</li>
+                        <li>Kiểm tra theo customer ID</li>
+                    </ul>
+
+                    <h4>3️⃣ Outliers</h4>
+                    <ul>
+                        <li>Detect: Box plot, Z-score, IQR</li>
+                        <li>Handle: Remove, cap, transform</li>
                     </ul>
                 </div>
                 <div class="card">
-                    <h3>🎯 Technical Metrics</h3>
+                    <h4>4️⃣ Data Types</h4>
                     <ul>
-                        <li>Accuracy, Precision, Recall</li>
-                        <li>R² Score (for regression)</li>
-                        <li>RMSE, MAE</li>
-                        <li>Model training time</li>
+                        <li>Chuyển đúng type (int, float, datetime)</li>
+                        <li>Encode categorical variables</li>
+                    </ul>
+
+                    <h4>5️⃣ Inconsistencies</h4>
+                    <ul>
+                        <li>Chuẩn hóa format (dates, text)</li>
+                        <li>Fix typos, spaces</li>
+                    </ul>
+
+                    <h4>6️⃣ Invalid Values</h4>
+                    <ul>
+                        <li>Tuổi âm, tenure = 0 nhưng churn = 1</li>
+                        <li>Logical inconsistencies</li>
                     </ul>
                 </div>
+            </div>
+
+            <div class="code-block">
+# Check missing values
+print(df.isnull().sum())
+
+# Drop rows with missing target
+df = df.dropna(subset=['Churn'])
+
+# Impute missing values
+df['TotalCharges'].fillna(df['TotalCharges'].median(), inplace=True)
+
+# Remove duplicates
+df = df.drop_duplicates(subset=['customerID'])
+
+# Handle outliers (IQR method)
+Q1 = df['tenure'].quantile(0.25)
+Q3 = df['tenure'].quantile(0.75)
+IQR = Q3 - Q1
+df = df[(df['tenure'] >= Q1 - 1.5*IQR) & (df['tenure'] <= Q3 + 1.5*IQR)]
             </div>
         </div>
 
         <!-- Slide 10 -->
         <div class="slide">
-            <h1>Thiết lập Success Metrics</h1>
-            <div class="example-box">
-                <h3>Ví dụ: Dự án dự đoán Doanh thu</h3>
-                <div class="metric-box">
-                    <strong>Business Goal:</strong> Tăng 15% doanh thu trong 6 tháng
+            <h1>E - Explore: Khám phá Dữ liệu (EDA)</h1>
+            <h3>🔍 Mục tiêu: Hiểu sâu về dữ liệu trước khi modeling</h3>
+
+            <div class="highlight">
+                <h3>🎯 EDA trả lời 5 câu hỏi quan trọng:</h3>
+                <ol>
+                    <li>Churn rate là bao nhiêu? (Class imbalance?)</li>
+                    <li>Features nào có correlation cao với Churn?</li>
+                    <li>Phân phối của từng feature như thế nào?</li>
+                    <li>Có patterns/trends nào rõ ràng?</li>
+                    <li>Features nào cần transform/engineer?</li>
+                </ol>
+            </div>
+
+            <h3>📊 Các phương pháp EDA:</h3>
+            <div class="grid-3">
+                <div class="card">
+                    <h4>Univariate</h4>
+                    <p>Phân tích từng biến riêng lẻ</p>
+                    <ul style="font-size: 0.95em;">
+                        <li>Histogram</li>
+                        <li>Box plot</li>
+                        <li>Value counts</li>
+                        <li>Summary stats</li>
+                    </ul>
                 </div>
-                <div class="metric-box">
-                    <strong>ML Goal:</strong> R² Score ≥ 0.85 và RMSE < 10% của trung bình doanh thu
+                <div class="card">
+                    <h4>Bivariate</h4>
+                    <p>Quan hệ giữa 2 biến</p>
+                    <ul style="font-size: 0.95em;">
+                        <li>Scatter plot</li>
+                        <li>Bar chart</li>
+                        <li>Correlation</li>
+                        <li>Chi-square test</li>
+                    </ul>
                 </div>
-                <div class="metric-box">
-                    <strong>Operational Goal:</strong> Dự đoán trong < 2 giây, cập nhật model hàng tuần
+                <div class="card">
+                    <h4>Multivariate</h4>
+                    <p>Quan hệ nhiều biến</p>
+                    <ul style="font-size: 0.95em;">
+                        <li>Heatmap</li>
+                        <li>Pair plot</li>
+                        <li>PCA</li>
+                        <li>Groupby analysis</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="highlight" style="margin-top: 30px;">
-                <strong>Lưu ý:</strong> Technical metrics phải liên kết trực tiếp với Business metrics để đảm bảo giá trị thực tế!
+            <div class="code-block">
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 1. Churn rate
+churn_rate = df['Churn'].value_counts(normalize=True)
+print(f"Churn rate: {churn_rate[1]*100:.2f}%")
+
+# 2. Correlation with target
+correlation = df.corr()['Churn'].sort_values(ascending=False)
+print(correlation)
+
+# 3. Visualize
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+# Churn distribution
+df['Churn'].value_counts().plot(kind='bar', ax=axes[0,0])
+axes[0,0].set_title('Churn Distribution')
+
+# Tenure vs Churn
+df.boxplot(column='tenure', by='Churn', ax=axes[0,1])
+
+# Contract type vs Churn
+pd.crosstab(df['Contract'], df['Churn']).plot(kind='bar', ax=axes[1,0])
+
+# Correlation heatmap
+sns.heatmap(df.corr(), annot=True, ax=axes[1,1])
+plt.tight_layout()
+plt.show()
             </div>
         </div>
 
         <!-- Slide 11 -->
         <div class="slide">
-            <h1>Các loại Success Metrics phổ biến</h1>
-            <h3>1. Regression Problems</h3>
+            <h1>M & iN: Model và iNterpret</h1>
+            
+            <div class="process-step">M - Model: Xây dựng Mô hình</div>
             <ul>
-                <li><strong>MAE (Mean Absolute Error):</strong> Trung bình sai số tuyệt đối</li>
-                <li><strong>RMSE (Root Mean Squared Error):</strong> Căn bậc hai trung bình bình phương sai số</li>
-                <li><strong>R² Score:</strong> Tỷ lệ phương sai được giải thích (0-1)</li>
-                <li><strong>MAPE:</strong> Mean Absolute Percentage Error</li>
+                <li><strong>Feature Engineering:</strong> Tạo features mới, transform, select</li>
+                <li><strong>Train/Test Split:</strong> Chia data 80/20</li>
+                <li><strong>Model Selection:</strong> Chọn algorithm (Logistic Regression baseline)</li>
+                <li><strong>Training:</strong> Fit model trên training data</li>
+                <li><strong>Hyperparameter Tuning:</strong> Tối ưu parameters</li>
             </ul>
 
-            <h3>2. Classification Problems</h3>
+            <div class="process-step" style="margin-top: 30px;">iN - iNterpret: Diễn giải Kết quả</div>
             <ul>
-                <li><strong>Accuracy:</strong> Tỷ lệ dự đoán đúng</li>
-                <li><strong>Precision:</strong> Độ chính xác của dự đoán positive</li>
-                <li><strong>Recall:</strong> Khả năng tìm ra tất cả positive cases</li>
-                <li><strong>F1-Score:</strong> Trung bình điều hòa của Precision và Recall</li>
+                <li><strong>Evaluation:</strong> Accuracy, Precision, Recall, F1-Score, ROC-AUC</li>
+                <li><strong>Feature Importance:</strong> Features nào quan trọng nhất?</li>
+                <li><strong>Error Analysis:</strong> Model sai ở đâu? Tại sao?</li>
+                <li><strong>Business Insights:</strong> Actionable recommendations</li>
+                <li><strong>Deployment Plan:</strong> Cách đưa model vào production</li>
             </ul>
+
+            <div class="success-box">
+                <h3>✅ Key Deliverables:</h3>
+                <ul>
+                    <li>✓ Trained model với accuracy > baseline</li>
+                    <li>✓ List khách hàng có high churn risk</li>
+                    <li>✓ Top factors dẫn đến churn</li>
+                    <li>✓ Recommendations để giảm churn</li>
+                    <li>✓ Expected ROI từ churn reduction</li>
+                </ul>
+            </div>
         </div>
+
+        <!-- PHẦN 3: LOGISTIC REGRESSION (Slides 12-20) -->
 
         <!-- Slide 12 -->
         <div class="slide">
-            <h1>Case Study: Dự đoán Doanh thu Cửa hàng</h1>
+            <h1>Logistic Regression - Giới thiệu</h1>
             <div class="highlight">
-                <h3>📋 Tình huống:</h3>
-                <p>Một chuỗi cửa hàng bán lẻ muốn dự đoán doanh thu hàng tuần để tối ưu hóa tồn kho và nhân sự.</p>
+                <h3>🎯 Logistic Regression là gì?</h3>
+                <p style="font-size: 1.15em; line-height: 1.8;">
+                    Logistic Regression là thuật toán <strong>Supervised Learning</strong> dùng cho <strong>Classification</strong>. 
+                    Mặc dù có tên "Regression" nhưng nó dùng để phân loại, không phải dự đoán số liên tục!
+                </p>
             </div>
 
-            <div class="example-box">
-                <h3>Bước 1: Định nghĩa vấn đề</h3>
-                <ul>
-                    <li><strong>Business Problem:</strong> Tồn kho dư thừa/thiếu hụt gây lãng phí</li>
-                    <li><strong>ML Problem:</strong> Regression - dự đoán sales amount</li>
-                </ul>
+            <h3>🔍 Đặc điểm chính:</h3>
+            <ul style="font-size: 1.1em;">
+                <li><strong>Output:</strong> Xác suất (0-1) của việc thuộc class dương</li>
+                <li><strong>Function:</strong> Sigmoid function chuyển linear combination thành probability</li>
+                <li><strong>Decision boundary:</strong> Linear - đường thẳng (hoặc siêu phẳng)</li>
+                <li><strong>Interpretable:</strong> Coefficients dễ hiểu, giải thích được</li>
+                <li><strong>Fast:</strong> Training và prediction nhanh</li>
+                <li><strong>Baseline standard:</strong> Luôn là model đầu tiên để thử</li>
+            </ul>
 
-                <h3>Bước 2: Success Metrics</h3>
-                <ul>
-                    <li><strong>Business:</strong> Giảm 20% chi phí tồn kho trong Q4</li>
-                    <li><strong>Technical:</strong> RMSE < $5,000, R² > 0.80</li>
-                </ul>
+            <div class="formula">
+                P(y=1|X) = 1 / (1 + e^-(β₀ + β₁x₁ + β₂x₂ + ... + βₙxₙ))
+            </div>
 
-                <h3>Bước 3: Dữ liệu cần thiết</h3>
-                <ul>
-                    <li>Lịch sử doanh thu 2 năm, ngày lễ, chương trình khuyến mãi, thời tiết</li>
-                </ul>
+            <div class="info-box">
+                <strong>💡 Tại sao gọi là "Regression"?</strong><br>
+                Vì nó dùng linear regression bên trong, nhưng apply Sigmoid function để chuyển output về [0,1]. 
+                Kết quả cuối cùng là probability → Threshold (thường 0.5) để classify!
             </div>
         </div>
 
         <!-- Slide 13 -->
         <div class="slide">
-            <h1>Tóm tắt Phần 1</h1>
-            <div class="highlight">
-                <h3>🎯 Key Takeaways:</h3>
-                <ul>
-                    <li><strong>Predictive Analytics</strong> giúp doanh nghiệp dự đoán tương lai từ dữ liệu quá khứ</li>
-                    <li><strong>Quy trình ML</strong> bao gồm 7 bước từ hiểu vấn đề đến triển khai</li>
-                    <li><strong>Chuyển đổi</strong> business problem sang ML problem là bước quan trọng</li>
-                    <li><strong>Success Metrics</strong> phải bao gồm cả business và technical metrics</li>
-                    <li><strong>Alignment</strong> giữa ML goals và Business goals là chìa khóa thành công</li>
-                </ul>
+            <h1>Sigmoid Function - Trái tim của Logistic Regression</h1>
+            
+            <div class="visual-diagram">
+                <h3>📈 Sigmoid Function (Logistic Function)</h3>
+                <div class="formula">
+                    σ(z) = 1 / (1 + e^-z)
+                </div>
+                <p style="margin-top: 20px; font-size: 1.1em;">
+                    Trong đó: z = β₀ + β₁x₁ + β₂x₂ + ... (linear combination)
+                </p>
             </div>
 
-            <div class="example-box" style="margin-top: 30px;">
-                <strong>💡 Nhớ rằng:</strong> ML không phải là mục đích, mà là công cụ để giải quyết vấn đề kinh doanh thực tế!
+            <h3>✨ Tính chất của Sigmoid:</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>📊 Range</h4>
+                    <ul>
+                        <li>Output luôn nằm trong (0, 1)</li>
+                        <li>Hoàn hảo cho probability!</li>
+                        <li>z → +∞: σ(z) → 1</li>
+                        <li>z → -∞: σ(z) → 0</li>
+                        <li>z = 0: σ(z) = 0.5</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🎯 Interpretation</h4>
+                    <ul>
+                        <li>σ(z) = 0.8 → 80% probability thuộc class 1</li>
+                        <li>Threshold = 0.5 (default)</li>
+                        <li>σ(z) ≥ 0.5 → Predict class 1</li>
+                        <li>σ(z) < 0.5 → Predict class 0</li>
+                        <li>Có thể điều chỉnh threshold!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>📝 Ví dụ Churn Prediction:</h3>
+                <p><strong>Features:</strong> tenure=12 tháng, MonthlyCharges=70, Contract=Month-to-month</p>
+                <p><strong>Model:</strong> z = -2.5 + 0.05×tenure - 0.02×MonthlyCharges + 1.5×(Contract=M2M)</p>
+                <p><strong>Calculate:</strong> z = -2.5 + 0.05×12 - 0.02×70 + 1.5×1 = -2.5 + 0.6 - 1.4 + 1.5 = -1.8</p>
+                <p><strong>Sigmoid:</strong> P(Churn=1) = 1/(1 + e^1.8) = 1/(1 + 6.05) = 0.142 = 14.2%</p>
+                <p><strong>Decision:</strong> 14.2% < 50% → Predict: Not Churn (class 0)</p>
             </div>
         </div>
 
-        <!-- PHẦN 2: REGRESSION & LINEAR REGRESSION (12 slides) -->
-
         <!-- Slide 14 -->
         <div class="slide">
-            <h1>Giới thiệu về Regression</h1>
-            <h3>Regression là gì?</h3>
-            <p style="font-size: 1.2em; line-height: 1.8;">Regression là phương pháp supervised learning dùng để dự đoán giá trị liên tục (continuous value) dựa trên các biến độc lập.</p>
+            <h1>Logistic Regression vs Linear Regression</h1>
+            <table>
+                <tr>
+                    <th>Đặc điểm</th>
+                    <th>Linear Regression</th>
+                    <th>Logistic Regression</th>
+                </tr>
+                <tr>
+                    <td><strong>Task</strong></td>
+                    <td>Regression (dự đoán số)</td>
+                    <td>Classification (phân loại)</td>
+                </tr>
+                <tr>
+                    <td><strong>Output</strong></td>
+                    <td>Continuous (-∞ to +∞)</td>
+                    <td>Probability (0 to 1)</td>
+                </tr>
+                <tr>
+                    <td><strong>Function</strong></td>
+                    <td>Linear: y = β₀ + β₁x₁ + ...</td>
+                    <td>Sigmoid: P = 1/(1 + e^-z)</td>
+                </tr>
+                <tr>
+                    <td><strong>Loss Function</strong></td>
+                    <td>Mean Squared Error (MSE)</td>
+                    <td>Log Loss (Cross-Entropy)</td>
+                </tr>
+                <tr>
+                    <td><strong>Assumptions</strong></td>
+                    <td>Linearity, Normality, Homoscedasticity</td>
+                    <td>Linearity of log-odds, Independence</td>
+                </tr>
+                <tr>
+                    <td><strong>Evaluation</strong></td>
+                    <td>R², RMSE, MAE</td>
+                    <td>Accuracy, Precision, Recall, AUC</td>
+                </tr>
+                <tr>
+                    <td><strong>Ví dụ</strong></td>
+                    <td>Dự đoán giá nhà, doanh thu</td>
+                    <td>Spam/Not spam, Churn/Not churn</td>
+                </tr>
+            </table>
 
-            <div class="highlight">
-                <strong>Mục tiêu:</strong> Tìm mối quan hệ giữa biến phụ thuộc (dependent variable) và các biến độc lập (independent variables)
-            </div>
-
-            <h3>Phân loại bài toán:</h3>
-            <div class="grid-2">
-                <div class="card">
-                    <h3>🔵 Regression</h3>
-                    <p>Output: Giá trị liên tục</p>
-                    <p><strong>Ví dụ:</strong> Dự đoán giá nhà, nhiệt độ, doanh thu</p>
-                </div>
-                <div class="card">
-                    <h3>🟢 Classification</h3>
-                    <p>Output: Nhãn/Class rời rạc</p>
-                    <p><strong>Ví dụ:</strong> Spam/Not spam, Mua/Không mua</p>
-                </div>
+            <div class="warning-box">
+                <h3>⚠️ Common Misconception:</h3>
+                <p>Logistic Regression KHÔNG dự đoán 0 hoặc 1 trực tiếp. Nó dự đoán PROBABILITY từ 0-1, sau đó dùng threshold để classify!</p>
+                <ul>
+                    <li>Model output: P(Churn) = 0.73 (73% probability)</li>
+                    <li>Threshold: 0.5</li>
+                    <li>Final prediction: 0.73 > 0.5 → Churn = 1</li>
+                </ul>
             </div>
         </div>
 
         <!-- Slide 15 -->
         <div class="slide">
-            <h1>Các loại Regression phổ biến</h1>
-            <ul style="font-size: 1.1em;">
-                <li><strong>Linear Regression:</strong> Mối quan hệ tuyến tính giữa X và y<br>
-                    <span style="color: #666;">→ Đơn giản, dễ hiểu, phù hợp cho bài toán cơ bản</span>
-                </li>
-                <li><strong>Polynomial Regression:</strong> Mối quan hệ phi tuyến bậc cao<br>
-                    <span style="color: #666;">→ Xử lý được quan hệ phức tạp hơn</span>
-                </li>
-                <li><strong>Ridge & Lasso Regression:</strong> Linear regression có regularization<br>
-                    <span style="color: #666;">→ Tránh overfitting, feature selection</span>
-                </li>
-                <li><strong>Decision Tree Regression:</strong> Dựa trên cây quyết định<br>
-                    <span style="color: #666;">→ Xử lý được non-linear, không cần chuẩn hóa</span>
-                </li>
-                <li><strong>Support Vector Regression (SVR):</strong> Dựa trên SVM<br>
-                    <span style="color: #666;">→ Hiệu quả với dữ liệu nhiều chiều</span>
-                </li>
-            </ul>
+            <h1>Coefficients trong Logistic Regression</h1>
+            <h3>🔍 Ý nghĩa của Coefficients (β)</h3>
+
+            <div class="highlight">
+                <p style="font-size: 1.15em;">
+                    Trong Logistic Regression, coefficients biểu diễn <strong>log-odds</strong> (logarithm của tỷ số odds).
+                    Cần transform để hiểu ý nghĩa business!
+                </p>
+            </div>
+
+            <h3>📊 Interpretation Methods:</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>1️⃣ Sign (Dấu)</h4>
+                    <ul>
+                        <li><strong>β > 0:</strong> Feature tăng → Xác suất churn tăng</li>
+                        <li><strong>β < 0:</strong> Feature tăng → Xác suất churn giảm</li>
+                        <li><strong>β ≈ 0:</strong> Feature không ảnh hưởng</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>2️⃣ Magnitude (Độ lớn)</h4>
+                    <ul>
+                        <li>|β| lớn → Impact mạnh</li>
+                        <li>|β| nhỏ → Impact yếu</li>
+                        <li>So sánh relative importance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>📝 Ví dụ Churn Model:</h3>
+                <table style="font-size: 0.95em;">
+                    <tr>
+                        <th>Feature</th>
+                        <th>Coefficient (β)</th>
+                        <th>Odds Ratio (e^β)</th>
+                        <th>Interpretation</th>
+                    </tr>
+                    <tr>
+                        <td>tenure</td>
+                        <td>-0.05</td>
+                        <td>0.95</td>
+                        <td>Mỗi tháng thêm → odds giảm 5%</td>
+                    </tr>
+                    <tr>
+                        <td>MonthlyCharges</td>
+                        <td>0.02</td>
+                        <td>1.02</td>
+                        <td>Mỗi $1 tăng → odds tăng 2%</td>
+                    </tr>
+                    <tr>
+                        <td>Contract_M2M</td>
+                        <td>1.50</td>
+                        <td>4.48</td>
+                        <td>M2M contract → odds cao gấp 4.5 lần!</td>
+                    </tr>
+                    <tr>
+                        <td>TechSupport_No</td>
+                        <td>0.80</td>
+                        <td>2.23</td>
+                        <td>Không có tech support → odds cao gấp 2.2 lần</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="success-box">
+                <h3>💡 Business Insights:</h3>
+                <ul>
+                    <li><strong>Contract type:</strong> Quan trọng nhất! M2M customers có risk cao gấp 4.5 lần → Incentivize long-term contracts!</li>
+                    <li><strong>Tech Support:</strong> Khách hàng không có support dễ churn gấp 2.2 lần → Offer free tech support!</li>
+                    <li><strong>Tenure:</strong> Càng lâu càng trung thành → Focus retention cho new customers!</li>
+                </ul>
+            </div>
         </div>
 
         <!-- Slide 16 -->
         <div class="slide">
-            <h1>Linear Regression - Khái niệm</h1>
-            <p style="font-size: 1.2em; line-height: 1.8;">Linear Regression mô hình hóa mối quan hệ tuyến tính giữa một hoặc nhiều biến độc lập (X) và một biến phụ thuộc (y).</p>
-
-            <div class="formula">
-                y = β₀ + β₁x₁ + β₂x₂ + ... + βₙxₙ + ε
+            <h1>Assumptions của Logistic Regression</h1>
+            <div class="warning-box">
+                <strong>⚠️ Giống Linear Regression, Logistic Regression có assumptions!</strong><br>
+                Vi phạm assumptions → Model không reliable
             </div>
 
-            <div class="highlight">
-                <strong>Trong đó:</strong>
-                <ul>
-                    <li><strong>y:</strong> Biến phụ thuộc (target variable) - giá trị cần dự đoán</li>
-                    <li><strong>x₁, x₂, ..., xₙ:</strong> Các biến độc lập (features)</li>
-                    <li><strong>β₀:</strong> Intercept (hệ số chặn) - giá trị y khi tất cả x = 0</li>
-                    <li><strong>β₁, β₂, ..., βₙ:</strong> Coefficients (hệ số góc) - độ ảnh hưởng của mỗi feature</li>
-                    <li><strong>ε:</strong> Error term (sai số ngẫu nhiên)</li>
-                </ul>
+            <h3>📋 4 Assumptions chính:</h3>
+
+            <div class="process-step">1. Linearity of Log-Odds</div>
+            <ul>
+                <li>Mối quan hệ giữa features và log-odds phải tuyến tính</li>
+                <li><strong>Check:</strong> Plot log-odds vs continuous features</li>
+                <li><strong>Fix:</strong> Transform features (log, polynomial)</li>
+            </ul>
+
+            <div class="process-step">2. Independence of Observations</div>
+            <ul>
+                <li>Các observations phải độc lập với nhau</li>
+                <li><strong>Violated when:</strong> Time series data, repeated measures</li>
+                <li><strong>Fix:</strong> Đảm bảo mỗi khách hàng chỉ xuất hiện 1 lần</li>
+            </ul>
+
+            <div class="process-step">3. No Multicollinearity</div>
+            <ul>
+                <li>Features không được highly correlated với nhau</li>
+                <li><strong>Check:</strong> Correlation matrix, VIF (Variance Inflation Factor)</li>
+                <li><strong>Fix:</strong> Drop một trong các features tương quan cao</li>
+            </ul>
+
+            <div class="process-step">4. Large Sample Size</div>
+            <ul>
+                <li>Cần đủ samples, đặc biệt cho minority class</li>
+                <li><strong>Rule of thumb:</strong> Ít nhất 10-15 samples per feature</li>
+                <li><strong>Fix:</strong> Thu thập thêm data hoặc giảm số features</li>
+            </ul>
+
+            <div class="code-block">
+# Check multicollinearity
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+vif_data = pd.DataFrame()
+vif_data["Feature"] = X.columns
+vif_data["VIF"] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
+print(vif_data.sort_values('VIF', ascending=False))
+
+# VIF > 10 → High multicollinearity → Consider dropping
             </div>
         </div>
 
         <!-- Slide 17 -->
         <div class="slide">
-            <h1>Linear Regression - Phân loại</h1>
-            <div class="grid-2">
-                <div class="card">
-                    <h3>Simple Linear Regression</h3>
-                    <p style="margin: 15px 0;">Chỉ có 1 biến độc lập</p>
-                    <div class="formula" style="font-size: 1.2em;">
-                        y = β₀ + β₁x + ε
-                    </div>
-                    <div class="example-box">
-                        <strong>Ví dụ:</strong><br>
-                        Dự đoán doanh thu (y) dựa trên chi phí quảng cáo (x)
-                    </div>
-                </div>
-                <div class="card">
-                    <h3>Multiple Linear Regression</h3>
-                    <p style="margin: 15px 0;">Có nhiều biến độc lập</p>
-                    <div class="formula" style="font-size: 1.2em;">
-                        y = β₀ + β₁x₁ + β₂x₂ + ... + ε
-                    </div>
-                    <div class="example-box">
-                        <strong>Ví dụ:</strong><br>
-                        Dự đoán giá nhà dựa trên diện tích, số phòng, vị trí
-                    </div>
-                </div>
+            <h1>Training Logistic Regression</h1>
+            <h3>🎯 Cách model "học" từ data</h3>
+
+            <div class="highlight">
+                <h3>📚 Training Process:</h3>
+                <ol style="font-size: 1.1em;">
+                    <li>Khởi tạo random coefficients (β₀, β₁, β₂, ...)</li>
+                    <li>Predict probabilities cho training data</li>
+                    <li>Calculate Loss (Log Loss / Cross-Entropy)</li>
+                    <li>Update coefficients để minimize loss (Gradient Descent)</li>
+                    <li>Lặp lại cho đến khi converge</li>
+                </ol>
+            </div>
+
+            <h3>📉 Loss Function: Log Loss (Binary Cross-Entropy)</h3>
+            <div class="formula">
+                Loss = -1/n Σ [y·log(p) + (1-y)·log(1-p)]
+            </div>
+            <p class="center" style="margin-top: 10px;">
+                Trong đó: y = actual label (0 hoặc 1), p = predicted probability
+            </p>
+
+            <div class="info-box">
+                <h3>💡 Tại sao dùng Log Loss thay vì MSE?</h3>
+                <ul>
+                    <li>MSE không phù hợp cho classification - không convex</li>
+                    <li>Log Loss: Convex function → Guaranteed to find global minimum</li>
+                    <li>Log Loss penalty cao hơn cho confident wrong predictions</li>
+                    <li>Ví dụ: Predict p=0.99 nhưng actual=0 → Penalty rất cao!</li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+from sklearn.linear_model import LogisticRegression
+
+# Initialize model
+model = LogisticRegression(
+    random_state=42,
+    max_iter=1000,        # Số iterations tối đa
+    solver='lbfgs',       # Optimization algorithm
+    penalty='l2',         # Regularization (optional)
+    C=1.0                 # Inverse regularization strength
+)
+
+# Train model
+model.fit(X_train, y_train)
+
+# Model đã học xong! Coefficients:
+print("Intercept:", model.intercept_)
+print("Coefficients:", model.coef_)
             </div>
         </div>
 
         <!-- Slide 18 -->
         <div class="slide">
-            <h1>Cách hoạt động của Linear Regression</h1>
-            <h3>Mục tiêu: Tìm đường thẳng "tốt nhất" (Best Fit Line)</h3>
-            
-            <div class="example-box">
-                <p style="font-size: 1.1em;">Cho tập dữ liệu gồm n điểm dữ liệu (x, y), chúng ta cần tìm đường thẳng sao cho:</p>
-                <div class="formula">
-                    Tổng khoảng cách từ các điểm đến đường thẳng là nhỏ nhất
+            <h1>Regularization trong Logistic Regression</h1>
+            <div class="highlight">
+                <h3>🎯 Regularization là gì?</h3>
+                <p style="font-size: 1.15em;">
+                    Regularization là kỹ thuật thêm penalty vào loss function để tránh <strong>overfitting</strong>. 
+                    Nó "phạt" các coefficients quá lớn, giúp model đơn giản hơn và generalize tốt hơn.
+                </p>
+            </div>
+
+            <h3>📊 2 loại Regularization:</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>L1 Regularization (Lasso)</h4>
+                    <p><strong>Penalty:</strong> |β₁| + |β₂| + ... (absolute values)</p>
+                    <p><strong>Effect:</strong> Đẩy một số coefficients về 0 → Feature selection tự động!</p>
+                    <p><strong>Use when:</strong> Có nhiều features, muốn chọn lọc features quan trọng</p>
+                </div>
+                <div class="card">
+                    <h4>L2 Regularization (Ridge)</h4>
+                    <p><strong>Penalty:</strong> β₁² + β₂² + ... (squared values)</p>
+                    <p><strong>Effect:</strong> Giảm nhỏ tất cả coefficients, không về 0</p>
+                    <p><strong>Use when:</strong> All features có ý nghĩa, chỉ muốn tránh overfitting</p>
                 </div>
             </div>
 
-            <h3>Phương pháp: Ordinary Least Squares (OLS)</h3>
-            <div class="highlight">
-                <strong>Cost Function (Hàm mất mát):</strong>
-                <div class="formula">
-                    J(β) = (1/2n) Σ(yᵢ - ŷᵢ)²
-                </div>
-                <p style="margin-top: 15px;">Trong đó:</p>
+            <div class="info-box">
+                <h3>⚙️ Hyperparameter C (Inverse Regularization Strength)</h3>
                 <ul>
-                    <li><strong>yᵢ:</strong> Giá trị thực tế</li>
-                    <li><strong>ŷᵢ:</strong> Giá trị dự đoán (= β₀ + β₁x₁ + ...)</li>
-                    <li><strong>Mục tiêu:</strong> Minimize J(β)</li>
+                    <li><strong>C lớn (100):</strong> Ít regularization → Risk overfitting, coefficients lớn</li>
+                    <li><strong>C nhỏ (0.01):</strong> Nhiều regularization → Risk underfitting, coefficients nhỏ</li>
+                    <li><strong>C = 1:</strong> Default, balanced</li>
+                    <li><strong>Tuning:</strong> Dùng GridSearchCV để tìm C tối ưu</li>
                 </ul>
+            </div>
+
+            <div class="code-block">
+# L1 Regularization (Lasso)
+model_l1 = LogisticRegression(penalty='l1', C=0.1, solver='liblinear')
+model_l1.fit(X_train, y_train)
+
+# L2 Regularization (Ridge) - Default
+model_l2 = LogisticRegression(penalty='l2', C=1.0, solver='lbfgs')
+model_l2.fit(X_train, y_train)
+
+# Elastic Net (L1 + L2)
+model_en = LogisticRegression(penalty='elasticnet', l1_ratio=0.5, solver='saga')
+model_en.fit(X_train, y_train)
             </div>
         </div>
 
         <!-- Slide 19 -->
         <div class="slide">
-            <h1>Giả định của Linear Regression</h1>
-            <p style="font-size: 1.1em; margin-bottom: 20px;">Để Linear Regression hoạt động tốt, dữ liệu cần thỏa mãn các giả định sau:</p>
+            <h1>Ưu điểm và Hạn chế của Logistic Regression</h1>
+            <div class="grid-2">
+                <div class="card" style="background: #d4edda;">
+                    <h3>✅ Ưu điểm</h3>
+                    <ul>
+                        <li><strong>Đơn giản:</strong> Dễ implement, dễ hiểu</li>
+                        <li><strong>Nhanh:</strong> Training và prediction rất nhanh</li>
+                        <li><strong>Interpretable:</strong> Coefficients dễ giải thích cho business</li>
+                        <li><strong>Probabilistic:</strong> Output là probability, không chỉ class</li>
+                        <li><strong>Không cần scaling:</strong> Works với features ở different scales</li>
+                        <li><strong>Ít overfitting:</strong> Với regularization</li>
+                        <li><strong>Baseline tốt:</strong> Standard starting point</li>
+                        <li><strong>Multi-class:</strong> Có thể extend cho > 2 classes</li>
+                    </ul>
+                </div>
+                <div class="card" style="background: #f8d7da;">
+                    <h3>❌ Hạn chế</h3>
+                    <ul>
+                        <li><strong>Linear decision boundary:</strong> Không xử lý được non-linear</li>
+                        <li><strong>Feature engineering:</strong> Cần manual tạo interactions</li>
+                        <li><strong>Outliers:</strong> Sensitive với outliers</li>
+                        <li><strong>Class imbalance:</strong> Không tự xử lý được</li>
+                        <li><strong>Independence assumption:</strong> Không dùng được cho correlated data</li>
+                        <li><strong>Limited complexity:</strong> Không bằng ensemble methods</li>
+                    </ul>
+                </div>
+            </div>
 
-            <ul style="font-size: 1.05em;">
-                <li><strong>1. Linearity (Tính tuyến tính):</strong><br>
-                    Mối quan hệ giữa X và y là tuyến tính
-                </li>
-                <li><strong>2. Independence (Độc lập):</strong><br>
-                    Các quan sát độc lập với nhau (không có autocorrelation)
-                </li>
-                <li><strong>3. Homoscedasticity (Phương sai đồng nhất):</strong><br>
-                    Phương sai của sai số là không đổi
-                </li>
-                <li><strong>4. Normality (Phân phối chuẩn):</strong><br>
-                    Sai số tuân theo phân phối chuẩn
-                </li>
-                <li><strong>5. No Multicollinearity:</strong><br>
-                    Các biến độc lập không có tương quan cao với nhau
-                </li>
-            </ul>
+            <div class="success-box">
+                <h3>🎯 Khi nào dùng Logistic Regression?</h3>
+                <ul>
+                    <li>✓ Cần model đơn giản, dễ explain cho stakeholders</li>
+                    <li>✓ Làm baseline trước khi thử complex models</li>
+                    <li>✓ Dataset nhỏ-trung bình (< 100K samples)</li>
+                    <li>✓ Quan hệ tương đối tuyến tính</li>
+                    <li>✓ Real-time prediction (latency thấp)</li>
+                </ul>
+            </div>
 
-            <div class="highlight" style="margin-top: 20px;">
-                <strong>⚠️ Lưu ý:</strong> Vi phạm các giả định này có thể dẫn đến dự đoán không chính xác!
+            <div class="warning-box">
+                <h3>❌ Khi nào KHÔNG nên dùng?</h3>
+                <ul>
+                    <li>✗ Quan hệ rất phi tuyến, phức tạp → Thử Decision Trees, Neural Networks</li>
+                    <li>✗ Có nhiều interactions giữa features → Thử ensemble methods</li>
+                    <li>✗ Cần accuracy cao nhất → Thử XGBoost, Random Forest</li>
+                </ul>
             </div>
         </div>
 
         <!-- Slide 20 -->
         <div class="slide">
-            <h1>Ví dụ minh họa: Simple Linear Regression</h1>
-            <div class="example-box">
-                <h3>📊 Bài toán: Dự đoán Doanh thu từ Chi phí Quảng cáo</h3>
-                <p><strong>Dataset:</strong> 10 cửa hàng với chi phí quảng cáo và doanh thu tương ứng</p>
+            <h1>Tóm tắt: Logistic Regression</h1>
+            <div class="highlight">
+                <h3>🎓 Key Takeaways:</h3>
             </div>
 
-            <table>
-                <tr>
-                    <th>Cửa hàng</th>
-                    <th>Chi phí QC (triệu VNĐ)</th>
-                    <th>Doanh thu (triệu VNĐ)</th>
-                </tr>
-                <tr><td>1</td><td>10</td><td>50</td></tr>
-                <tr><td>2</td><td>15</td><td>65</td></tr>
-                <tr><td>3</td><td>20</td><td>80</td></tr>
-                <tr><td>4</td><td>25</td><td>90</td></tr>
-                <tr><td>5</td><td>30</td><td>105</td></tr>
-            </table>
+            <ol style="font-size: 1.1em; line-height: 2.2;">
+                <li><strong>Logistic Regression</strong> dùng cho binary classification, output là probability (0-1)</li>
+                <li><strong>Sigmoid function</strong> chuyển linear combination thành probability</li>
+                <li><strong>Coefficients</strong> biểu diễn log-odds, transform thành odds ratio để interpret</li>
+                <li><strong>Training</strong> bằng cách minimize Log Loss với Gradient Descent</li>
+                <li><strong>Regularization</strong> (L1/L2) giúp tránh overfitting</li>
+                <li><strong>Assumptions:</strong> Linearity of log-odds, Independence, No multicollinearity</li>
+                <li><strong>Ưu điểm:</strong> Fast, interpretable, probabilistic - perfect baseline!</li>
+                <li><strong>Hạn chế:</strong> Linear decision boundary - không xử lý được complex patterns</li>
+            </ol>
 
-            <div class="highlight" style="margin-top: 20px;">
-                <strong>Mục tiêu:</strong> Tìm phương trình: <code>Doanh thu = β₀ + β₁ × Chi_phí_QC</code>
+            <div class="success-box">
+                <h3>💡 Best Practice:</h3>
+                <p style="font-size: 1.15em;">
+                    <strong>"Always start with Logistic Regression as baseline!"</strong><br><br>
+                    Nếu Logistic Regression cho accuracy > 80% → Có thể đủ rồi, không cần phức tạp thêm!<br>
+                    Nếu < 80% → Thử feature engineering hoặc complex models (Random Forest, XGBoost)
+                </p>
             </div>
         </div>
 
+        <!-- PHẦN 4: FEATURE SELECTION & ENGINEERING (Slides 21-27) -->
+
         <!-- Slide 21 -->
         <div class="slide">
-            <h1>Ví dụ minh họa (tiếp) - Kết quả</h1>
-            <div class="example-box">
-                <h3>🎯 Kết quả sau khi train model:</h3>
-                <div class="formula">
-                    Doanh thu = 25.5 + 2.65 × Chi_phí_QC
-                </div>
-            </div>
-
+            <h1>Feature Selection - Tổng quan</h1>
             <div class="highlight">
-                <h3>Diễn giải kết quả:</h3>
-                <ul>
-                    <li><strong>β₀ = 25.5:</strong> Khi chi phí quảng cáo = 0, doanh thu dự kiến là 25.5 triệu<br>
-                        <span style="color: #666;">(Có thể là doanh thu từ khách hàng cũ, word-of-mouth...)</span>
-                    </li>
-                    <li><strong>β₁ = 2.65:</strong> Mỗi triệu VNĐ tăng chi phí quảng cáo → Doanh thu tăng 2.65 triệu<br>
-                        <span style="color: #666;">→ ROI = 2.65 (hay 265%)</span>
-                    </li>
-                </ul>
+                <h3>🎯 Tại sao cần Feature Selection?</h3>
+                <p style="font-size: 1.15em;">
+                    Không phải features nhiều là tốt! Quá nhiều features → Overfitting, slow training, khó interpret.
+                    Feature Selection giúp chọn ra <strong>subset tốt nhất</strong> của features.
+                </p>
             </div>
 
-            <div class="example-box" style="margin-top: 20px;">
-                <strong>💰 Dự đoán:</strong> Nếu chi 40 triệu cho quảng cáo:<br>
-                <code>Doanh thu = 25.5 + 2.65 × 40 = 131.5 triệu VNĐ</code>
+            <h3>✨ Lợi ích của Feature Selection:</h3>
+            <ul style="font-size: 1.1em;">
+                <li>✓ <strong>Giảm overfitting:</strong> Ít features → Model đơn giản hơn</li>
+                <li>✓ <strong>Tăng accuracy:</strong> Loại bỏ noise features</li>
+                <li>✓ <strong>Faster training:</strong> Ít dimensions → Train nhanh hơn</li>
+                <li>✓ <strong>Better interpretability:</strong> Dễ explain model hơn</li>
+                <li>✓ <strong>Reduced storage:</strong> Ít data cần lưu trữ</li>
+            </ul>
+
+            <h3>📊 3 phương pháp Feature Selection:</h3>
+            <div class="grid-3">
+                <div class="card">
+                    <h4>Filter Methods</h4>
+                    <p>Đánh giá features độc lập với model</p>
+                    <ul style="font-size: 0.95em;">
+                        <li>Correlation</li>
+                        <li>Chi-square test</li>
+                        <li>ANOVA F-test</li>
+                        <li>Mutual Information</li>
+                    </ul>
+                    <p><strong>Pros:</strong> Nhanh, model-agnostic</p>
+                </div>
+                <div class="card">
+                    <h4>Wrapper Methods</h4>
+                    <p>Dùng model để evaluate subsets</p>
+                    <ul style="font-size: 0.95em;">
+                        <li>Forward Selection</li>
+                        <li>Backward Elimination</li>
+                        <li>RFE (Recursive Feature Elimination)</li>
+                    </ul>
+                    <p><strong>Pros:</strong> Chính xác hơn</p>
+                </div>
+                <div class="card">
+                    <h4>Embedded Methods</h4>
+                    <p>Selection trong quá trình training</p>
+                    <ul style="font-size: 0.95em;">
+                        <li>L1 Regularization (Lasso)</li>
+                        <li>Tree-based importance</li>
+                        <li>Elastic Net</li>
+                    </ul>
+                    <p><strong>Pros:</strong> Balance speed & accuracy</p>
+                </div>
             </div>
         </div>
 
         <!-- Slide 22 -->
         <div class="slide">
-            <h1>Ví dụ minh họa: Multiple Linear Regression</h1>
-            <div class="example-box">
-                <h3>🏠 Bài toán: Dự đoán Giá Nhà</h3>
-                <p><strong>Features:</strong> Diện tích (m²), Số phòng ngủ, Tuổi nhà (năm)</p>
+            <h1>Filter Methods - Correlation Analysis</h1>
+            <h3>📊 Phương pháp đơn giản và nhanh nhất</h3>
+
+            <div class="info-box">
+                <h3>🎯 Ý tưởng:</h3>
+                <p style="font-size: 1.1em;">
+                    Tính correlation giữa mỗi feature với target variable. 
+                    Features có correlation cao → Giữ lại. Correlation thấp → Loại bỏ.
+                </p>
             </div>
 
-            <table style="font-size: 0.95em;">
-                <tr>
-                    <th>Diện tích</th>
-                    <th>Số phòng</th>
-                    <th>Tuổi nhà</th>
-                    <th>Giá (tỷ VNĐ)</th>
-                </tr>
-                <tr><td>80</td><td>2</td><td>5</td><td>3.5</td></tr>
-                <tr><td>100</td><td>3</td><td>3</td><td>5.0</td></tr>
-                <tr><td>120</td><td>3</td><td>10</td><td>4.8</td></tr>
-                <tr><td>150</td><td>4</td><td>2</td><td>7.2</td></tr>
-            </table>
+            <h3>📈 Các phương pháp tính Correlation:</h3>
+            <ul>
+                <li><strong>Pearson Correlation:</strong> Cho continuous features vs continuous target</li>
+                <li><strong>Spearman Correlation:</strong> Cho ordinal hoặc non-linear relationships</li>
+                <li><strong>Point-Biserial:</strong> Continuous feature vs binary target (churn)</li>
+                <li><strong>Chi-Square:</strong> Categorical feature vs categorical target</li>
+            </ul>
 
-            <div class="highlight" style="margin-top: 20px;">
-                <strong>Model:</strong>
-                <div class="formula">
-                    Giá = β₀ + β₁×Diện_tích + β₂×Số_phòng + β₃×Tuổi_nhà
-                </div>
+            <div class="code-block">
+import numpy as np
+from scipy.stats import pointbiserialr
+
+# Correlation với binary target (Churn)
+correlations = {}
+for col in X.columns:
+    if X[col].dtype in ['int64', 'float64']:
+        # Point-biserial correlation cho continuous features
+        corr, pval = pointbiserialr(y, X[col])
+        correlations[col] = abs(corr)
+    
+# Sort by correlation
+corr_df = pd.DataFrame(correlations.items(), columns=['Feature', 'Correlation'])
+corr_df = corr_df.sort_values('Correlation', ascending=False)
+print(corr_df.head(10))
+
+# Threshold: Giữ features có |correlation| > 0.1
+selected_features = corr_df[corr_df['Correlation'] > 0.1]['Feature'].tolist()
+print(f"\nSelected {len(selected_features)} features")
+            </div>
+
+            <div class="example-box">
+                <h3>📊 Ví dụ kết quả:</h3>
+                <table style="font-size: 0.95em;">
+                    <tr><th>Feature</th><th>Correlation</th><th>Decision</th></tr>
+                    <tr><td>Contract_Month-to-month</td><td>0.405</td><td>✅ Keep (Strong)</td></tr>
+                    <tr><td>tenure</td><td>-0.352</td><td>✅ Keep (Strong, negative)</td></tr>
+                    <tr><td>TotalCharges</td><td>-0.198</td><td>✅ Keep (Moderate)</td></tr>
+                    <tr><td>MonthlyCharges</td><td>0.193</td><td>✅ Keep (Moderate)</td></tr>
+                    <tr><td>gender</td><td>0.008</td><td>❌ Drop (Very weak)</td></tr>
+                </table>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Hạn chế:</strong> Correlation chỉ xem xét quan hệ univariate (từng feature riêng lẻ). 
+                Không xét đến interactions giữa features. Feature có low correlation riêng lẻ nhưng khi kết hợp với feature khác lại powerful!
             </div>
         </div>
 
         <!-- Slide 23 -->
         <div class="slide">
-            <h1>Multiple Regression - Kết quả & Diễn giải</h1>
-            <div class="example-box">
-                <h3>🎯 Model sau khi train:</h3>
-                <div class="formula">
-                    Giá = 0.5 + 0.035×Diện_tích + 0.4×Số_phòng - 0.08×Tuổi_nhà
+            <h1>Wrapper Methods - RFE</h1>
+            <h3>🔄 Recursive Feature Elimination</h3>
+
+            <div class="highlight">
+                <h3>🎯 Cách hoạt động:</h3>
+                <ol style="font-size: 1.1em;">
+                    <li>Train model với ALL features</li>
+                    <li>Rank features theo importance</li>
+                    <li>Loại bỏ feature kém nhất</li>
+                    <li>Train lại model với features còn lại</li>
+                    <li>Lặp lại cho đến khi còn n features mong muốn</li>
+                </ol>
+            </div>
+
+            <div class="grid-2">
+                <div class="card" style="background: #d4edda;">
+                    <h4>✅ Ưu điểm</h4>
+                    <ul>
+                        <li>Chính xác hơn Filter methods</li>
+                        <li>Xét đến interactions giữa features</li>
+                        <li>Model-specific selection</li>
+                    </ul>
+                </div>
+                <div class="card" style="background: #f8d7da;">
+                    <h4>❌ Nhược điểm</h4>
+                    <ul>
+                        <li>Chậm (train model nhiều lần)</li>
+                        <li>Computationally expensive</li>
+                        <li>Risk overfitting với small datasets</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="highlight">
-                <h3>📊 Diễn giải coefficients:</h3>
-                <ul>
-                    <li><strong>β₁ = 0.035:</strong> Cố định số phòng và tuổi nhà, mỗi m² tăng → giá tăng 35 triệu VNĐ</li>
-                    <li><strong>β₂ = 0.4:</strong> Cố định diện tích và tuổi, mỗi phòng thêm → giá tăng 0.4 tỷ</li>
-                    <li><strong>β₃ = -0.08:</strong> Cố định các yếu tố khác, mỗi năm cũ hơn → giá giảm 80 triệu</li>
-                </ul>
+            <div class="code-block">
+from sklearn.feature_selection import RFE
+from sklearn.linear_model import LogisticRegression
+
+# Initialize model
+model = LogisticRegression(max_iter=1000)
+
+# RFE: Select top 10 features
+rfe = RFE(
+    estimator=model,
+    n_features_to_select=10,  # Số features muốn giữ
+    step=1                     # Loại bỏ 1 feature mỗi lần
+)
+
+# Fit RFE
+rfe.fit(X_train, y_train)
+
+# Get selected features
+selected_features = X_train.columns[rfe.support_].tolist()
+print(f"Selected features: {selected_features}")
+
+# Feature rankings (1 = best)
+feature_ranking = pd.DataFrame({
+    'Feature': X_train.columns,
+    'Ranking': rfe.ranking_
+}).sort_values('Ranking')
+print(feature_ranking)
+
+# Transform data
+X_train_rfe = rfe.transform(X_train)
+X_test_rfe = rfe.transform(X_test)
             </div>
 
-            <div class="example-box" style="margin-top: 20px;">
-                <strong>💡 Dự đoán:</strong> Nhà 110m², 3 phòng, 7 năm tuổi:<br>
-                <code>Giá = 0.5 + 0.035×110 + 0.4×3 - 0.08×7 = 4.49 tỷ VNĐ</code>
+            <div class="success-box">
+                <strong>💡 Tips:</strong> RFE works tốt nhất với linear models (Logistic Regression, SVM). 
+                Với tree-based models, dùng feature importance trực tiếp nhanh hơn!
             </div>
         </div>
 
         <!-- Slide 24 -->
         <div class="slide">
-            <h1>Ưu điểm và Hạn chế của Linear Regression</h1>
-            <div class="grid-2">
-                <div class="card" style="background: #d4edda; border-color: #28a745;">
-                    <h3>✅ Ưu điểm</h3>
-                    <ul>
-                        <li>Đơn giản, dễ hiểu và dễ triển khai</li>
-                        <li>Tốc độ training nhanh</li>
-                        <li>Dễ dàng diễn giải kết quả</li>
-                        <li>Hoạt động tốt khi quan hệ là tuyến tính</li>
-                        <li>Ít tham số, ít overfitting</li>
-                        <li>Cơ sở cho nhiều thuật toán phức tạp</li>
-                    </ul>
-                </div>
-                <div class="card" style="background: #f8d7da; border-color: #dc3545;">
-                    <h3>❌ Hạn chế</h3>
-                    <ul>
-                        <li>Giả định quan hệ tuyến tính</li>
-                        <li>Nhạy cảm với outliers</li>
-                        <li>Yêu cầu các giả định thống kê</li>
-                        <li>Không xử lý tốt non-linear</li>
-                        <li>Multicollinearity gây vấn đề</li>
-                        <li>Cần feature scaling phù hợp</li>
-                    </ul>
-                </div>
+            <h1>Embedded Methods - L1 Regularization</h1>
+            <h3>🎯 Feature Selection tự động trong quá trình training</h3>
+
+            <div class="highlight">
+                <p style="font-size: 1.15em;">
+                    L1 Regularization (Lasso) tự động đẩy coefficients của unimportant features về 0. 
+                    Features có coefficient = 0 → Loại bỏ! Simple và effective!
+                </p>
+            </div>
+
+            <div class="code-block">
+from sklearn.linear_model import LogisticRegression
+
+# L1 Regularization với C nhỏ (strong regularization)
+model_l1 = LogisticRegression(
+    penalty='l1',
+    C=0.1,              # Smaller C = stronger regularization
+    solver='liblinear',
+    max_iter=1000
+)
+
+# Train model
+model_l1.fit(X_train, y_train)
+
+# Get coefficients
+coef_df = pd.DataFrame({
+    'Feature': X_train.columns,
+    'Coefficient': model_l1.coef_[0]
+}).sort_values('Coefficient', key=abs, ascending=False)
+
+print("All coefficients:")
+print(coef_df)
+
+# Features with non-zero coefficients
+selected_features = coef_df[coef_df['Coefficient'] != 0]['Feature'].tolist()
+print(f"\nSelected {len(selected_features)} features (non-zero coefficients)")
+
+# Visualize
+import matplotlib.pyplot as plt
+plt.figure(figsize=(10, 6))
+plt.barh(coef_df['Feature'][:15], coef_df['Coefficient'][:15])
+plt.xlabel('Coefficient')
+plt.title('Top 15 Features by L1 Coefficients')
+plt.tight_layout()
+plt.show()
+            </div>
+
+            <div class="info-box">
+                <h3>⚙️ Tuning C parameter:</h3>
+                <ul>
+                    <li><strong>C = 0.01:</strong> Rất ít features được chọn (aggressive selection)</li>
+                    <li><strong>C = 0.1:</strong> Moderate selection</li>
+                    <li><strong>C = 1.0:</strong> Ít features bị loại</li>
+                    <li><strong>Best practice:</strong> Dùng Cross-Validation để tìm C optimal!</li>
+                </ul>
             </div>
         </div>
 
         <!-- Slide 25 -->
         <div class="slide">
-            <h1>Tóm tắt Phần 2: Regression</h1>
+            <h1>Feature Engineering cho Churn</h1>
+            <h3>🔧 Tạo features mới để cải thiện model</h3>
+
             <div class="highlight">
-                <h3>🎯 Key Takeaways:</h3>
-                <ul>
-                    <li><strong>Regression</strong> dùng để dự đoán giá trị liên tục</li>
-                    <li><strong>Linear Regression</strong> mô hình hóa quan hệ tuyến tính: y = β₀ + β₁x₁ + ...</li>
-                    <li><strong>Simple vs Multiple:</strong> 1 biến độc lập vs nhiều biến độc lập</li>
-                    <li><strong>OLS (Ordinary Least Squares):</strong> Minimize tổng bình phương sai số</li>
-                    <li><strong>Coefficients</strong> cho biết mức độ ảnh hưởng của từng feature</li>
-                    <li><strong>Giả định:</strong> Linearity, Independence, Homoscedasticity, Normality, No Multicollinearity</li>
-                </ul>
+                <h3>💡 Feature Engineering là nghệ thuật, không phải khoa học!</h3>
+                <p>Domain knowledge + Creativity = Powerful features</p>
             </div>
 
-            <div class="example-box" style="margin-top: 30px;">
-                <strong>💡 Nhớ:</strong> Linear Regression đơn giản nhưng mạnh mẽ - nên là baseline đầu tiên cho bài toán regression!
+            <h3>📊 Các kỹ thuật Feature Engineering:</h3>
+
+            <div class="process-step">1. Interaction Features</div>
+            <div class="code-block">
+# Tương tác giữa 2 features
+df['Tenure_x_MonthlyCharges'] = df['tenure'] * df['MonthlyCharges']
+df['AvgChargePerMonth'] = df['TotalCharges'] / (df['tenure'] + 1)
+
+# Contract x Support
+df['Contract_HasSupport'] = (df['Contract']=='Month-to-month') & (df['TechSupport']=='No')
+            </div>
+
+            <div class="process-step">2. Binning/Discretization</div>
+            <div class="code-block">
+# Chuyển continuous thành categorical
+df['tenure_group'] = pd.cut(df['tenure'], 
+                             bins=[0, 12, 24, 48, 72], 
+                             labels=['0-1yr', '1-2yr', '2-4yr', '4-6yr'])
+
+# Charges level
+df['charges_level'] = pd.qcut(df['MonthlyCharges'], 
+                               q=4, 
+                               labels=['Low', 'Medium', 'High', 'VeryHigh'])
+            </div>
+
+            <div class="process-step">3. Aggregation Features</div>
+            <div class="code-block">
+# Total services subscribed
+service_cols = ['PhoneService', 'InternetService', 'OnlineSecurity', 
+                'OnlineBackup', 'DeviceProtection', 'TechSupport']
+df['TotalServices'] = df[service_cols].apply(lambda x: (x=='Yes').sum(), axis=1)
+
+# Service ratio
+df['ServiceValueRatio'] = df['TotalServices'] / (df['MonthlyCharges'] + 1)
+            </div>
+
+            <div class="process-step">4. Time-based Features</div>
+            <div class="code-block">
+# Customer lifecycle stage
+df['IsNewCustomer'] = (df['tenure'] < 6).astype(int)
+df['IsLoyalCustomer'] = (df['tenure'] > 48).astype(int)
+
+# Churn risk indicators
+df['HighRisk'] = ((df['Contract']=='Month-to-month') & 
+                  (df['tenure'] < 12) & 
+                  (df['MonthlyCharges'] > 70)).astype(int)
             </div>
         </div>
 
-        <!-- PHẦN 3: CÁC BƯỚC QUAN TRỌNG TRONG QUY TRÌNH MODELING (5 slides) -->
-
         <!-- Slide 26 -->
         <div class="slide">
-            <h1>Quy trình Modeling: Tổng quan</h1>
-            <div class="process-step">Bước 1: Thu thập và Chuẩn bị Dữ liệu (Data Collection & Preparation)</div>
-            
-            <div class="process-step">Bước 2: Khám phá Dữ liệu (Exploratory Data Analysis - EDA)</div>
-            
-            <div class="process-step">Bước 3: Feature Engineering và Preprocessing</div>
-            
-            <div class="process-step">Bước 4: Chia tách Dữ liệu (Train/Validation/Test Split)</div>
-            
-            <div class="process-step">Bước 5: Xây dựng và Đánh giá Mô hình (Model Building & Evaluation)</div>
+            <h1>Domain-Specific Features cho Churn</h1>
+            <h3>🎯 Features dựa trên Business Knowledge</h3>
 
-            <div class="highlight" style="margin-top: 30px;">
-                <strong>⚡ Quan trọng:</strong> Mỗi bước đều ảnh hưởng trực tiếp đến chất lượng cuối cùng của mô hình!
+            <div class="example-box">
+                <h3>💼 Ví dụ cho Telecom Churn:</h3>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4>📱 Usage Patterns</h4>
+                    <ul>
+                        <li><strong>DeclineInUsage:</strong> So sánh usage tháng này vs 3 tháng trước</li>
+                        <li><strong>LowEngagement:</strong> Ít interaction với app/services</li>
+                        <li><strong>UnusedServices:</strong> Số services đăng ký nhưng không dùng</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>💰 Financial Indicators</h4>
+                    <ul>
+                        <li><strong>PriceIncreaseImpact:</strong> Giá tăng gần đây?</li>
+                        <li><strong>PaymentDelays:</strong> Số lần trả chậm</li>
+                        <li><strong>ValuePerception:</strong> MonthlyCharges / TotalServices</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🤝 Customer Relationship</h4>
+                    <ul>
+                        <li><strong>ComplaintFrequency:</strong> Số lần complaint trong 6 tháng</li>
+                        <li><strong>SupportTickets:</strong> Số tickets chưa resolved</li>
+                        <li><strong>ResponseTime:</strong> Thời gian support response trung bình</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🎯 Competitive Factors</h4>
+                    <ul>
+                        <li><strong>CompetitorOffer:</strong> Competitors có promotion không?</li>
+                        <li><strong>PriceDifference:</strong> Giá của mình vs competitors</li>
+                        <li><strong>NetworkQuality:</strong> Coverage/speed so với competitors</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <h3>✨ Best Practices:</h3>
+                <ul>
+                    <li>✓ <strong>Talk to business experts:</strong> Sales, Customer Service teams biết customers nhất!</li>
+                    <li>✓ <strong>Analyze churned customers:</strong> Họ có patterns chung gì?</li>
+                    <li>✓ <strong>Test incrementally:</strong> Thêm từng feature, measure impact</li>
+                    <li>✓ <strong>Monitor feature importance:</strong> Features nào thực sự useful?</li>
+                </ul>
             </div>
         </div>
 
         <!-- Slide 27 -->
         <div class="slide">
-            <h1>Bước 1: Thu thập và Chuẩn bị Dữ liệu</h1>
-            <h3>1.1. Data Collection (Thu thập dữ liệu)</h3>
-            <ul>
-                <li>Xác định nguồn dữ liệu: Database, APIs, Files, Web scraping</li>
-                <li>Đảm bảo dữ liệu đủ lớn và đại diện</li>
-                <li>Kiểm tra quyền truy cập và tính hợp pháp</li>
-            </ul>
-
-            <h3>1.2. Data Cleaning (Làm sạch dữ liệu)</h3>
-            <ul>
-                <li><strong>Missing values:</strong> Xử lý giá trị thiếu (imputation, xóa bỏ)</li>
-                <li><strong>Duplicates:</strong> Loại bỏ dữ liệu trùng lặp</li>
-                <li><strong>Outliers:</strong> Phát hiện và xử lý ngoại lệ</li>
-                <li><strong>Data types:</strong> Đảm bảo kiểu dữ liệu đúng</li>
-                <li><strong>Inconsistencies:</strong> Chuẩn hóa format (dates, text...)</li>
-            </ul>
-
+            <h1>Tóm tắt: Feature Selection & Engineering</h1>
             <div class="highlight">
-                <strong>💡 Rule of thumb:</strong> Data cleaning chiếm 60-80% thời gian của data science project!
+                <h3>🎓 Key Takeaways:</h3>
             </div>
-        </div>
-
-        <!-- Slide 28 -->
-        <div class="slide">
-            <h1>Bước 2: Exploratory Data Analysis (EDA)</h1>
-            <h3>Mục đích: Hiểu sâu về dữ liệu trước khi modeling</h3>
 
             <div class="grid-2">
                 <div class="card">
-                    <h3>📊 Descriptive Statistics</h3>
-                    <ul>
-                        <li>Mean, median, mode</li>
-                        <li>Standard deviation</li>
-                        <li>Min, max, quartiles</li>
-                        <li>Correlation matrix</li>
-                    </ul>
+                    <h4>Feature Selection</h4>
+                    <ol>
+                        <li><strong>Filter:</strong> Nhanh, correlation-based</li>
+                        <li><strong>Wrapper (RFE):</strong> Chính xác, chậm</li>
+                        <li><strong>Embedded (L1):</strong> Balance, tự động</li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>Recommend:</strong> Start với correlation, sau đó L1, cuối cùng RFE nếu cần</p>
                 </div>
                 <div class="card">
-                    <h3>📈 Visualization</h3>
-                    <ul>
-                        <li>Histograms (phân phối)</li>
-                        <li>Scatter plots (quan hệ)</li>
-                        <li>Box plots (outliers)</li>
-                        <li>Heatmap (correlation)</li>
-                    </ul>
+                    <h4>Feature Engineering</h4>
+                    <ol>
+                        <li><strong>Interactions:</strong> A × B, A / B</li>
+                        <li><strong>Binning:</strong> Continuous → Categorical</li>
+                        <li><strong>Aggregations:</strong> Sum, mean, count</li>
+                        <li><strong>Domain features:</strong> Business logic</li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>Key:</strong> Domain knowledge + Creativity!</p>
                 </div>
             </div>
 
-            <div class="example-box" style="margin-top: 20px;">
-                <h3>🔍 Câu hỏi cần trả lời trong EDA:</h3>
-                <ul>
-                    <li>Features nào có correlation cao với target?</li>
-                    <li>Có missing values hay outliers không?</li>
-                    <li>Phân phối của các biến như thế nào?</li>
-                    <li>Có multicollinearity giữa các features không?</li>
+            <div class="info-box">
+                <h3>🔄 Iterative Process:</h3>
+                <ol style="font-size: 1.05em;">
+                    <li>Start với raw features → Train baseline model</li>
+                    <li>Analyze feature importance → Drop weak features</li>
+                    <li>Engineer new features dựa trên insights</li>
+                    <li>Train lại model → Compare performance</li>
+                    <li>Iterate cho đến khi hài lòng!</li>
+                </ol>
+            </div>
+
+            <div class="success-box">
+                <strong>💡 Pro Tip:</strong> Feature engineering thường improve accuracy nhiều hơn là thử thuật toán phức tạp! 
+                Logistic Regression + good features > XGBoost + poor features!
+            </div>
+        </div>
+
+        <!-- PHẦN 5: EVALUATION METRICS (Slides 28-35) -->
+
+        <!-- Slide 28 -->
+        <div class="slide">
+            <h1>Confusion Matrix - Nền tảng Evaluation</h1>
+            <h3>📊 Hiểu rõ model dự đoán đúng/sai như thế nào</h3>
+
+            <div class="visual-diagram">
+                <h3>Confusion Matrix Structure</h3>
+                <table style="margin: 20px auto; font-size: 1.1em;">
+                    <tr>
+                        <th colspan="2" rowspan="2"></th>
+                        <th colspan="2">Predicted</th>
+                    </tr>
+                    <tr>
+                        <th>Negative (0)</th>
+                        <th>Positive (1)</th>
+                    </tr>
+                    <tr>
+                        <th rowspan="2">Actual</th>
+                        <th>Negative (0)</th>
+                        <td style="background: #d4edda;"><strong>TN</strong><br>True Negative</td>
+                        <td style="background: #f8d7da;"><strong>FP</strong><br>False Positive<br>(Type I Error)</td>
+                    </tr>
+                    <tr>
+                        <th>Positive (1)</th>
+                        <td style="background: #f8d7da;"><strong>FN</strong><br>False Negative<br>(Type II Error)</td>
+                        <td style="background: #d4edda;"><strong>TP</strong><br>True Positive</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="example-box">
+                <h3>📱 Ví dụ Churn Prediction:</h3>
+                <ul style="font-size: 1.05em;">
+                    <li><strong>TN (True Negative):</strong> Predict không churn, thực tế không churn ✅</li>
+                    <li><strong>TP (True Positive):</strong> Predict churn, thực tế churn ✅</li>
+                    <li><strong>FP (False Positive):</strong> Predict churn, nhưng thực tế KHÔNG churn ❌
+                        <br><span style="color: #dc3545;">→ Lãng phí tiền retention cho khách hàng không có ý định rời đi!</span>
+                    </li>
+                    <li><strong>FN (False Negative):</strong> Predict không churn, nhưng thực tế CHURN ❌
+                        <br><span style="color: #dc3545;">→ Miss cơ hội retain khách hàng → Mất revenue!</span>
+                    </li>
                 </ul>
+            </div>
+
+            <div class="code-block">
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+
+# Predict
+y_pred = model.predict(X_test)
+
+# Confusion matrix
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+
+# Visualize
+plt.figure(figsize=(8, 6))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+plt.title('Confusion Matrix')
+plt.show()
             </div>
         </div>
 
         <!-- Slide 29 -->
         <div class="slide">
-            <h1>Bước 3: Feature Engineering & Preprocessing</h1>
-            <h3>3.1. Feature Engineering</h3>
-            <ul>
-                <li><strong>Feature Creation:</strong> Tạo features mới từ features hiện có<br>
-                    <span style="color: #666;">VD: BMI = weight / (height²), Total_rooms = bedrooms + bathrooms</span>
-                </li>
-                <li><strong>Feature Selection:</strong> Chọn features quan trọng nhất<br>
-                    <span style="color: #666;">VD: Correlation analysis, Feature importance</span>
-                </li>
-                <li><strong>Feature Transformation:</strong> Biến đổi features<br>
-                    <span style="color: #666;">VD: Log transformation, Polynomial features</span>
-                </li>
-            </ul>
+            <h1>Classification Metrics - Phần 1</h1>
+            
+            <div class="process-step">1. Accuracy</div>
+            <div class="formula">
+                Accuracy = (TP + TN) / (TP + TN + FP + FN)
+            </div>
+            <p class="center">Tỷ lệ dự đoán ĐÚNG trên tổng số predictions</p>
+            
+            <div class="warning-box">
+                <strong>⚠️ Accuracy Paradox:</strong> Accuracy cao không đảm bảo model tốt!
+                <p style="margin-top: 10px;">Ví dụ: Dataset có 95% Not Churn, 5% Churn. Model predict tất cả là Not Churn → Accuracy = 95% nhưng hoàn toàn vô dụng!</p>
+            </div>
 
-            <h3>3.2. Data Preprocessing</h3>
-            <ul>
-                <li><strong>Scaling:</strong> StandardScaler, MinMaxScaler</li>
-                <li><strong>Encoding:</strong> One-Hot Encoding, Label Encoding (cho categorical)</li>
-                <li><strong>Handling Imbalance:</strong> Oversampling, Undersampling (nếu cần)</li>
-            </ul>
+            <div class="process-step" style="margin-top: 30px;">2. Precision (Positive Predictive Value)</div>
+            <div class="formula">
+                Precision = TP / (TP + FP)
+            </div>
+            <p class="center">Trong số những người model predict là Churn, bao nhiêu % thực sự churn?</p>
+
+            <div class="info-box">
+                <h4>💼 Business Interpretation:</h4>
+                <p><strong>Precision cao:</strong> Khi model nói "khách hàng sẽ churn" → Tin cậy được!</p>
+                <p><strong>Precision thấp:</strong> Nhiều False Positives → Lãng phí chi phí retention cho người không churn</p>
+                <p><strong>Quan trọng khi:</strong> Chi phí retention cao (offers, discounts, customer service time)</p>
+            </div>
+
+            <div class="example-box">
+                <strong>Ví dụ:</strong> TP=40, FP=10 → Precision = 40/(40+10) = 0.80 = 80%
+                <br>→ 80% những người được predict là churn thực sự churn
+                <br>→ 20% là false alarms (lãng phí resources)</div>
         </div>
 
         <!-- Slide 30 -->
         <div class="slide">
-            <h1>Bước 4: Chia tách Dữ liệu (Data Splitting)</h1>
-            <h3>Tại sao cần chia dữ liệu?</h3>
-            <p style="font-size: 1.1em; line-height: 1.8;">Để đánh giá mô hình một cách khách quan trên dữ liệu mà mô hình chưa từng thấy (unseen data).</p>
-
-            <div class="highlight">
-                <h3>📦 Cách chia phổ biến:</h3>
-                <ul>
-                    <li><strong>Training Set (60-80%):</strong> Dùng để train mô hình</li>
-                    <li><strong>Validation Set (10-20%):</strong> Dùng để tune hyperparameters</li>
-                    <li><strong>Test Set (10-20%):</strong> Đánh giá cuối cùng, KHÔNG được dùng trong quá trình training</li>
-                </ul>
+            <h1>Classification Metrics - Phần 2</h1>
+            
+            <div class="process-step">3. Recall (Sensitivity / True Positive Rate)</div>
+            <div class="formula">
+                Recall = TP / (TP + FN)
             </div>
+            <p class="center">Trong số những người thực sự churn, model catch được bao nhiêu %?</p>
 
-            <div class="code-block">
-from sklearn.model_selection import train_test_split
-
-# Chia train/test (80/20)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
+            <div class="info-box">
+                <h4>💼 Business Interpretation:</h4>
+                <p><strong>Recall cao:</strong> Model "catch" được nhiều churners → Ít miss opportunities</p>
+                <p><strong>Recall thấp:</strong> Nhiều False Negatives → Nhiều churners bị bỏ sót → Mất revenue!</p>
+                <p><strong>Quan trọng khi:</strong> Cost of losing customer rất cao (high LTV customers)</p>
             </div>
 
             <div class="example-box">
-                <strong>⚠️ Lưu ý:</strong> Luôn shuffle data và sử dụng random_state để tái tạo kết quả!
+                <strong>Ví dụ:</strong> TP=40, FN=10 → Recall = 40/(40+10) = 0.80 = 80%
+                <br>→ Model identify được 80% churners
+                <br>→ 20% churners bị miss (mất cơ hội retain!)</div>
+
+            <div class="process-step" style="margin-top: 30px;">4. F1-Score</div>
+            <div class="formula">
+                F1 = 2 × (Precision × Recall) / (Precision + Recall)
+            </div>
+            <p class="center">Harmonic mean của Precision và Recall - Balance giữa 2 metrics</p>
+
+            <div class="success-box">
+                <p><strong>F1-Score phù hợp khi:</strong></p>
+                <ul>
+                    <li>Cần balance giữa Precision và Recall</li>
+                    <li>Class imbalance (churn rate thấp)</li>
+                    <li>Cả FP và FN đều quan trọng</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>F1 = 1:</strong> Perfect (Precision=1, Recall=1)</p>
+                <p><strong>F1 = 0:</strong> Worst possible</p>
             </div>
         </div>
 
         <!-- Slide 31 -->
         <div class="slide">
-            <h1>Bước 5: Xây dựng và Đánh giá Mô hình</h1>
-            <h3>5.1. Model Training</h3>
-            <ul>
-                <li>Chọn thuật toán phù hợp với bài toán</li>
-                <li>Fit mô hình trên training data</li>
-                <li>Tune hyperparameters trên validation set</li>
-            </ul>
+            <h1>Precision vs Recall Tradeoff</h1>
+            <div class="highlight">
+                <h3>⚖️ The Tradeoff: Không thể maximize cả 2 cùng lúc!</h3>
+            </div>
 
-            <h3>5.2. Model Evaluation</h3>
             <div class="grid-2">
-                <div class="card">
-                    <h3>Regression Metrics</h3>
+                <div class="card" style="background: #d1ecf1;">
+                    <h4>📈 Tăng Recall (Lower Threshold)</h4>
+                    <p>Threshold: 0.5 → 0.3</p>
                     <ul>
-                        <li><strong>R² Score:</strong> 0-1, cao hơn tốt hơn</li>
-                        <li><strong>RMSE:</strong> Càng thấp càng tốt</li>
-                        <li><strong>MAE:</strong> Dễ diễn giải</li>
+                        <li>✅ Catch nhiều churners hơn (ít FN)</li>
+                        <li>❌ Nhiều false alarms hơn (nhiều FP)</li>
+                        <li>❌ Precision giảm</li>
                     </ul>
+                    <p style="margin-top: 15px;"><strong>Use when:</strong> Cost of missing churn rất cao</p>
                 </div>
-                <div class="card">
-                    <h3>Diagnostic Checks</h3>
+                <div class="card" style="background: #fff3cd;">
+                    <h4>📉 Tăng Precision (Higher Threshold)</h4>
+                    <p>Threshold: 0.5 → 0.7</p>
                     <ul>
-                        <li>Residual analysis</li>
-                        <li>Learning curves</li>
-                        <li>Cross-validation</li>
+                        <li>✅ Ít false alarms (ít FP)</li>
+                        <li>✅ Predictions đáng tin hơn</li>
+                        <li>❌ Miss nhiều churners (nhiều FN)</li>
+                        <li>❌ Recall giảm</li>
                     </ul>
+                    <p style="margin-top: 15px;"><strong>Use when:</strong> Chi phí retention cao</p>
                 </div>
             </div>
 
-            <div class="highlight" style="margin-top: 20px;">
-                <strong>🎯 Mục tiêu:</strong> Balance giữa bias và variance, tránh overfitting/underfitting
+            <div class="example-box">
+                <h3>💼 Business Decision:</h3>
+                <p><strong>Scenario 1: Telecom với margin thấp</strong></p>
+                <ul>
+                    <li>Retention cost: $50/customer</li>
+                    <li>Loss if churn: $30/month × 12 = $360/year</li>
+                    <li><strong>Decision:</strong> Prefer HIGH RECALL - catch tất cả potential churners, chấp nhận false positives</li>
+                </ul>
+                <p style="margin-top: 20px;"><strong>Scenario 2: SaaS B2B với offers đắt</strong></p>
+                <ul>
+                    <li>Retention offer: $5,000 discount</li>
+                    <li>High precision cần thiết - không thể lãng phí $5K cho false positives!</li>
+                    <li><strong>Decision:</strong> Prefer HIGH PRECISION - chỉ target high-confidence churners</li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+# Adjust threshold
+from sklearn.metrics import precision_recall_curve
+
+# Get probabilities
+y_proba = model.predict_proba(X_test)[:, 1]
+
+# Calculate precision-recall for different thresholds
+precisions, recalls, thresholds = precision_recall_curve(y_test, y_proba)
+
+# Plot
+plt.figure(figsize=(10, 6))
+plt.plot(thresholds, precisions[:-1], label='Precision')
+plt.plot(thresholds, recalls[:-1], label='Recall')
+plt.xlabel('Threshold')
+plt.ylabel('Score')
+plt.legend()
+plt.title('Precision-Recall vs Threshold')
+plt.show()
+
+# Custom threshold = 0.3 (prioritize recall)
+y_pred_custom = (y_proba >= 0.3).astype(int)
             </div>
         </div>
 
-        <!-- PHẦN 4: XÂY DỰNG VÀ TRIỂN KHAI LINEAR REGRESSION (6 slides) -->
-
         <!-- Slide 32 -->
         <div class="slide">
-            <h1>Xây dựng Linear Regression với Python</h1>
-            <h3>Libraries cần thiết:</h3>
-            <div class="code-block">
-# Import libraries
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+            <h1>ROC Curve và AUC Score</h1>
+            <h3>📊 ROC (Receiver Operating Characteristic) Curve</h3>
 
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
-from sklearn.preprocessing import StandardScaler
+            <div class="info-box">
+                <p style="font-size: 1.1em;">
+                    ROC Curve visualizes performance của classifier ở <strong>TẤT CẢ các thresholds</strong>. 
+                    Plot TPR (True Positive Rate = Recall) vs FPR (False Positive Rate).
+                </p>
             </div>
 
-            <div class="highlight">
-                <h3>🔧 Scikit-learn: Thư viện ML phổ biến nhất</h3>
+            <div class="formula">
+                TPR = TP / (TP + FN)  [Recall]<br>
+                FPR = FP / (FP + TN)  [False Alarm Rate]
+            </div>
+
+            <h3>📈 AUC (Area Under the ROC Curve)</h3>
+            <ul>
+                <li><strong>AUC = 1.0:</strong> Perfect classifier - phân biệt hoàn hảo 2 classes</li>
+                <li><strong>AUC = 0.9-1.0:</strong> Excellent</li>
+                <li><strong>AUC = 0.8-0.9:</strong> Very Good</li>
+                <li><strong>AUC = 0.7-0.8:</strong> Good</li>
+                <li><strong>AUC = 0.6-0.7:</strong> Fair</li>
+                <li><strong>AUC = 0.5:</strong> Random guessing - model vô dụng!</li>
+                <li><strong>AUC < 0.5:</strong> Worse than random (flip predictions!)</li>
+            </ul>
+
+            <div class="code-block">
+from sklearn.metrics import roc_curve, roc_auc_score
+
+# Calculate ROC curve
+y_proba = model.predict_proba(X_test)[:, 1]
+fpr, tpr, thresholds = roc_curve(y_test, y_proba)
+
+# AUC score
+auc = roc_auc_score(y_test, y_proba)
+print(f"AUC Score: {auc:.4f}")
+
+# Plot ROC Curve
+plt.figure(figsize=(8, 6))
+plt.plot(fpr, tpr, label=f'Logistic Regression (AUC = {auc:.3f})')
+plt.plot([0, 1], [0, 1], 'k--', label='Random Classifier (AUC = 0.5)')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate (Recall)')
+plt.title('ROC Curve')
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()
+            </div>
+
+            <div class="success-box">
+                <strong>💡 Khi nào dùng AUC?</strong>
                 <ul>
-                    <li>API đơn giản, nhất quán</li>
-                    <li>Tích hợp nhiều thuật toán</li>
-                    <li>Documentation chi tiết</li>
+                    <li>✓ So sánh models khác nhau - AUC higher = model better</li>
+                    <li>✓ Threshold-agnostic metric - không phụ thuộc threshold cụ thể</li>
+                    <li>✓ Đánh giá khả năng ranking - model rank churners tốt không?</li>
                 </ul>
             </div>
         </div>
 
         <!-- Slide 33 -->
         <div class="slide">
-            <h1>Bước 1: Load và Khám phá Dữ liệu</h1>
-            <div class="code-block">
-# Load data
-df = pd.read_csv('sales_data.csv')
-
-# Khám phá cơ bản
-print(df.head())          # 5 dòng đầu
-print(df.info())          # Thông tin tổng quan
-print(df.describe())      # Thống kê mô tả
-
-# Kiểm tra missing values
-print(df.isnull().sum())
-
-# Correlation matrix
-correlation = df.corr()
-sns.heatmap(correlation, annot=True, cmap='coolwarm')
-plt.show()
+            <h1>Chọn Metric nào cho Churn Prediction?</h1>
+            <div class="highlight">
+                <h3>🤔 Câu hỏi quan trọng nhất: Metric nào phù hợp với business?</h3>
             </div>
 
+            <table>
+                <tr>
+                    <th>Metric</th>
+                    <th>Khi nào dùng?</th>
+                    <th>Ưu điểm</th>
+                    <th>Nhược điểm</th>
+                </tr>
+                <tr>
+                    <td><strong>Accuracy</strong></td>
+                    <td>Classes balanced</td>
+                    <td>Dễ hiểu</td>
+                    <td>Misleading với imbalanced data</td>
+                </tr>
+                <tr>
+                    <td><strong>Precision</strong></td>
+                    <td>Retention cost cao<br>Muốn tránh false alarms</td>
+                    <td>Minimize wasted resources</td>
+                    <td>Có thể miss nhiều churners</td>
+                </tr>
+                <tr>
+                    <td><strong>Recall</strong></td>
+                    <td>Customer LTV cao<br>Cost of churn rất cao</td>
+                    <td>Catch most churners</td>
+                    <td>Nhiều false positives</td>
+                </tr>
+                <tr>
+                    <td><strong>F1-Score</strong></td>
+                    <td>Cần balance<br>Imbalanced classes</td>
+                    <td>Single metric cho balance</td>
+                    <td>Không customize tradeoff</td>
+                </tr>
+                <tr>
+                    <td><strong>AUC</strong></td>
+                    <td>Model comparison<br>Threshold chưa định</td>
+                    <td>Threshold-agnostic</td>
+                    <td>Khó interpret cho business</td>
+                </tr>
+            </table>
+
             <div class="example-box">
-                <strong>💡 Tips:</strong> Dành thời gian hiểu dữ liệu sẽ giúp bạn build mô hình tốt hơn!
+                <h3>📊 Recommendation cho Churn Prediction:</h3>
+                <ol style="font-size: 1.05em;">
+                    <li><strong>Primary metric: F1-Score</strong> - Balance giữa Precision và Recall</li>
+                    <li><strong>Secondary: Recall</strong> - Đảm bảo không miss quá nhiều churners</li>
+                    <li><strong>Model comparison: AUC</strong> - So sánh different algorithms</li>
+                    <li><strong>Business reporting: Precision</strong> - ROI của churn program</li>
+                </ol>
+            </div>
+
+            <div class="success-box">
+                <strong>💼 Business Context:</strong> Thường trong churn prediction, <strong>Recall quan trọng hơn Precision</strong> vì:
+                <ul>
+                    <li>Cost of losing customer >> Cost of retention offer</li>
+                    <li>Prefer catch all potential churners, accept some false alarms</li>
+                    <li>Target: Recall > 75%, Precision > 60%, F1 > 0.65</li>
+                </ul>
             </div>
         </div>
 
         <!-- Slide 34 -->
         <div class="slide">
-            <h1>Bước 2: Chuẩn bị Dữ liệu</h1>
-            <div class="code-block">
-# Xử lý missing values
-df = df.dropna()  # Hoặc df.fillna(method='ffill')
-
-# Chọn features và target
-X = df[['advertising_spend', 'promotion', 'competition']]
-y = df['sales']
-
-# Chia train/test
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
-
-# Feature scaling (optional cho Linear Regression)
-scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
-
-print(f"Train size: {len(X_train)}, Test size: {len(X_test)}")
+            <h1>Class Imbalance Problem</h1>
+            <div class="warning-box">
+                <h3>⚠️ Vấn đề lớn trong Churn Prediction!</h3>
+                <p style="font-size: 1.1em;">
+                    Churn rate thường chỉ 5-20% → Dataset severely imbalanced!<br>
+                    80-95% Not Churn vs 5-20% Churn
+                </p>
             </div>
 
-            <div class="highlight">
-                <strong>⚠️ Quan trọng:</strong> fit_transform trên train, chỉ transform trên test!
+            <h3>🔍 Tại sao Class Imbalance là vấn đề?</h3>
+            <ul>
+                <li>Model bias về majority class (Not Churn)</li>
+                <li>Học được rất ít về minority class (Churn)</li>
+                <li>Accuracy cao nhưng vô dụng (predict tất cả là Not Churn)</li>
+                <li>Poor performance trên class quan trọng (Churners)!</li>
+            </ul>
+
+            <h3>✨ Giải pháp:</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>1️⃣ Resampling</h4>
+                    <p><strong>Oversampling minority:</strong></p>
+                    <ul style="font-size: 0.95em;">
+                        <li>Random oversampling</li>
+                        <li>SMOTE (Synthetic Minority Oversampling)</li>
+                        <li>ADASYN</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>Undersampling majority:</strong></p>
+                    <ul style="font-size: 0.95em;">
+                        <li>Random undersampling</li>
+                        <li>Tomek Links</li>
+                        <li>NearMiss</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>2️⃣ Algorithm-level</h4>
+                    <p><strong>Class weights:</strong></p>
+                    <ul style="font-size: 0.95em;">
+                        <li>Assign higher weight cho minority class</li>
+                        <li>Penalize misclassifying churners nhiều hơn</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>Threshold adjustment:</strong></p>
+                    <ul style="font-size: 0.95em;">
+                        <li>Lower threshold (0.3 thay vì 0.5)</li>
+                        <li>Tăng recall cho minority class</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="code-block">
+# Method 1: Class weights
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(class_weight='balanced')  # Auto-calculate weights
+# Or manual: class_weight={0: 1, 1: 5}  # Weight class 1 (Churn) 5x higher
+
+# Method 2: SMOTE
+from imblearn.over_sampling import SMOTE
+
+smote = SMOTE(random_state=42)
+X_train_sm, y_train_sm = smote.fit_resample(X_train, y_train)
+print(f"Original: {y_train.value_counts()}")
+print(f"After SMOTE: {y_train_sm.value_counts()}")
             </div>
         </div>
 
         <!-- Slide 35 -->
         <div class="slide">
-            <h1>Bước 3: Training Mô hình</h1>
-            <div class="code-block">
-# Khởi tạo model
-model = LinearRegression()
-
-# Training (fit) model
-model.fit(X_train, y_train)
-
-# Xem coefficients
-print("Intercept (β₀):", model.intercept_)
-print("Coefficients (β₁, β₂, ...):", model.coef_)
-
-# Feature names và coefficients
-feature_names = X.columns
-for name, coef in zip(feature_names, model.coef_):
-    print(f"{name}: {coef:.4f}")
+            <h1>Tóm tắt: Evaluation Metrics</h1>
+            <div class="highlight">
+                <h3>🎓 Key Takeaways:</h3>
             </div>
 
-            <div class="example-box">
-                <h3>📊 Output ví dụ:</h3>
-                <pre style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px;">
-Intercept (β₀): 25.5
-advertising_spend: 2.65
-promotion: 1.85
-competition: -0.92
-                </pre>
+            <ol style="font-size: 1.1em; line-height: 2;">
+                <li><strong>Confusion Matrix:</strong> Nền tảng - TP, TN, FP, FN</li>
+                <li><strong>Accuracy:</strong> Dễ hiểu nhưng misleading với imbalanced data</li>
+                <li><strong>Precision:</strong> Minimize false alarms - quan trọng khi retention cost cao</li>
+                <li><strong>Recall:</strong> Catch churners - quan trọng khi LTV cao</li>
+                <li><strong>F1-Score:</strong> Balance Precision & Recall - good default metric</li>
+                <li><strong>AUC:</strong> Model comparison, threshold-agnostic</li>
+                <li><strong>Precision-Recall Tradeoff:</strong> Adjust threshold dựa trên business needs</li>
+                <li><strong>Class Imbalance:</strong> Dùng SMOTE, class weights, hoặc adjust threshold</li>
+            </ol>
+
+            <div class="success-box">
+                <h3>💼 Best Practice cho Churn Prediction:</h3>
+                <ul>
+                    <li>✓ <strong>Primary:</strong> F1-Score và Recall (aim for F1 > 0.65, Recall > 0.75)</li>
+                    <li>✓ <strong>Handle imbalance:</strong> class_weight='balanced' hoặc SMOTE</li>
+                    <li>✓ <strong>Business alignment:</strong> Calculate ROI = (TP × LTV - FP × RetentionCost)</li>
+                    <li>✓ <strong>Always:</strong> Analyze confusion matrix - hiểu model sai ở đâu!</li>
+                </ul>
             </div>
         </div>
 
+        <!-- PHẦN 6: CASE STUDY & IMPLEMENTATION (Slides 36-45) -->
+
         <!-- Slide 36 -->
         <div class="slide">
-            <h1>Bước 4: Dự đoán và Đánh giá</h1>
-            <div class="code-block">
-# Dự đoán trên test set
-y_pred = model.predict(X_test)
+            <h1>Case Study: Telecom Churn Prediction</h1>
+            <div class="example-box">
+                <h3>📱 Business Context:</h3>
+                <p style="font-size: 1.15em;">
+                    <strong>Company:</strong> TeleConnect - Nhà mạng viễn thông<br>
+                    <strong>Problem:</strong> Churn rate 26.5% - mất 2,600 khách hàng/10,000 mỗi năm<br>
+                    <strong>Impact:</strong> Mất ~$15M revenue/năm (AVG LTV = $5,700/customer)<br>
+                    <strong>Goal:</strong> Giảm churn rate xuống 20% trong 6 tháng
+                </p>
+            </div>
 
-# Tính các metrics
-r2 = r2_score(y_test, y_pred)
-rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-mae = mean_absolute_error(y_test, y_pred)
+            <h3>📊 Dataset Overview:</h3>
+            <ul>
+                <li><strong>Samples:</strong> 7,043 customers</li>
+                <li><strong>Features:</strong> 21 features (demographics, services, billing)</li>
+                <li><strong>Target:</strong> Churn (Yes/No)</li>
+                <li><strong>Churn Rate:</strong> 26.5% (1,869 churners)</li>
+                <li><strong>Timeframe:</strong> Data từ Q1-Q4 2023</li>
+            </ul>
 
-print(f"R² Score: {r2:.4f}")
-print(f"RMSE: {rmse:.4f}")
-print(f"MAE: {mae:.4f}")
+            <h3>🎯 Business Questions:</h3>
+            <ol>
+                <li>Yếu tố nào dẫn đến churn?</li>
+                <li>Khách hàng nào có risk cao nhất?</li>
+                <li>Can thiệp như thế nào để giảm churn?</li>
+                <li>Expected ROI của churn prevention program?</li>
+            </ol>
 
-# So sánh actual vs predicted
-comparison = pd.DataFrame({
-    'Actual': y_test,
-    'Predicted': y_pred,
-    'Difference': y_test - y_pred
-})
-print(comparison.head(10))
+            <div class="info-box">
+                <strong>💰 Business Metrics:</strong>
+                <ul>
+                    <li>Retention offer cost: $100/customer</li>
+                    <li>Average LTV: $5,700/customer</li>
+                    <li>Target: Reduce churn 6.5% → Save $3.9M/year</li>
+                </ul>
             </div>
         </div>
 
         <!-- Slide 37 -->
         <div class="slide">
-            <h1>Bước 5: Visualization và Residual Analysis</h1>
-            <div class="code-block">
-# 1. Actual vs Predicted plot
-plt.figure(figsize=(10, 6))
-plt.scatter(y_test, y_pred, alpha=0.6)
-plt.plot([y_test.min(), y_test.max()], 
-         [y_test.min(), y_test.max()], 
-         'r--', lw=2)
-plt.xlabel('Actual Sales')
-plt.ylabel('Predicted Sales')
-plt.title('Actual vs Predicted Sales')
-plt.show()
+            <h1>Dataset Features</h1>
+            <h3>📋 Features của Telecom Churn Dataset:</h3>
 
-# 2. Residual plot
-residuals = y_test - y_pred
-plt.figure(figsize=(10, 6))
-plt.scatter(y_pred, residuals, alpha=0.6)
-plt.axhline(y=0, color='r', linestyle='--')
-plt.xlabel('Predicted Values')
-plt.ylabel('Residuals')
-plt.title('Residual Plot')
-plt.show()
+            <div class="grid-2">
+                <div class="card">
+                    <h4>👤 Demographics</h4>
+                    <ul>
+                        <li><strong>customerID:</strong> Unique ID</li>
+                        <li><strong>gender:</strong> Male/Female</li>
+                        <li><strong>SeniorCitizen:</strong> 0/1</li>
+                        <li><strong>Partner:</strong> Yes/No</li>
+                        <li><strong>Dependents:</strong> Yes/No</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>📞 Services</h4>
+                    <ul>
+                        <li><strong>PhoneService:</strong> Yes/No</li>
+                        <li><strong>MultipleLines:</strong> Yes/No/No phone</li>
+                        <li><strong>InternetService:</strong> DSL/Fiber/No</li>
+                        <li><strong>OnlineSecurity:</strong> Yes/No/No internet</li>
+                        <li><strong>OnlineBackup:</strong> Yes/No/No internet</li>
+                        <li><strong>DeviceProtection:</strong> Yes/No/No internet</li>
+                        <li><strong>TechSupport:</strong> Yes/No/No internet</li>
+                        <li><strong>StreamingTV:</strong> Yes/No/No internet</li>
+                        <li><strong>StreamingMovies:</strong> Yes/No/No internet</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>📝 Account</h4>
+                    <ul>
+                        <li><strong>tenure:</strong> Tháng sử dụng</li>
+                        <li><strong>Contract:</strong> Month-to-month / One year / Two year</li>
+                        <li><strong>PaperlessBilling:</strong> Yes/No</li>
+                        <li><strong>PaymentMethod:</strong> Electronic/Mailed check/Bank transfer/Credit card</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>💰 Charges</h4>
+                    <ul>
+                        <li><strong>MonthlyCharges:</strong> $ per month</li>
+                        <li><strong>TotalCharges:</strong> Total $ paid</li>
+                    </ul>
+                    <h4 style="margin-top: 15px;">🎯 Target</h4>
+                    <ul>
+                        <li><strong>Churn:</strong> Yes/No</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- PHẦN 5: DIỄN GIẢI KẾT QUẢ VÀ RÚT RA INSIGHTS (6 slides) -->
-
         <!-- Slide 38 -->
         <div class="slide">
-            <h1>Diễn giải R² Score</h1>
-            <div class="formula">
-                R² = 1 - (SS_res / SS_tot)
-            </div>
-            <p style="text-align: center; margin: 20px 0; font-size: 1.1em;">
-                Tỷ lệ phương sai của biến phụ thuộc được giải thích bởi mô hình
-            </p>
+            <h1>Step 1: Obtain & Scrub Data</h1>
+            <div class="code-block">
+import pandas as pd
+import numpy as np
 
-            <div class="highlight">
-                <h3>📊 Cách hiểu R² Score:</h3>
-                <ul>
-                    <li><strong>R² = 0.85:</strong> Mô hình giải thích được 85% sự biến thiên của dữ liệu</li>
-                    <li><strong>Giá trị:</strong> 0 đến 1 (càng cao càng tốt)</li>
-                    <li><strong>R² = 1:</strong> Perfect fit (hiếm khi xảy ra, cẩn thận overfitting)</li>
-                    <li><strong>R² = 0:</strong> Mô hình không tốt hơn dự đoán bằng mean</li>
-                    <li><strong>R² < 0:</strong> Mô hình tệ hơn cả baseline</li>
-                </ul>
-            </div>
+# 1. OBTAIN - Load data
+df = pd.read_csv('telecom_churn.csv')
+print(f"Dataset shape: {df.shape}")
+print(df.head())
 
-            <div class="example-box">
-                <strong>💼 Business Context:</strong> R² = 0.82 nghĩa là mô hình dự đoán doanh thu chính xác 82%, còn 18% bị ảnh hưởng bởi các yếu tố khác chưa có trong model.
+# 2. SCRUB - Data Cleaning
+print("\n=== DATA QUALITY CHECK ===")
+
+# Check data types
+print(df.dtypes)
+
+# Missing values
+print(f"\nMissing values:\n{df.isnull().sum()}")
+
+# TotalCharges có ' ' (space) thay vì NaN
+df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
+print(f"TotalCharges missing after conversion: {df['TotalCharges'].isnull().sum()}")
+
+# Impute missing TotalCharges
+df['TotalCharges'].fillna(df['TotalCharges'].median(), inplace=True)
+
+# Drop customerID (không cần cho modeling)
+df = df.drop('customerID', axis=1)
+
+# Convert target to binary
+df['Churn'] = (df['Churn'] == 'Yes').astype(int)
+
+# Check for duplicates
+print(f"\nDuplicates: {df.duplicated().sum()}")
+
+# Basic statistics
+print(f"\n=== SUMMARY STATISTICS ===")
+print(df.describe())
+
+print(f"\n✅ Data cleaning completed!")
+print(f"Final shape: {df.shape}")
             </div>
         </div>
 
         <!-- Slide 39 -->
         <div class="slide">
-            <h1>Diễn giải Coefficients</h1>
-            <div class="example-box">
-                <h3>🏪 Case Study: Dự đoán Doanh thu</h3>
-                <div class="code-block">
-Model: Sales = 25.5 + 2.65*Ad_Spend + 1.85*Promotion - 0.92*Competition
-R² = 0.84, RMSE = 5.2
-                </div>
+            <h1>Step 2: Explore Data (EDA)</h1>
+            <div class="code-block">
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Churn rate
+churn_rate = df['Churn'].mean()
+print(f"Churn Rate: {churn_rate*100:.2f}%")
+
+# 1. Churn distribution
+fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+
+# Churn by Contract
+pd.crosstab(df['Contract'], df['Churn'], normalize='index').plot(
+    kind='bar', ax=axes[0,0], title='Churn by Contract Type'
+)
+
+# Churn by Tenure
+df.boxplot(column='tenure', by='Churn', ax=axes[0,1])
+axes[0,1].set_title('Tenure Distribution by Churn')
+
+# Churn by Monthly Charges
+df.boxplot(column='MonthlyCharges', by='Churn', ax=axes[0,2])
+axes[0,2].set_title('Monthly Charges by Churn')
+
+# Churn by Internet Service
+pd.crosstab(df['InternetService'], df['Churn'], normalize='index').plot(
+    kind='bar', ax=axes[1,0], title='Churn by Internet Service'
+)
+
+# Churn by Tech Support
+pd.crosstab(df['TechSupport'], df['Churn'], normalize='index').plot(
+    kind='bar', ax=axes[1,1], title='Churn by Tech Support'
+)
+
+# Correlation heatmap (numerical features only)
+numerical_cols = df.select_dtypes(include=[np.number]).columns
+correlation = df[numerical_cols].corr()
+sns.heatmap(correlation, annot=True, fmt='.2f', ax=axes[1,2])
+axes[1,2].set_title('Correlation Matrix')
+
+plt.tight_layout()
+plt.show()
             </div>
 
-            <div class="highlight">
-                <h3>📈 Insights từ Coefficients:</h3>
+            <div class="success-box">
+                <h3>🔍 Key Findings từ EDA:</h3>
                 <ul>
-                    <li><strong>Advertising Spend (2.65):</strong><br>
-                        → Mỗi 1 triệu VNĐ tăng chi phí quảng cáo → Doanh thu tăng 2.65 triệu<br>
-                        → <strong>ROI = 165%</strong> - Đáng giá để đầu tư!
-                    </li>
-                    <li><strong>Promotion (1.85):</strong><br>
-                        → Có chương trình khuyến mãi → Doanh thu tăng trung bình 1.85 triệu<br>
-                        → Nên tổ chức promotion thường xuyên
-                    </li>
-                    <li><strong>Competition (-0.92):</strong><br>
-                        → Mỗi đối thủ cạnh tranh thêm → Doanh thu giảm 0.92 triệu<br>
-                        → Cần chiến lược để differentiate
-                    </li>
+                    <li><strong>Contract:</strong> Month-to-month có churn rate 42%! (vs 11% for 1-year, 3% for 2-year)</li>
+                    <li><strong>Tenure:</strong> Churners có tenure trung bình thấp hơn (17 vs 38 tháng)</li>
+                    <li><strong>Tech Support:</strong> Không có tech support → Churn rate 42% (vs 15% có support)</li>
+                    <li><strong>Monthly Charges:</strong> Churners trả nhiều hơn ($74 vs $61)</li>
                 </ul>
             </div>
         </div>
 
         <!-- Slide 40 -->
         <div class="slide">
-            <h1>Phân tích Residuals</h1>
-            <h3>Residual = Actual - Predicted</h3>
-            <p style="font-size: 1.1em; line-height: 1.8;">Phân tích residuals giúp kiểm tra giả định và phát hiện vấn đề của mô hình.</p>
+            <h1>Step 3: Feature Engineering & Preprocessing</h1>
+            <div class="code-block">
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
-            <div class="grid-2">
-                <div class="card">
-                    <h3>✅ Residuals tốt</h3>
-                    <ul>
-                        <li>Phân phối gần chuẩn</li>
-                        <li>Mean ≈ 0</li>
-                        <li>Không có pattern</li>
-                        <li>Homoscedastic (phương sai đồng nhất)</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>❌ Dấu hiệu vấn đề</h3>
-                    <ul>
-                        <li>Có pattern rõ ràng</li>
-                        <li>Heteroscedasticity</li>
-                        <li>Outliers lớn</li>
-                        <li>Non-normal distribution</li>
-                    </ul>
-                </div>
-            </div>
+# 1. Feature Engineering
+# Tenure groups
+df['tenure_group'] = pd.cut(df['tenure'], bins=[0, 12, 24, 48, 72], 
+                              labels=['0-1yr', '1-2yr', '2-4yr', '4-6yr'])
 
-            <div class="highlight" style="margin-top: 20px;">
-                <strong>🔍 Actions:</strong>
-                <ul>
-                    <li>Pattern trong residuals → Thử polynomial regression hoặc add features</li>
-                    <li>Heteroscedasticity → Transform data (log, sqrt)</li>
-                    <li>Outliers → Investigate và xử lý</li>
-                </ul>
+# Service count
+service_cols = ['OnlineSecurity', 'OnlineBackup', 'DeviceProtection', 
+                'TechSupport', 'StreamingTV', 'StreamingMovies']
+df['num_services'] = df[service_cols].apply(lambda x: (x=='Yes').sum(), axis=1)
+
+# Average monthly charge per service
+df['avg_charge_per_service'] = df['MonthlyCharges'] / (df['num_services'] + 1)
+
+# High value customer
+df['high_value'] = ((df['tenure'] > 24) & (df['MonthlyCharges'] > 70)).astype(int)
+
+# 2. Encoding Categorical Variables
+categorical_cols = df.select_dtypes(include=['object']).columns
+print(f"Categorical columns: {categorical_cols.tolist()}")
+
+# One-hot encoding
+df_encoded = pd.get_dummies(df, columns=categorical_cols, drop_first=True)
+
+print(f"\n✅ After encoding: {df_encoded.shape}")
+
+# 3. Separate features and target
+X = df_encoded.drop('Churn', axis=1)
+y = df_encoded['Churn']
+
+# 4. Train-test split
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+# 5. Feature Scaling (optional cho Logistic Regression)
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+print(f"\n✅ Preprocessing completed!")
+print(f"Training set: {X_train.shape}")
+print(f"Test set: {X_test.shape}")
             </div>
         </div>
 
         <!-- Slide 41 -->
         <div class="slide">
-            <h1>Rút ra Business Insights</h1>
-            <div class="highlight">
-                <h3>🎯 Từ Model đến Action:</h3>
-                <ol style="font-size: 1.05em;">
-                    <li><strong>Identify Key Drivers</strong><br>
-                        Feature nào có impact lớn nhất? → Prioritize resources
-                    </li>
-                    <li><strong>Quantify Impact</strong><br>
-                        Coefficients cho biết ROI cụ thể → Data-driven decisions
-                    </li>
-                    <li><strong>Scenario Analysis</strong><br>
-                        "What-if" scenarios: Nếu tăng budget 20% thì doanh thu tăng bao nhiêu?
-                    </li>
-                    <li><strong>Identify Gaps</strong><br>
-                        R² = 0.82 → 18% chưa giải thích được → Tìm features mới
-                    </li>
-                </ol>
-            </div>
+            <h1>Step 4: Model Training & Evaluation</h1>
+            <div class="code-block">
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score
 
-            <div class="example-box" style="margin-top: 20px;">
-                <strong>💰 Example Business Actions:</strong>
-                <ul>
-                    <li>Tăng advertising budget vì ROI cao (2.65x)</li>
-                    <li>Tập trung vào differentiation để giảm impact của competition</li>
-                    <li>Schedule promotions vào thời điểm có coefficient cao</li>
-                </ul>
+# 1. Train Baseline Model
+print("=== BASELINE MODEL ===")
+model_baseline = LogisticRegression(random_state=42, max_iter=1000)
+model_baseline.fit(X_train, y_train)
+
+y_pred_baseline = model_baseline.predict(X_test)
+y_proba_baseline = model_baseline.predict_proba(X_test)[:, 1]
+
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred_baseline))
+print(f"AUC Score: {roc_auc_score(y_test, y_proba_baseline):.4f}")
+
+# 2. Model với Class Weights (Handle Imbalance)
+print("\n=== MODEL WITH CLASS WEIGHTS ===")
+model_weighted = LogisticRegression(
+    class_weight='balanced',
+    random_state=42,
+    max_iter=1000
+)
+model_weighted.fit(X_train, y_train)
+
+y_pred_weighted = model_weighted.predict(X_test)
+y_proba_weighted = model_weighted.predict_proba(X_test)[:, 1]
+
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred_weighted))
+print(f"AUC Score: {roc_auc_score(y_test, y_proba_weighted):.4f}")
+
+# 3. Confusion Matrix
+import seaborn as sns
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+cm_baseline = confusion_matrix(y_test, y_pred_baseline)
+sns.heatmap(cm_baseline, annot=True, fmt='d', ax=axes[0], cmap='Blues')
+axes[0].set_title('Baseline Model')
+axes[0].set_xlabel('Predicted')
+axes[0].set_ylabel('Actual')
+
+cm_weighted = confusion_matrix(y_test, y_pred_weighted)
+sns.heatmap(cm_weighted, annot=True, fmt='d', ax=axes[1], cmap='Greens')
+axes[1].set_title('Weighted Model')
+axes[1].set_xlabel('Predicted')
+axes[1].set_ylabel('Actual')
+
+plt.tight_layout()
+plt.show()
             </div>
         </div>
 
         <!-- Slide 42 -->
         <div class="slide">
-            <h1>Limitations và Cách cải thiện</h1>
-            <div class="grid-2">
-                <div class="card">
-                    <h3>⚠️ Limitations</h3>
-                    <ul>
-                        <li><strong>Causation ≠ Correlation</strong><br>
-                            Mô hình chỉ cho biết correlation, không chứng minh causation
-                        </li>
-                        <li><strong>Extrapolation Risk</strong><br>
-                            Dự đoán ngoài phạm vi training data không đáng tin
-                        </li>
-                        <li><strong>Feature Limitations</strong><br>
-                            Chỉ tốt bằng features được cung cấp
-                        </li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>🚀 Cách cải thiện</h3>
-                    <ul>
-                        <li><strong>Add More Features</strong><br>
-                            Thu thập thêm dữ liệu relevant
-                        </li>
-                        <li><strong>Feature Engineering</strong><br>
-                            Tạo interaction terms, polynomial
-                        </li>
-                        <li><strong>Try Advanced Models</strong><br>
-                            Ridge, Lasso, Random Forest
-                        </li>
-                        <li><strong>More Data</strong><br>
-                            Tăng kích thước dataset
-                        </li>
-                    </ul>
-                </div>
+            <h1>Step 5: Feature Importance Analysis</h1>
+            <div class="code-block">
+# Get feature coefficients
+feature_importance = pd.DataFrame({
+    'Feature': X_train.columns,
+    'Coefficient': model_weighted.coef_[0],
+    'Abs_Coefficient': np.abs(model_weighted.coef_[0])
+}).sort_values('Abs_Coefficient', ascending=False)
+
+# Top 15 features
+print("=== TOP 15 MOST IMPORTANT FEATURES ===")
+print(feature_importance.head(15))
+
+# Visualize
+plt.figure(figsize=(10, 8))
+top_features = feature_importance.head(15)
+colors = ['red' if x < 0 else 'green' for x in top_features['Coefficient']]
+plt.barh(top_features['Feature'], top_features['Coefficient'], color=colors, alpha=0.7)
+plt.xlabel('Coefficient (Impact on Churn)')
+plt.title('Top 15 Features Impacting Churn')
+plt.axvline(x=0, color='black', linestyle='--', linewidth=1)
+plt.tight_layout()
+plt.show()
+
+# Odds Ratio Interpretation
+print("\n=== ODDS RATIO INTERPRETATION ===")
+top_5 = feature_importance.head(5)
+for idx, row in top_5.iterrows():
+    odds_ratio = np.exp(row['Coefficient'])
+    direction = "increase" if row['Coefficient'] > 0 else "decrease"
+    impact = (odds_ratio - 1) * 100 if odds_ratio > 1 else (1 - odds_ratio) * 100
+    print(f"{row['Feature']}: Odds {direction} by {impact:.1f}%")
+            </div>
+
+            <div class="success-box">
+                <h3>🔍 Top Churn Drivers:</h3>
+                <ol>
+                    <li><strong>Contract_Month-to-month:</strong> Tăng odds churn 3.5x!</li>
+                    <li><strong>tenure:</strong> Mỗi tháng thêm → Giảm 5% odds</li>
+                    <li><strong>TechSupport_No:</strong> Tăng odds 2.2x</li>
+                    <li><strong>InternetService_Fiber:</strong> Tăng odds 1.8x</li>
+                    <li><strong>OnlineSecurity_No:</strong> Tăng odds 1.6x</li>
+                </ol>
             </div>
         </div>
 
-        <!-- Slide 43 -->
+        <!-- Slide 43: HOÀN CHỈNH -->
         <div class="slide">
-            <h1>Model Deployment: Đưa vào Production</h1>
-            <h3>Các bước triển khai:</h3>
-            <div class="process-step">1. Model Serialization</div>
-            <div class="code-block">
-import pickle
-
-# Save model
-with open('sales_model.pkl', 'wb') as f:
-    pickle.dump(model, f)
-
-# Load model
-with open('sales_model.pkl', 'rb') as f:
-    loaded_model = pickle.load(f)
+            <h1>Step 6: iNterpret - Business Insights</h1>
+            <div class="example-box">
+                <h3>📊 Model Performance Summary:</h3>
+                <ul style="font-size: 1.05em;">
+                    <li><strong>Accuracy:</strong> 80.2%</li>
+                    <li><strong>Precision:</strong> 67.3% - 67% predictions đúng</li>
+                    <li><strong>Recall:</strong> 81.5% - Catch được 81.5% churners!</li>
+                    <li><strong>F1-Score:</strong> 0.736 - Good balance</li>
+                    <li><strong>AUC:</strong> 0.857 - Excellent discrimination!</li>
+                </ul>
             </div>
 
-            <div class="process-step">2. Create Prediction API/Service</div>
-            <ul>
-                <li>Flask/FastAPI cho REST API</li>
-                <li>Docker containerization</li>
-                <li>Cloud deployment (AWS, GCP, Azure)</li>
-            </ul>
+            <h3>💼 Actionable Business Insights:</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>🎯 High Priority Actions</h4>
+                    <ol>
+                        <li><strong>Contract Strategy:</strong>
+                            <ul style="font-size: 0.95em;">
+                                <li>Incentivize long-term contracts</li>
+                                <li>Offer 20% discount for 1-year</li>
+                                <li>30% discount for 2-year contracts</li>
+                                <li>Expected impact: Reduce churn 15%</li>
+                            </ul>
+                        </li>
+                        <li><strong>Tech Support:</strong>
+                            <ul style="font-size: 0.95em;">
+                                <li>Provide FREE tech support</li>
+                                <li>Proactive outreach for new customers</li>
+                                <li>Expected: Reduce churn 8%</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+                <div class="card">
+                    <h4>📈 Customer Segmentation</h4>
+                    <ol>
+                        <li><strong>High Risk (Priority 1):</strong>
+                            <ul style="font-size: 0.95em;">
+                                <li>M2M contract + tenure < 12 months</li>
+                                <li>No tech support</li>
+                                <li>→ 327 customers identified</li>
+                                <li>→ Immediate intervention!</li>
+                            </ul>
+                        </li>
+                        <li><strong>Medium Risk (Priority 2):</strong>
+                            <ul style="font-size: 0.95em;">
+                                <li>Fiber internet + high charges</li>
+                                <li>→ 456 customers</li>
+                                <li>→ Loyalty programs</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
 
-            <div class="process-step">3. Monitoring & Maintenance</div>
-            <ul>
-                <li>Track prediction accuracy theo thời gian</li>
-                <li>Retrain model định kỳ với dữ liệu mới</li>
-                <li>A/B testing cho model updates</li>
-            </ul>
+            <div class="success-box">
+                <h3>💰 Expected ROI:</h3>
+                <ul>
+                    <li><strong>Investment:</strong> $327K (327 high-risk × $1000 retention offer)</li>
+                    <li><strong>Saved customers:</strong> 267 (81.5% recall × 327)</li>
+                    <li><strong>Saved revenue:</strong> $1.52M (267 × $5,700 LTV)</li>
+                    <li><strong>Net profit:</strong> $1.19M</li>
+                    <li><strong>ROI:</strong> 365%! 🎉</li>
+                </ul>
+            </div>
         </div>
 
         <!-- Slide 44 -->
         <div class="slide">
-            <h1>Best Practices & Tips</h1>
-            <div class="highlight">
-                <h3>✨ Best Practices:</h3>
+            <h1>Deployment Plan</h1>
+            <div class="process-step">Phase 1: Pilot Program (Month 1-2)</div>
+            <ul>
+                <li>Deploy model cho 1,000 customers</li>
+                <li>Test retention offers: 3 variants (A/B/C testing)</li>
+                <li>Measure: Actual churn rate vs predicted</li>
+                <li>Refine threshold based on results</li>
+            </ul>
+
+            <div class="process-step">Phase 2: Scale Up (Month 3-4)</div>
+            <ul>
+                <li>Roll out to 50% customer base</li>
+                <li>Automated scoring pipeline (batch predictions daily)</li>
+                <li>CRM integration - flag high-risk customers</li>
+                <li>Train customer service team on intervention protocols</li>
+            </ul>
+
+            <div class="process-step">Phase 3: Full Production (Month 5-6)</div>
+            <ul>
+                <li>100% customer coverage</li>
+                <li>Real-time predictions via API</li>
+                <li>Automated retention campaigns</li>
+                <li>Monthly model retraining with new data</li>
+            </ul>
+
+            <div class="info-box">
+                <h3>🔧 Technical Requirements:</h3>
                 <ul>
-                    <li><strong>Start Simple:</strong> Luôn bắt đầu với Linear Regression làm baseline</li>
-                    <li><strong>Understand Data:</strong> EDA kỹ lưỡng trước khi modeling</li>
-                    <li><strong>Feature Engineering:</strong> Đây là nơi tạo ra sự khác biệt lớn nhất</li>
-                    <li><strong>Cross-Validation:</strong> Sử dụng CV để đánh giá robust hơn</li>
-                    <li><strong>Document Everything:</strong> Code, decisions, assumptions</li>
-                    <li><strong>Think Business:</strong> Luôn liên kết technical metrics với business value</li>
+                    <li><strong>Model Storage:</strong> Pickle file, version control</li>
+                    <li><strong>API:</strong> Flask/FastAPI for predictions</li>
+                    <li><strong>Database:</strong> Store customer scores, update daily</li>
+                    <li><strong>Monitoring:</strong> Track model performance, data drift</li>
+                    <li><strong>Alerting:</strong> Email alerts for high-risk customers</li>
                 </ul>
             </div>
 
-            <div class="example-box" style="margin-top: 20px;">
-                <strong>⚡ Pro Tips:</strong>
-                <ul>
-                    <li>Sử dụng version control (Git) cho code và data</li>
-                    <li>Set random_state để reproducible results</li>
-                    <li>Validate assumptions trước khi trust kết quả</li>
-                    <li>Communicate với stakeholders bằng ngôn ngữ business</li>
-                </ul>
+            <div class="code-block">
+# Save model
+import pickle
+
+model_data = {
+    'model': model_weighted,
+    'scaler': scaler,
+    'feature_names': X_train.columns.tolist(),
+    'threshold': 0.5,
+    'training_date': '2024-01-15',
+    'metrics': {'auc': 0.857, 'recall': 0.815, 'precision': 0.673}
+}
+
+with open('churn_model_v1.pkl', 'wb') as f:
+    pickle.dump(model_data, f)
+
+print("✅ Model saved successfully!")
             </div>
         </div>
 
         <!-- Slide 45 -->
         <div class="slide">
-            <h1>Tổng kết toàn bộ khóa học</h1>
+            <h1>Monitoring & Continuous Improvement</h1>
+            <h3>📊 KPIs để Monitor:</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>Model Performance</h4>
+                    <ul>
+                        <li><strong>Weekly:</strong> Actual vs Predicted churn rate</li>
+                        <li><strong>Precision/Recall:</strong> Track xu hướng</li>
+                        <li><strong>AUC Score:</strong> Model degradation?</li>
+                        <li><strong>Calibration:</strong> Probabilities còn accurate?</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Business Impact</h4>
+                    <ul>
+                        <li><strong>Churn Rate:</strong> Overall trend</li>
+                        <li><strong>Retention Rate:</strong> Của high-risk segment</li>
+                        <li><strong>ROI:</strong> Retention program effectiveness</li>
+                        <li><strong>Customer Feedback:</strong> Satisfaction scores</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>🔄 Retraining Strategy:</h3>
+            <div class="process-step">Trigger Retraining khi:</div>
+            <ul>
+                <li>Accuracy drop > 5% so với baseline</li>
+                <li>Data drift detected (distribution changes)</li>
+                <li>Mỗi 3 tháng (scheduled retraining)</li>
+                <li>Có major business changes (new products, pricing)</li>
+            </ul>
+
+            <div class="process-step">Improvement Opportunities:</div>
+            <ul>
+                <li><strong>More features:</strong> Customer service interactions, social media sentiment</li>
+                <li><strong>Advanced models:</strong> Try Random Forest, XGBoost, Neural Networks</li>
+                <li><strong>Ensemble:</strong> Combine multiple models</li>
+                <li><strong>Deep Learning:</strong> RNN for sequential behavior patterns</li>
+            </ul>
+
+            <div class="warning-box">
+                <h3>⚠️ Common Pitfalls to Avoid:</h3>
+                <ul>
+                    <li>❌ Set-and-forget: Model degrades over time!</li>
+                    <li>❌ Ignore false positives: Customers frustrated by unnecessary offers</li>
+                    <li>❌ Over-optimize for metrics: Remember business goals!</li>
+                    <li>❌ No feedback loop: Learn from retention successes/failures</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 46 -->
+        <div class="slide">
+            <h1>Best Practices: Churn Prediction Projects</h1>
             <div class="highlight">
-                <h3>🎓 Những gì đã học:</h3>
-                <ol style="font-size: 1.05em; line-height: 2;">
-                    <li><strong>Predictive Analytics:</strong> Ứng dụng ML trong kinh doanh</li>
-                    <li><strong>Quy trình ML:</strong> 7 bước từ business problem đến deployment</li>
-                    <li><strong>Success Metrics:</strong> Định nghĩa và đo lường thành công</li>
-                    <li><strong>Regression Theory:</strong> Concepts và assumptions</li>
-                    <li><strong>Linear Regression:</strong> Simple & Multiple, công thức, giả định</li>
-                    <li><strong>Modeling Process:</strong> Data prep, EDA, feature engineering, splitting, evaluation</li>
-                    <li><strong>Python Implementation:</strong> Scikit-learn, visualization</li>
-                    <li><strong>Interpretation:</strong> Coefficients, R², residuals, business insights</li>
+                <h3>✨ Lessons Learned từ Industry:</h3>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4>🎯 Data & Features</h4>
+                    <ul>
+                        <li><strong>Recency matters:</strong> Behavior 30-60 ngày gần nhất quan trọng nhất</li>
+                        <li><strong>Engagement metrics:</strong> Login frequency, feature usage > Demographics</li>
+                        <li><strong>Temporal features:</strong> Trends (declining usage) > Absolute values</li>
+                        <li><strong>Customer service:</strong> Complaint history là strong predictor</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🤖 Modeling</h4>
+                    <ul>
+                        <li><strong>Start simple:</strong> Logistic Regression baseline</li>
+                        <li><strong>Handle imbalance:</strong> SMOTE hoặc class weights</li>
+                        <li><strong>Optimize for business:</strong> Recall > Precision thường</li>
+                        <li><strong>Interpretability:</strong> Stakeholders cần hiểu WHY</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <h3>💼 Business Integration:</h3>
+                <ol style="font-size: 1.05em;">
+                    <li><strong>Segment customers:</strong> Not all churners are equal!
+                        <ul><li>High-value vs low-value</li><li>Savable vs lost causes</li></ul>
+                    </li>
+                    <li><strong>Personalized interventions:</strong> Different retention strategies cho different segments</li>
+                    <li><strong>Timing is key:</strong> Intervene BEFORE churn intent peaks</li>
+                    <li><strong>Close the loop:</strong> Track which interventions work, iterate</li>
                 </ol>
             </div>
 
-            <div class="example-box" style="margin-top: 30px; text-align: center;">
-                <h3>🚀 Next Steps:</h3>
-                <p style="font-size: 1.1em;">Thực hành với real datasets, tham gia Kaggle competitions, và áp dụng vào projects thực tế!</p>
+            <div class="info-box">
+                <strong>📚 Resources:</strong>
+                <ul>
+                    <li>Papers: "Deep Learning for Customer Churn Prediction" (IEEE)</li>
+                    <li>Books: "Fighting Churn with Data" by Carl Gold</li>
+                    <li>Tools: scikit-learn, imbalanced-learn, SHAP (explainability)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 47 -->
+        <div class="slide">
+            <h1>Common Mistakes và Cách Tránh</h1>
+            
+            <div class="warning-box">
+                <h3>❌ Mistake #1: Data Leakage</h3>
+                <p><strong>Vấn đề:</strong> Features chứa thông tin từ tương lai</p>
+                <p><strong>Ví dụ:</strong> Dùng "number of complaints" AFTER churn decision</p>
+                <p><strong>Fix:</strong> Chỉ dùng data TRƯỚC thời điểm churn cutoff</p>
+            </div>
+
+            <div class="warning-box">
+                <h3>❌ Mistake #2: Ignoring Temporal Aspects</h3>
+                <p><strong>Vấn đề:</strong> Train/test không tách theo time</p>
+                <p><strong>Ví dụ:</strong> Random split → Future data leak vào training</p>
+                <p><strong>Fix:</strong> Time-based split - Train trên Q1-Q3, Test trên Q4</p>
+            </div>
+
+            <div class="warning-box">
+                <h3>❌ Mistake #3: Treating All Churners Equally</h3>
+                <p><strong>Vấn đề:</strong> Same retention offer cho tất cả</p>
+                <p><strong>Fix:</strong> Segment by value, churn reason, savability score</p>
+            </div>
+
+            <div class="warning-box">
+                <h3>❌ Mistake #4: Over-Optimizing Technical Metrics</h3>
+                <p><strong>Vấn đề:</strong> AUC=0.95 nhưng business impact = 0</p>
+                <p><strong>Ví dụ:</strong> High accuracy nhưng miss high-value customers</p>
+                <p><strong>Fix:</strong> Optimize for business metrics (revenue saved, ROI)</p>
+            </div>
+
+            <div class="warning-box">
+                <h3>❌ Mistake #5: No Feedback Loop</h3>
+                <p><strong>Vấn đề:</strong> Không track retention program effectiveness</p>
+                <p><strong>Fix:</strong> A/B test interventions, measure incremental impact</p>
+            </div>
+        </div>
+
+        <!-- Slide 48 -->
+        <div class="slide">
+            <h1>Advanced Topics: Next Steps</h1>
+            <div class="highlight">
+                <h3>🚀 Sau khi master Logistic Regression, học gì tiếp?</h3>
+            </div>
+
+            <h3>1️⃣ Advanced Algorithms:</h3>
+            <ul>
+                <li><strong>Random Forest:</strong> Handle non-linearity, feature interactions tự động</li>
+                <li><strong>XGBoost/LightGBM:</strong> State-of-the-art accuracy, winning Kaggle</li>
+                <li><strong>Neural Networks:</strong> Deep learning cho complex patterns</li>
+                <li><strong>Survival Analysis:</strong> Model time-to-churn, không chỉ churn/not churn</li>
+            </ul>
+
+            <h3>2️⃣ Model Interpretability:</h3>
+            <ul>
+                <li><strong>SHAP (SHapley Additive exPlanations):</strong> Explain individual predictions</li>
+                <li><strong>LIME:</strong> Local Interpretable Model-agnostic Explanations</li>
+                <li><strong>Partial Dependence Plots:</strong> Visualize feature effects</li>
+            </ul>
+
+            <h3>3️⃣ Advanced Techniques:</h3>
+            <ul>
+                <li><strong>Uplift Modeling:</strong> Predict WHO will respond to intervention</li>
+                <li><strong>Causal Inference:</strong> Estimate causal effect của interventions</li>
+                <li><strong>Multi-task Learning:</strong> Predict churn + churn reason cùng lúc</li>
+                <li><strong>Sequential Models:</strong> RNN/LSTM cho temporal behavior</li>
+            </ul>
+
+            <div class="info-box">
+                <h3>📖 Recommended Learning Path:</h3>
+                <ol>
+                    <li>Master Logistic Regression thoroughly (you're here! ✓)</li>
+                    <li>Learn Decision Trees & Random Forest</li>
+                    <li>Gradient Boosting (XGBoost, LightGBM)</li>
+                    <li>Model interpretation (SHAP, LIME)</li>
+                    <li>Deep Learning (Neural Networks)</li>
+                    <li>Specialized techniques (Survival Analysis, Uplift Modeling)</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 49 -->
+        <div class="slide">
+            <h1>Assignment: Hands-on Project</h1>
+            <div class="example-box">
+                <h3>🎯 Đồ án Cuối khóa: E-commerce Churn Prediction</h3>
+            </div>
+
+            <h3>📋 Yêu cầu:</h3>
+            <ol style="font-size: 1.05em;">
+                <li><strong>Dataset:</strong> Tìm hoặc dùng dataset có sẵn (Kaggle, UCI)
+                    <ul><li>Telecom, Banking, E-commerce, SaaS, hoặc Retail</li></ul>
+                </li>
+                <li><strong>Implement OSEMN Pipeline đầy đủ:</strong>
+                    <ul>
+                        <li>Obtain & Scrub: Load và clean data</li>
+                        <li>Explore: EDA với ít nhất 5 visualizations</li>
+                        <li>Model: Train Logistic Regression + 1 advanced model</li>
+                        <li>iNterpret: Business insights và recommendations</li>
+                    </ul>
+                </li>
+                <li><strong>Feature Engineering:</strong> Tạo ít nhất 3 features mới có ý nghĩa</li>
+                <li><strong>Handle Class Imbalance:</strong> Thử SMOTE hoặc class weights</li>
+                <li><strong>Comprehensive Evaluation:</strong> Report đầy đủ metrics + confusion matrix</li>
+            </ol>
+
+            <h3>📊 Deliverables:</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>1. Jupyter Notebook</h4>
+                    <ul>
+                        <li>Code đầy đủ với comments</li>
+                        <li>Markdown cells giải thích</li>
+                        <li>Visualizations đẹp</li>
+                        <li>Reproducible (set random_state)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>2. Business Report (PPT)</h4>
+                    <ul>
+                        <li>Problem statement</li>
+                        <li>Key findings từ EDA</li>
+                        <li>Model performance</li>
+                        <li>Actionable recommendations</li>
+                        <li>Expected ROI</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <h3>⭐ Bonus Points:</h3>
+                <ul>
+                    <li>+10%: Deploy model thành API (Flask/FastAPI)</li>
+                    <li>+10%: Streamlit dashboard cho predictions</li>
+                    <li>+5%: Feature importance analysis với SHAP</li>
+                    <li>+5%: A/B test simulation cho retention strategies</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 50 -->
+        <div class="slide">
+            <h1>Tóm tắt: Supervised Learning for Churn</h1>
+            <div class="highlight">
+                <h3>🎓 Những gì đã học trong 50 slides:</h3>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4>📚 Lý thuyết</h4>
+                    <ol style="font-size: 0.95em;">
+                        <li>Churn prediction: Tại sao quan trọng</li>
+                        <li>Classification vs Regression</li>
+                        <li>OSEMN Pipeline</li>
+                        <li>Logistic Regression: Sigmoid, coefficients, training</li>
+                        <li>Feature Selection & Engineering</li>
+                        <li>Evaluation Metrics: Precision, Recall, F1, AUC</li>
+                        <li>Class Imbalance handling</li>
+                        <li>Model interpretation</li>
+                    </ol>
+                </div>
+                <div class="card">
+                    <h4>💻 Thực hành</h4>
+                    <ol style="font-size: 0.95em;">
+                        <li>Data cleaning với pandas</li>
+                        <li>EDA với matplotlib/seaborn</li>
+                        <li>Feature engineering techniques</li>
+                        <li>Train model với scikit-learn</li>
+                        <li>Hyperparameter tuning</li>
+                        <li>Model evaluation & comparison</li>
+                        <li>Business insights extraction</li>
+                        <li>Deployment considerations</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <h3>🎯 Key Takeaways:</h3>
+                <ol style="font-size: 1.05em; line-height: 2;">
+                    <li><strong>Churn prediction = High ROI:</strong> Giữ khách cũ rẻ hơn tìm khách mới 5-25 lần</li>
+                    <li><strong>OSEMN pipeline:</strong> Structured approach từ data đến insights</li>
+                    <li><strong>Logistic Regression:</strong> Simple, fast, interpretable - perfect baseline!</li>
+                    <li><strong>Feature Engineering > Algorithms:</strong> Good features + simple model > Poor features + complex model</li>
+                    <li><strong>Metrics matter:</strong> Choose based on business context (Recall for churn!)</li>
+                    <li><strong>Class Imbalance:</strong> Always handle it - SMOTE, class weights, threshold tuning</li>
+                    <li><strong>Interpretation is KEY:</strong> Model insights → Business actions → Revenue impact</li>
+                </ol>
+            </div>
+
+            <div class="center" style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); border-radius: 15px; color: white;">
+                <h2 style="color: white; margin-bottom: 20px;">🎉 Chúc mừng đã hoàn thành!</h2>
+                <p style="font-size: 1.3em;">Bây giờ bạn đã sẵn sàng apply Machine Learning<br>để giải quyết real business problems!</p>
+                <p style="font-size: 1.1em; margin-top: 20px; opacity: 0.9;">Keep learning, keep practicing! 🚀</p>
             </div>
         </div>
 
@@ -1424,7 +2820,7 @@ with open('sales_model.pkl', 'rb') as f:
             <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
         </div>
         <div class="slide-counter">
-            <span id="currentSlide">1</span> / <span id="totalSlides">45</span>
+            <span id="currentSlide">1</span> / <span id="totalSlides">50</span>
         </div>
     </div>
 
@@ -1447,7 +2843,6 @@ with open('sales_model.pkl', 'rb') as f:
             document.getElementById('prevBtn').disabled = currentSlide === 1;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
             
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
