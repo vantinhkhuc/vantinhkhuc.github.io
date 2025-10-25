@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fine-Tuning Classification Algorithms</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px;
+            display: none;
+            flex-direction: column;
+            position: relative;
+            overflow-y: auto;
+        }
+        .slide.active {
+            display: flex;
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            color: #667eea;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        h1 {
+            color: #667eea;
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        h2 {
+            color: #667eea;
+            font-size: 36px;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        h3 {
+            color: #764ba2;
+            font-size: 28px;
+            margin: 25px 0 15px 0;
+        }
+        h4 {
+            color: #667eea;
+            font-size: 22px;
+            margin: 20px 0 10px 0;
+        }
+        p, li {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 12px;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 24px;
+            color: #666;
+            margin-top: 10px;
+        }
+        .highlight {
+            background: linear-gradient(120deg, #ffd89b 0%, #ff9a76 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        .formula {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Times New Roman', serif;
+            font-size: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .objective-list {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .key-point {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .warning {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Fine-Tuning Classification Algorithms</h1>
+            <p class="subtitle">Tối ưu hóa thuật toán phân loại trong Phân tích dữ liệu kinh doanh</p>
+            <div class="highlight" style="margin-top: 80px;">
+                <h3 style="text-align: center; color: #333;">Môn: Phân tích dữ liệu trong Kinh doanh</h3>
+                <p style="text-align: center; font-size: 20px; margin-top: 20px;">Dành cho sinh viên năm 3 - Ngành Thương mại điện tử</p>
+            </div>
+            <div class="slide-number">1/50</div>
+        </div>
+
+        <!-- Slide 2: Mục tiêu học tập -->
+        <div class="slide">
+            <h2>Mục tiêu học tập</h2>
+            <div class="objective-list">
+                <ul>
+                    <li><strong>Tối ưu hóa phân tích dự đoán:</strong> Hiểu và áp dụng các thuật toán phân loại trong dự đoán hành vi khách hàng</li>
+                    <li><strong>Triển khai thuật toán:</strong> Thực hành với Support Vector Machines, Decision Trees và Random Forests</li>
+                    <li><strong>Đánh giá mô hình:</strong> Lựa chọn và sử dụng metrics phù hợp để đo lường hiệu suất</li>
+                    <li><strong>Ứng dụng thực tế:</strong> Giải quyết bài toán dự đoán customer churn trong thương mại điện tử</li>
+                    <li><strong>Tối ưu hóa:</strong> So sánh và lựa chọn thuật toán tốt nhất cho từng bài toán cụ thể</li>
+                </ul>
+            </div>
+            <div class="slide-number">2/50</div>
+        </div>
+
+        <!-- Slide 3: Giới thiệu Classification -->
+        <div class="slide">
+            <h2>Classification trong Machine Learning</h2>
+            <h3>Phân loại là gì?</h3>
+            <p>Classification (Phân loại) là quá trình dự đoán nhãn (label) hoặc danh mục (category) của dữ liệu dựa trên các đặc trưng (features) đầu vào.</p>
+            
+            <div class="two-column">
+                <div class="box">
+                    <h4>Ví dụ trong E-commerce:</h4>
+                    <ul>
+                        <li>Khách hàng rời bỏ? (Yes/No)</li>
+                        <li>Email spam hay không?</li>
+                        <li>Đánh giá tích cực/tiêu cực</li>
+                        <li>Phân loại sản phẩm</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>Loại Classification:</h4>
+                    <ul>
+                        <li><strong>Binary:</strong> 2 lớp (churn/không churn)</li>
+                        <li><strong>Multi-class:</strong> >2 lớp (A/B/C/D)</li>
+                        <li><strong>Multi-label:</strong> nhiều nhãn cùng lúc</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">3/50</div>
+        </div>
+
+        <!-- Slide 4: Customer Churn -->
+        <div class="slide">
+            <h2>Customer Churn - Vấn đề kinh doanh</h2>
+            <h3>Churn là gì?</h3>
+            <p><strong>Customer Churn (Tỷ lệ rời bỏ khách hàng)</strong> là tỷ lệ khách hàng ngừng sử dụng sản phẩm/dịch vụ trong một khoảng thời gian nhất định.</p>
+            
+            <div class="highlight">
+                <h4>Tại sao Churn quan trọng?</h4>
+                <ul>
+                    <li>Chi phí thu hút khách hàng mới cao gấp 5-25 lần so với giữ chân khách hàng cũ</li>
+                    <li>Tăng retention rate 5% có thể tăng lợi nhuận 25-95%</li>
+                    <li>Khách hàng trung thành mang lại giá trị lâu dài (LTV cao)</li>
+                </ul>
+            </div>
+            
+            <div class="key-point">
+                <strong>Mục tiêu:</strong> Dự đoán khách hàng có nguy cơ rời bỏ để có chiến lược giữ chân kịp thời.
+            </div>
+            <div class="slide-number">4/50</div>
+        </div>
+
+        <!-- Slide 5: Overview 3 thuật toán -->
+        <div class="slide">
+            <h2>Ba thuật toán chính</h2>
+            <div class="two-column">
+                <div class="box">
+                    <h4>1. Support Vector Machines (SVM)</h4>
+                    <p>Tìm siêu phẳng tối ưu để phân tách các lớp với margin lớn nhất.</p>
+                    <p><strong>Ưu điểm:</strong> Hiệu quả với dữ liệu chiều cao, mạnh với kernel trick</p>
+                </div>
+                <div class="box">
+                    <h4>2. Decision Trees</h4>
+                    <p>Cây quyết định chia dữ liệu thành các nhánh dựa trên điều kiện.</p>
+                    <p><strong>Ưu điểm:</strong> Dễ hiểu, không cần chuẩn hóa dữ liệu</p>
+                </div>
+            </div>
+            <div class="box" style="margin-top: 20px;">
+                <h4>3. Random Forests</h4>
+                <p>Ensemble của nhiều Decision Trees, mỗi tree học trên subset ngẫu nhiên của dữ liệu.</p>
+                <p><strong>Ưu điểm:</strong> Giảm overfitting, xử lý tốt missing values, feature importance</p>
+            </div>
+            <div class="slide-number">5/50</div>
+        </div>
+
+        <!-- Slide 6: Setup môi trường -->
+        <div class="slide">
+            <h2>Setup môi trường Python</h2>
+            <h3>Thư viện cần thiết</h3>
+            <div class="code-block">
+# Cài đặt thư viện
+pip install numpy pandas scikit-learn matplotlib seaborn
+
+# Import các thư viện
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+
+from sklearn.metrics import (
+    accuracy_score, precision_score, recall_score,
+    f1_score, confusion_matrix, classification_report
+)
+            </div>
+            <div class="slide-number">6/50</div>
+        </div>
+
+        <!-- Slide 7: Load dữ liệu -->
+        <div class="slide">
+            <h2>Chuẩn bị dữ liệu Customer Churn</h2>
+            <h3>Ví dụ: Telco Customer Churn Dataset</h3>
+            <div class="code-block">
+# Load dữ liệu
+df = pd.read_csv('customer_churn.csv')
+
+# Xem thông tin cơ bản
+print(df.head())
+print(df.info())
+print(df['Churn'].value_counts())
+
+# Các features điển hình:
+# - CustomerID, Gender, Age, Tenure (tháng)
+# - MonthlyCharges, TotalCharges
+# - Contract (Month-to-month, One year, Two year)
+# - InternetService, PhoneService
+# - Churn (Yes/No) - Target variable
+            </div>
+            <div class="key-point">
+                <strong>Lưu ý:</strong> Target variable là "Churn" - cần chuyển đổi Yes/No thành 1/0.
+            </div>
+            <div class="slide-number">7/50</div>
+        </div>
+
+        <!-- Slide 8: EDA -->
+        <div class="slide">
+            <h2>Exploratory Data Analysis (EDA)</h2>
+            <div class="code-block">
+# Phân tích phân phối Churn
+churn_rate = df['Churn'].value_counts(normalize=True)
+print(f"Churn Rate: {churn_rate[1]*100:.2f}%")
+
+# Visualize
+plt.figure(figsize=(12, 4))
+
+plt.subplot(131)
+sns.countplot(data=df, x='Churn')
+plt.title('Churn Distribution')
+
+plt.subplot(132)
+sns.boxplot(data=df, x='Churn', y='MonthlyCharges')
+plt.title('Monthly Charges by Churn')
+
+plt.subplot(133)
+sns.boxplot(data=df, x='Churn', y='Tenure')
+plt.title('Tenure by Churn')
+
+plt.tight_layout()
+plt.show()
+            </div>
+            <div class="slide-number">8/50</div>
+        </div>
+
+        <!-- Slide 9: Preprocessing -->
+        <div class="slide">
+            <h2>Data Preprocessing</h2>
+            <h3>Bước 1: Xử lý missing values & encoding</h3>
+            <div class="code-block">
+# Xử lý missing values
+df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
+df['TotalCharges'].fillna(df['TotalCharges'].median(), inplace=True)
+
+# Encoding categorical variables
+from sklearn.preprocessing import LabelEncoder
+
+le = LabelEncoder()
+categorical_cols = ['Gender', 'Contract', 'InternetService']
+
+for col in categorical_cols:
+    df[col + '_encoded'] = le.fit_transform(df[col])
+
+# Encoding target variable
+df['Churn'] = df['Churn'].map({'Yes': 1, 'No': 0})
+            </div>
+            <div class="slide-number">9/50</div>
+        </div>
+
+        <!-- Slide 10: Feature Selection -->
+        <div class="slide">
+            <h2>Feature Selection</h2>
+            <div class="code-block">
+# Chọn features cho mô hình
+feature_cols = [
+    'Tenure', 'MonthlyCharges', 'TotalCharges',
+    'Gender_encoded', 'Contract_encoded', 
+    'InternetService_encoded'
+]
+
+X = df[feature_cols]
+y = df['Churn']
+
+# Chia train-test
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+print(f"Training set: {X_train.shape}")
+print(f"Test set: {X_test.shape}")
+print(f"Churn rate in train: {y_train.mean():.2%}")
+print(f"Churn rate in test: {y_test.mean():.2%}")
+            </div>
+            <div class="slide-number">10/50</div>
+        </div>
+
+        <!-- Slide 11: Feature Scaling -->
+        <div class="slide">
+            <h2>Feature Scaling</h2>
+            <p>Chuẩn hóa features để đưa về cùng một scale - quan trọng cho SVM!</p>
+            <div class="code-block">
+# Standardization: mean=0, std=1
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Kiểm tra
+print("Before scaling:")
+print(X_train.describe())
+
+print("\nAfter scaling:")
+print(pd.DataFrame(X_train_scaled, columns=feature_cols).describe())
+            </div>
+            <div class="warning">
+                <strong>Quan trọng:</strong> Chỉ fit scaler trên training set, sau đó transform cả train và test để tránh data leakage!
+            </div>
+            <div class="slide-number">11/50</div>
+        </div>
+
+        <!-- Slide 12: Baseline Model -->
+        <div class="slide">
+            <h2>Baseline Model</h2>
+            <p>Trước khi fine-tune, cần tạo baseline để so sánh hiệu suất.</p>
+            <div class="code-block">
+# Baseline: Dự đoán tất cả là class đa số
+from sklearn.dummy import DummyClassifier
+
+baseline = DummyClassifier(strategy='most_frequent')
+baseline.fit(X_train, y_train)
+y_pred_baseline = baseline.predict(X_test)
+
+baseline_acc = accuracy_score(y_test, y_pred_baseline)
+print(f"Baseline Accuracy: {baseline_acc:.4f}")
+
+# Với imbalanced data, accuracy không đủ!
+# Cần xem thêm precision, recall, F1-score
+            </div>
+            <div class="key-point">
+                Baseline giúp ta hiểu mô hình có thực sự học được pattern hay chỉ đoán ngẫu nhiên.
+            </div>
+            <div class="slide-number">12/50</div>
+        </div>
+
+        <!-- Slide 13: Support Vector Machine - Lý thuyết -->
+        <div class="slide">
+            <h2>Support Vector Machine (SVM)</h2>
+            <h3>Khái niệm cốt lõi</h3>
+            <p>SVM tìm <strong>siêu phẳng (hyperplane)</strong> tối ưu phân tách các class với <strong>margin</strong> lớn nhất.</p>
+            
+            <div class="two-column">
+                <div>
+                    <h4>Margin</h4>
+                    <p>Khoảng cách từ hyperplane đến điểm gần nhất của mỗi class.</p>
+                    <p><strong>Support Vectors:</strong> Các điểm nằm trên margin boundary.</p>
+                </div>
+                <div>
+                    <h4>Kernel Trick</h4>
+                    <p>Chuyển dữ liệu không tách tuyến tính sang không gian chiều cao hơn.</p>
+                    <ul>
+                        <li>Linear</li>
+                        <li>RBF (Radial Basis Function)</li>
+                        <li>Polynomial</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">13/50</div>
+        </div>
+
+        <!-- Slide 14: SVM - Hyperparameters -->
+        <div class="slide">
+            <h2>SVM Hyperparameters</h2>
+            <div class="box">
+                <h4>1. C (Regularization Parameter)</h4>
+                <p>Kiểm soát trade-off giữa margin lớn và phân loại đúng training points.</p>
+                <ul>
+                    <li><strong>C nhỏ:</strong> Margin lớn, có thể misclassify một số points (underfitting)</li>
+                    <li><strong>C lớn:</strong> Margin nhỏ, cố gắng classify đúng mọi point (overfitting)</li>
+                </ul>
+            </div>
+            
+            <div class="box" style="margin-top: 20px;">
+                <h4>2. Kernel</h4>
+                <ul>
+                    <li><strong>linear:</strong> Cho dữ liệu tách tuyến tính</li>
+                    <li><strong>rbf:</strong> Phổ biến nhất, xử lý tốt non-linear</li>
+                    <li><strong>poly:</strong> Polynomial kernel</li>
+                </ul>
+            </div>
+            
+            <div class="box" style="margin-top: 20px;">
+                <h4>3. Gamma (cho RBF kernel)</h4>
+                <p>Ảnh hưởng của một training example.</p>
+                <ul>
+                    <li><strong>Gamma nhỏ:</strong> Ảnh hưởng xa (smoother decision boundary)</li>
+                    <li><strong>Gamma lớn:</strong> Ảnh hưởng gần (complex decision boundary)</li>
+                </ul>
+            </div>
+            <div class="slide-number">14/50</div>
+        </div>
+
+        <!-- Slide 15: SVM - Baseline Implementation -->
+        <div class="slide">
+            <h2>SVM - Baseline Implementation</h2>
+            <div class="code-block">
+# SVM với default parameters
+svm_baseline = SVC(random_state=42)
+svm_baseline.fit(X_train_scaled, y_train)
+
+# Dự đoán
+y_pred_svm = svm_baseline.predict(X_test_scaled)
+
+# Đánh giá
+from sklearn.metrics import classification_report
+
+print("SVM Baseline Performance:")
+print(classification_report(y_test, y_pred_svm))
+
+# Confusion Matrix
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred_svm)
+print("\nConfusion Matrix:")
+print(cm)
+            </div>
+            <div class="slide-number">15/50</div>
+        </div>
+
+        <!-- Slide 16: Confusion Matrix -->
+        <div class="slide">
+            <h2>Understanding Confusion Matrix</h2>
+            <div class="formula">
+                <table style="margin: 20px auto; width: 60%;">
+                    <tr>
+                        <th></th>
+                        <th>Predicted Negative</th>
+                        <th>Predicted Positive</th>
+                    </tr>
+                    <tr>
+                        <th>Actual Negative</th>
+                        <td style="background: #d4edda;">TN (True Negative)</td>
+                        <td style="background: #f8d7da;">FP (False Positive)</td>
+                    </tr>
+                    <tr>
+                        <th>Actual Positive</th>
+                        <td style="background: #f8d7da;">FN (False Negative)</td>
+                        <td style="background: #d4edda;">TP (True Positive)</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="two-column">
+                <div class="box">
+                    <h4>Type I Error (FP)</h4>
+                    <p>Dự đoán khách hàng churn nhưng thực tế không churn.</p>
+                    <p><em>Chi phí: Marketing campaign lãng phí</em></p>
+                </div>
+                <div class="box">
+                    <h4>Type II Error (FN)</h4>
+                    <p>Dự đoán không churn nhưng thực tế có churn.</p>
+                    <p><em>Chi phí: Mất khách hàng</em></p>
+                </div>
+            </div>
+            <div class="slide-number">16/50</div>
+        </div>
+
+        <!-- Slide 17: Evaluation Metrics -->
+        <div class="slide">
+            <h2>Evaluation Metrics</h2>
+            <div class="formula">
+                <strong>Accuracy</strong> = (TP + TN) / (TP + TN + FP + FN)
+            </div>
+            <div class="formula">
+                <strong>Precision</strong> = TP / (TP + FP)
+                <br><small>Trong số dự đoán Positive, bao nhiêu là đúng?</small>
+            </div>
+            <div class="formula">
+                <strong>Recall (Sensitivity)</strong> = TP / (TP + FN)
+                <br><small>Trong số Positive thực tế, model tìm được bao nhiêu?</small>
+            </div>
+            <div class="formula">
+                <strong>F1-Score</strong> = 2 × (Precision × Recall) / (Precision + Recall)
+                <br><small>Harmonic mean của Precision và Recall</small>
+            </div>
+            <div class="slide-number">17/50</div>
+        </div>
+
+        <!-- Slide 18: Chọn Metric phù hợp -->
+        <div class="slide">
+            <h2>Chọn Metric phù hợp cho Churn</h2>
+            <div class="highlight">
+                <h4>Với bài toán Customer Churn:</h4>
+                <ul>
+                    <li><strong>Recall cao quan trọng:</strong> Muốn bắt được nhiều khách hàng có nguy cơ churn (giảm FN)</li>
+                    <li><strong>F1-Score:</strong> Cân bằng giữa Precision và Recall</li>
+                    <li><strong>Accuracy không đủ:</strong> Vì dữ liệu imbalanced (churn rate thường 15-30%)</li>
+                </ul>
+            </div>
+            
+            <div class="key-point">
+                <strong>Business Impact:</strong><br>
+                - Chi phí của FN (miss churner) >> Chi phí của FP (campaign dư)<br>
+                - Nên tối ưu cho <strong>Recall</strong> hoặc <strong>F1-Score</strong>
+            </div>
+            <div class="slide-number">18/50</div>
+        </div>
+
+        <!-- Slide 19: Grid Search -->
+        <div class="slide">
+            <h2>Hyperparameter Tuning: Grid Search</h2>
+            <p><strong>Grid Search:</strong> Thử tất cả các kết hợp hyperparameters trong grid được định nghĩa.</p>
+            <div class="code-block">
+from sklearn.model_selection import GridSearchCV
+
+# Define parameter grid
+param_grid_svm = {
+    'C': [0.1, 1, 10, 100],
+    'kernel': ['linear', 'rbf'],
+    'gamma': ['scale', 'auto', 0.001, 0.01, 0.1]
+}
+
+# Grid Search với Cross-Validation
+grid_svm = GridSearchCV(
+    SVC(random_state=42),
+    param_grid_svm,
+    cv=5,
+    scoring='f1',  # Optimize for F1-score
+    n_jobs=-1,
+    verbose=1
+)
+
+grid_svm.fit(X_train_scaled, y_train)
+
+# Best parameters
+print("Best parameters:", grid_svm.best_params_)
+print("Best F1-score:", grid_svm.best_score_)
+            </div>
+            <div class="slide-number">19/50</div>
+        </div>
+
+        <!-- Slide 20: Grid Search Results -->
+        <div class="slide">
+            <h2>Grid Search - Phân tích kết quả</h2>
+            <div class="code-block">
+# Xem chi tiết kết quả
+print("Best parameters:", grid_svm.best_params_)
+print("Best CV F1-score:", grid_svm.best_score_)
+
+# Xem top 5 combinations
+results_df = pd.DataFrame(grid_svm.cv_results_)
+top_5 = results_df.nlargest(5, 'mean_test_score')[
+    ['params', 'mean_test_score', 'std_test_score', 'rank_test_score']
+]
+print("\nTop 5 parameter combinations:")
+print(top_5)
+
+# Training time
+print(f"\nTotal search time: {grid_svm.refit_time_:.2f} seconds")
+print(f"Number of combinations tested: {len(results_df)}")
+            </div>
+            
+            <div class="key-point">
+                <strong>Lưu ý:</strong> Grid Search có thể mất nhiều thời gian. Với grid này: 4 × 2 × 5 = 40 combinations × 5 folds = 200 model trainings!
+            </div>
+            <div class="slide-number">20/50</div>
+        </div>
+
+        <!-- Slide 21: Cross-Validation Explained -->
+        <div class="slide">
+            <h2>Cross-Validation</h2>
+            <h3>Tại sao cần Cross-Validation?</h3>
+            <p>Đánh giá mô hình trên nhiều folds khác nhau để có kết quả đáng tin cậy hơn, tránh may mắn khi chia train-test.</p>
+            
+            <div class="two-column">
+                <div class="box">
+                    <h4>K-Fold CV (k=5)</h4>
+                    <ul>
+                        <li>Chia data thành 5 phần bằng nhau</li>
+                        <li>Mỗi lần: 4 phần train, 1 phần validate</li>
+                        <li>Lặp 5 lần, mỗi phần làm validation 1 lần</li>
+                        <li>Kết quả = trung bình 5 lần</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>Stratified K-Fold</h4>
+                    <p>Giữ tỷ lệ các class trong mỗi fold giống với toàn bộ dataset.</p>
+                    <p><strong>Quan trọng với imbalanced data!</strong></p>
+                    <p>GridSearchCV sử dụng StratifiedKFold mặc định.</p>
+                </div>
+            </div>
+            <div class="slide-number">21/50</div>
+        </div>
+
+        <!-- Slide 22: Cross-Validation Code -->
+        <div class="slide">
+            <h2>Cross-Validation - Thực hành</h2>
+            <div class="code-block">
+from sklearn.model_selection import cross_val_score, cross_validate
+
+# Đánh giá best model với CV
+best_svm = grid_svm.best_estimator_
+
+# Single metric
+f1_scores = cross_val_score(
+    best_svm, 
+    X_train_scaled, y_train,
+    cv=5, 
+    scoring='f1'
+)
+print(f"F1-scores per fold: {f1_scores}")
+print(f"Mean F1: {f1_scores.mean():.4f} (+/- {f1_scores.std():.4f})")
+
+# Multiple metrics
+scoring = ['accuracy', 'precision', 'recall', 'f1']
+cv_results = cross_validate(
+    best_svm,
+    X_train_scaled, y_train,
+    cv=5,
+    scoring=scoring
+)
+
+for metric in scoring:
+    scores = cv_results[f'test_{metric}']
+    print(f"{metric}: {scores.mean():.4f} (+/- {scores.std():.4f})")
+            </div>
+            <div class="slide-number">22/50</div>
+        </div>
+
+        <!-- Slide 23: SVM Final Evaluation -->
+        <div class="slide">
+            <h2>SVM - Đánh giá trên Test Set</h2>
+            <div class="code-block">
+# Dự đoán trên test set
+y_pred_svm_tuned = best_svm.predict(X_test_scaled)
+
+# Classification report
+print("SVM After Fine-Tuning:")
+print(classification_report(y_test, y_pred_svm_tuned))
+
+# Confusion Matrix
+cm = confusion_matrix(y_test, y_pred_svm_tuned)
+print("\nConfusion Matrix:")
+print(cm)
+
+# Visualize Confusion Matrix
+plt.figure(figsize=(8, 6))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+plt.title('SVM Confusion Matrix')
+plt.ylabel('Actual')
+plt.xlabel('Predicted')
+plt.show()
+            </div>
+            <div class="slide-number">23/50</div>
+        </div>
+
+        <!-- Slide 24: SVM Performance Comparison -->
+        <div class="slide">
+            <h2>SVM - So sánh Before/After Tuning</h2>
+            <div class="code-block">
+# Baseline SVM
+svm_baseline = SVC(random_state=42)
+svm_baseline.fit(X_train_scaled, y_train)
+y_pred_baseline = svm_baseline.predict(X_test_scaled)
+
+# Comparison
+print("BASELINE SVM:")
+print(f"  Accuracy:  {accuracy_score(y_test, y_pred_baseline):.4f}")
+print(f"  Precision: {precision_score(y_test, y_pred_baseline):.4f}")
+print(f"  Recall:    {recall_score(y_test, y_pred_baseline):.4f}")
+print(f"  F1-Score:  {f1_score(y_test, y_pred_baseline):.4f}")
+
+print("\nTUNED SVM:")
+print(f"  Accuracy:  {accuracy_score(y_test, y_pred_svm_tuned):.4f}")
+print(f"  Precision: {precision_score(y_test, y_pred_svm_tuned):.4f}")
+print(f"  Recall:    {recall_score(y_test, y_pred_svm_tuned):.4f}")
+print(f"  F1-Score:  {f1_score(y_test, y_pred_svm_tuned):.4f}")
+
+improvement = f1_score(y_test, y_pred_svm_tuned) - f1_score(y_test, y_pred_baseline)
+print(f"\nF1-Score Improvement: +{improvement:.4f} ({improvement*100:.2f}%)")
+            </div>
+            <div class="slide-number">24/50</div>
+        </div>
+
+        <!-- Slide 25: Decision Tree Introduction -->
+        <div class="slide">
+            <h2>Decision Trees</h2>
+            <h3>Giới thiệu</h3>
+            <p>Decision Tree chia dữ liệu thành các nhánh dựa trên điều kiện về features, tạo thành cấu trúc cây từ root đến leaves.</p>
+            
+            <div class="highlight">
+                <h4>Ví dụ: Decision Rules cho Churn</h4>
+                <p style="font-family: monospace; margin-top: 10px;">
+                    IF Tenure ≤ 12 months:<br>
+                    &nbsp;&nbsp;IF MonthlyCharges > $70:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;IF Contract = Month-to-month:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ CHURN (90% probability)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;ELSE:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ NO CHURN (70% probability)<br>
+                    ELSE:<br>
+                    &nbsp;&nbsp;→ NO CHURN (85% probability)
+                </p>
+            </div>
+            
+            <div class="key-point">
+                Decision Trees tạo ra rules dễ hiểu và giải thích cho business users!
+            </div>
+            <div class="slide-number">25/50</div>
+        </div>
+
+        <!-- Slide 26: Decision Tree Pros and Cons -->
+        <div class="slide">
+            <h2>Decision Trees - Ưu và Nhược điểm</h2>
+            <div class="two-column">
+                <div class="box">
+                    <h4>✅ Ưu điểm</h4>
+                    <ul>
+                        <li>Dễ hiểu và visualize</li>
+                        <li>Không cần feature scaling/normalization</li>
+                        <li>Xử lý được numerical & categorical</li>
+                        <li>Xử lý non-linear relationships</li>
+                        <li>Feature importance tự nhiên</li>
+                        <li>Fast training và prediction</li>
+                        <li>Ít data preparation</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>❌ Nhược điểm</h4>
+                    <ul>
+                        <li>Dễ overfit (đặc biệt với deep trees)</li>
+                        <li>Không ổn định - nhạy với data thay đổi</li>
+                        <li>Bias với imbalanced data</li>
+                        <li>Greedy algorithm (local optimal)</li>
+                        <li>Khó capture linear relationships</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">26/50</div>
+        </div>
+
+        <!-- Slide 27: Splitting Criteria -->
+        <div class="slide">
+            <h2>Decision Tree - Splitting Criteria</h2>
+            <h3>Làm thế nào để chọn split tốt nhất?</h3>
+            
+            <div class="box">
+                <h4>1. Gini Impurity (mặc định)</h4>
+                <div class="formula">
+                    Gini = 1 - Σ(p<sub>i</sub>)<sup>2</sup>
+                </div>
+                <p>Đo độ "không thuần khiết" của node. Gini = 0 khi node chỉ chứa 1 class.</p>
+                <p><strong>Ví dụ:</strong> Node có 70% No Churn, 30% Churn</p>
+                <p>Gini = 1 - (0.7² + 0.3²) = 1 - (0.49 + 0.09) = 0.42</p>
+            </div>
+            
+            <div class="box" style="margin-top: 20px;">
+                <h4>2. Entropy (Information Gain)</h4>
+                <div class="formula">
+                    Entropy = -Σ p<sub>i</sub> × log<sub>2</sub>(p<sub>i</sub>)
+                </div>
+                <p>Đo độ "hỗn loạn". Entropy = 0 khi node thuần khiết.</p>
+                <p><strong>Ví dụ:</strong> Cùng node trên</p>
+                <p>Entropy = -(0.7×log₂(0.7) + 0.3×log₂(0.3)) ≈ 0.88</p>
+            </div>
+            
+            <div class="key-point">
+                <strong>Chọn split:</strong> Split làm giảm impurity/entropy nhiều nhất (Information Gain cao nhất).
+            </div>
+            <div class="slide-number">27/50</div>
+        </div>
+
+        <!-- Slide 28: Decision Tree Hyperparameters -->
+        <div class="slide">
+            <h2>Decision Tree - Key Hyperparameters</h2>
+            
+            <div class="box">
+                <h4>1. max_depth</h4>
+                <p>Độ sâu tối đa của cây. Càng sâu càng phức tạp, dễ overfit.</p>
+                <p><em>Default: None (expand until pure leaves) ⚠️ Dễ overfit!</em></p>
+                <p><strong>Recommendation:</strong> Thử 3, 5, 10, 15, 20</p>
+            </div>
+            
+            <div class="box" style="margin-top: 15px;">
+                <h4>2. min_samples_split</h4>
+                <p>Số samples tối thiểu để split một internal node.</p>
+                <p><em>Default: 2</em></p>
+                <p><strong>Tăng → giảm complexity → giảm overfitting</strong></p>
+            </div>
+            
+            <div class="box" style="margin-top: 15px;">
+                <h4>3. min_samples_leaf</h4>
+                <p>Số samples tối thiểu ở mỗi leaf node.</p>
+                <p><em>Default: 1</em></p>
+                <p><strong>Tăng → smoother predictions</strong></p>
+            </div>
+            <div class="slide-number">28/50</div>
+        </div>
+
+        <!-- Slide 29: More Hyperparameters -->
+        <div class="slide">
+            <h2>Decision Tree - More Hyperparameters</h2>
+            
+            <div class="box">
+                <h4>4. max_features</h4>
+                <p>Số features xem xét khi tìm best split.</p>
+                <p><strong>Options:</strong></p>
+                <ul>
+                    <li>None: Xét tất cả features</li>
+                    <li>'sqrt': √n_features</li>
+                    <li>'log2': log₂(n_features)</li>
+                    <li>int: Số features cụ thể</li>
+                </ul>
+                <p>Giảm → tăng randomness → giảm overfitting</p>
+            </div>
+            
+            <div class="box" style="margin-top: 15px;">
+                <h4>5. criterion</h4>
+                <p>'gini' hoặc 'entropy' - Function để đo quality của split.</p>
+                <p>Thường cho kết quả tương tự, gini nhanh hơn.</p>
+            </div>
+            
+            <div class="box" style="margin-top: 15px;">
+                <h4>6. class_weight</h4>
+                <p>Weights cho classes. Quan trọng với imbalanced data!</p>
+                <p><strong>'balanced':</strong> Tự động điều chỉnh weights nghịch đảo với tần suất</p>
+            </div>
+            <div class="slide-number">29/50</div>
+        </div>
+
+        <!-- Slide 30: Decision Tree Baseline -->
+        <div class="slide">
+            <h2>Decision Tree - Baseline Implementation</h2>
+            <div class="code-block">
+# Decision Tree với default parameters
+dt_baseline = DecisionTreeClassifier(random_state=42)
+dt_baseline.fit(X_train, y_train)  # Không cần scaling!
+
+# Predictions
+y_pred_dt = dt_baseline.predict(X_test)
+
+# Evaluation
+print("Decision Tree Baseline Performance:")
+print(classification_report(y_test, y_pred_dt))
+
+# Check overfitting
+train_score = dt_baseline.score(X_train, y_train)
+test_score = dt_baseline.score(X_test, y_test)
+
+print(f"\nTrain Accuracy: {train_score:.4f}")
+print(f"Test Accuracy: {test_score:.4f}")
+print(f"Overfitting Gap: {train_score - test_score:.4f}")
+
+# Tree complexity
+print(f"\nTree Depth: {dt_baseline.get_depth()}")
+print(f"Number of Leaves: {dt_baseline.get_n_leaves()}")
+            </div>
+            
+            <div class="warning">
+                <strong>Thường thấy:</strong> Train accuracy ≈ 100%, test accuracy ≈ 75-85% → Clear overfitting!
+            </div>
+            <div class="slide-number">30/50</div>
+        </div>
+
+        <!-- Slide 31: Visualize Decision Tree -->
+        <div class="slide">
+            <h2>Visualize Decision Tree</h2>
+            <div class="code-block">
+from sklearn.tree import plot_tree
+import matplotlib.pyplot as plt
+
+# Plot full tree (nếu không quá lớn)
+plt.figure(figsize=(25, 15))
+plot_tree(
+    dt_baseline,
+    feature_names=feature_cols,
+    class_names=['No Churn', 'Churn'],
+    filled=True,
+    rounded=True,
+    fontsize=10
+)
+plt.title('Full Decision Tree')
+plt.tight_layout()
+plt.show()
+
+# Plot chỉ 3 levels đầu (dễ nhìn hơn)
+plt.figure(figsize=(20, 10))
+plot_tree(
+    dt_baseline,
+    feature_names=feature_cols,
+    class_names=['No Churn', 'Churn'],
+    filled=True,
+    rounded=True,
+    max_depth=3,
+    fontsize=12
+)
+plt.title('Decision Tree (First 3 Levels)')
+plt.tight_layout()
+plt.show()
+            </div>
+            <div class="slide-number">31/50</div>
+        </div>
+
+        <!-- Slide 32: Text Representation -->
+        <div class="slide">
+            <h2>Decision Tree - Text Representation</h2>
+            <div class="code-block">
+from sklearn.tree import export_text
+
+# Export tree rules as text
+tree_rules = export_text(
+    dt_baseline, 
+    feature_names=feature_cols,
+    max_depth=4  # Limit depth for readability
+)
+
+print("Decision Tree Rules:")
+print(tree_rules)
+
+# Example output:
+# |--- Tenure <= 12.50
+# |   |--- MonthlyCharges <= 70.35
+# |   |   |--- Contract_encoded <= 0.50
+# |   |   |   |--- class: 1 (Churn)
+# |   |   |--- Contract_encoded >  0.50
+# |   |   |   |--- class: 0 (No Churn)
+# |   |--- MonthlyCharges >  70.35
+# |   |   |--- class: 1 (Churn)
+# |--- Tenure >  12.50
+# |   |--- class: 0 (No Churn)
+            </div>
+            
+            <div class="key-point">
+                Text rules giúp explain predictions cho business stakeholders không có technical background.
+            </div>
+            <div class="slide-number">32/50</div>
+        </div>
+
+        <!-- Slide 33: Decision Tree Tuning -->
+        <div class="slide">
+            <h2>Decision Tree - Fine-Tuning</h2>
+            <div class="code-block">
+# Parameter grid
+param_grid_dt = {
+    'max_depth': [3, 5, 7, 10, 15, 20, None],
+    'min_samples_split': [2, 5, 10, 20, 50],
+    'min_samples_leaf': [1, 2, 4, 8, 16],
+    'criterion': ['gini', 'entropy'],
+    'max_features': ['sqrt', 'log2', None],
+    'class_weight': [None, 'balanced']
+}
+
+# Grid Search
+grid_dt = GridSearchCV(
+    DecisionTreeClassifier(random_state=42),
+    param_grid_dt,
+    cv=5,
+    scoring='f1',
+    n_jobs=-1,
+    verbose=1
+)
+
+print("Training Decision Tree with Grid Search...")
+grid_dt.fit(X_train, y_train)
+
+print("\nBest Parameters:")
+print(grid_dt.best_params_)
+print(f"\nBest CV F1-Score: {grid_dt.best_score_:.4f}")
+            </div>
+            <div class="slide-number">33/50</div>
+        </div>
+<!-- Slide 34: Random Forest Baseline -->
+        <div class="slide">
+            <h2>Random Forest - Baseline</h2>
+            <div class="code-block">
+# Random Forest với default parameters
+rf_baseline = RandomForestClassifier(
+    random_state=42, 
+    n_jobs=-1  # Use all CPU cores
+)
+rf_baseline.fit(X_train, y_train)
+
+# Dự đoán
+y_pred_rf = rf_baseline.predict(X_test)
+
+# Đánh giá
+print("Random Forest Baseline:")
+print(classification_report(y_test, y_pred_rf))
+
+# Check overfitting
+train_score_rf = rf_baseline.score(X_train, y_train)
+test_score_rf = rf_baseline.score(X_test, y_test)
+
+print(f"\nTrain Accuracy: {train_score_rf:.4f}")
+print(f"Test Accuracy: {test_score_rf:.4f}")
+print(f"Overfitting Gap: {train_score_rf - test_score_rf:.4f}")
+
+# Number of trees
+print(f"\nNumber of trees: {rf_baseline.n_estimators}")
+            </div>
+            
+            <div class="success">
+                Random Forest baseline thường cho kết quả tốt hơn Decision Tree ngay cả với default params!
+            </div>
+            <div class="slide-number">34/50</div>
+        </div>
+
+        <!-- Slide 35: Random Forest Tuning -->comparison_df = pd.DataFrame(results)
+print(comparison_df)
+            </div>
+            <div class="slide-number">37/50</div>
+        </div>
+
+        <!-- Slide 38: Visualization Comparison -->
+        <div class="slide">
+            <h2>Visualization - So sánh trực quan</h2>
+            <div class="code-block">
+# Visualize comparison
+import matplotlib.pyplot as plt
+
+metrics = ['Accuracy', 'Precision', 'Recall', 'F1-Score']
+x = np.arange(len(metrics))
+width = 0.25
+
+fig, ax = plt.subplots(figsize=(12, 6))
+
+for i, row in comparison_df.iterrows():
+    offset = width * (i - 1)
+    values = [row[m] for m in metrics]
+    ax.bar(x + offset, values, width, label=row['Model'])
+
+ax.set_xlabel('Metrics')
+ax.set_ylabel('Score')
+ax.set_title('Model Comparison')
+ax.set_xticks(x)
+ax.set_xticklabels(metrics)
+ax.legend()
+ax.grid(axis='y', alpha=0.3)
+plt.tight_layout()
+plt.show()
+            </div>
+            <div class="slide-number">38/50</div>
+        </div>
+
+        <!-- Slide 39: ROC Curve -->
+        <div class="slide">
+            <h2>ROC Curve & AUC</h2>
+            <h3>Receiver Operating Characteristic</h3>
+            <p>ROC curve biểu diễn trade-off giữa True Positive Rate (Recall) và False Positive Rate.</p>
+            <div class="code-block">
+from sklearn.metrics import roc_curve, auc
+
+plt.figure(figsize=(10, 8))
+
+for name, model in models.items():
+    if name == 'SVM':
+        y_scores = model.decision_function(X_test_scaled)
+    else:
+        y_scores = model.predict_proba(X_test)[:, 1]
+    
+    fpr, tpr, _ = roc_curve(y_test, y_scores)
+    roc_auc = auc(fpr, tpr)
+    
+    plt.plot(fpr, tpr, label=f'{name} (AUC = {roc_auc:.3f})')
+
+plt.plot([0, 1], [0, 1], 'k--', label='Random Classifier')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('ROC Curves Comparison')
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()
+            </div>
+            <div class="slide-number">39/50</div>
+        </div>
+
+        <!-- Slide 40: Precision-Recall Curve -->
+        <div class="slide">
+            <h2>Precision-Recall Curve</h2>
+            <p>Quan trọng hơn ROC với <strong>imbalanced data</strong>!</p>
+            <div class="code-block">
+from sklearn.metrics import precision_recall_curve, average_precision_score
+
+plt.figure(figsize=(10, 8))
+
+for name, model in models.items():
+    if name == 'SVM':
+        y_scores = model.decision_function(X_test_scaled)
+    else:
+        y_scores = model.predict_proba(X_test)[:, 1]
+    
+    precision, recall, _ = precision_recall_curve(y_test, y_scores)
+    avg_precision = average_precision_score(y_test, y_scores)
+    
+    plt.plot(recall, precision, 
+             label=f'{name} (AP = {avg_precision:.3f})')
+
+plt.xlabel('Recall')
+plt.ylabel('Precision')
+plt.title('Precision-Recall Curves')
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()
+            </div>
+            <div class="slide-number">40/50</div>
+        </div>
+
+        <!-- Slide 41: Handling Imbalanced Data -->
+        <div class="slide">
+            <h2>Xử lý Imbalanced Data</h2>
+            <h3>Vấn đề: Churn rate thấp (15-25%)</h3>
+            
+            <div class="two-column">
+                <div class="box">
+                    <h4>1. Class Weight</h4>
+                    <div class="code-block" style="font-size: 12px;">
+# Tự động điều chỉnh weights
+rf_balanced = RandomForestClassifier(
+    class_weight='balanced',
+    random_state=42
+)
+rf_balanced.fit(X_train, y_train)
+                    </div>
+                </div>
+                <div class="box">
+                    <h4>2. Resampling</h4>
+                    <div class="code-block" style="font-size: 12px;">
+from imblearn.over_sampling import SMOTE
+
+smote = SMOTE(random_state=42)
+X_train_sm, y_train_sm = smote.fit_resample(
+    X_train, y_train
+)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="box" style="margin-top: 20px;">
+                <h4>3. Threshold Adjustment</h4>
+                <div class="code-block" style="font-size: 12px;">
+# Thay vì threshold mặc định 0.5
+y_proba = best_rf.predict_proba(X_test)[:, 1]
+y_pred_adjusted = (y_proba > 0.3).astype(int)  # Lower threshold
+                </div>
+            </div>
+            <div class="slide-number">41/50</div>
+        </div>
+
+        <!-- Slide 42: Class Weight Implementation -->
+        <div class="slide">
+            <h2>Class Weight - Thực hành</h2>
+            <div class="code-block">
+# So sánh với và không có class_weight
+rf_normal = RandomForestClassifier(random_state=42)
+rf_balanced = RandomForestClassifier(
+    class_weight='balanced', 
+    random_state=42
+)
+
+rf_normal.fit(X_train, y_train)
+rf_balanced.fit(X_train, y_train)
+
+y_pred_normal = rf_normal.predict(X_test)
+y_pred_balanced = rf_balanced.predict(X_test)
+
+print("Without class_weight:")
+print(f"Precision: {precision_score(y_test, y_pred_normal):.4f}")
+print(f"Recall: {recall_score(y_test, y_pred_normal):.4f}")
+
+print("\nWith class_weight='balanced':")
+print(f"Precision: {precision_score(y_test, y_pred_balanced):.4f}")
+print(f"Recall: {recall_score(y_test, y_pred_balanced):.4f}")
+            </div>
+            
+            <div class="key-point">
+                <strong>Kết quả:</strong> Class weight thường tăng Recall (bắt được nhiều churners hơn) nhưng giảm Precision.
+            </div>
+            <div class="slide-number">42/50</div>
+        </div>
+
+        <!-- Slide 43: SMOTE -->
+        <div class="slide">
+            <h2>SMOTE - Synthetic Oversampling</h2>
+            <p><strong>SMOTE (Synthetic Minority Over-sampling Technique):</strong> Tạo synthetic samples cho minority class.</p>
+            <div class="code-block">
+from imblearn.over_sampling import SMOTE
+
+# Apply SMOTE
+smote = SMOTE(random_state=42)
+X_train_smote, y_train_smote = smote.fit_resample(X_train, y_train)
+
+print(f"Before SMOTE: {y_train.value_counts()}")
+print(f"After SMOTE: {pd.Series(y_train_smote).value_counts()}")
+
+# Train model on balanced data
+rf_smote = RandomForestClassifier(random_state=42)
+rf_smote.fit(X_train_smote, y_train_smote)
+
+y_pred_smote = rf_smote.predict(X_test)
+print("\nSMOTE Results:")
+print(classification_report(y_test, y_pred_smote))
+            </div>
+            
+            <div class="warning">
+                <strong>Lưu ý:</strong> Chỉ apply SMOTE trên training set, không trên test set!
+            </div>
+            <div class="slide-number">43/50</div>
+        </div>
+
+        <!-- Slide 44: Threshold Tuning -->
+        <div class="slide">
+            <h2>Threshold Tuning</h2>
+            <h3>Tối ưu hóa ngưỡng quyết định</h3>
+            <div class="code-block">
+# Get probability predictions
+y_proba = best_rf.predict_proba(X_test)[:, 1]
+
+# Test different thresholds
+thresholds = np.arange(0.1, 0.9, 0.05)
+results = []
+
+for thresh in thresholds:
+    y_pred_thresh = (y_proba >= thresh).astype(int)
+    
+    results.append({
+        'Threshold': thresh,
+        'Precision': precision_score(y_test, y_pred_thresh),
+        'Recall': recall_score(y_test, y_pred_thresh),
+        'F1': f1_score(y_test, y_pred_thresh)
+    })
+
+thresh_df = pd.DataFrame(results)
+print(thresh_df)
+
+# Find optimal threshold
+optimal_idx = thresh_df['F1'].idxmax()
+optimal_thresh = thresh_df.loc[optimal_idx, 'Threshold']
+print(f"\nOptimal Threshold: {optimal_thresh:.2f}")
+            </div>
+            <div class="slide-number">44/50</div>
+        </div>
+
+        <!-- Slide 45: Business Cost Function -->
+        <div class="slide">
+            <h2>Business Cost Function</h2>
+            <h3>Tối ưu hóa dựa trên chi phí kinh doanh</h3>
+            <div class="code-block">
+# Define business costs
+COST_FP = 50    # Chi phí marketing campaign cho non-churner
+COST_FN = 500   # Chi phí mất khách hàng (LTV)
+
+def calculate_business_cost(y_true, y_pred):
+    cm = confusion_matrix(y_true, y_pred)
+    tn, fp, fn, tp = cm.ravel()
+    
+    total_cost = (fp * COST_FP) + (fn * COST_FN)
+    return total_cost
+
+# Test thresholds với business cost
+for thresh in [0.3, 0.4, 0.5, 0.6]:
+    y_pred = (y_proba >= thresh).astype(int)
+    cost = calculate_business_cost(y_test, y_pred)
+    print(f"Threshold {thresh:.1f}: Cost = ${cost:,}")
+
+# Tìm threshold tối ưu
+best_thresh = min(thresholds, 
+    key=lambda t: calculate_business_cost(
+        y_test, (y_proba >= t).astype(int)
+    ))
+print(f"\nOptimal threshold (business cost): {best_thresh:.2f}")
+            </div>
+            <div class="slide-number">45/50</div>
+        </div>
+
+        <!-- Slide 46: Model Deployment -->
+        <div class="slide">
+            <h2>Model Deployment</h2>
+            <h3>Lưu và load model</h3>
+            <div class="code-block">
+import joblib
+
+# Save model
+joblib.dump(best_rf, 'churn_model.pkl')
+joblib.dump(scaler, 'scaler.pkl')
+
+print("Model saved successfully!")
+
+# Load model
+loaded_model = joblib.load('churn_model.pkl')
+loaded_scaler = joblib.load('scaler.pkl')
+
+# Make predictions
+new_customer = pd.DataFrame({
+    'Tenure': [12],
+    'MonthlyCharges': [65.0],
+    'TotalCharges': [780.0],
+    'Gender_encoded': [1],
+    'Contract_encoded': [0],
+    'InternetService_encoded': [2]
+})
+
+# new_customer_scaled = loaded_scaler.transform(new_customer)
+churn_prob = loaded_model.predict_proba(new_customer)[0, 1]
+print(f"Churn Probability: {churn_prob:.2%}")
+            </div>
+            <div class="slide-number">46/50</div>
+        </div>
+
+        <!-- Slide 47: Model Monitoring -->
+        <div class="slide">
+            <h2>Model Monitoring & Maintenance</h2>
+            
+            <div class="box">
+                <h4>1. Performance Monitoring</h4>
+                <p>Theo dõi metrics theo thời gian để phát hiện model degradation.</p>
+                <ul>
+                    <li>Track F1-score, Precision, Recall hàng tuần/tháng</li>
+                    <li>So sánh predicted churn rate vs actual churn rate</li>
+                </ul>
+            </div>
+            
+            <div class="box" style="margin-top: 20px;">
+                <h4>2. Data Drift Detection</h4>
+                <p>Kiểm tra distribution của features có thay đổi không.</p>
+                <ul>
+                    <li>Statistical tests (KS test, Chi-square test)</li>
+                    <li>Monitor feature importance changes</li>
+                </ul>
+            </div>
+            
+            <div class="box" style="margin-top: 20px;">
+                <h4>3. Model Retraining</h4>
+                <p>Retrain model định kỳ với dữ liệu mới.</p>
+                <ul>
+                    <li>Schedule: Hàng quý hoặc khi performance giảm</li>
+                    <li>A/B testing: So sánh model mới với model cũ</li>
+                </ul>
+            </div>
+            <div class="slide-number">47/50</div>
+        </div>
+
+        <!-- Slide 48: Best Practices -->
+        <div class="slide">
+            <h2>Best Practices</h2>
+            
+            <div class="highlight">
+                <h4>📊 Data Preparation</h4>
+                <ul>
+                    <li>Xử lý missing values cẩn thận</li>
+                    <li>Feature engineering: tạo features mới có ý nghĩa</li>
+                    <li>Stratified split để giữ tỷ lệ classes</li>
+                </ul>
+            </div>
+            
+            <div class="highlight" style="margin-top: 20px;">
+                <h4>🎯 Model Training</h4>
+                <ul>
+                    <li>Luôn có baseline để so sánh</li>
+                    <li>Use Cross-Validation, không chỉ dựa vào test set</li>
+                    <li>Xử lý imbalanced data với class_weight hoặc SMOTE</li>
+                    <li>Fine-tune hyperparameters với Grid/Random Search</li>
+                </ul>
+            </div>
+            
+            <div class="highlight" style="margin-top: 20px;">
+                <h4>📈 Evaluation</h4>
+                <ul>
+                    <li>Chọn metric phù hợp với business objective</li>
+                    <li>Xem confusion matrix, không chỉ accuracy</li>
+                    <li>Test threshold khác nhau dựa trên business cost</li>
+                </ul>
+            </div>
+            <div class="slide-number">48/50</div>
+        </div>
+
+        <!-- Slide 49: Case Study Recap -->
+        <div class="slide">
+            <h2>Case Study Recap: Customer Churn</h2>
+            
+            <div class="two-column">
+                <div class="box">
+                    <h4>Problem</h4>
+                    <p>Dự đoán khách hàng có nguy cơ rời bỏ để có retention strategy kịp thời.</p>
+                </div>
+                <div class="box">
+                    <h4>Solution</h4>
+                    <p>Fine-tuned Random Forest classifier với F1-score = 0.85</p>
+                </div>
+            </div>
+            
+            <div class="box" style="margin-top: 20px;">
+                <h4>Key Insights</h4>
+                <ul>
+                    <li><strong>Top features:</strong> Tenure, Contract type, Monthly charges</li>
+                    <li><strong>Optimal threshold:</strong> 0.35 (giảm chi phí 30%)</li>
+                    <li><strong>Business impact:</strong> Retention rate tăng 15%, tiết kiệm $50K/tháng</li>
+                </ul>
+            </div>
+            
+            <div class="success" style="margin-top: 20px;">
+                <strong>Actionable:</strong> Tập trung retention campaign vào khách hàng có: tenure thấp (<12 tháng), month-to-month contract, high monthly charges.
+            </div>
+            <div class="slide-number">49/50</div>
+        </div>
+
+        <!-- Slide 50: Tổng kết -->
+        <div class="slide">
+            <h2>Tổng kết</h2>
+            
+            <div class="objective-list">
+                <h3>✅ Đã học được:</h3>
+                <ul>
+                    <li>Hiểu và triển khai 3 thuật toán: SVM, Decision Trees, Random Forests</li>
+                    <li>Fine-tune hyperparameters với Grid Search và Random Search</li>
+                    <li>Chọn và sử dụng evaluation metrics phù hợp (Precision, Recall, F1, ROC-AUC)</li>
+                    <li>Xử lý imbalanced data với class weights, SMOTE, threshold tuning</li>
+                    <li>Giải quyết bài toán thực tế: Customer Churn Prediction</li>
+                    <li>Deploy và monitor model trong production</li>
+                </ul>
+            </div>
+            
+            <div class="highlight" style="margin-top: 30px;">
+                <h3>🎯 Next Steps:</h3>
+                <ul>
+                    <li>Thực hành với datasets khác (fraud detection, product recommendation)</li>
+                    <li>Explore thêm: XGBoost, LightGBM, Neural Networks</li>
+                    <li>Học về AutoML tools (Auto-sklearn, H2O AutoML)</li>
+                    <li>Deep dive vào Explainable AI (SHAP, LIME)</li>
+                </ul>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px; font-size: 28px; color: #667eea;">
+                <strong>Cảm ơn các bạn đã theo dõi! 🎓</strong>
+            </div>
+            <div class="slide-number">50/50</div>
+        </div>
+
+    </div>
+
+    <div class="navigation">
+        <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            
+            // Scroll to top of slide
+            slides[currentSlide].scrollTop = 0;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
