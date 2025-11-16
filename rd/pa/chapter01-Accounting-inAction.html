@@ -1,0 +1,3862 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounting in Action - Kế toán trong Hành động</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px;
+            display: none;
+            flex-direction: column;
+            position: relative;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-header {
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin: 20px 0 10px 0;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 20px;
+        }
+
+        .content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            line-height: 1.8;
+        }
+
+        li {
+            margin: 15px 0;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .example-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #764ba2;
+        }
+
+        .formula {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #856404;
+            border: 2px solid #ffc107;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .column {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1em;
+        }
+
+        th, td {
+            border: 2px solid #667eea;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .session-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .icon {
+            font-size: 3em;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .key-point {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+
+        .note {
+            background: #d1ecf1;
+            border-left: 5px solid #0c5460;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #0c5460;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border-left: 5px solid #721c24;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #721c24;
+        }
+
+        @media print {
+            .slide {
+                page-break-after: always;
+                height: auto;
+            }
+            .navigation {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active">
+            <div class="icon">📊</div>
+            <div style="text-align: center;">
+                <h1 style="font-size: 3em; margin-bottom: 20px;">ACCOUNTING IN ACTION</h1>
+                <h2 style="color: #764ba2; font-size: 2em;">Kế toán trong Hành động</h2>
+                <div class="subtitle" style="margin-top: 40px; font-size: 1.3em;">
+                    <p>Nguyên lý Kế toán</p>
+                    <p style="margin-top: 20px;">Dành cho Sinh viên Thương mại Điện tử - Năm 2</p>
+                    <p style="margin-top: 40px; color: #667eea; font-weight: bold;">3 Buổi học - 450 phút</p>
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()" disabled>← Trước</button>
+                <span class="slide-number">Slide <span id="current">1</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 2: Course Overview -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Tổng quan</span>
+                <h2>📋 Tổng quan Khóa học</h2>
+            </div>
+            <div class="content">
+                <h3>🎯 Mục tiêu học tập</h3>
+                <ol>
+                    <li><strong>Nhận biết</strong> các hoạt động và người dùng liên quan đến kế toán</li>
+                    <li><strong>Giải thích</strong> các nền tảng của kế toán: đạo đức, nguyên tắc và giả định</li>
+                    <li><strong>Trình bày</strong> phương trình kế toán và định nghĩa các thành phần</li>
+                    <li><strong>Phân tích</strong> tác động của các giao dịch kinh doanh đến phương trình kế toán</li>
+                    <li><strong>Mô tả</strong> năm báo cáo tài chính và cách lập chúng</li>
+                </ol>
+
+                <div class="highlight" style="margin-top: 30px;">
+                    <h3>📅 Lịch trình 3 buổi học</h3>
+                    <ul style="margin-left: 20px;">
+                        <li><strong>Buổi 1 (150 phút):</strong> Giới thiệu Kế toán & Người dùng Thông tin Kế toán</li>
+                        <li><strong>Buổi 2 (150 phút):</strong> Nền tảng Kế toán & Phương trình Kế toán</li>
+                        <li><strong>Buổi 3 (150 phút):</strong> Phân tích Giao dịch & Báo cáo Tài chính</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">2</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- ==================== BUỔI 1: GIỚI THIỆU KẾ TOÁN ==================== -->
+
+        <!-- Slide 3: Session 1 Title -->
+        <div class="slide">
+            <div class="icon">🎓</div>
+            <div style="text-align: center;">
+                <span class="session-badge" style="font-size: 1.2em;">BUỔI 1 - 150 PHÚT</span>
+                <h1 style="margin-top: 30px;">Giới thiệu về Kế toán</h1>
+                <h2 style="color: #764ba2; margin-top: 20px;">Introduction to Accounting</h2>
+                <div class="highlight" style="margin-top: 50px; text-align: left;">
+                    <h3>Nội dung buổi học:</h3>
+                    <ul style="font-size: 1.1em;">
+                        <li>Kế toán là gì và tại sao nó quan trọng?</li>
+                        <li>Ba hoạt động chính của kế toán</li>
+                        <li>Người dùng nội bộ và bên ngoài</li>
+                        <li>Vai trò của kế toán trong thương mại điện tử</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">3</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 4: Feature Story -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 1</span>
+                <h2>💡 Câu chuyện Mở đầu: "Knowing the Numbers"</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3>📖 Câu nói của Harold Geneen (CEO ITT Corporation)</h3>
+                    <p style="font-size: 1.3em; font-style: italic; color: #667eea; text-align: center; margin: 20px 0;">
+                        "To be good at your business, you have to know the numbers—cold."
+                    </p>
+                    <p style="text-align: center; font-size: 1.2em;">
+                        "Để giỏi trong công việc, bạn phải hiểu rõ các con số"
+                    </p>
+                </div>
+
+                <h3>🎯 Tại sao phải học Kế toán?</h3>
+                <ul>
+                    <li><strong>Ngôn ngữ kinh doanh:</strong> Kế toán là phương tiện giao tiếp các con số trong kinh doanh</li>
+                    <li><strong>Ra quyết định:</strong> Bạn sẽ dựa vào số liệu để đưa ra quyết định</li>
+                    <li><strong>Đánh giá hiệu suất:</strong> Quản lý sẽ dùng chúng để đánh giá hiệu suất của bạn</li>
+                    <li><strong>Financial Literacy:</strong> Các công ty dạy nhân viên kế toán cơ bản để họ có thể đọc báo cáo tài chính</li>
+                </ul>
+
+                <div class="key-point">
+                    ⚡ Bất kể công việc của bạn là gì (marketing, sản xuất, quản lý, hay công nghệ thông tin), bạn đều cần hiểu kế toán!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">4</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 5: What is Accounting? -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 1</span>
+                <h2>📊 Kế toán là gì?</h2>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>Definition - Định nghĩa</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        <strong>Accounting (Kế toán)</strong> là hệ thống thông tin tài chính mà:
+                    </p>
+                    <ul style="font-size: 1.1em; margin-top: 15px;">
+                        <li><strong>Nhận diện (Identifies)</strong> các sự kiện kinh tế</li>
+                        <li><strong>Ghi chép (Records)</strong> các sự kiện đó</li>
+                        <li><strong>Truyền đạt (Communicates)</strong> thông tin đến người dùng quan tâm</li>
+                    </ul>
+                </div>
+
+                <h3>🔄 Quy trình Kế toán (Accounting Process)</h3>
+                <div class="formula">
+                    NHẬN DIỆN → GHI CHÉP → TRUYỀN ĐẠT
+                </div>
+
+                <div class="two-column">
+                    <div class="column">
+                        <h4>📝 Bookkeeping</h4>
+                        <p>Chỉ liên quan đến việc <strong>ghi chép</strong> các sự kiện kinh tế</p>
+                        <p style="margin-top: 10px; color: #666;">→ Chỉ là MỘT PHẦN của kế toán</p>
+                    </div>
+                    <div class="column">
+                        <h4>📊 Accounting</h4>
+                        <p>Bao gồm <strong>toàn bộ quy trình</strong>: nhận diện, ghi chép, VÀ truyền đạt</p>
+                        <p style="margin-top: 10px; color: #666;">→ Rộng hơn nhiều so với bookkeeping</p>
+                    </div>
+                </div>
+
+                <div class="note">
+                    💡 <strong>Lưu ý:</strong> Kế toán không chỉ là "ghi sổ sách" - nó còn bao gồm phân tích và diễn giải thông tin!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">5</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 6: Three Activities of Accounting -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 1</span>
+                <h2>🔄 Ba Hoạt động Chính của Kế toán</h2>
+            </div>
+            <div class="content">
+                <h3>1️⃣ Nhận diện (Identification)</h3>
+                <div class="example-box">
+                    <p><strong>Mục đích:</strong> Xác định các sự kiện kinh tế liên quan đến doanh nghiệp</p>
+                    <p style="margin-top: 10px;"><strong>Ví dụ:</strong></p>
+                    <ul>
+                        <li>Unilever bán thực phẩm và đồ ăn nhẹ</li>
+                        <li>Chunghwa Telecom cung cấp dịch vụ điện thoại</li>
+                        <li>Tata Motors sản xuất xe cơ giới</li>
+                    </ul>
+                </div>
+
+                <h3>2️⃣ Ghi chép (Recording)</h3>
+                <div class="example-box">
+                    <p><strong>Mục đích:</strong> Lưu giữ lịch sử hoạt động tài chính một cách có hệ thống, theo trình tự thời gian</p>
+                    <p style="margin-top: 10px;"><strong>Yêu cầu:</strong></p>
+                    <ul>
+                        <li>Đo lường bằng đơn vị tiền tệ</li>
+                        <li>Phân loại và tổng hợp các sự kiện kinh tế</li>
+                        <li>Ghi chép theo trình tự thời gian (chronological)</li>
+                    </ul>
+                </div>
+
+                <h3>3️⃣ Truyền đạt (Communication)</h3>
+                <div class="example-box">
+                    <p><strong>Mục đích:</strong> Báo cáo thông tin đã thu thập cho người dùng quan tâm</p>
+                    <p style="margin-top: 10px;"><strong>Công cụ chính:</strong> Báo cáo Tài chính (Financial Statements)</p>
+                    <ul>
+                        <li>Báo cáo dữ liệu theo cách <strong>chuẩn hóa</strong></li>
+                        <li>Tổng hợp thông tin từ các giao dịch tương tự</li>
+                        <li>Phân tích và diễn giải thông tin đã báo cáo</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    🎯 Điểm quan trọng: Kế toán phải làm cho thông tin phức tạp trở nên DỄ HIỂU và CÓ Ý NGHĨA!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">6</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 7: Users of Accounting Information -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 1</span>
+                <h2>👥 Người dùng Thông tin Kế toán</h2>
+            </div>
+            <div class="content">
+                <div class="formula">
+                    HAI NHÓM NGƯỜI DÙNG CHÍNH
+                </div>
+
+                <div class="two-column">
+                    <div class="column" style="background: #e3f2fd;">
+                        <h3 style="color: #1976d2;">🏢 Internal Users (Nội bộ)</h3>
+                        <p><strong>Là ai?</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Các nhà quản lý (Managers)</li>
+                            <li>Giám đốc tài chính (Finance Directors)</li>
+                            <li>Quản lý marketing</li>
+                            <li>Giám sát sản xuất</li>
+                            <li>Cán bộ công ty</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>Mục đích:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Lập kế hoạch (Plan)</li>
+                            <li>Tổ chức (Organize)</li>
+                            <li>Điều hành (Run) doanh nghiệp</li>
+                        </ul>
+                    </div>
+
+                    <div class="column" style="background: #fff3e0;">
+                        <h3 style="color: #f57c00;">🌐 External Users (Bên ngoài)</h3>
+                        <p><strong>Là ai?</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Nhà đầu tư (Investors)</li>
+                            <li>Chủ nợ (Creditors)</li>
+                            <li>Cơ quan thuế</li>
+                            <li>Cơ quan quản lý</li>
+                            <li>Khách hàng</li>
+                            <li>Công đoàn</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>Mục đích:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Đánh giá rủi ro</li>
+                            <li>Quyết định đầu tư</li>
+                            <li>Giám sát tuân thủ</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="note" style="margin-top: 20px;">
+                    📌 <strong>Điểm khác biệt:</strong> Internal users cần thông tin CHI TIẾT và KỊP THỜI. External users nhận thông tin TỔNG HỢP và ĐỊNH KỲ.
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">7</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 8: Internal Users Questions -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 1</span>
+                <h2>🏢 Câu hỏi của Người dùng Nội bộ</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3>💰 Finance (Tài chính)</h3>
+                    <p style="font-size: 1.1em; color: #667eea;">
+                        ❓ "Tiền mặt có đủ để trả cổ tức cho cổ đông SAP không?"
+                    </p>
+                    <p style="margin-top: 10px; color: #666;">
+                        → Cần biết: Dòng tiền, khả năng thanh toán, dự báo tài chính
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <h3>👨‍💼 Human Resources (Nhân sự)</h3>
+                    <p style="font-size: 1.1em; color: #667eea;">
+                        ❓ "Toyota có đủ khả năng tăng lương cho nhân viên năm nay không?"
+                    </p>
+                    <p style="margin-top: 10px; color: #666;">
+                        → Cần biết: Chi phí nhân công, lợi nhuận, ngân sách
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <h3>📊 Management (Quản lý)</h3>
+                    <p style="font-size: 1.1em; color: #667eea;">
+                        ❓ "Dòng sản phẩm nào của PepsiCo có lợi nhuận cao nhất? Có nên loại bỏ sản phẩm nào không?"
+                    </p>
+                    <p style="margin-top: 10px; color: #666;">
+                        → Cần biết: Lợi nhuận theo sản phẩm, phân tích chi phí-lợi ích
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <h3>📱 Marketing</h3>
+                    <p style="font-size: 1.1em; color: #667eea;">
+                        ❓ "Nokia nên định giá điện thoại ở mức nào để tối đa hóa lợi nhuận ròng?"
+                    </p>
+                    <p style="margin-top: 10px; color: #666;">
+                        → Cần biết: Chi phí sản xuất, giá cạnh tranh, margin
+                    </p>
+                </div>
+
+                <div class="key-point">
+                    🎯 <strong>Managerial Accounting</strong> cung cấp các báo cáo nội bộ chi tiết để giúp người dùng nội bộ ra quyết định!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">8</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 9: External Users Questions -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 1</span>
+                <h2>🌐 Câu hỏi của Người dùng Bên ngoài</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3>💼 Investors - Nhà đầu tư</h3>
+                    <p style="font-size: 1.1em; color: #764ba2;">
+                        ❓ "Lenovo có thu được lợi nhuận thỏa đáng không?"
+                    </p>
+                    <p style="font-size: 1.1em; color: #764ba2; margin-top: 10px;">
+                        ❓ "Disney so sánh với Time Warner về quy mô và lợi nhuận như thế nào?"
+                    </p>
+                    <p style="margin-top: 10px; color: #666;">
+                        → Nhà đầu tư dùng thông tin để quyết định: <strong>MUA, GIỮ, hay BÁN</strong> cổ phần
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <h3>🏦 Creditors - Chủ nợ</h3>
+                    <p style="font-size: 1.1em; color: #764ba2;">
+                        ❓ "Singapore Airlines có thể trả nợ đúng hạn không?"
+                      </p>
+                    <p style="margin-top: 10px; color: #666;">
+                        → Chủ nợ (ngân hàng, nhà cung cấp) đánh giá <strong>RỦI RO</strong> khi cho vay hoặc bán chịu
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <h3>🏛️ Các Người dùng Bên ngoài khác</h3>
+                    <ul style="margin-left: 20px; font-size: 1.05em;">
+                        <li><strong>Cơ quan thuế:</strong> Công ty có tuân thủ luật thuế không?</li>
+                        <li><strong>Cơ quan quản lý:</strong> Công ty có hoạt động trong khuôn khổ quy định không?</li>
+                        <li><strong>Khách hàng:</strong> Tesla có tiếp tục hỗ trợ bảo hành sản phẩm không?</li>
+                        <li><strong>Công đoàn:</strong> Công ty có khả năng tăng lương và phúc lợi không?</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    🎯 <strong>Financial Accounting</strong> cung cấp thông tin kinh tế và tài chính cho nhà đầu tư, chủ nợ, và người dùng bên ngoài khác!
+                </div>
+
+                <div class="note">
+                    📊 Nhu cầu thông tin của External Users rất đa dạng, nhưng họ đều cần thông tin <strong>ĐÁNG TIN CẬY</strong> và <strong>SO SÁNH ĐƯỢC</strong>!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">9</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 10: Accounting for E-commerce -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 1</span>
+                <h2>🛒 Kế toán trong Thương mại Điện tử</h2>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>💡 Tại sao Kế toán quan trọng với Thương mại Điện tử?</h3>
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        Thương mại điện tử tạo ra hàng ngàn giao dịch mỗi ngày - kế toán giúp theo dõi, phân tích và ra quyết định!
+                    </p>
+                </div>
+
+                <h3>🎯 Ứng dụng Kế toán trong E-commerce</h3>
+                
+                <div class="example-box">
+                    <h4>1. Theo dõi Doanh thu và Chi phí</h4>
+                    <ul>
+                        <li>Doanh thu từ bán hàng online (Shopee, Lazada, website riêng)</li>
+                        <li>Chi phí marketing (Facebook Ads, Google Ads)</li>
+                        <li>Chi phí vận chuyển và logistics</li>
+                        <li>Chi phí platform (phí hoa hồng sàn)</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>2. Quản lý Dòng tiền (Cash Flow)</h4>
+                    <ul>
+                        <li>Tiền thu từ khách hàng (COD, chuyển khoản, ví điện tử)</li>
+                        <li>Thanh toán cho nhà cung cấp</li>
+                        <li>Chu kỳ tiền mặt: từ mua hàng → bán hàng → thu tiền</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>3. Phân tích Hiệu quả Kinh doanh</h4>
+                    <ul>
+                        <li>Sản phẩm nào bán chạy nhất?</li>
+                        <li>Kênh nào mang lại ROI cao nhất?</li>
+                        <li>Chi phí quảng cáo có hiệu quả không?</li>
+                        <li>Margin lợi nhuận của từng sản phẩm</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    ⚡ Trong E-commerce, dữ liệu kế toán được tạo ra TỰ ĐỘNG qua các hệ thống - nhưng bạn phải biết PHÂN TÍCH và DIỄN GIẢI chúng!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">10</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 11: Real-world E-commerce Example -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 1</span>
+                <h2>📱 Ví dụ Thực tế: Phân tích Shop Online</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3>🏪 Case Study: Shop Thời trang Online</h3>
+                    <p><strong>Tình huống:</strong> Bạn điều hành một shop quần áo trên Shopee và Facebook</p>
+                </div>
+
+                <h3>📊 Dữ liệu tháng 10/2024 (VNĐ)</h3>
+                <table>
+                    <tr>
+                        <th>Khoản mục</th>
+                        <th>Shopee</th>
+                        <th>Facebook</th>
+                        <th>Tổng</th>
+                    </tr>
+                    <tr>
+                        <td>Doanh thu bán hàng</td>
+                        <td>50,000,000</td>
+                        <td>30,000,000</td>
+                        <td>80,000,000</td>
+                    </tr>
+                    <tr>
+                        <td>Chi phí hàng bán</td>
+                        <td>30,000,000</td>
+                        <td>18,000,000</td>
+                        <td>48,000,000</td>
+                    </tr>
+                    <tr>
+                        <td>Phí platform</td>
+                        <td>5,000,000</td>
+                        <td>0</td>
+                        <td>5,000,000</td>
+                    </tr>
+                    <tr>
+                        <td>Chi phí quảng cáo</td>
+                        <td>2,000,000</td>
+                        <td>5,000,000</td>
+                        <td>7,000,000</td>
+                    </tr>
+                    <tr>
+                        <td>Chi phí vận chuyển</td>
+                        <td>3,000,000</td>
+                        <td>2,000,000</td>
+                        <td>5,000,000</td>
+                    </tr>
+                    <tr style="background: #fff3cd; font-weight: bold;">
+                        <td>Lợi nhuận</td>
+                        <td>10,000,000</td>
+                        <td>5,000,000</td>
+                        <td>15,000,000</td>
+                    </tr>
+                </table>
+
+                <h3>💡 Câu hỏi Phân tích</h3>
+                <div class="two-column">
+                    <div class="column">
+                        <h4>❓ Questions</h4>
+                        <ul>
+                            <li>Kênh nào hiệu quả hơn?</li>
+                            <li>Margin lợi nhuận của mỗi kênh?</li>
+                            <li>Có nên tăng ngân sách quảng cáo Facebook không?</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>✅ Answers</h4>
+                        <ul>
+                            <li>Shopee: Margin 20% (10M/50M)</li>
+                            <li>Facebook: Margin 16.7% (5M/30M)</li>
+                            <li>→ Shopee hiệu quả hơn về margin!</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    🎯 Kế toán giúp bạn ra quyết định: Tập trung vào kênh nào? Điều chỉnh giá? Tối ưu chi phí?
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">11</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 12: Career Opportunities -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 1</span>
+                <h2>💼 Cơ hội Nghề nghiệp trong Kế toán</h2>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>🎯 "One degree with 360 degrees of opportunity"</h3>
+                    <p style="font-size: 1.1em;">Một bằng cấp với 360 độ cơ hội!</p>
+                </div>
+
+                <h3>🏢 Các Lĩnh vực Nghề nghiệp</h3>
+
+                <div class="example-box">
+                    <h4>1. Public Accounting (Kế toán Công)</h4>
+                    <ul>
+                        <li><strong>Auditing:</strong> Kiểm toán báo cáo tài chính (CPA, CA)</li>
+                        <li><strong>Taxation:</strong> Tư vấn thuế, lập tờ khai thuế</li>
+                        <li><strong>Consulting:</strong> Tư vấn quản lý, hệ thống kế toán</li>
+                        <li><strong>Công ty:</strong> PwC, Deloitte, EY, KPMG</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>2. Private Accounting (Kế toán Doanh nghiệp)</h4>
+                    <ul>
+                        <li><strong>Cost Accounting:</strong> Tính giá thành sản phẩm</li>
+                        <li><strong>Budgeting:</strong> Lập và kiểm soát ngân sách</li>
+                        <li><strong>Internal Audit:</strong> Kiểm toán nội bộ</li>
+                        <li><strong>Financial Analysis:</strong> Phân tích tài chính</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>3. Governmental Accounting (Kế toán Chính phủ)</h4>
+                    <ul>
+                        <li>Cơ quan thuế</li>
+                        <li>Cơ quan quản lý doanh nghiệp</li>
+                        <li>Giảng dạy tại các trường đại học</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>4. Forensic Accounting (Kế toán Pháp lý)</h4>
+                    <ul>
+                        <li>Điều tra gian lận, trộm cắp</li>
+                        <li>Truy tìm nguồn gốc tiền bất hợp pháp</li>
+                        <li>Phân tích tài sản trong ly hôn</li>
+                        <li>🔥 Một trong Top 20 nghề nghiệp của tương lai!</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">12</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 13: Review Session 1 -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 1 - Ôn tập</span>
+                <h2>📝 Tổng kết Buổi 1</h2>
+            </div>
+            <div class="content">
+                <h3>✅ Những điểm chính đã học</h3>
+                
+                <div class="highlight">
+                    <h4>1. Kế toán là gì?</h4>
+                    <ul>
+                        <li>Hệ thống thông tin: Nhận diện → Ghi chép → Truyền đạt</li>
+                        <li>Khác với bookkeeping (chỉ là ghi chép)</li>
+                        <li>Là "ngôn ngữ kinh doanh"</li>
+                    </ul>
+                </div>
+
+                <div class="highlight">
+                    <h4>2. Người dùng Thông tin Kế toán</h4>
+                    <ul>
+                        <li><strong>Internal Users:</strong> Quản lý, nhân viên → Managerial Accounting</li>
+                        <li><strong>External Users:</strong> Nhà đầu tư, chủ nợ → Financial Accounting</li>
+                    </ul>
+                </div>
+
+                <div class="highlight">
+                    <h4>3. Ứng dụng trong E-commerce</h4>
+                    <ul>
+                        <li>Theo dõi doanh thu, chi phí theo kênh</li>
+                        <li>Phân tích hiệu quả kinh doanh</li>
+                        <li>Quản lý dòng tiền</li>
+                    </ul>
+                </div>
+
+                <div class="highlight">
+                    <h4>4. Cơ hội Nghề nghiệp</h4>
+                    <ul>
+                        <li>Public Accounting (Kiểm toán, Thuế, Tư vấn)</li>
+                        <li>Private Accounting (Kế toán DN)</li>
+                        <li>Government & Forensic Accounting</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    🎯 Takeaway: Kế toán không chỉ là "con số" - nó là công cụ để RA QUYẾT ĐỊNH và ĐÁNH GIÁ HIỆU QUẢ!
+                </div>
+
+                <div class="note">
+                    ⏰ Nghỉ giải lao 10 phút trước khi chuyển sang Buổi 2!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">13</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- ==================== BUỔI 2: NỀN TẢNG KẾ TOÁN ==================== -->
+
+        <!-- Slide 14: Session 2 Title -->
+        <div class="slide">
+            <div class="icon">🏗️</div>
+            <div style="text-align: center;">
+                <span class="session-badge" style="font-size: 1.2em;">BUỔI 2 - 150 PHÚT</span>
+                <h1 style="margin-top: 30px;">Nền tảng của Kế toán</h1>
+                <h2 style="color: #764ba2; margin-top: 20px;">Building Blocks of Accounting</h2>
+                <div class="highlight" style="margin-top: 50px; text-align: left;">
+                    <h3>Nội dung buổi học:</h3>
+                    <ul style="font-size: 1.1em;">
+                        <li>Đạo đức trong Báo cáo Tài chính</li>
+                        <li>Chuẩn mực Kế toán (IFRS vs GAAP)</li>
+                        <li>Các Nguyên tắc và Giả định Kế toán</li>
+                        <li>Phương trình Kế toán cơ bản</li>
+                        <li>Các thành phần: Assets, Liabilities, Equity</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">14</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 15: Ethics in Accounting -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 2</span>
+                <h2>⚖️ Đạo đức trong Kế toán</h2>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>📖 Định nghĩa Ethics</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        <strong>Ethics (Đạo đức)</strong> là các tiêu chuẩn hành vi mà theo đó các hành động được đánh giá là:
+                    </p>
+                    <ul style="font-size: 1.1em; margin-top: 15px;">
+                        <li>Đúng hay Sai (Right or Wrong)</li>
+                        <li>Trung thực hay Không trung thực (Honest or Dishonest)</li>
+                        <li>Công bằng hay Không công bằng (Fair or Not Fair)</li>
+                    </ul>
+                </div>
+
+                <div class="warning">
+                    <h3>⚠️ Tại sao Đạo đức quan trọng?</h3>
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        Báo cáo tài chính hiệu quả phụ thuộc vào <strong>hành vi đạo đức</strong>. Nếu không có đạo đức, thông tin sẽ:
+                    </p>
+                    <ul>
+                        <li>Không đáng tin cậy (No credibility)</li>
+                        <li>Không thể dùng để ra quyết định</li>
+                        <li>Phá hoại niềm tin của thị trường</li>
+                    </ul>
+                </div>
+
+                <h3>🚨 Các Vụ bê bối Kế toán Lớn</h3>
+                <div class="two-column">
+                    <div class="column">
+                        <h4>🌏 International</h4>
+                        <ul>
+                            <li><strong>Satyam (IND):</strong> Thổi phồng lợi nhuận</li>
+                            <li><strong>Toshiba (JPN):</strong> Gian lận kế toán</li>
+                            <li><strong>Pou Sheng (HKG):</strong> Làm giả số liệu</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>🇺🇸 United States</h4>
+                        <ul>
+                            <li><strong>Enron:</strong> Che giấu nợ</li>
+                            <li><strong>WorldCom:</strong> Ghi nhận sai chi phí</li>
+                            <li><strong>Adelphia:</strong> Vay mượn cá nhân</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    💡 Hệ quả: Giá cổ phiếu sụt giảm, nhà đầu tư mất niềm tin, nền kinh tế bị ảnh hưởng!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">15</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 16: Ethics Case Study -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 2</span>
+                <h2>⚖️ Case Study: Dilema Đạo đức</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3>📋 Tình huống: Dewey & LeBoeuf LLP</h3>
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        Công ty luật này đã phá sản vì gian lận kế toán. Nhân viên kế toán đã:
+                    </p>
+                    <ul>
+                        <li>Tạo hóa đơn giả (fake invoices)</li>
+                        <li>Che giấu thiếu hụt tiền mặt</li>
+                        <li>Cung cấp thông tin sai cho kiểm toán viên</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-style: italic; color: #666;">
+                        Lý do: "I felt the pressure" - Tôi cảm thấy áp lực từ sếp
+                    </p>
+                </div>
+
+                <h3>🤔 Ba Bước Phân tích Tình huống Đạo đức</h3>
+                
+                <div class="highlight">
+                    <h4>Bước 1: Nhận diện vấn đề đạo đức</h4>
+                    <ul>
+                        <li>Hành động này có đúng không?</li>
+                        <li>Ai bị ảnh hưởng?</li>
+                        <li>Mã đạo đức nghề nghiệp nói gì?</li>
+                    </ul>
+                </div>
+
+                <div class="highlight">
+                    <h4>Bước 2: Xác định các bên liên quan (Stakeholders)</h4>
+                    <ul>
+                        <li>Ai sẽ bị thiệt hại? (nhà đầu tư, nhân viên, khách hàng)</li>
+                        <li>Ai có lợi ích? (quản lý, cá nhân)</li>
+                        <li>Trách nhiệm của từng bên là gì?</li>
+                    </ul>
+                </div>
+
+                <div class="highlight">
+                    <h4>Bước 3: Đánh giá các phương án thay thế</h4>
+                    <ul>
+                        <li>Có phương án nào khác không?</li>
+                        <li>Hậu quả của mỗi phương án?</li>
+                        <li>Chọn phương án có đạo đức nhất</li>
+                    </ul>
+                </div>
+
+                <div class="warning">
+                    ⚠️ <strong>Câu hỏi thảo luận:</strong> Nếu bạn là nhân viên kế toán trong tình huống này, bạn sẽ làm gì? Tại sao?
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">16</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 17: Accounting Standards -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 2</span>
+                <h2>📚 Chuẩn mực Kế toán</h2>
+            </div>
+            <div class="content">
+                <div class="formula">
+                    HAI HỆ THỐNG CHUẨN MỰC CHÍNH
+                </div>
+
+                <div class="two-column">
+                    <div class="column" style="background: #e3f2fd;">
+                        <h3 style="color: #1976d2;">🌍 IFRS</h3>
+                        <p><strong>International Financial Reporting Standards</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li><strong>Cơ quan:</strong> IASB (International Accounting Standards Board)</li>
+                            <li><strong>Trụ sở:</strong> London, UK</li>
+                            <li><strong>Sử dụng:</strong> 130+ quốc gia</li>
+                            <li><strong>Đặc điểm:</strong> Principles-based (dựa trên nguyên tắc)</li>
+                        </ul>
+                        <p style="margin-top: 15px; color: #1976d2; font-weight: bold;">
+                            ✅ Việt Nam sử dụng VAS (dựa trên IFRS)
+                        </p>
+                    </div>
+
+                    <div class="column" style="background: #fff3e0;">
+                        <h3 style="color: #f57c00;">🇺🇸 U.S. GAAP</h3>
+                        <p><strong>Generally Accepted Accounting Principles</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li><strong>Cơ quan:</strong> FASB (Financial Accounting Standards Board)</li>
+                            <li><strong>Trụ sở:</strong> Connecticut, USA</li>
+                            <li><strong>Sử dụng:</strong> Hoa Kỳ</li>
+                            <li><strong>Đặc điểm:</strong> Rules-based (dựa trên quy tắc)</li>
+                        </ul>
+                        <p style="margin-top: 15px; color: #f57c00; font-weight: bold;">
+                            ⚠️ Chi tiết hơn IFRS
+                        </p>
+                    </div>
+                </div>
+
+                <h3>🔄 Convergence - Hội tụ Chuẩn mực</h3>
+                <div class="highlight">
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        <strong>Convergence</strong> là quá trình giảm thiểu sự khác biệt giữa IFRS và U.S. GAAP để:
+                    </p>
+                    <ul>
+                        <li>Tăng khả năng so sánh giữa các công ty quốc tế</li>
+                        <li>Giảm chi phí tuân thủ cho công ty đa quốc gia</li>
+                        <li>Tạo "ngôn ngữ chung" cho báo cáo tài chính toàn cầu</li>
+                    </ul>
+                </div>
+
+                <div class="note">
+                    📌 <strong>Lưu ý:</strong> Trong khóa học này, chúng ta tập trung vào IFRS vì đây là chuẩn mực toàn cầu!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">17</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 18: Measurement Principles -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 2</span>
+                <h2>📏 Nguyên tắc Đo lường (Measurement Principles)</h2>
+            </div>
+            <div class="content">
+                <div class="formula">
+                    HAI NGUYÊN TẮC CHÍNH: HISTORICAL COST vs FAIR VALUE
+                </div>
+
+                <h3>1️⃣ Historical Cost Principle (Nguyên tắc Giá gốc)</h3>
+                <div class="highlight">
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        <strong>Định nghĩa:</strong> Tài sản được ghi nhận theo <strong>giá mua ban đầu</strong> và tiếp tục báo cáo theo giá đó trong suốt thời gian nắm giữ.
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <h4>📝 Ví dụ: Mua Đất</h4>
+                    <ul>
+                        <li><strong>Năm 2020:</strong> Great Wall Manufacturing mua đất với giá ¥300,000</li>
+                        <li><strong>Năm 2021:</strong> Giá trị thị trường đất tăng lên ¥400,000</li>
+                        <li><strong>Ghi sổ theo Historical Cost:</strong> Vẫn ghi là ¥300,000</li>
+                    </ul>
+                    <p style="margin-top: 10px; color: #667eea; font-weight: bold;">
+                        ✅ Ưu điểm: Đáng tin cậy, có thể kiểm chứng (Faithful Representation)
+                    </p>
+                    <p style="color: #f57c00; font-weight: bold;">
+                        ⚠️ Nhược điểm: Không phản ánh giá trị hiện tại (Less Relevant)
+                    </p>
+                </div>
+
+                <h3>2️⃣ Fair Value Principle (Nguyên tắc Giá trị Hợp lý)</h3>
+                <div class="highlight">
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        <strong>Định nghĩa:</strong> Tài sản và nợ phải trả được báo cáo theo <strong>giá trị thị trường hiện tại</strong> (giá có thể bán hoặc thanh toán).
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <h4>📝 Ví dụ: Cổ phiếu Đầu tư</h4>
+                    <ul>
+                        <li><strong>Mua:</strong> 1,000 cổ phiếu Apple × $150 = $150,000</li>
+                        <li><strong>Cuối năm:</strong> Giá cổ phiếu tăng lên $180/cổ phiếu</li>
+                        <li><strong>Ghi sổ theo Fair Value:</strong> $180,000 (giá thị trường hiện tại)</li>
+                    </ul>
+                    <p style="margin-top: 10px; color: #667eea; font-weight: bold;">
+                        ✅ Ưu điểm: Phản ánh giá trị thực tế (More Relevant)
+                    </p>
+                    <p style="color: #f57c00; font-weight: bold;">
+                        ⚠️ Nhược điểm: Có thể thay đổi thường xuyên, khó ước tính
+                    </p>
+                </div>
+
+                <div class="note">
+                    📊 <strong>Trong thực tế:</strong> IFRS cho phép dùng cả hai. Historical Cost được dùng phổ biến cho tài sản cố định, Fair Value cho chứng khoán đầu tư.
+                </div>
+
+                <div class="key-point">
+                    ⚖️ Trade-off: <strong>Relevance</strong> (liên quan) vs <strong>Faithful Representation</strong> (trung thực)
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">18</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 19: Assumptions -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 2</span>
+                <h2>🎯 Các Giả định Kế toán (Accounting Assumptions)</h2>
+            </div>
+            <div class="content">
+                <h3>1️⃣ Monetary Unit Assumption (Giả định Đơn vị Tiền tệ)</h3>
+                <div class="highlight">
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        <strong>Định nghĩa:</strong> Chỉ ghi nhận các giao dịch có thể <strong>đo lường bằng tiền</strong> vào sổ sách kế toán.
+                    </p>
+                </div>
+
+                <div class="two-column">
+                    <div class="column" style="background: #d4edda;">
+                        <h4>✅ Được ghi nhận</h4>
+                        <ul>
+                            <li>Mua thiết bị: $10,000</li>
+                            <li>Trả lương: €5,000</li>
+                            <li>Doanh thu bán hàng: ¥100,000</li>
+                        </ul>
+                    </div>
+                    <div class="column" style="background: #f8d7da;">
+                        <h4>❌ KHÔNG được ghi nhận</h4>
+                        <ul>
+                            <li>Sức khỏe của CEO</li>
+                            <li>Chất lượng dịch vụ</li>
+                            <li>Tinh thần nhân viên</li>
+                            <li>Danh tiếng công ty</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="note">
+                    💡 Tại sao? Vì không thể đo lường chính xác bằng tiền!
+                </div>
+
+                <h3>2️⃣ Economic Entity Assumption (Giả định Thực thể Kinh tế)</h3>
+                <div class="highlight">
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        <strong>Định nghĩa:</strong> Các hoạt động của doanh nghiệp phải được <strong>tách biệt</strong> với hoạt động cá nhân của chủ sở hữu và các thực thể khác.
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <h4>📝 Ví dụ: Barb's Bike Shop</h4>
+                    <table>
+                        <tr>
+                            <th>Chi phí Công ty</th>
+                            <th>Chi phí Cá nhân (Barb Su)</th>
+                        </tr>
+                        <tr>
+                            <td>✅ Lương nhân viên</td>
+                            <td>❌ Tiền thuê nhà riêng</td>
+                        </tr>
+                        <tr>
+                            <td>✅ Tiền thuê cửa hàng</td>
+                            <td>❌ Chi tiêu gia đình</td>
+                        </tr>
+                        <tr>
+                            <td>✅ Mua xe giao hàng</td>
+                            <td>❌ Mua xe cá nhân</td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 15px; font-weight: bold; color: #667eea;">
+                        → Barb PHẢI tách biệt chi phí sống cá nhân với chi phí kinh doanh!
+                    </p>
+                </div>
+
+                <div class="warning">
+                    ⚠️ <strong>Vi phạm:</strong> Vụ Adelphia (USA) - Quản lý vay tiền công ty cho mục đích cá nhân → Gian lận!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">19</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 20: Business Organizations -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 2</span>
+                <h2>🏢 Ba Loại hình Tổ chức Kinh doanh</h2>
+            </div>
+            <div class="content">
+                <h3>1️⃣ Proprietorship (Doanh nghiệp Tư nhân)</h3>
+                <div class="example-box">
+                    <p><strong>Đặc điểm:</strong></p>
+                    <ul>
+                        <li>Chỉ có <strong>1 chủ sở hữu</strong></li>
+                        <li>Chủ sở hữu thường là người quản lý/điều hành</li>
+                        <li>Vốn ban đầu thấp, dễ thành lập</li>
+                        <li><strong>Trách nhiệm:</strong> Chủ sở hữu chịu trách nhiệm vô hạn (unlimited liability)</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>Ví dụ:</strong> Tiệm cắt tóc, cửa hàng quần áo nhỏ, quán cafe</p>
+                    <div class="note" style="margin-top: 10px;">
+                        📌 Kế toán: Tách biệt tài chính công ty với cá nhân chủ!
+                    </div>
+                </div>
+
+                <h3>2️⃣ Partnership (Công ty Hợp danh)</h3>
+                <div class="example-box">
+                    <p><strong>Đặc điểm:</strong></p>
+                    <ul>
+                        <li><strong>2 người trở lên</strong> cùng làm chủ</li>
+                        <li>Có thỏa thuận hợp danh (partnership agreement)</li>
+                        <li>Chia sẻ lợi nhuận/lỗ theo thỏa thuận</li>
+                        <li><strong>Trách nhiệm:</strong> Mỗi đối tác có unlimited liability</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>Ví dụ:</strong> Văn phòng luật sư, phòng khám bác sĩ, công ty kiến trúc</p>
+                    <div class="note" style="margin-top: 10px;">
+                        📌 Kế toán: Tách biệt với hoạt động cá nhân của TẤT CẢ các đối tác!
+                    </div>
+                </div>
+
+                <h3>3️⃣ Corporation (Công ty Cổ phần)</h3>
+                <div class="example-box">
+                    <p><strong>Đặc điểm:</strong></p>
+                    <ul>
+                        <li>Là <strong>pháp nhân độc lập</strong> theo luật</li>
+                        <li>Quyền sở hữu chia thành <strong>cổ phần</strong> (shares)</li>
+                        <li>Cổ đông có thể chuyển nhượng cổ phần dễ dàng</li>
+                        <li><strong>Trách nhiệm:</strong> Cổ đông có limited liability (trách nhiệm hữu hạn)</li>
+                        <li>Tuổi thọ vô hạn (unlimited life)</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>Ví dụ:</strong> Apple, Samsung, Toyota, Vinamilk</p>
+                    <div class="key-point" style="margin-top: 10px;">
+                        💡 Hầu hết các công ty LỚN đều là Corporation!
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">20</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 21: Basic Accounting Equation -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 2</span>
+                <h2>⚖️ Phương trình Kế toán Cơ bản</h2>
+            </div>
+            <div class="content">
+                <div class="icon" style="font-size: 4em;">📐</div>
+                
+                <div class="formula" style="font-size: 2em; padding: 30px;">
+                    ASSETS = LIABILITIES + EQUITY
+                </div>
+
+                <div class="formula" style="font-size: 1.8em; background: #e3f2fd; color: #1976d2;">
+                    TÀI SẢN = NỢ PHẢI TRẢ + VỐN CHỦ SỞ HỮU
+                </div>
+
+                <div class="highlight" style="margin-top: 30px;">
+                    <h3>💡 Ý nghĩa</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        Phương trình này cho biết: Tài sản của công ty được tài trợ bởi HAI nguồn:
+                    </p>
+                    <ul style="font-size: 1.1em; margin-top: 15px;">
+                        <li><strong>Liabilities (Nợ):</strong> Tiền vay từ chủ nợ</li>
+                        <li><strong>Equity (Vốn):</strong> Tiền từ chủ sở hữu</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h3>📊 Ví dụ: adidas (DEU)</h3>
+                    <table>
+                        <tr>
+                            <th>Assets (Tài sản)</th>
+                            <th>Liabilities (Nợ)</th>
+                            <th>Equity (Vốn)</th>
+                        </tr>
+                        <tr style="font-size: 1.2em; font-weight: bold;">
+                            <td>€15,176 billion</td>
+                            <td>€8,721 billion</td>
+                            <td>€6,455 billion</td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 15px; font-size: 1.1em;">
+                        ✅ Kiểm tra: €15,176 = €8,721 + €6,455 ✓
+                    </p>
+                </div>
+
+                <div class="key-point">
+                    🎯 Nguyên tắc VÀNG: Hai vế của phương trình LUÔN LUÔN BẰNG NHAU!
+                </div>
+
+                <div class="note">
+                    📌 Phương trình này áp dụng cho MỌI tổ chức kinh tế, dù lớn hay nhỏ!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">21</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 22: Assets Definition -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 2</span>
+                <h2>💰 Assets - Tài sản</h2>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>📖 Định nghĩa</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        <strong>Assets (Tài sản)</strong> là các nguồn lực mà doanh nghiệp sở hữu, có khả năng mang lại lợi ích kinh tế trong tương lai.
+                    </p>
+                </div>
+
+                <h3>🔑 Đặc điểm chung của Tài sản</h3>
+                <ul style="font-size: 1.1em;">
+                    <li>Doanh nghiệp có quyền kiểm soát</li>
+                    <li>Có khả năng tạo ra dòng tiền trong tương lai</li>
+                    <li>Là kết quả của các sự kiện đã xảy ra trong quá khứ</li>
+                </ul>
+
+                <h3>📋 Các loại Tài sản phổ biến</h3>
+                
+                <div class="two-column">
+                    <div class="column">
+                        <h4>💵 Current Assets (Tài sản Ngắn hạn)</h4>
+                        <ul>
+                            <li><strong>Cash (Tiền mặt)</strong></li>
+                            <li><strong>Accounts Receivable (Phải thu khách hàng)</strong></li>
+                            <li><strong>Inventory (Hàng tồn kho)</strong></li>
+                            <li><strong>Supplies (Vật tư)</strong></li>
+                            <li><strong>Prepaid Expenses (Chi phí trả trước)</strong></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>🏢 Non-current Assets (Tài sản Dài hạn)</h4>
+                        <ul>
+                            <li><strong>Equipment (Thiết bị)</strong></li>
+                            <li><strong>Buildings (Nhà xưởng)</strong></li>
+                            <li><strong>Land (Đất)</strong></li>
+                            <li><strong>Vehicles (Xe cộ)</strong></li>
+                            <li><strong>Investments (Đầu tư dài hạn)</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>🍕 Ví dụ: Taipei Pizza Restaurant</h3>
+                    <p><strong>Tài sản bao gồm:</strong></p>
+                    <ul>
+                        <li>Tiền mặt trong két</li>
+                        <li>Xe giao hàng (delivery truck)</li>
+                        <li>Lò nướng bánh (oven)</li>
+                        <li>Bàn ghế nhà hàng</li>
+                        <li>Hệ thống âm thanh</li>
+                        <li>Máy tính tiền</li>
+                        <li>Bát đĩa, dao nĩa</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    💡 Tất cả các tài sản cuối cùng đều tạo ra CASH INFLOWS (dòng tiền vào) cho doanh nghiệp!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">22</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 23: Liabilities Definition -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 2</span>
+                <h2>📋 Liabilities - Nợ phải trả</h2>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>📖 Định nghĩa</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        <strong>Liabilities (Nợ phải trả)</strong> là các khoản nợ và nghĩa vụ hiện tại của doanh nghiệp - đây là quyền đòi hỏi của chủ nợ đối với tài sản.
+                    </p>
+                </div>
+
+                <div class="warning">
+                    <p style="font-size: 1.1em;">
+                        ⚠️ <strong>Quan trọng:</strong> Nợ phải trả được ưu tiên thanh toán TRƯỚC vốn chủ sở hữu khi doanh nghiệp thanh lý!
+                    </p>
+                </div>
+
+                <h3>📋 Các loại Nợ phải trả phổ biến</h3>
+                
+                <div class="example-box">
+                    <h4>💳 Current Liabilities (Nợ Ngắn hạn - < 1 năm)</h4>
+                    <ul>
+                        <li><strong>Accounts Payable (Phải trả nhà cung cấp):</strong> Nợ tiền mua hàng chưa trả</li>
+                        <li><strong>Salaries & Wages Payable (Lương phải trả):</strong> Lương nhân viên chưa trả</li>
+                        <li><strong>Taxes Payable (Thuế phải nộp):</strong> Thuế doanh nghiệp, thuế GTGT</li>
+                        <li><strong>Interest Payable (Lãi vay phải trả):</strong> Lãi tiền vay chưa trả</li>
+                        <li><strong>Unearned Revenue (Doanh thu chưa thực hiện):</strong> Tiền khách trả trước</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>🏦 Non-current Liabilities (Nợ Dài hạn - > 1 năm)</h4>
+                    <ul>
+                        <li><strong>Notes Payable (Vay dài hạn):</strong> Tiền vay ngân hàng dài hạn</li>
+                        <li><strong>Bonds Payable (Trái phiếu):</strong> Nợ phát hành trái phiếu</li>
+                        <li><strong>Mortgage Payable (Nợ thế chấp):</strong> Vay mua nhà, đất</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h3>🍕 Ví dụ: Taipei Pizza Restaurant</h3>
+                    <p><strong>Các khoản nợ bao gồm:</strong></p>
+                    <table>
+                        <tr>
+                            <th>Loại nợ</th>
+                            <th>Mô tả</th>
+                        </tr>
+                        <tr>
+                            <td>Accounts Payable</td>
+                            <td>Nợ tiền mua phô mai, xúc xích, bột mì</td>
+                        </tr>
+                        <tr>
+                            <td>Notes Payable</td>
+                            <td>Vay First Bank để mua xe giao hàng</td>
+                        </tr>
+                        <tr>
+                            <td>Salaries Payable</td>
+                            <td>Lương nhân viên tháng này chưa trả</td>
+                        </tr>
+                        <tr>
+                            <td>Taxes Payable</td>
+                            <td>Thuế doanh nghiệp phải nộp</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="key-point">
+                    ⚖️ Chủ nợ có quyền ép buộc thanh lý doanh nghiệp nếu không trả nợ đúng hạn!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">23</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 24: Equity Definition -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 2</span>
+                <h2>👥 Equity - Vốn chủ sở hữu</h2>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>📖 Định nghĩa</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        <strong>Equity (Vốn chủ sở hữu)</strong> là quyền đòi hỏi của chủ sở hữu đối với tài sản của công ty.
+                    </p>
+                    <div class="formula" style="margin-top: 20px;">
+                        EQUITY = ASSETS − LIABILITIES
+                    </div>
+                    <p style="margin-top: 15px; font-style: italic; color: #666;">
+                        → Còn được gọi là <strong>Residual Equity</strong> (Vốn còn lại sau khi trừ nợ)
+                    </p>
+                </div>
+
+                <h3>📊 Hai Thành phần của Equity</h3>
+
+                <div class="example-box">
+                    <h4>1️⃣ Share Capital—Ordinary (Vốn Góp)</h4>
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        Là số tiền mà cổ đông <strong>đầu tư vào</strong> công ty khi mua cổ phần.
+                    </p>
+                    <p style="margin-top: 10px;"><strong>Ví dụ:</strong></p>
+                    <ul>
+                        <li>100 cổ đông mua 1,000 cổ phiếu × $10 = $10,000</li>
+                        <li>→ Share Capital—Ordinary = $10,000</li>
+                    </ul>
+                    <div class="note" style="margin-top: 10px;">
+                        📌 Khi công ty phát hành thêm cổ phiếu → Share Capital tăng
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>2️⃣ Retained Earnings (Lợi nhuận Giữ lại)</h4>
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        Là phần lợi nhuận ròng (net income) mà công ty <strong>KHÔNG</strong> chia cho cổ đông mà giữ lại để tái đầu tư.
+                    </p>
+                    <div class="formula" style="margin-top: 15px; font-size: 1.2em;">
+                        Retained Earnings = Revenues − Expenses − Dividends
+                    </div>
+                </div>
+
+                <div class="formula" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-size: 1.3em;">
+                    EQUITY = Share Capital + Retained Earnings
+                </div>
+
+                <div class="key-point">
+                    💡 Equity tăng khi: (1) Cổ đông đầu tư thêm, hoặc (2) Công ty có lợi nhuận
+                </div>
+
+                <div class="key-point" style="background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);">
+                    ⚠️ Equity giảm khi: (1) Công ty bị lỗ, hoặc (2) Chia cổ tức cho cổ đông
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">24</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 25: Revenues and Expenses -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 2</span>
+                <h2>📈 Revenues & Expenses</h2>
+            </div>
+            <div class="content">
+                <h3>💵 Revenues - Doanh thu</h3>
+                <div class="highlight">
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        <strong>Revenues (Doanh thu)</strong> là sự gia tăng TỔNG của vốn chủ sở hữu từ các hoạt động kinh doanh nhằm mục đích kiếm lợi nhuận.
+                    </p>
+                    <div class="formula" style="margin-top: 15px;">
+                        REVENUES → ↑ ASSETS hoặc ↓ LIABILITIES → ↑ EQUITY
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>📋 Các loại Doanh thu phổ biến</h4>
+                    <table>
+                        <tr>
+                            <th>Loại DN</th>
+                            <th>Tên Doanh thu</th>
+                            <th>Ví dụ</th>
+                        </tr>
+                        <tr>
+                            <td>Bán hàng</td>
+                            <td>Sales Revenue</td>
+                            <td>Taipei Pizza: Pizza Sales, Beverage Sales</td>
+                        </tr>
+                        <tr>
+                            <td>Dịch vụ</td>
+                            <td>Service Revenue</td>
+                            <td>Consulting fees, Repair services</td>
+                        </tr>
+                        <tr>
+                            <td>Cho thuê</td>
+                            <td>Rent Revenue</td>
+                            <td>Cho thuê văn phòng, nhà xưởng</td>
+                        </tr>
+                        <tr>
+                            <td>Đầu tư</td>
+                            <td>Interest Revenue, Dividend Revenue</td>
+                            <td>Lãi tiền gửi, cổ tức nhận được</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>💸 Expenses - Chi phí</h3>
+                <div class="highlight">
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        <strong>Expenses (Chi phí)</strong> là chi phí của tài sản đã sử dụng hoặc dịch vụ đã tiêu thụ trong quá trình tạo ra doanh thu.
+                    </p>
+                    <div class="formula" style="margin-top: 15px;">
+                        EXPENSES → ↓ ASSETS hoặc ↑ LIABILITIES → ↓ EQUITY
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>📋 Các loại Chi phí của Taipei Pizza</h4>
+                    <table>
+                        <tr>
+                            <th>Chi phí</th>
+                            <th>Mô tả</th>
+                        </tr>
+                        <tr>
+                            <td>Cost of Ingredients</td>
+                            <td>Bột mì, phô mai, cà chua, thịt, nấm...</td>
+                        </tr>
+                        <tr>
+                            <td>Cost of Beverages</td>
+                            <td>Nước ngọt, bia...</td>
+                        </tr>
+                        <tr>
+                            <td>Salaries & Wages Expense</td>
+                            <td>Lương nhân viên</td>
+                        </tr>
+                        <tr>
+                            <td>Rent Expense</td>
+                            <td>Tiền thuê mặt bằng</td>
+                        </tr>
+                        <tr>
+                            <td>Utilities Expense</td>
+                            <td>Điện, nước, gas</td>
+                        </tr>
+                        <tr>
+                            <td>Delivery Expense</td>
+                            <td>Xăng xe, sửa chữa, giấy phép</td>
+                        </tr>
+                        <tr>
+                            <td>Supplies Expense</td>
+                            <td>Khăn giấy, chất tẩy rửa, tạp dề</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="key-point">
+                    💡 Revenues TĂNG Equity | Expenses GIẢM Equity
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">25</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 26: Dividends -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 2</span>
+                <h2>💰 Dividends - Cổ tức</h2>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>📖 Định nghĩa</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        <strong>Dividends (Cổ tức)</strong> là việc phân phối tiền mặt hoặc tài sản khác cho cổ đông.
+                    </p>
+                    <div class="formula" style="margin-top: 15px;">
+                        DIVIDENDS → ↓ ASSETS (Cash) → ↓ EQUITY (Retained Earnings)
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <h3>⚠️ Điểm QUAN TRỌNG</h3>
+                    <p style="font-size: 1.2em; font-weight: bold; color: #721c24;">
+                        Dividends KHÔNG PHẢI là Expenses!
+                    </p>
+                    <p style="margin-top: 10px; font-size: 1.1em; line-height: 1.8;">
+                        Vì sao? Vì dividends không liên quan đến việc tạo ra doanh thu. Đây là việc CHIA LỢI NHUẬN cho chủ sở hữu.
+                    </p>
+                </div>
+
+                <h3>🔄 Quy trình Tính toán và Chia Cổ tức</h3>
+                <div class="example-box">
+                    <div style="font-size: 1.1em; line-height: 2;">
+                        <p><strong>Bước 1:</strong> Tính Revenues (Doanh thu)</p>
+                        <p style="margin-left: 30px;">↓</p>
+                        <p><strong>Bước 2:</strong> Trừ Expenses (Chi phí)</p>
+                        <p style="margin-left: 30px;">↓</p>
+                        <p><strong>Bước 3:</strong> Ra được <span style="background: #fff3cd; padding: 5px 10px; border-radius: 5px;">Net Income (Lợi nhuận ròng)</span></p>
+                        <p style="margin-left: 30px;">↓</p>
+                        <p><strong>Bước 4:</strong> Hội đồng quản trị quyết định: Giữ lại bao nhiêu? Chia bao nhiêu?</p>
+                        <p style="margin-left: 30px;">↓</p>
+                        <p><strong>Bước 5:</strong> Chia Dividends cho cổ đông</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>📊 Ví dụ số</h3>
+                    <table>
+                        <tr>
+                            <td>Revenues</td>
+                            <td style="text-align: right;">$100,000</td>
+                        </tr>
+                        <tr>
+                            <td>Expenses</td>
+                            <td style="text-align: right;">($70,000)</td>
+                        </tr>
+                        <tr style="background: #d4edda; font-weight: bold;">
+                            <td>Net Income</td>
+                            <td style="text-align: right;">$30,000</td>
+                        </tr>
+                        <tr>
+                            <td>Dividends declared</td>
+                            <td style="text-align: right;">($10,000)</td>
+                        </tr>
+                        <tr style="background: #fff3cd; font-weight: bold;">
+                            <td>Retained Earnings (giữ lại)</td>
+                            <td style="text-align: right;">$20,000</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="key-point">
+                    🎯 Nhớ: Net Income là lợi nhuận TRƯỚC khi chia cổ tức. Dividends được trả từ lợi nhuận đã kiếm được!
+                </div>
+
+                <div class="note">
+                    📌 Công ty có thể có Net Income nhưng KHÔNG chia Dividends (để tái đầu tư)
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">26</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 27: Expanded Accounting Equation -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 2</span>
+                <h2>📐 Phương trình Kế toán MỞ RỘNG</h2>
+            </div>
+            <div class="content">
+                <div class="icon" style="font-size: 3em;">⚖️</div>
+
+                <div class="formula" style="font-size: 1.3em; padding: 20px;">
+                    ASSETS = LIABILITIES + EQUITY
+                </div>
+
+                <div style="text-align: center; font-size: 2em; margin: 20px 0;">↓ MỞ RỘNG ↓</div>
+
+                <div class="formula" style="font-size: 1.1em; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    ASSETS = LIABILITIES + SHARE CAPITAL + REVENUES − EXPENSES − DIVIDENDS
+                </div>
+
+                <div class="formula" style="font-size: 1.1em; padding: 25px; background: #e3f2fd; color: #1976d2; margin-top: 20px;">
+                    TÀI SẢN = NỢ + VỐN GÓP + DOANH THU − CHI PHÍ − CỔ TỨC
+                </div>
+
+                <h3 style="margin-top: 30px;">📊 Sơ đồ Phân tích</h3>
+                <div class="example-box">
+                    <table style="font-size: 1em;">
+                        <tr>
+                            <th>Thành phần</th>
+                            <th>Tác động lên Equity</th>
+                            <th>Ví dụ</th>
+                        </tr>
+                        <tr style="background: #d4edda;">
+                            <td><strong>Share Capital</strong></td>
+                            <td>TĂNG ↑</td>
+                            <td>Phát hành cổ phiếu</td>
+                        </tr>
+                        <tr style="background: #d4edda;">
+                            <td><strong>Revenues</strong></td>
+                            <td>TĂNG ↑</td>
+                            <td>Bán hàng, cung cấp dịch vụ</td>
+                        </tr>
+                        <tr style="background: #f8d7da;">
+                            <td><strong>Expenses</strong></td>
+                            <td>GIẢM ↓</td>
+                            <td>Trả lương, thuê mặt bằng</td>
+                        </tr>
+                        <tr style="background: #f8d7da;">
+                            <td><strong>Dividends</strong></td>
+                            <td>GIẢM ↓</td>
+                            <td>Chia cổ tức cho cổ đông</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="highlight" style="margin-top: 20px;">
+                    <h3>💡 Mối quan hệ với Retained Earnings</h3>
+                    <div class="formula" style="font-size: 1.2em; margin-top: 15px;">
+                        Retained Earnings = Revenues − Expenses − Dividends
+                    </div>
+                    <p style="margin-top: 15px; font-size: 1.1em;">
+                        Vì vậy, phương trình cũng có thể viết:
+                    </p>
+                    <div class="formula" style="font-size: 1.1em; margin-top: 10px;">
+                        ASSETS = LIABILITIES + SHARE CAPITAL + RETAINED EARNINGS
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    🎯 Phương trình mở rộng giúp chúng ta theo dõi CHI TIẾT các thay đổi trong Equity!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">27</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 28: Review Session 2 -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 2 - Ôn tập</span>
+                <h2>📝 Tổng kết Buổi 2</h2>
+            </div>
+            <div class="content">
+                <h3>✅ Những điểm chính đã học</h3>
+                
+                <div class="highlight">
+                    <h4>1. Đạo đức trong Kế toán</h4>
+                    <ul>
+                        <li>Ethics = tiêu chuẩn đánh giá hành vi đúng/sai</li>
+                        <li>Báo cáo tài chính hiệu quả phụ thuộc vào đạo đức</li>
+                        <li>3 bước phân tích tình huống đạo đức</li>
+                    </ul>
+                </div>
+
+                <div class="highlight">
+                    <h4>2. Chuẩn mực Kế toán</h4>
+                    <ul>
+                        <li>IFRS (130+ quốc gia) vs U.S. GAAP (Hoa Kỳ)</li>
+                        <li>Convergence: hội tụ chuẩn mực</li>
+                    </ul>
+                </div>
+
+                <div class="highlight">
+                    <h4>3. Nguyên tắc và Giả định</h4>
+                    <ul>
+                        <li><strong>Historical Cost:</strong> Ghi theo giá gốc</li>
+                        <li><strong>Fair Value:</strong> Ghi theo giá trị thị trường</li>
+                        <li><strong>Monetary Unit:</strong> Chỉ ghi giao dịch đo bằng tiền</li>
+                        <li><strong>Economic Entity:</strong> Tách biệt công ty với cá nhân</li>
+                    </ul>
+                </div>
+
+                <div class="highlight">
+                    <h4>4. Phương trình Kế toán</h4>
+                    <div class="formula" style="font-size: 1.2em; margin: 15px 0;">
+                        ASSETS = LIABILITIES + EQUITY
+                    </div>
+                    <div class="formula" style="font-size: 1.1em;">
+                        ASSETS = LIABILITIES + SHARE CAPITAL + REVENUES − EXPENSES − DIVIDENDS
+                    </div>
+                </div>
+
+                <div class="highlight">
+                    <h4>5. Các Thành phần</h4>
+                    <ul>
+                        <li><strong>Assets:</strong> Tài sản (Cash, Equipment, Inventory...)</li>
+                        <li><strong>Liabilities:</strong> Nợ phải trả (Accounts Payable, Notes Payable...)</li>
+                        <li><strong>Equity:</strong> Share Capital + Retained Earnings</li>
+                        <li><strong>Revenues:</strong> Tăng Equity (Sales, Service Revenue...)</li>
+                        <li><strong>Expenses:</strong> Giảm Equity (Salaries, Rent, Utilities...)</li>
+                        <li><strong>Dividends:</strong> Giảm Equity (KHÔNG phải Expense!)</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    🎯 Takeaway: Phương trình kế toán LUÔN CÂN BẰNG - đây là nền tảng của MỌI giao dịch kế toán!
+                </div>
+
+                <div class="note">
+                    ⏰ Nghỉ giải lao 10 phút trước Buổi 3!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">28</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- ==================== BUỔI 3: PHÂN TÍCH GIAO DỊCH ==================== -->
+
+        <!-- Slide 29: Session 3 Title -->
+        <div class="slide">
+            <div class="icon">📊</div>
+            <div style="text-align: center;">
+                <span class="session-badge" style="font-size: 1.2em;">BUỔI 3 - 150 PHÚT</span>
+                <h1 style="margin-top: 30px;">Phân tích Giao dịch & Báo cáo Tài chính</h1>
+                <h2 style="color: #764ba2; margin-top: 20px;">Transaction Analysis & Financial Statements</h2>
+                <div class="highlight" style="margin-top: 50px; text-align: left;">
+                    <h3>Nội dung buổi học:</h3>
+                    <ul style="font-size: 1.1em;">
+                        <li>Giao dịch kế toán là gì?</li>
+                        <li>Phân tích tác động của giao dịch lên phương trình kế toán</li>
+                        <li>Lập bảng tóm tắt giao dịch (Tabular Analysis)</li>
+                        <li>Chuẩn bị 5 báo cáo tài chính</li>
+                        <li>Mối liên hệ giữa các báo cáo</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">29</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 30: What is a Transaction? -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>💼 Giao dịch Kế toán là gì?</h2>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>📖 Định nghĩa</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        <strong>Transaction (Giao dịch)</strong> là các sự kiện kinh tế của doanh nghiệp được ghi nhận bởi kế toán viên.
+                    </p>
+                </div>
+
+                <h3>🔄 Hai Loại Giao dịch</h3>
+                <div class="two-column">
+                    <div class="column" style="background: #e3f2fd;">
+                        <h4>1️⃣ External Transactions (Giao dịch Bên ngoài)</h4>
+                        <p>Sự kiện kinh tế giữa công ty và bên ngoài</p>
+                        <p style="margin-top: 10px;"><strong>Ví dụ - Taipei Pizza:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Mua thiết bị từ nhà cung cấp</li>
+                            <li>Trả tiền thuê cho chủ nhà</li>
+                            <li>Bán pizza cho khách hàng</li>
+                        </ul>
+                    </div>
+
+                    <div class="column" style="background: #fff3e0;">
+                        <h4>2️⃣ Internal Transactions (Giao dịch Nội bộ)</h4>
+                        <p>Sự kiện kinh tế xảy ra hoàn toàn trong công ty</p>
+                        <p style="margin-top: 10px;"><strong>Ví dụ - Taipei Pizza:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Sử dụng vật tư nấu ăn</li>
+                            <li>Sử dụng chất tẩy rửa</li>
+                            <li>Khấu hao thiết bị</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>✅ Sự kiện NÀO được ghi nhận?</h3>
+                <div class="example-box">
+                    <table>
+                        <tr>
+                            <th>Sự kiện</th>
+                            <th>Có ghi không?</th>
+                            <th>Lý do</th>
+                        </tr>
+                        <tr style="background: #d4edda;">
+                            <td>Mua máy tính trả tiền mặt</td>
+                            <td><strong>✅ CÓ</strong></td>
+                            <td>Ảnh hưởng đến tài sản (Cash giảm, Equipment tăng)</td>
+                        </tr>
+                        <tr style="background: #d4edda;">
+                            <td>Bán hàng cho khách</td>
+                            <td><strong>✅ CÓ</strong></td>
+                            <td>Ảnh hưởng đến tài sản và equity</td>
+                        </tr>
+                        <tr style="background: #f8d7da;">
+                            <td>Tuyển nhân viên mới</td>
+                            <td><strong>❌ KHÔNG</strong></td>
+                            <td>Chưa ảnh hưởng đến tài chính (chưa trả lương)</td>
+                        </tr>
+                        <tr style="background: #f8d7da;">
+                            <td>Đặt hàng từ nhà cung cấp</td>
+                            <td><strong>❌ KHÔNG</strong></td>
+                            <td>Chưa nhận hàng, chưa phát sinh nghĩa vụ</td>
+                        </tr>
+                        <tr style="background: #f8d7da;">
+                            <td>Trả lời email khách hàng</td>
+                            <td><strong>❌ KHÔNG</strong></td>
+                            <td>Không ảnh hưởng tài chính</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="key-point">
+                    🎯 Tiêu chí GHI NHẬN: Sự kiện phải ảnh hưởng đến ASSETS, LIABILITIES, hoặc EQUITY!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">30</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 31: Dual Effect -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>⚖️ Tác động KÉP (Dual Effect)</h2>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>📐 Nguyên tắc VÀNG</h3>
+                    <p style="font-size: 1.3em; font-weight: bold; text-align: center; line-height: 1.8;">
+                        Mọi giao dịch đều có TÁC ĐỘNG KÉP lên phương trình kế toán
+                    </p>
+                    <div class="formula" style="margin-top: 20px;">
+                        ASSETS = LIABILITIES + EQUITY
+                    </div>
+                    <p style="text-align: center; margin-top: 15px; font-size: 1.1em;">
+                        → Phải LUÔN CÂN BẰNG sau mỗi giao dịch!
+                    </p>
+                </div>
+
+                <h3>🔄 Các Khả năng Tác động</h3>
+                <div class="example-box">
+                    <p style="font-size: 1.1em; margin-bottom: 15px;">
+                        Nếu một <strong>ASSET tăng</strong>, phải có tương ứng:
+                    </p>
+                    <ul style="font-size: 1.05em;">
+                        <li>✅ <strong>Giảm</strong> một Asset khác, HOẶC</li>
+                        <li>✅ <strong>Tăng</strong> một Liability cụ thể, HOẶC</li>
+                        <li>✅ <strong>Tăng</strong> Equity</li>
+                    </ul>
+                </div>
+
+                <h3>📊 Ví dụ Minh họa</h3>
+                <div class="two-column">
+                    <div class="column">
+                        <h4>Ví dụ 1: Mua thiết bị bằng tiền mặt</h4>
+                        <p><strong>$10,000</strong></p>
+                        <ul>
+                            <li>Cash: <span style="color: red;">−$10,000</span></li>
+                            <li>Equipment: <span style="color: green;">+$10,000</span></li>
+                        </ul>
+                        <p style="margin-top: 10px; background: #fff3cd; padding: 10px; border-radius: 5px;">
+                            ✅ Assets không đổi (trao đổi giữa 2 loại tài sản)
+                        </p>
+                    </div>
+
+                    <div class="column">
+                        <h4>Ví dụ 2: Mua thiết bị chịu nợ</h4>
+                        <p><strong>$10,000</strong></p>
+                        <ul>
+                            <li>Equipment: <span style="color: green;">+$10,000</span></li>
+                            <li>Accounts Payable: <span style="color: green;">+$10,000</span></li>
+                        </ul>
+                        <p style="margin-top: 10px; background: #fff3cd; padding: 10px; border-radius: 5px;">
+                            ✅ Assets tăng = Liabilities tăng
+                        </p>
+                    </div>
+                </div>
+
+                <div class="two-column" style="margin-top: 20px;">
+                    <div class="column">
+                        <h4>Ví dụ 3: Cổ đông đầu tư</h4>
+                        <p><strong>$50,000</strong></p>
+                        <ul>
+                            <li>Cash: <span style="color: green;">+$50,000</span></li>
+                            <li>Share Capital: <span style="color: green;">+$50,000</span></li>
+                        </ul>
+                        <p style="margin-top: 10px; background: #fff3cd; padding: 10px; border-radius: 5px;">
+                            ✅ Assets tăng = Equity tăng
+                        </p>
+                    </div>
+
+                    <div class="column">
+                        <h4>Ví dụ 4: Trả nợ nhà cung cấp</h4>
+                        <p><strong>$5,000</strong></p>
+                        <ul>
+                            <li>Cash: <span style="color: red;">−$5,000</span></li>
+                            <li>Accounts Payable: <span style="color: red;">−$5,000</span></li>
+                        </ul>
+                        <p style="margin-top: 10px; background: #fff3cd; padding: 10px; border-radius: 5px;">
+                            ✅ Assets giảm = Liabilities giảm
+                        </p>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    ⚖️ Nhớ: Phương trình LUÔN cân bằng - đây là cơ sở của hệ thống "Kế toán kép" (Double-entry)!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">31</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+                </div>
+        </div>
+
+        <!-- Slide 32: Case Study Introduction - Softbyte -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>📱 Case Study: Softbyte SA</h2>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>🏢 Giới thiệu Công ty</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        <strong>Softbyte SA</strong> - Công ty phát triển ứng dụng smartphone
+                    </p>
+                    <ul style="font-size: 1.1em; margin-top: 15px;">
+                        <li><strong>Founders:</strong> Ray và Barbara Neal</li>
+                        <li><strong>Ngày thành lập:</strong> September 1, 2020</li>
+                        <li><strong>Loại hình:</strong> Corporation (Công ty Cổ phần)</li>
+                        <li><strong>Ngành nghề:</strong> Smartphone App Development</li>
+                    </ul>
+                </div>
+
+                <h3>🎯 Mục tiêu Học tập</h3>
+                <div class="example-box">
+                    <p style="font-size: 1.1em;">
+                        Chúng ta sẽ phân tích <strong>10 giao dịch</strong> của Softbyte trong tháng September 2020 để:
+                    </p>
+                    <ul>
+                        <li>✅ Hiểu cách mỗi giao dịch ảnh hưởng đến phương trình kế toán</li>
+                        <li>✅ Luyện tập phân tích tác động kép (dual effect)</li>
+                        <li>✅ Xây dựng bảng tóm tắt giao dịch (tabular summary)</li>
+                        <li>✅ Lập báo cáo tài chính từ dữ liệu giao dịch</li>
+                    </ul>
+                </div>
+
+                <div class="note">
+                    📌 <strong>Lưu ý:</strong> Số liệu sử dụng đơn vị <strong>€ (Euro)</strong> và đã làm tròn nghìn
+                </div>
+
+                <div class="key-point">
+                    💡 Đây là ví dụ thực tế về cách một startup công nghệ bắt đầu kinh doanh và ghi nhận các giao dịch!
+                </div>
+
+                <div class="warning">
+                    ⚠️ Hãy chú ý theo dõi cẩn thận TỪNG giao dịch - mỗi giao dịch có bài học riêng!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">32</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 33: Transaction 1 - Investment -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>💰 Giao dịch 1: Đầu tư của Cổ đông</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3>📝 Mô tả Giao dịch</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        <strong>September 1, 2020:</strong> Ray và Barbara Neal đầu tư <strong>€15,000</strong> tiền mặt vào công ty để đổi lấy cổ phần (ordinary shares).
+                    </p>
+                </div>
+
+                <h3>🔍 Phân tích (Basic Analysis)</h3>
+                <div class="highlight">
+                    <p style="font-size: 1.1em;">
+                        Tài sản <strong>Cash</strong> tăng €15,000, và vốn chủ sở hữu <strong>Share Capital—Ordinary</strong> tăng €15,000.
+                    </p>
+                </div>
+
+                <h3>📊 Tác động lên Phương trình Kế toán</h3>
+                <table>
+                    <tr>
+                        <th colspan="3" style="text-align: center; background: #667eea;">ASSETS</th>
+                        <th style="background: #764ba2;">=</th>
+                        <th style="background: #f57c00;">LIABILITIES</th>
+                        <th style="background: #1976d2;">+</th>
+                        <th colspan="2" style="text-align: center; background: #43a047;">EQUITY</th>
+                    </tr>
+                    <tr>
+                        <th>Cash</th>
+                        <th>+</th>
+                        <th>Equipment</th>
+                        <th>=</th>
+                        <th></th>
+                        <th>+</th>
+                        <th>Share Capital</th>
+                        <th>Explanation</th>
+                    </tr>
+                    <tr style="font-size: 1.1em; font-weight: bold;">
+                        <td style="color: green;">+€15,000</td>
+                        <td>+</td>
+                        <td>-</td>
+                        <td>=</td>
+                        <td>-</td>
+                        <td>+</td>
+                        <td style="color: green;">+€15,000</td>
+                        <td style="background: #fff3cd;">Issued Shares</td>
+                    </tr>
+                    <tr style="background: #e3f2fd; font-weight: bold;">
+                        <td>€15,000</td>
+                        <td>+</td>
+                        <td>€0</td>
+                        <td>=</td>
+                        <td>€0</td>
+                        <td>+</td>
+                        <td>€15,000</td>
+                        <td></td>
+                    </tr>
+                    <tr style="background: #d4edda; font-weight: bold; font-size: 1.1em;">
+                        <td colspan="3">€15,000</td>
+                        <td>=</td>
+                        <td colspan="4">€15,000</td>
+                    </tr>
+                </table>
+
+                <div class="key-point">
+                    ✅ Kiểm tra: €15,000 = €0 + €15,000 ✓ BALANCED!
+                </div>
+
+                <div class="note">
+                    📌 <strong>Ghi chú quan trọng:</strong> Đây là nguồn vốn từ CHỦ SỞ HỮU, KHÔNG PHẢI là doanh thu!
+                </div>
+
+                <div class="warning">
+                    💡 <strong>Điểm học tập:</strong> Investments by shareholders (đầu tư của cổ đông) làm TĂNG Share Capital, không phải Revenues!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">33</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 34: Transaction 2 - Equipment Purchase -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>💻 Giao dịch 2: Mua Thiết bị</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3>📝 Mô tả Giao dịch</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        Softbyte mua thiết bị máy tính (computer equipment) với giá <strong>€7,000</strong> bằng tiền mặt.
+                    </p>
+                </div>
+
+                <h3>🔍 Phân tích (Basic Analysis)</h3>
+                <div class="highlight">
+                    <p style="font-size: 1.1em;">
+                        Tài sản <strong>Cash</strong> giảm €7,000, và tài sản <strong>Equipment</strong> tăng €7,000.
+                    </p>
+                </div>
+
+                <h3>📊 Tác động lên Phương trình Kế toán</h3>
+                <table>
+                    <tr>
+                        <th colspan="3" style="text-align: center; background: #667eea;">ASSETS</th>
+                        <th style="background: #764ba2;">=</th>
+                        <th style="background: #f57c00;">LIABILITIES</th>
+                        <th style="background: #1976d2;">+</th>
+                        <th style="background: #43a047;">EQUITY</th>
+                    </tr>
+                    <tr>
+                        <th>Cash</th>
+                        <th>+</th>
+                        <th>Equipment</th>
+                        <th>=</th>
+                        <th></th>
+                        <th>+</th>
+                        <th>Share Capital</th>
+                    </tr>
+                    <tr>
+                        <td>€15,000</td>
+                        <td>+</td>
+                        <td>€0</td>
+                        <td>=</td>
+                        <td>€0</td>
+                        <td>+</td>
+                        <td>€15,000</td>
+                    </tr>
+                    <tr style="font-size: 1.1em; font-weight: bold;">
+                        <td style="color: red;">−€7,000</td>
+                        <td>+</td>
+                        <td style="color: green;">+€7,000</td>
+                        <td>=</td>
+                        <td>-</td>
+                        <td>+</td>
+                        <td>-</td>
+                    </tr>
+                    <tr style="background: #e3f2fd; font-weight: bold;">
+                        <td>€8,000</td>
+                        <td>+</td>
+                        <td>€7,000</td>
+                        <td>=</td>
+                        <td>€0</td>
+                        <td>+</td>
+                        <td>€15,000</td>
+                    </tr>
+                    <tr style="background: #d4edda; font-weight: bold; font-size: 1.1em;">
+                        <td colspan="3">€15,000</td>
+                        <td>=</td>
+                        <td colspan="3">€15,000</td>
+                    </tr>
+                </table>
+
+                <div class="key-point">
+                    ✅ Kiểm tra: €15,000 = €0 + €15,000 ✓ BALANCED!
+                </div>
+
+                <div class="note">
+                    📌 <strong>Quan sát:</strong> Tổng Assets KHÔNG ĐỔI (vẫn €15,000) - chỉ thay đổi CẤU TRÚC tài sản!
+                </div>
+
+                <div class="warning">
+                    💡 <strong>Điểm học tập:</strong> Khi một tài sản tăng, một tài sản khác có thể giảm - đây là giao dịch "trao đổi" giữa các loại tài sản (Exchange Transaction).
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">34</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 35: Transaction 3 - Purchase on Credit -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>🎧 Giao dịch 3: Mua Vật tư chịu Nợ</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3>📝 Mô tả Giao dịch</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        Softbyte mua headsets và phụ kiện máy tính (supplies) trị giá <strong>€1,600</strong> từ Mobile Solutions. Mobile Solutions cho phép Softbyte trả tiền vào tháng sau.
+                    </p>
+                    <p style="margin-top: 10px; color: #666; font-style: italic;">
+                        → Đây là <strong>Purchase on Account</strong> (mua chịu) hay <strong>Credit Purchase</strong>
+                    </p>
+                </div>
+
+                <h3>🔍 Phân tích (Basic Analysis)</h3>
+                <div class="highlight">
+                    <p style="font-size: 1.1em;">
+                        Tài sản <strong>Supplies</strong> tăng €1,600, và nợ phải trả <strong>Accounts Payable</strong> tăng €1,600.
+                    </p>
+                </div>
+
+                <h3>📊 Tác động lên Phương trình Kế toán</h3>
+                <table style="font-size: 0.95em;">
+                    <tr>
+                        <th colspan="5" style="text-align: center; background: #667eea;">ASSETS</th>
+                        <th style="background: #764ba2;">=</th>
+                        <th style="background: #f57c00;">LIABILITIES</th>
+                        <th style="background: #1976d2;">+</th>
+                        <th style="background: #43a047;">EQUITY</th>
+                    </tr>
+                    <tr>
+                        <th>Cash</th>
+                        <th>+</th>
+                        <th>Supplies</th>
+                        <th>+</th>
+                        <th>Equipment</th>
+                        <th>=</th>
+                        <th>Accounts Payable</th>
+                        <th>+</th>
+                        <th>Share Capital</th>
+                    </tr>
+                    <tr>
+                        <td>€8,000</td>
+                        <td>+</td>
+                        <td>€0</td>
+                        <td>+</td>
+                        <td>€7,000</td>
+                        <td>=</td>
+                        <td>€0</td>
+                        <td>+</td>
+                        <td>€15,000</td>
+                    </tr>
+                    <tr style="font-size: 1.1em; font-weight: bold;">
+                        <td>-</td>
+                        <td>+</td>
+                        <td style="color: green;">+€1,600</td>
+                        <td>+</td>
+                        <td>-</td>
+                        <td>=</td>
+                        <td style="color: green;">+€1,600</td>
+                        <td>+</td>
+                        <td>-</td>
+                    </tr>
+                    <tr style="background: #e3f2fd; font-weight: bold;">
+                        <td>€8,000</td>
+                        <td>+</td>
+                        <td>€1,600</td>
+                        <td>+</td>
+                        <td>€7,000</td>
+                        <td>=</td>
+                        <td>€1,600</td>
+                        <td>+</td>
+                        <td>€15,000</td>
+                    </tr>
+                    <tr style="background: #d4edda; font-weight: bold; font-size: 1.1em;">
+                        <td colspan="5">€16,600</td>
+                        <td>=</td>
+                        <td colspan="3">€16,600</td>
+                    </tr>
+                </table>
+
+                <div class="key-point">
+                    ✅ Kiểm tra: €16,600 = €1,600 + €15,000 ✓ BALANCED!
+                </div>
+
+                <div class="note">
+                    📌 <strong>Quan sát:</strong> Tổng Assets TĂNG lên €16,600 vì công ty có thêm vật tư, nhưng cũng có thêm nợ phải trả!
+                </div>
+
+                <div class="warning">
+                    💡 <strong>Điểm học tập:</strong> Khi mua chịu, Assets tăng và Liabilities cũng tăng tương ứng. Equity KHÔNG thay đổi!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">35</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 36: Transaction 4 - Service Revenue Cash -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>💵 Giao dịch 4: Doanh thu Dịch vụ (Tiền mặt)</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3>📝 Mô tả Giao dịch</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        Softbyte nhận <strong>€1,200</strong> tiền mặt từ khách hàng cho dịch vụ phát triển app đã hoàn thành.
+                    </p>
+                    <p style="margin-top: 10px; color: #666; font-style: italic;">
+                        → Đây là hoạt động <strong>KIẾM TIỀN CHÍNH</strong> của công ty!
+                    </p>
+                </div>
+
+                <h3>🔍 Phân tích (Basic Analysis)</h3>
+                <div class="highlight">
+                    <p style="font-size: 1.1em;">
+                        Tài sản <strong>Cash</strong> tăng €1,200, và vốn chủ sở hữu tăng €1,200 do <strong>Service Revenue</strong> (doanh thu dịch vụ).
+                    </p>
+                </div>
+
+                <h3>📊 Tác động lên Phương trình Kế toán (Mở rộng)</h3>
+                <table style="font-size: 0.85em;">
+                    <tr>
+                        <th colspan="5">ASSETS</th>
+                        <th>=</th>
+                        <th>LIAB.</th>
+                        <th>+</th>
+                        <th colspan="4">EQUITY</th>
+                    </tr>
+                    <tr>
+                        <th>Cash</th>
+                        <th>+</th>
+                        <th>Supp.</th>
+                        <th>+</th>
+                        <th>Equip.</th>
+                        <th>=</th>
+                        <th>A/P</th>
+                        <th>+</th>
+                        <th>S. Cap.</th>
+                        <th>+</th>
+                        <th>Rev.</th>
+                        <th>−</th>
+                        <th>Exp.</th>
+                    </tr>
+                    <tr>
+                        <td>€8,000</td>
+                        <td>+</td>
+                        <td>€1,600</td>
+                        <td>+</td>
+                        <td>€7,000</td>
+                        <td>=</td>
+                        <td>€1,600</td>
+                        <td>+</td>
+                        <td>€15,000</td>
+                        <td>+</td>
+                        <td>-</td>
+                        <td>−</td>
+                        <td>-</td>
+                    </tr>
+                    <tr style="font-weight: bold;">
+                        <td style="color: green;">+€1,200</td>
+                        <td>+</td>
+                        <td>-</td>
+                        <td>+</td>
+                        <td>-</td>
+                        <td>=</td>
+                        <td>-</td>
+                        <td>+</td>
+                        <td>-</td>
+                        <td>+</td>
+                        <td style="color: green; background: #fff3cd;">+€1,200</td>
+                        <td>−</td>
+                        <td>-</td>
+                    </tr>
+                    <tr style="background: #e3f2fd; font-weight: bold;">
+                        <td>€9,200</td>
+                        <td>+</td>
+                        <td>€1,600</td>
+                        <td>+</td>
+                        <td>€7,000</td>
+                        <td>=</td>
+                        <td>€1,600</td>
+                        <td>+</td>
+                        <td>€15,000</td>
+                        <td>+</td>
+                        <td>€1,200</td>
+                        <td>−</td>
+                        <td>€0</td>
+                    </tr>
+                    <tr style="background: #d4edda; font-weight: bold;">
+                        <td colspan="5">€17,800</td>
+                        <td>=</td>
+                        <td colspan="7">€17,800</td>
+                    </tr>
+                </table>
+
+                <div class="key-point">
+                    ✅ Kiểm tra: €17,800 = €1,600 + €15,000 + €1,200 ✓ BALANCED!
+                </div>
+
+                <div class="note">
+                    📌 <strong>Quan sát:</strong> Revenue (Doanh thu) làm TĂNG Equity! Đây là cách công ty kiếm lợi nhuận.
+                </div>
+
+                <div class="warning">
+                    💡 <strong>Điểm học tập:</strong> Revenue tăng Equity NHƯNG nó KHÁC với Investment của cổ đông. Phải theo dõi riêng để tính Net Income!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">36</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 37: Transaction 5 - Advertising Expense -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>📢 Giao dịch 5: Chi phí Quảng cáo (chịu)</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3>📝 Mô tả Giao dịch</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        Softbyte nhận hóa đơn <strong>€250</strong> từ Programming News cho quảng cáo trên website, nhưng sẽ trả sau.
+                    </p>
+                </div>
+
+                <h3>🔍 Phân tích (Basic Analysis)</h3>
+                <div class="highlight">
+                    <p style="font-size: 1.1em;">
+                        Nợ phải trả <strong>Accounts Payable</strong> tăng €250, và vốn chủ sở hữu giảm €250 do <strong>Advertising Expense</strong> (chi phí quảng cáo).
+                    </p>
+                </div>
+
+                <h3>📊 Tác động lên Phương trình Kế toán</h3>
+                <table style="font-size: 0.8em;">
+                    <tr>
+                        <th colspan="5">ASSETS</th>
+                        <th>=</th>
+                        <th>LIABILITIES</th>
+                        <th>+</th>
+                        <th colspan="5">EQUITY (Retained Earnings)</th>
+                    </tr>
+                    <tr style="font-size: 0.85em;">
+                        <th>Cash + Supp. + Equip.</th>
+                        <th>=</th>
+                        <th>A/P</th>
+                        <th>+</th>
+                        <th>S.Cap.</th>
+                        <th>+</th>
+                        <th>Rev.</th>
+                        <th>−</th>
+                        <th>Exp.</th>
+                    </tr>
+                    <tr>
+                        <td>€9,200 + €1,600 + €7,000</td>
+                        <td>=</td>
+                        <td>€1,600</td>
+                        <td>+</td>
+                        <td>€15,000</td>
+                        <td>+</td>
+                        <td>€1,200</td>
+                        <td>−</td>
+                        <td>€0</td>
+                    </tr>
+                    <tr style="font-weight: bold;">
+                        <td>-</td>
+                        <td>=</td>
+                        <td style="color: green;">+€250</td>
+                        <td>+</td>
+                        <td>-</td>
+                        <td>+</td>
+                        <td>-</td>
+                        <td>−</td>
+                        <td style="color: red; background: #f8d7da;">+€250 Adv.</td>
+                    </tr>
+                    <tr style="background: #e3f2fd; font-weight: bold;">
+                        <td>€17,800</td>
+                        <td>=</td>
+                        <td>€1,850</td>
+                        <td>+</td>
+                        <td>€15,000</td>
+                        <td>+</td>
+                        <td>€1,200</td>
+                        <td>−</td>
+                        <td>€250</td>
+                    </tr>
+                    <tr style="background: #d4edda; font-weight: bold;">
+                        <td>€17,800</td>
+                        <td>=</td>
+                        <td colspan="7">€17,800</td>
+                    </tr>
+                </table>
+
+                <div class="key-point">
+                    ✅ Kiểm tra: €17,800 = €1,850 + €15,000 + (€1,200 − €250) ✓ BALANCED!
+                </div>
+
+                <div class="note">
+                    📌 <strong>Quan sát:</strong> Expense (Chi phí) làm GIẢM Equity! Chi phí chưa trả vẫn được ghi nhận ngay.
+                </div>
+
+                <div class="warning">
+                    💡 <strong>Điểm học tập:</strong> Expense được ghi nhận KHI PHÁT SINH, không phải khi trả tiền! (Accrual Accounting)
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">37</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 38: Transactions 6-10 Summary -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>📋 Giao dịch 6-10: Tóm tắt</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3>💼 Giao dịch 6: Doanh thu Dịch vụ (tiền mặt + phải thu)</h3>
+                    <p>Cung cấp dịch vụ €3,500: nhận ngay €1,500 cash, còn €2,000 khách nợ</p>
+                    <ul>
+                        <li>Cash: +€1,500</li>
+                        <li>Accounts Receivable: +€2,000</li>
+                        <li>Service Revenue: +€3,500</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h3>💸 Giao dịch 7: Trả các Chi phí</h3>
+                    <p>Trả tiền mặt cho: Rent €600 + Salaries €900 + Utilities €200 = €1,700</p>
+                    <ul>
+                        <li>Cash: −€1,700</li>
+                        <li>Expenses: +€1,700 (Rent, Salaries, Utilities)</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h3>💳 Giao dịch 8: Trả Nợ nhà cung cấp</h3>
+                    <p>Trả €250 cho Programming News (nợ từ giao dịch 5)</p>
+                    <ul>
+                      <li>Cash: −€250</li>
+                        <li>Accounts Payable: −€250</li>
+                        <li>⚠️ Equity KHÔNG thay đổi (đã ghi nhận expense ở giao dịch 5)</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h3>💰 Giao dịch 9: Thu tiền từ Khách hàng</h3>
+                    <p>Nhận €600 từ khách đã nợ (từ giao dịch 6)</p>
+                    <ul>
+                        <li>Cash: +€600</li>
+                        <li>Accounts Receivable: −€600</li>
+                        <li>⚠️ Equity KHÔNG thay đổi (đã ghi nhận revenue ở giao dịch 6)</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h3>🎁 Giao dịch 10: Chia Cổ tức</h3>
+                    <p>Chia €1,300 tiền mặt cho cổ đông Ray và Barbara Neal</p>
+                    <ul>
+                        <li>Cash: −€1,300</li>
+                        <li>Dividends: +€1,300 (giảm Retained Earnings)</li>
+                    </ul>
+                </div>
+
+                <div class="warning">
+                    ⚠️ <strong>Lưu ý quan trọng về Giao dịch 8 & 9:</strong>
+                    <p style="margin-top: 10px;">
+                        Khi trả nợ hoặc thu tiền từ khách nợ, chúng ta KHÔNG ghi nhận lại Expense hay Revenue! Vì đã ghi nhận rồi khi phát sinh nghĩa vụ/quyền.
+                    </p>
+                </div>
+
+                <div class="key-point">
+                    💡 <strong>Nguyên tắc Accrual Accounting:</strong> Ghi nhận khi PHÁT SINH, không phải khi thu/chi tiền mặt!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">38</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 39: Complete Tabular Summary -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>📊 Bảng Tóm tắt Hoàn chỉnh - Softbyte SA</h2>
+            </div>
+            <div class="content">
+                <h3>📋 Summary of All Transactions (September 2020)</h3>
+                <table style="font-size: 0.7em;">
+                    <tr>
+                        <th>Trans.</th>
+                        <th colspan="4">ASSETS</th>
+                        <th>=</th>
+                        <th>LIAB.</th>
+                        <th>+</th>
+                        <th colspan="5">EQUITY</th>
+                    </tr>
+                    <tr style="font-size: 0.85em;">
+                        <th>#</th>
+                        <th>Cash</th>
+                        <th>A/R</th>
+                        <th>Supp.</th>
+                        <th>Equip.</th>
+                        <th>=</th>
+                        <th>A/P</th>
+                        <th>+</th>
+                        <th>S.Cap.</th>
+                        <th>+</th>
+                        <th>Rev.</th>
+                        <th>−</th>
+                        <th>Exp.</th>
+                        <th>−</th>
+                        <th>Div.</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>+15,000</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>=</td>
+                        <td></td>
+                        <td>+</td>
+                        <td style="background: #d4edda;">+15,000</td>
+                        <td>+</td>
+                        <td></td>
+                        <td>−</td>
+                        <td></td>
+                        <td>−</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>−7,000</td>
+                        <td></td>
+                        <td></td>
+                        <td>+7,000</td>
+                        <td>=</td>
+                        <td></td>
+                        <td>+</td>
+                        <td></td>
+                        <td>+</td>
+                        <td></td>
+                        <td>−</td>
+                        <td></td>
+                        <td>−</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td></td>
+                        <td></td>
+                        <td>+1,600</td>
+                        <td></td>
+                        <td>=</td>
+                        <td>+1,600</td>
+                        <td>+</td>
+                        <td></td>
+                        <td>+</td>
+                        <td></td>
+                        <td>−</td>
+                        <td></td>
+                        <td>−</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>+1,200</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>=</td>
+                        <td></td>
+                        <td>+</td>
+                        <td></td>
+                        <td>+</td>
+                        <td style="background: #d4edda;">+1,200</td>
+                        <td>−</td>
+                        <td></td>
+                        <td>−</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>=</td>
+                        <td>+250</td>
+                        <td>+</td>
+                        <td></td>
+                        <td>+</td>
+                        <td></td>
+                        <td>−</td>
+                        <td style="background: #f8d7da;">+250</td>
+                        <td>−</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>+1,500</td>
+                        <td>+2,000</td>
+                        <td></td>
+                        <td></td>
+                        <td>=</td>
+                        <td></td>
+                        <td>+</td>
+                        <td></td>
+                        <td>+</td>
+                        <td style="background: #d4edda;">+3,500</td>
+                        <td>−</td>
+                        <td></td>
+                        <td>−</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>−1,700</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>=</td>
+                        <td></td>
+                        <td>+</td>
+                        <td></td>
+                        <td>+</td>
+                        <td></td>
+                        <td>−</td>
+                        <td style="background: #f8d7da;">+1,700</td>
+                        <td>−</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>−250</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>=</td>
+                        <td>−250</td>
+                        <td>+</td>
+                        <td></td>
+                        <td>+</td>
+                        <td></td>
+                        <td>−</td>
+                        <td></td>
+                        <td>−</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>+600</td>
+                        <td>−600</td>
+                        <td></td>
+                        <td></td>
+                        <td>=</td>
+                        <td></td>
+                        <td>+</td>
+                        <td></td>
+                        <td>+</td>
+                        <td></td>
+                        <td>−</td>
+                        <td></td>
+                        <td>−</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>−1,300</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>=</td>
+                        <td></td>
+                        <td>+</td>
+                        <td></td>
+                        <td>+</td>
+                        <td></td>
+                        <td>−</td>
+                        <td></td>
+                        <td>−</td>
+                        <td style="background: #f8d7da;">+1,300</td>
+                    </tr>
+                    <tr style="background: #667eea; color: white; font-weight: bold; font-size: 1em;">
+                        <td>END</td>
+                        <td>€8,050</td>
+                        <td>€1,400</td>
+                        <td>€1,600</td>
+                        <td>€7,000</td>
+                        <td>=</td>
+                        <td>€1,600</td>
+                        <td>+</td>
+                        <td>€15,000</td>
+                        <td>+</td>
+                        <td>€4,700</td>
+                        <td>−</td>
+                        <td>€1,950</td>
+                        <td>−</td>
+                        <td>€1,300</td>
+                    </tr>
+                    <tr style="background: #d4edda; font-weight: bold; font-size: 1.1em;">
+                        <td colspan="5">Total Assets: €18,050</td>
+                        <td>=</td>
+                        <td colspan="9">Total Liabilities + Equity: €18,050</td>
+                    </tr>
+                </table>
+
+                <div class="key-point" style="margin-top: 20px;">
+                    ✅ Phương trình CÂN BẰNG: €18,050 = €18,050
+                </div>
+
+                <div class="note">
+                    📌 Từ bảng này, chúng ta có thể lập TẤT CẢ các báo cáo tài chính!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">39</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 40: Five Financial Statements Overview -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>📄 Năm Báo cáo Tài chính</h2>
+            </div>
+            <div class="content">
+                <div class="formula">
+                    5 BÁO CÁO TÀI CHÍNH CHÍNH
+                </div>
+
+                <div class="example-box">
+                    <h3>1️⃣ Income Statement (Báo cáo Kết quả Kinh doanh)</h3>
+                    <p>Trình bày <strong>Revenues</strong> và <strong>Expenses</strong> → Tính ra <strong>Net Income/Loss</strong></p>
+                    <p style="color: #667eea; font-weight: bold;">Kỳ: For the Month/Year Ended...</p>
+                </div>
+
+                <div class="example-box">
+                    <h3>2️⃣ Retained Earnings Statement (Báo cáo Lợi nhuận Giữ lại)</h3>
+                    <p>Tóm tắt các thay đổi trong <strong>Retained Earnings</strong> trong kỳ</p>
+                    <p style="color: #667eea; font-weight: bold;">Kỳ: For the Month/Year Ended...</p>
+                </div>
+
+                <div class="example-box">
+                    <h3>3️⃣ Statement of Financial Position / Balance Sheet (Bảng Cân đối Kế toán)</h3>
+                    <p>Báo cáo <strong>Assets, Liabilities, và Equity</strong> tại một thời điểm cụ thể</p>
+                    <p style="color: #f57c00; font-weight: bold;">Thời điểm: As of December 31, 20XX</p>
+                </div>
+
+                <div class="example-box">
+                    <h3>4️⃣ Statement of Cash Flows (Báo cáo Lưu chuyển Tiền tệ)</h3>
+                    <p>Tóm tắt thông tin về <strong>Cash Inflows</strong> và <strong>Cash Outflows</strong></p>
+                    <p>Ba loại hoạt động: Operating, Investing, Financing</p>
+                    <p style="color: #667eea; font-weight: bold;">Kỳ: For the Month/Year Ended...</p>
+                </div>
+
+                <div class="example-box">
+                    <h3>5️⃣ Comprehensive Income Statement (Báo cáo Thu nhập Toàn diện)</h3>
+                    <p>Trình bày các khoản thu nhập toàn diện khác không được tính vào Net Income</p>
+                    <p style="color: #667eea; font-weight: bold;">Kỳ: For the Month/Year Ended...</p>
+                </div>
+
+                <div class="key-point">
+                    🔗 Các báo cáo có MỐI LIÊN HỆ với nhau - chúng ta sẽ xem chi tiết!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">40</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 41: Income Statement -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>📊 1. Income Statement (Báo cáo Kết quả KD)</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3 style="text-align: center;">Softbyte SA</h3>
+                    <h4 style="text-align: center;">Income Statement</h4>
+                    <p style="text-align: center; font-style: italic;">For the Month Ended September 30, 2020</p>
+                    
+                    <table style="margin-top: 20px;">
+                        <tr>
+                            <td><strong>Revenues</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">Service revenue</td>
+                            <td style="text-align: right;"><strong>€4,700</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Expenses</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">Salaries and wages expense</td>
+                            <td style="text-align: right;">€900</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">Rent expense</td>
+                            <td style="text-align: right;">600</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">Advertising expense</td>
+                            <td style="text-align: right;">250</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">Utilities expense</td>
+                            <td style="text-align: right;"><u>200</u></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 40px;"><strong>Total expenses</strong></td>
+                            <td style="text-align: right;"><strong><u>1,950</u></strong></td>
+                        </tr>
+                        <tr style="background: #d4edda; font-weight: bold; font-size: 1.1em;">
+                            <td><strong>Net income</strong></td>
+                            <td style="text-align: right;"><strong><u style="border-bottom: 3px double;">€2,750</u></strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>📌 Đặc điểm quan trọng</h3>
+                <ul style="font-size: 1.05em;">
+                    <li><strong>Heading:</strong> Tên công ty, loại báo cáo, kỳ báo cáo</li>
+                    <li><strong>Revenues trước:</strong> Liệt kê các loại doanh thu</li>
+                    <li><strong>Expenses sau:</strong> Sắp xếp theo mức độ quan trọng hoặc số tiền</li>
+                    <li><strong>Net Income = Revenues − Expenses</strong></li>
+                </ul>
+
+                <div class="key-point">
+                    💡 Net Income: €2,750 → Công ty có LỢI NHUẬN trong tháng 9!
+                </div>
+
+                <div class="warning">
+                    ⚠️ <strong>Lưu ý:</strong> Investment và Dividend KHÔNG xuất hiện trong Income Statement!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">41</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 42: Retained Earnings Statement -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>📈 2. Retained Earnings Statement</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3 style="text-align: center;">Softbyte SA</h3>
+                    <h4 style="text-align: center;">Retained Earnings Statement</h4>
+                    <p style="text-align: center; font-style: italic;">For the Month Ended September 30, 2020</p>
+                    
+                    <table style="margin-top: 20px; font-size: 1.05em;">
+                        <tr>
+                            <td>Retained earnings, September 1</td>
+                            <td style="text-align: right;">€ 0</td>
+                        </tr>
+                        <tr>
+                            <td>Add: Net income</td>
+                            <td style="text-align: right; background: #fff3cd;"><u>2,750</u></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: right; font-weight: bold;">2,750</td>
+                        </tr>
+                        <tr>
+                            <td>Less: Dividends</td>
+                            <td style="text-align: right;"><u>1,300</u></td>
+                        </tr>
+                        <tr style="background: #d4edda; font-weight: bold; font-size: 1.1em;">
+                            <td><strong>Retained earnings, September 30</strong></td>
+                            <td style="text-align: right;"><strong><u style="border-bottom: 3px double;">€1,450</u></strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>🔗 Mối liên hệ với các báo cáo khác</h3>
+                <div class="highlight">
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        <strong>①</strong> Net Income €2,750 lấy từ <span style="background: #fff3cd; padding: 3px 8px; border-radius: 3px;">Income Statement</span>
+                    </p>
+                    <p style="font-size: 1.1em; line-height: 1.8; margin-top: 10px;">
+                        <strong>②</strong> Retained Earnings €1,450 sẽ xuất hiện trên <span style="background: #e3f2fd; padding: 3px 8px; border-radius: 3px;">Statement of Financial Position</span>
+                    </p>
+                </div>
+
+                <h3>📌 Công thức</h3>
+                <div class="formula">
+                    Ending RE = Beginning RE + Net Income − Dividends
+                </div>
+                <div class="formula" style="margin-top: 10px;">
+                    €1,450 = €0 + €2,750 − €1,300 ✓
+                </div>
+
+                <div class="note">
+                    📌 <strong>Giải thích:</strong> 
+                    <ul style="margin-top: 10px;">
+                        <li>Beginning RE = €0 (tháng đầu tiên hoạt động)</li>
+                        <li>Kiếm được €2,750</li>
+                        <li>Chia €1,300 cho cổ đông</li>
+                        <li>Giữ lại €1,450 để tái đầu tư</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    💡 Nếu có Net Loss, sẽ TRỪ thay vì cộng!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">42</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 43: Statement of Financial Position -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>⚖️ 3. Statement of Financial Position (Bảng Cân đối KT)</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3 style="text-align: center;">Softbyte SA</h3>
+                    <h4 style="text-align: center;">Statement of Financial Position</h4>
+                    <p style="text-align: center; font-style: italic; color: #f57c00; font-weight: bold;">September 30, 2020</p>
+                    
+                    <table style="margin-top: 20px; font-size: 0.95em;">
+                        <tr>
+                            <th colspan="2" style="background: #667eea; text-align: center;">ASSETS</th>
+                        </tr>
+                        <tr>
+                            <td>Equipment</td>
+                            <td style="text-align: right;">€ 7,000</td>
+                        </tr>
+                        <tr>
+                            <td>Supplies</td>
+                            <td style="text-align: right;">1,600</td>
+                        </tr>
+                        <tr>
+                            <td>Accounts receivable</td>
+                            <td style="text-align: right;">1,400</td>
+                        </tr>
+                        <tr>
+                            <td>Cash</td>
+                            <td style="text-align: right;"><u>8,050</u></td>
+                        </tr>
+                        <tr style="font-weight: bold; background: #e3f2fd;">
+                            <td><strong>Total assets</strong></td>
+                            <td style="text-align: right;"><strong><u style="border-bottom: 3px double;">€18,050</u></strong></td>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="background: #43a047; text-align: center;">EQUITY AND LIABILITIES</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>Equity</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">Share capital—ordinary</td>
+                            <td style="text-align: right;">€15,000</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">Retained earnings</td>
+                            <td style="text-align: right; background: #fff3cd;"><u>1,450</u></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: right; font-weight: bold;">€16,450</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>Liabilities</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">Accounts payable</td>
+                            <td style="text-align: right;"><u>1,600</u></td>
+                        </tr>
+                        <tr style="font-weight: bold; background: #d4edda;">
+                            <td><strong>Total equity and liabilities</strong></td>
+                            <td style="text-align: right;"><strong><u style="border-bottom: 3px double;">€18,050</u></strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="key-point">
+                    ✅ Phương trình CÂN BẰNG: Assets €18,050 = Liabilities €1,600 + Equity €16,450
+                </div>
+
+                <div class="note">
+                    📌 Retained Earnings €1,450 lấy từ <span style="background: #fff3cd; padding: 3px 8px; border-radius: 3px;">Retained Earnings Statement</span>
+                </div>
+
+                <div class="warning">
+                    ⚠️ <strong>Lưu ý về thời gian:</strong> Đây là "snapshot" tại MỘT THỜI ĐIỂM (Sept 30), không phải "For the period"
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">43</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 44: Statement of Cash Flows -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>💵 4. Statement of Cash Flows (Báo cáo Lưu chuyển TT)</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3 style="text-align: center;">Softbyte SA</h3>
+                    <h4 style="text-align: center;">Statement of Cash Flows</h4>
+                    <p style="text-align: center; font-style: italic;">For the Month Ended September 30, 2020</p>
+                    
+                    <table style="margin-top: 20px; font-size: 0.95em;">
+                        <tr>
+                            <td colspan="2"><strong>Cash flows from operating activities</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">Cash receipts from revenues</td>
+                            <td style="text-align: right;">€ 3,300</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">Cash payments for expenses</td>
+                            <td style="text-align: right;"><u>(1,950)</u></td>
+                        </tr>
+                        <tr style="background: #e3f2fd;">
+                            <td style="padding-left: 40px;"><strong>Net cash provided by operating activities</strong></td>
+                            <td style="text-align: right; font-weight: bold;">1,350</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>Cash flows from investing activities</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">Purchase of equipment</td>
+                            <td style="text-align: right;"><u>(7,000)</u></td>
+                        </tr>
+                        <tr style="background: #fff3e0;">
+                            <td style="padding-left: 40px;"><strong>Net cash used by investing activities</strong></td>
+                            <td style="text-align: right; font-weight:bold;">(7,000)</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>Cash flows from financing activities</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">Sale of ordinary shares</td>
+                            <td style="text-align: right;">€15,000</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">Payment of cash dividends</td>
+                            <td style="text-align: right;"><u>(1,300)</u></td>
+                        </tr>
+                        <tr style="background: #d1ecf1;">
+                            <td style="padding-left: 40px;"><strong>Net cash provided by financing activities</strong></td>
+                            <td style="text-align: right; font-weight: bold;">13,700</td>
+                        </tr>
+                        <tr style="background: #d4edda; font-weight: bold;">
+                            <td><strong>Net increase in cash</strong></td>
+                            <td style="text-align: right;"><strong>8,050</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Cash at the beginning of the period</td>
+                            <td style="text-align: right;"><u>0</u></td>
+                        </tr>
+                        <tr style="background: #d4edda; font-weight: bold; font-size: 1.1em;">
+                            <td><strong>Cash at the end of the period</strong></td>
+                            <td style="text-align: right;"><strong><u style="border-bottom: 3px double;">€ 8,050</u></strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>🔍 Ba Loại Hoạt động</h3>
+                <div class="two-column">
+                    <div class="column" style="background: #e3f2fd;">
+                        <h4>💼 Operating</h4>
+                        <p>Hoạt động chính tạo ra lợi nhuận</p>
+                        <p style="font-weight: bold; color: green;">+€1,350</p>
+                    </div>
+                    <div class="column" style="background: #fff3e0;">
+                        <h4>🏭 Investing</h4>
+                        <p>Mua/bán tài sản dài hạn</p>
+                        <p style="font-weight: bold; color: red;">−€7,000</p>
+                    </div>
+                </div>
+                <div class="column" style="background: #d1ecf1; margin-top: 10px;">
+                    <h4>💰 Financing</h4>
+                    <p>Vay nợ và giao dịch với chủ sở hữu</p>
+                    <p style="font-weight: bold; color: green;">+€13,700</p>
+                </div>
+
+                <div class="key-point" style="margin-top: 20px;">
+                    ✅ Cash cuối kỳ €8,050 khớp với Cash trên Statement of Financial Position!
+                </div>
+
+                <div class="note">
+                    📌 <strong>Công thức:</strong> €0 + €1,350 − €7,000 + €13,700 = €8,050 ✓
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">44</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 45: Comprehensive Income Statement -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>📊 5. Comprehensive Income Statement</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3 style="text-align: center;">Softbyte SA</h3>
+                    <h4 style="text-align: center;">Comprehensive Income Statement</h4>
+                    <p style="text-align: center; font-style: italic;">For the Month Ended September 30, 2020</p>
+                    
+                    <table style="margin-top: 20px; font-size: 1.05em;">
+                        <tr>
+                            <td>Net income</td>
+                            <td style="text-align: right; background: #fff3cd;">€2,750</td>
+                        </tr>
+                        <tr>
+                            <td>Other comprehensive income</td>
+                            <td style="text-align: right;"><u>600</u></td>
+                        </tr>
+                        <tr style="background: #d4edda; font-weight: bold; font-size: 1.1em;">
+                            <td><strong>Comprehensive income</strong></td>
+                            <td style="text-align: right;"><strong><u style="border-bottom: 3px double;">€3,350</u></strong></td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 15px; font-style: italic; color: #666; font-size: 0.95em;">
+                        * Giả định Softbyte có Other Comprehensive Income €600
+                    </p>
+                </div>
+
+                <h3>💡 Other Comprehensive Income là gì?</h3>
+                <div class="highlight">
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        <strong>Other Comprehensive Income (OCI)</strong> là các khoản thu nhập quan trọng nhưng KHÔNG được tính vào Net Income.
+                    </p>
+                </div>
+
+                <h3>📋 Ví dụ về OCI</h3>
+                <ul style="font-size: 1.05em;">
+                    <li>Lãi/lỗ từ đánh giá lại tài sản cố định (revaluation)</li>
+                    <li>Lãi/lỗ chưa thực hiện từ chứng khoán đầu tư (unrealized gains/losses)</li>
+                    <li>Chênh lệch tỷ giá hối đoái (foreign currency translation)</li>
+                    <li>Lãi/lỗ từ công cụ phòng ngừa rủi ro (hedging instruments)</li>
+                </ul>
+
+                <h3>🔄 Hai Định dạng Báo cáo</h3>
+                <div class="two-column">
+                    <div class="column">
+                        <h4>Format 1: Two Statements</h4>
+                        <ul>
+                            <li>Income Statement riêng</li>
+                            <li>Comprehensive Income Statement riêng</li>
+                        </ul>
+                        <p style="margin-top: 10px; font-weight: bold; color: #667eea;">→ Nestlé, Delfi sử dụng</p>
+                    </div>
+                    <div class="column">
+                        <h4>Format 2: Single Statement</h4>
+                        <ul>
+                            <li>Gộp chung thành một "Statement of Comprehensive Income"</li>
+                        </ul>
+                        <p style="margin-top: 10px; font-weight: bold; color: #f57c00;">→ TSMC sử dụng</p>
+                    </div>
+                </div>
+
+                <div class="note">
+                    📌 Trong khóa học này, chúng ta sử dụng định dạng <strong>Two Statements</strong>
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">45</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 46: Interrelationships of Financial Statements -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>🔗 Mối Liên hệ giữa các Báo cáo</h2>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>🎯 Thứ tự Chuẩn bị Báo cáo</h3>
+                    <p style="font-size: 1.1em; line-height: 2; text-align: center;">
+                        <strong style="background: #fff3cd; padding: 5px 15px; border-radius: 5px;">1. Income Statement</strong>
+                        <br>↓<br>
+                        <strong style="background: #e3f2fd; padding: 5px 15px; border-radius: 5px;">2. Retained Earnings Statement</strong>
+                        <br>↓<br>
+                        <strong style="background: #d4edda; padding: 5px 15px; border-radius: 5px;">3. Statement of Financial Position</strong>
+                        <br>↓<br>
+                        <strong style="background: #d1ecf1; padding: 5px 15px; border-radius: 5px;">4. Statement of Cash Flows</strong>
+                        <br>↓<br>
+                        <strong style="background: #fff3e0; padding: 5px 15px; border-radius: 5px;">5. Comprehensive Income Statement</strong>
+                    </p>
+                </div>
+
+                <h3>🔗 Ba Mối Liên hệ Chính</h3>
+                
+                <div class="example-box">
+                    <h4>Liên hệ ①: Income Statement → Retained Earnings Statement</h4>
+                    <div class="formula">
+                        Net Income €2,750 từ Income Statement
+                        <br>↓<br>
+                        Được CỘNG vào Retained Earnings Statement
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Liên hệ ②: Retained Earnings Statement → Statement of Financial Position</h4>
+                    <div class="formula">
+                        Retained Earnings €1,450 từ RE Statement
+                        <br>↓<br>
+                        Xuất hiện trong phần EQUITY của Statement of Financial Position
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Liên hệ ③: Statement of Financial Position → Statement of Cash Flows</h4>
+                    <div class="formula">
+                        Cash €8,050 trên Statement of Financial Position
+                        <br>↓<br>
+                        BẰNG Cash cuối kỳ trên Statement of Cash Flows
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    ⚡ Các báo cáo tài chính tạo thành một HỆ THỐNG - phải lập theo ĐÚNG THỨ TỰ!
+                </div>
+
+                <div class="warning">
+                    ⚠️ Nếu một báo cáo SAI, tất cả các báo cáo sau nó cũng SAI!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">46</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 47: E-commerce Application - Revenue Recognition -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>🛒 Ứng dụng E-commerce: Ghi nhận Doanh thu</h2>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>💡 Thách thức trong E-commerce</h3>
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        Khi nào ghi nhận doanh thu trong kinh doanh online? Khi khách đặt hàng? Khi nhận tiền? Hay khi giao hàng?
+                    </p>
+                </div>
+
+                <h3>📅 Các Thời điểm Quan trọng trong E-commerce</h3>
+                <table>
+                    <tr>
+                        <th>Thời điểm</th>
+                        <th>Sự kiện</th>
+                        <th>Ghi nhận Doanh thu?</th>
+                    </tr>
+                    <tr>
+                        <td>Ngày 1</td>
+                        <td>Khách đặt hàng online</td>
+                        <td style="background: #f8d7da;">❌ CHƯA</td>
+                    </tr>
+                    <tr>
+                        <td>Ngày 2</td>
+                        <td>Khách chuyển khoản thanh toán</td>
+                        <td style="background: #f8d7da;">❌ CHƯA</td>
+                    </tr>
+                    <tr>
+                        <td>Ngày 3</td>
+                        <td>Shop gửi hàng cho shipper</td>
+                        <td style="background: #fff3cd;">⚠️ TÙY ĐIỀU KHOẢN</td>
+                    </tr>
+                    <tr>
+                        <td>Ngày 5</td>
+                        <td>Khách nhận hàng và xác nhận</td>
+                        <td style="background: #d4edda;">✅ GHI NHẬN!</td>
+                    </tr>
+                </table>
+
+                <div class="example-box">
+                    <h3>📝 Ví dụ: Shop Thời trang Online</h3>
+                    <p><strong>Tình huống:</strong></p>
+                    <ul>
+                        <li><strong>Ngày 10/11:</strong> Khách đặt áo 500,000đ, chuyển khoản trước</li>
+                        <li><strong>Ngày 12/11:</strong> Shop gửi hàng</li>
+                        <li><strong>Ngày 15/11:</strong> Khách nhận hàng, xác nhận OK</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>Ghi sổ:</strong></p>
+                    <ul>
+                        <li><strong>10/11:</strong> Cash +500,000 | Unearned Revenue +500,000 (nợ phải trả!)</li>
+                        <li><strong>15/11:</strong> Unearned Revenue −500,000 | Revenue +500,000 ✅</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    🎯 Nguyên tắc: Ghi nhận doanh thu khi đã HOÀN THÀNH NGHĨA VỤ và khách hàng CHẤP NHẬN hàng!
+                </div>
+
+                <div class="note">
+                    📌 <strong>Với COD:</strong> Thu tiền và ghi nhận doanh thu CÙNG LÚC khi giao hàng thành công
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">47</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 48: E-commerce Application - Returns and Refunds -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3</span>
+                <h2>↩️ Ứng dụng E-commerce: Trả hàng & Hoàn tiền</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3>📦 Case Study: Xử lý Trả hàng</h3>
+                    <p><strong>Tình huống:</strong></p>
+                    <ul>
+                        <li>Tháng 10: Bán 100 sản phẩm × 200,000đ = 20,000,000đ</li>
+                        <li>Tháng 11: Khách trả lại 5 sản phẩm (lỗi size)</li>
+                        <li>Shop hoàn tiền 1,000,000đ cho khách</li>
+                    </ul>
+                </div>
+
+                <h3>📊 Cách Ghi nhận</h3>
+                <div class="two-column">
+                    <div class="column">
+                        <h4>❌ Cách SAI</h4>
+                        <p>Ghi vào Expenses:</p>
+                        <ul>
+                            <li>Cash: −1,000,000</li>
+                            <li>Refund Expense: +1,000,000</li>
+                        </ul>
+                        <p style="color: red; font-weight: bold; margin-top: 10px;">
+                            → SAI! Đây không phải chi phí!
+                        </p>
+                    </div>
+
+                    <div class="column">
+                        <h4>✅ Cách ĐÚNG</h4>
+                        <p>Giảm Revenue:</p>
+                        <ul>
+                            <li>Cash: −1,000,000</li>
+                            <li>Sales Returns: +1,000,000</li>
+                            <li>→ Giảm Net Revenue</li>
+                        </ul>
+                        <p style="color: green; font-weight: bold; margin-top: 10px;">
+                            → ĐÚNG! Điều chỉnh doanh thu
+                        </p>
+                    </div>
+                </div>
+
+                <h3>💰 Báo cáo trên Income Statement</h3>
+                <table>
+                    <tr>
+                        <td>Gross Sales (Doanh thu gộp)</td>
+                        <td style="text-align: right;">20,000,000đ</td>
+                    </tr>
+                    <tr>
+                        <td>Less: Sales Returns and Allowances</td>
+                        <td style="text-align: right;">(1,000,000đ)</td>
+                    </tr>
+                    <tr style="background: #d4edda; font-weight: bold;">
+                        <td>Net Sales (Doanh thu thuần)</td>
+                        <td style="text-align: right;">19,000,000đ</td>
+                    </tr>
+                </table>
+
+                <div class="highlight" style="margin-top: 20px;">
+                    <h3>📈 Tỷ lệ Trả hàng (Return Rate)</h3>
+                    <div class="formula">
+                        Return Rate = Sales Returns / Gross Sales × 100%
+                    </div>
+                    <p style="margin-top: 15px; font-size: 1.1em;">
+                        Ví dụ: 1,000,000 / 20,000,000 × 100% = <strong>5%</strong>
+                    </p>
+                    <p style="margin-top: 10px; color: #666;">
+                        → Tỷ lệ này cần theo dõi để đánh giá chất lượng sản phẩm và dịch vụ!
+                    </p>
+                </div>
+
+                <div class="key-point">
+                    💡 Trả hàng là điều BÌNH THƯỜNG trong E-commerce - quan trọng là THEO DÕI và GIẢM THIỂU!
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">48</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 49: Practice Exercise 1 -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3 - Thực hành</span>
+                <h2>✏️ Bài tập Thực hành 1</h2>
+            </div>
+            <div class="content">
+                <div class="example-box">
+                    <h3>📝 Đề bài: TechStart Ltd.</h3>
+                    <p style="font-size: 1.1em;">
+                        TechStart Ltd. là công ty khởi nghiệp công nghệ bắt đầu hoạt động ngày 1/12/2024. 
+                        Dưới đây là các giao dịch trong tháng 12:
+                    </p>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <ol style="font-size: 1.05em; line-height: 2;">
+                        <li>01/12: Cổ đông đầu tư $50,000 tiền mặt</li>
+                        <li>03/12: Mua máy tính và thiết bị $15,000 bằng tiền mặt</li>
+                        <li>05/12: Mua vật tư văn phòng $2,000 chịu nợ</li>
+                        <li>10/12: Cung cấp dịch vụ tư vấn, thu $8,000 tiền mặt</li>
+                        <li>15/12: Trả tiền thuê văn phòng tháng 12: $3,000</li>
+                        <li>20/12: Cung cấp dịch vụ $12,000, khách nợ</li>
+                        <li>25/12: Thu $5,000 từ khách nợ (giao dịch 6)</li>
+                        <li>28/12: Trả lương nhân viên $6,000</li>
+                        <li>30/12: Trả nợ nhà cung cấp $1,000 (giao dịch 3)</li>
+                        <li>31/12: Chia cổ tức $2,000</li>
+                    </ol>
+                </div>
+
+                <h3>❓ Yêu cầu:</h3>
+                <div class="highlight">
+                    <ol style="font-size: 1.05em;">
+                        <li>Lập bảng phân tích giao dịch (tabular analysis)</li>
+                        <li>Tính Net Income tháng 12/2024</li>
+                        <li>Tính Retained Earnings cuối tháng 12/2024</li>
+                        <li>Tính Total Assets cuối tháng 12/2024</li>
+                    </ol>
+                </div>
+
+                <div class="note">
+                    ⏰ <strong>Thời gian:</strong> 15 phút để làm bài
+                </div>
+
+                <div class="key-point">
+                    💡 <strong>Gợi ý:</strong> Vẽ bảng với cột: Cash, A/R, Supplies, Equipment, A/P, Share Capital, Revenues, Expenses, Dividends
+                </div>
+            </div>
+            <div class="navigation">
+                <button onclick="previousSlide()">← Trước</button>
+                <span class="slide-number">Slide <span id="current">49</span> / <span id="total">65</span></span>
+                <button onclick="nextSlide()">Tiếp →</button>
+            </div>
+        </div>
+
+        <!-- Slide 50: Practice Exercise 1 - Solution -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="session-badge">Buổi 3 - Thực hành</span>
+                <h2>✅ Đáp án Bài tập 1</h2>
+            </div>
+            <div class="content">
+                <h3>📊 Tabular Analysis - TechStart Ltd.</h3>
+                <table style="font-size: 0.75em;">
+                    <tr>
+                        <th>#</th>
+                        <th>Cash</th>
+                        <th>A/R</th>
+                        <th>Supp.</th>
+                        <th>Equip.</th>
+                        <th>=</th>
+                        <th>A/P</th>
+                        <th>+</th>
+                        <th>S.Cap.</th>
+                        <th>+</th>
+                        <th>Rev.</th>
+                        <th>−</th>
+                        <th>Exp.</th>
+                        <th>−</th>
+                        <th>Div.</th>
+                    </tr>
+                    <tr><td>1</td><td>+50,000</td><td></td><td></td><td></td><td>=</td><td></td><td>+</td><td>+50,000</td><td>+</td><td></td><td>−</td><td></td><td>−</td><td></td></tr>
+                    <tr><td>2</td><td>−15,000</td><td></td><td></td><td>+15,000</td><td>=</td><td></td><td>+</td><td></td><td>+</td><td></td><td>−</td><td></td><td>−</td><td></td></tr>
+                    <tr><td>3</td><td></td><td></td><td>+2,000</td><td></td><td>=</td><td>+2,000</td><td>+</td><td></td><td>+</td><td></td><td>−</td><td></td><td>−</td><td></td></tr>
+                    <tr><td>4</td><td>+8,000</td><td></td><td></td><td></td><td>=</td><td></td><td>+</td><td></td><td>+</td><td>+8,000</td><td>−</td><td></td><td>−</td><td></td></tr>
+                    <tr><td>5</td><td>−3,000</td><td></td><td></td><td></td><td>=</td><td></td><td>+</td><td></td><td>+</td><td></td><td>−</td><td>+3,000</td><td>−</td><td></td></tr>
+                    <tr><td>6</td><td></td><td>+12,000</td><td></td><td></td><td>=</td><td></td><td>+</td><td></td><td>+</td><td>+12,000</td><td>−</td><td></td><td>−</td><td></td></tr>
+                    <tr><td>7</td><td>+5,000</td><td>−5,000</td><td></td><td></td><td>=</td><td></td><td>+</td><td></td><td>+</td><td></td><td>−</td><td></td><td>−</td><td></td></tr>
+                    <tr><td>8</td><td>−6,000</td><td></td><td></td><td></td><td>=</td><td></td><td>+</td><td></td><td>+</td><td></td><td>−</td><td>+6,000</td><td>−</td><td></td></tr>
+                    <tr><td>9</td><td>−1,000</td><td></td><td></td><td></td><td>=</td><td>−1,000</td><td>+</td><td></td><td>+</td><td></td><td>−</td><td></td><td>−</td><td></td></tr>
+                    <tr><td>10</td><td>−2,000</td><td></td><td></td><td></td><td>=</td><td></td><td>+</td><td></td><td>+</td><td></td><td>−</td><td></td><td>−</td><td>+2,000</td></tr>
+                    <tr style="background: #d4edda; font-weight: bold;">
+                        <td>END</td><td>$36,000</td><td>$7,000</td><td>$2,000</td><td>$15,000</td><td>=</td><td>$1,000</td><td>+</td><td>$50,000</td><td>+</td><td>$20,000</td><td>−</td><td>$9,000</td><td>−</td><td>$2,000</td>
+                    </tr>
+                </table>
+
+                <h3>💡 Đáp án các câu hỏi:</h3>
+                <div class="two-column">
+                    <div class="column">
+                        <h4>1. Net Income</h4>
+                        <div class="formula">
+                            $20,000 − $9,000 = <strong>$11,000</strong>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h4>2. Retained Earnings</h4>
+                        <div class="formula">
+                            $0 + $11,000 − $2,000 = <strong>$9,000</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column" style="margin-top: 15px;">
+                    <h4>3. Total Assets</h4>
+                    <div class="formula">
+                        $36,000 + $7,000 + $2,000 + $15,000 = <strong>$60,000</strong>
+                    </div>
+                </div>
+
+                <div class="
