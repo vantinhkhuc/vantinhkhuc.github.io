@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiclass Classification Algorithms</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px;
+            display: none;
+            flex-direction: column;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: flex;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.8em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.6em;
+            margin: 25px 0 15px 0;
+        }
+
+        p, li {
+            font-size: 1.15em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.3em;
+            margin-top: 10px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(118, 75, 162, 0.4);
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .emoji {
+            font-size: 1.3em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .formula {
+            background: #fff9e6;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2em;
+            margin: 20px 0;
+            border: 2px solid #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>🎯 Multiclass Classification Algorithms</h1>
+            <p class="subtitle">Phân tích dữ liệu trong Kinh doanh</p>
+            <p class="subtitle" style="margin-top: 40px; font-size: 1.5em;">Marketing Analytics với Machine Learning</p>
+            <div style="margin-top: 60px; text-align: center; color: #666;">
+                <p style="font-size: 1.2em;">Dành cho sinh viên năm 3 - Thương mại điện tử</p>
+                <p style="margin-top: 30px; font-style: italic;">Học phần: Phân tích dữ liệu trong Kinh doanh</p>
+            </div>
+            <div class="slide-number">1/50</div>
+        </div>
+
+        <!-- Slide 2: Objectives -->
+        <div class="slide">
+            <h2>🎓 Mục tiêu học tập</h2>
+            <ul>
+                <li><span class="emoji">✅</span> Hiểu và triển khai các thuật toán giải quyết bài toán phân loại đa lớp trong marketing analytics</li>
+                <li><span class="emoji">💻</span> Thành thạo các loại classifier khác nhau sử dụng thư viện scikit-learn</li>
+                <li><span class="emoji">📊</span> Diễn giải các chỉ số đánh giá micro và macro performance cho bài toán multiclass</li>
+                <li><span class="emoji">⚖️</span> Áp dụng các kỹ thuật sampling để giải quyết vấn đề dữ liệu không cân bằng</li>
+                <li><span class="emoji">🚀</span> Vận dụng thuật toán và metric phù hợp cho bài toán thực tế</li>
+            </ul>
+            <div class="slide-number">2/50</div>
+        </div>
+
+        <!-- Slide 3: Introduction -->
+        <div class="slide">
+            <h2>📚 Giới thiệu</h2>
+            <h3>Classification là gì?</h3>
+            <p>Classification là bài toán học có giám sát (supervised learning) nhằm dự đoán nhãn (label) rời rạc của đối tượng dựa trên các đặc trưng (features).</p>
+            
+            <div class="two-column">
+<h3 style="font-size: 1.3em;">Binary Classification</h3>
+                    <p>2 lớp: Có/Không, Spam/Ham</p>
+                    <p>VD: Email spam detection</p>
+                </div>
+                <div class="box">
+                    <h3 style="font-size: 1.2em;">Nhược điểm:</h3>
+                    <ul>
+                        <li>Giả định độc lập thường sai</li>
+                        <li>Ít accurate hơn methods phức tạp</li>
+                        <li>Nhạy cảm với feature distribution</li>
+                    </ul>
+                </div>
+            </div>
+      <h3 style="font-size: 1.3em;">Multiclass Classification</h3>
+                    <p>3+ lớp: A, B, C, D, ...</p>
+                    <p>VD: Phân loại khách hàng theo nhóm</p>
+                </div>
+            </div>
+            <div class="slide-number">3/50</div>
+        </div>
+
+        <!-- Slide 4: Real-world Examples -->
+        <div class="slide">
+            <h2>🌍 Ứng dụng trong Marketing</h2>
+            <div class="highlight">
+                <h3>Các bài toán Multiclass thực tế:</h3>
+                <ul>
+                    <li><strong>Customer Segmentation:</strong> Phân loại khách hàng (VIP, Gold, Silver, Bronze)</li>
+                    <li><strong>Product Category:</strong> Phân loại sản phẩm theo danh mục</li>
+                    <li><strong>Sentiment Analysis:</strong> Phân tích cảm xúc (Very Negative, Negative, Neutral, Positive, Very Positive)</li>
+                    <li><strong>Churn Prediction:</strong> Dự đoán hành vi rời bỏ theo mức độ (Low, Medium, High Risk)</li>
+                    <li><strong>Lead Scoring:</strong> Xếp hạng khách hàng tiềm năng (A, B, C, D)</li>
+                </ul>
+            </div>
+            <div class="slide-number">4/50</div>
+        </div>
+
+        <!-- Slide 5: Case Study Introduction -->
+        <div class="slide">
+            <h2>📖 Case Study: Phân loại khách hàng E-commerce</h2>
+            <p><strong>Bối cảnh:</strong> Một công ty thương mại điện tử muốn phân loại khách hàng thành 4 nhóm để tối ưu chiến lược marketing.</p>
+            
+            <div class="box">
+                <h3>Các nhóm khách hàng:</h3>
+                <ul>
+                    <li><strong>VIP (0):</strong> Chi tiêu cao, tương tác thường xuyên</li>
+                    <li><strong>Regular (1):</strong> Mua sắm đều đặn, giá trị trung bình</li>
+                    <li><strong>Occasional (2):</strong> Mua sắm không thường xuyên</li>
+                    <li><strong>At-Risk (3):</strong> Có dấu hiệu rời bỏ</li>
+                </ul>
+            </div>
+            
+            <p style="margin-top: 20px;"><strong>Mục tiêu:</strong> Xây dựng model tự động phân loại khách hàng mới dựa trên hành vi và đặc điểm của họ.</p>
+            <div class="slide-number">5/50</div>
+        </div>
+
+        <!-- Slide 6: Dataset Overview -->
+        <div class="slide">
+            <h2>📊 Tổng quan dữ liệu</h2>
+            <h3>Features (Đặc trưng):</h3>
+            <ul>
+                <li><strong>recency:</strong> Số ngày kể từ lần mua gần nhất</li>
+                <li><strong>frequency:</strong> Số lần mua hàng</li>
+                <li><strong>monetary:</strong> Tổng giá trị mua hàng</li>
+                <li><strong>avg_order_value:</strong> Giá trị đơn hàng trung bình</li>
+                <li><strong>days_since_first_purchase:</strong> Số ngày là khách hàng</li>
+                <li><strong>email_open_rate:</strong> Tỷ lệ mở email (0-1)</li>
+                <li><strong>website_visits:</strong> Số lần truy cập website</li>
+            </ul>
+            <p style="margin-top: 20px;"><strong>Target:</strong> customer_segment (0: VIP, 1: Regular, 2: Occasional, 3: At-Risk)</p>
+            <div class="slide-number">6/50</div>
+        </div>
+
+        <!-- Slide 7: Python Setup -->
+        <div class="slide">
+            <h2>🐍 Cài đặt môi trường Python</h2>
+            <h3>Thư viện cần thiết:</h3>
+            <div class="code-block">
+# Import các thư viện cơ bản
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Import từ scikit-learn
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+
+# Import các model
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
+from sklearn.naive_bayes import GaussianNB
+            </div>
+            <div class="slide-number">7/50</div>
+        </div>
+
+        <!-- Slide 8: Load and Explore Data -->
+        <div class="slide">
+            <h2>📥 Load và khám phá dữ liệu</h2>
+            <div class="code-block">
+# Load dữ liệu
+df = pd.read_csv('customer_data.csv')
+
+# Xem tổng quan
+print(df.head())
+print(df.info())
+print(df.describe())
+
+# Kiểm tra missing values
+print(df.isnull().sum())
+
+# Phân bố của target
+print(df['customer_segment'].value_counts())
+
+# Visualize phân bố
+df['customer_segment'].value_counts().plot(kind='bar')
+plt.title('Phân bố nhóm khách hàng')
+plt.xlabel('Segment')
+plt.ylabel('Số lượng')
+plt.show()
+            </div>
+            <div class="slide-number">8/50</div>
+        </div>
+
+        <!-- Slide 9: Data Imbalance -->
+        <div class="slide">
+            <h2>⚖️ Vấn đề dữ liệu không cân bằng</h2>
+            <h3>Imbalanced Data là gì?</h3>
+            <p>Dữ liệu không cân bằng xảy ra khi số lượng mẫu giữa các lớp khác nhau rất nhiều.</p>
+            
+            <div class="highlight">
+                <h3>Ví dụ phân bố:</h3>
+                <ul>
+                    <li>VIP: 500 mẫu (5%)</li>
+                    <li>Regular: 3000 mẫu (30%)</li>
+                    <li>Occasional: 4000 mẫu (40%)</li>
+                    <li>At-Risk: 2500 mẫu (25%)</li>
+                </ul>
+            </div>
+            
+            <p><strong>Hậu quả:</strong> Model có xu hướng bias về lớp đa số, dự đoán kém cho lớp thiểu số.</p>
+            <div class="slide-number">9/50</div>
+        </div>
+
+        <!-- Slide 10: Train Test Split -->
+        <div class="slide">
+            <h2>✂️ Chia tập dữ liệu</h2>
+            <div class="code-block">
+# Tách features và target
+X = df.drop('customer_segment', axis=1)
+y = df['customer_segment']
+
+# Chia train/test với stratify để giữ tỷ lệ
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, 
+    test_size=0.2, 
+    random_state=42,
+    stratify=y  # Quan trọng cho multiclass
+)
+
+print(f"Training set: {X_train.shape}")
+print(f"Test set: {X_test.shape}")
+
+# Kiểm tra phân bố sau khi split
+print("\nPhân bố train set:")
+print(y_train.value_counts(normalize=True))
+print("\nPhân bố test set:")
+print(y_test.value_counts(normalize=True))
+            </div>
+            <div class="slide-number">10/50</div>
+        </div>
+
+        <!-- Slide 11: Feature Scaling -->
+        <div class="slide">
+            <h2>📏 Chuẩn hóa dữ liệu</h2>
+            <p>Nhiều thuật toán (SVM, Logistic Regression, KNN) yêu cầu features có cùng scale.</p>
+            
+            <div class="code-block">
+# Khởi tạo StandardScaler
+scaler = StandardScaler()
+
+# Fit trên training set và transform cả train và test
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Chuyển về DataFrame để dễ làm việc
+X_train_scaled = pd.DataFrame(
+    X_train_scaled, 
+    columns=X_train.columns,
+    index=X_train.index
+)
+
+X_test_scaled = pd.DataFrame(
+    X_test_scaled, 
+    columns=X_test.columns,
+    index=X_test.index
+)
+
+print("Dữ liệu đã được chuẩn hóa!")
+            </div>
+            <div class="slide-number">11/50</div>
+        </div>
+
+        <!-- Slide 12: Logistic Regression Theory -->
+        <div class="slide">
+            <h2>📐 Logistic Regression cho Multiclass</h2>
+            <h3>One-vs-Rest (OvR) Strategy:</h3>
+            <p>Huấn luyện K binary classifiers, mỗi cái phân biệt một lớp với tất cả các lớp còn lại.</p>
+            
+            <div class="box">
+                <h3>Ưu điểm:</h3>
+                <ul>
+                    <li>Đơn giản, dễ hiểu và implement</li>
+                    <li>Training nhanh</li>
+                    <li>Có thể diễn giải được (interpretable)</li>
+                </ul>
+            </div>
+            
+            <div class="box" style="margin-top: 20px;">
+                <h3>Nhược điểm:</h3>
+                <ul>
+                    <li>Giả định linear separability</li>
+                    <li>Không xử lý tốt quan hệ phức tạp</li>
+                </ul>
+            </div>
+            <div class="slide-number">12/50</div>
+        </div>
+
+        <!-- Slide 13: Logistic Regression Implementation -->
+        <div class="slide">
+            <h2>💻 Implement Logistic Regression</h2>
+            <div class="code-block">
+# Khởi tạo model với multi_class='ovr'
+log_reg = LogisticRegression(
+    multi_class='ovr',  # One-vs-Rest
+    max_iter=1000,
+    random_state=42
+)
+
+# Training
+log_reg.fit(X_train_scaled, y_train)
+
+# Prediction
+y_pred_lr = log_reg.predict(X_test_scaled)
+
+# Probability predictions
+y_pred_proba_lr = log_reg.predict_proba(X_test_scaled)
+
+print("Model đã được train!")
+print(f"Classes: {log_reg.classes_}")
+print(f"Coefficients shape: {log_reg.coef_.shape}")
+            </div>
+            <p style="margin-top: 20px;"><strong>Lưu ý:</strong> Scikit-learn tự động xử lý multiclass, bạn chỉ cần chỉ định strategy.</p>
+            <div class="slide-number">13/50</div>
+        </div>
+
+        <!-- Slide 14: Decision Tree Theory -->
+        <div class="slide">
+            <h2>🌳 Decision Tree Classifier</h2>
+            <h3>Cách hoạt động:</h3>
+            <p>Decision Tree tạo ra các quy tắc if-then-else bằng cách chia dữ liệu dựa trên feature values.</p>
+            
+            <div class="highlight">
+                <h3>Ví dụ rule:</h3>
+                <p>IF monetary > 10000 AND frequency > 20<br>
+                   THEN customer_segment = VIP<br>
+                ELSE IF recency > 180<br>
+                   THEN customer_segment = At-Risk<br>
+                ELSE ...</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="box">
+                    <h3 style="font-size: 1.2em;">Ưu điểm:</h3>
+                    <ul>
+                        <li>Dễ hiểu, dễ visualize</li>
+                        <li>Không cần scaling</li>
+                        <li>Xử lý non-linear</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h3 style="font-size: 1.2em;">Nhược điểm:</h3>
+                    <ul>
+                        <li>Dễ overfitting</li>
+                        <li>Không stable</li>
+                        <li>Bias với imbalanced data</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">14/50</div>
+        </div>
+
+        <!-- Slide 15: Decision Tree Implementation -->
+        <div class="slide">
+            <h2>💻 Implement Decision Tree</h2>
+            <div class="code-block">
+# Khởi tạo Decision Tree
+dt_clf = DecisionTreeClassifier(
+    max_depth=5,          # Giới hạn độ sâu để tránh overfitting
+    min_samples_split=20, # Tối thiểu samples để split
+    min_samples_leaf=10,  # Tối thiểu samples ở leaf
+    random_state=42
+)
+
+# Training (không cần scaled data)
+dt_clf.fit(X_train, y_train)
+
+# Prediction
+y_pred_dt = dt_clf.predict(X_test)
+
+# Feature importance
+feature_importance = pd.DataFrame({
+    'feature': X_train.columns,
+    'importance': dt_clf.feature_importances_
+}).sort_values('importance', ascending=False)
+
+print("Top 5 features quan trọng:")
+print(feature_importance.head())
+            </div>
+            <div class="slide-number">15/50</div>
+        </div>
+
+        <!-- Slide 16: Random Forest Theory -->
+        <div class="slide">
+            <h2>🌲 Random Forest Classifier</h2>
+            <h3>Ensemble Learning:</h3>
+            <p>Random Forest là tập hợp nhiều Decision Trees, mỗi tree được train trên subset khác nhau của data và features.</p>
+            
+            <div class="box">
+                <h3>Cách hoạt động:</h3>
+                <ol>
+                    <li>Tạo N decision trees với bootstrap sampling</li>
+                    <li>Mỗi split chỉ xem xét subset ngẫu nhiên của features</li>
+                    <li>Prediction cuối = voting của tất cả trees</li>
+                </ol>
+            </div>
+            
+            <div class="highlight" style="margin-top: 20px;">
+                <h3>Ưu điểm chính:</h3>
+                <ul>
+                    <li>Giảm overfitting so với Decision Tree đơn</li>
+                    <li>Robust với noise và outliers</li>
+                    <li>Xử lý tốt high-dimensional data</li>
+                    <li>Cung cấp feature importance</li>
+                </ul>
+            </div>
+            <div class="slide-number">16/50</div>
+        </div>
+
+        <!-- Slide 17: Random Forest Implementation -->
+        <div class="slide">
+            <h2>💻 Implement Random Forest</h2>
+            <div class="code-block">
+# Khởi tạo Random Forest
+rf_clf = RandomForestClassifier(
+    n_estimators=100,     # Số lượng trees
+    max_depth=10,         # Độ sâu mỗi tree
+    min_samples_split=20,
+    min_samples_leaf=10,
+    max_features='sqrt',  # Số features cho mỗi split
+    random_state=42,
+    n_jobs=-1            # Sử dụng tất cả CPU cores
+)
+
+# Training
+rf_clf.fit(X_train, y_train)
+
+# Prediction
+y_pred_rf = rf_clf.predict(X_test)
+y_pred_proba_rf = rf_clf.predict_proba(X_test)
+
+# Feature importance
+rf_importance = pd.DataFrame({
+    'feature': X_train.columns,
+    'importance': rf_clf.feature_importances_
+}).sort_values('importance', ascending=False)
+            </div>
+            <div class="slide-number">17/50</div>
+        </div>
+
+        <!-- Slide 18: SVM Theory -->
+        <div class="slide">
+            <h2>🎯 Support Vector Machine (SVM)</h2>
+            <h3>Multiclass với One-vs-One:</h3>
+            <p>SVM xây dựng hyperplane để tách các lớp với margin tối đa. Cho multiclass, thường dùng One-vs-One strategy.</p>
+            
+            <div class="box">
+                <h3>One-vs-One (OvO):</h3>
+                <p>Train K(K-1)/2 binary classifiers, mỗi cái phân biệt 2 lớp. Prediction = voting.</p>
+                <p><strong>Ví dụ:</strong> 4 lớp → 6 classifiers (0vs1, 0vs2, 0vs3, 1vs2, 1vs3, 2vs3)</p>
+            </div>
+            
+            <div class="highlight" style="margin-top: 20px;">
+                <h3>Kernel Trick:</h3>
+                <p>SVM có thể ánh xạ dữ liệu lên không gian cao chiều để xử lý non-linear separation.</p>
+                <ul>
+                    <li><strong>Linear:</strong> Dữ liệu linearly separable</li>
+                    <li><strong>RBF (Radial Basis Function):</strong> Non-linear, popular nhất</li>
+                    <li><strong>Polynomial:</strong> Non-linear với polynomial boundary</li>
+                </ul>
+            </div>
+            <div class="slide-number">18/50</div>
+        </div>
+
+        <!-- Slide 19: SVM Implementation -->
+        <div class="slide">
+            <h2>💻 Implement SVM</h2>
+            <div class="code-block">
+# Khởi tạo SVM với RBF kernel
+svm_clf = SVC(
+    kernel='rbf',         # Radial Basis Function
+    C=1.0,               # Regularization parameter
+    gamma='scale',       # Kernel coefficient
+    decision_function_shape='ovr',  # One-vs-Rest
+    random_state=42,
+    probability=True     # Enable probability estimates
+)
+
+# Training (cần scaled data)
+svm_clf.fit(X_train_scaled, y_train)
+
+# Prediction
+y_pred_svm = svm_clf.predict(X_test_scaled)
+y_pred_proba_svm = svm_clf.predict_proba(X_test_scaled)
+
+print(f"Number of support vectors: {svm_clf.n_support_}")
+print(f"Classes: {svm_clf.classes_}")
+            </div>
+            <p style="margin-top: 20px;"><strong>Lưu ý:</strong> SVM tốn thời gian với large dataset. Nên dùng với small-medium data.</p>
+            <div class="slide-number">19/50</div>
+        </div>
+
+        <!-- Slide 20: Naive Bayes Theory -->
+        <div class="slide">
+            <h2>📊 Naive Bayes Classifier</h2>
+            <h3>Dựa trên Bayes Theorem:</h3>
+            <div class="formula">
+                P(Class|Features) = P(Features|Class) × P(Class) / P(Features)
+            </div>
+            
+            <p><strong>Giả định "Naive":</strong> Các features độc lập với nhau (trong thực tế thường không đúng nhưng model vẫn hoạt động tốt).</p>
+            
+            <div class="two-column">
+                <div class="box">
+                    <h3 style="font-size: 1.2em;">Ưu điểm:</h3>
+                    <ul>
+                        <li>Rất nhanh</li>
+                        <li>Tốt với small data</li>
+                        <li>Xử lý tốt high dimensions</li>
+                        <li>Ít bị overfitting</li>
+                    </ul>
+                </div>
+                <div class="box">
+           <h3 style="font-size: 1.3em;">Multiclass Classification</h3>
+                    <p>3+ lớp: A, B, C, D, ...</p>
+                    <p>VD: Phân loại khách hàng theo nhóm</p>
+                </div>
+            </div>
+            <div class="slide-number">3/50</div>
+        </div>
+
+        <!-- Slide 21: Naive Bayes Implementation -->
+        <div class="slide">
+            <h2>💻 Implement Naive Bayes</h2>
+            <div class="code-block">
+# Gaussian Naive Bayes (phù hợp với continuous features)
+nb_clf = GaussianNB()
+
+# Training
+nb_clf.fit(X_train, y_train)
+
+# Prediction
+y_pred_nb = nb_clf.predict(X_test)
+y_pred_proba_nb = nb_clf.predict_proba(X_test)
+
+# Xem prior probabilities (xác suất tiên nghiệm)
+print("Prior probabilities của các class:")
+for i, class_label in enumerate(nb_clf.classes_):
+    print(f"Class {class_label}: {nb_clf.class_prior_[i]:.4f}")
+
+# Xem class count
+print("\nSố lượng samples mỗi class trong training:")
+print(nb_clf.class_count_)
+            </div>
+            <div class="slide-number">21/50</div>
+        </div>
+
+        <!-- Slide 22: Evaluation Metrics Introduction -->
+        <div class="slide">
+            <h2>📈 Các chỉ số đánh giá - Giới thiệu</h2>
+            <p>Với multiclass classification, chúng ta cần metrics đánh giá performance cho từng class và overall.</p>
+            
+            <div class="highlight">
+                <h3>Các metrics chính:</h3>
+                <ul>
+                    <li><strong>Accuracy:</strong> Tỷ lệ dự đoán đúng tổng thể</li>
+                    <li><strong>Precision:</strong> Trong số dự đoán là class X, bao nhiêu đúng?</li>
+                    <li><strong>Recall:</strong> Trong số thực tế là class X, bao nhiêu được tìm thấy?</li>
+                    <li><strong>F1-Score:</strong> Trung bình điều hòa của Precision và Recall</li>
+                    <li><strong>Confusion Matrix:</strong> Ma trận hiển thị chi tiết predictions</li>
+                </ul>
+            </div>
+            <div class="slide-number">22/50</div>
+        </div>
+
+        <!-- Slide 23: Confusion Matrix -->
+        <div class="slide">
+            <h2>🔢 Confusion Matrix</h2>
+            <p>Ma trận confusion hiển thị số lượng predictions đúng và sai cho từng class.</p>
+            
+            <div class="code-block">
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+
+# Tính confusion matrix
+cm = confusion_matrix(y_test, y_pred_rf)
+
+# Visualization
+plt.figure(figsize=(8, 6))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+            xticklabels=['VIP', 'Regular', 'Occasional', 'At-Risk'],
+            yticklabels=['VIP', 'Regular', 'Occasional', 'At-Risk'])
+plt.title('Confusion Matrix - Random Forest')
+plt.ylabel('True Label')
+plt.xlabel('Predicted Label')
+plt.show()
+            </div>
+            <p><strong>Đọc matrix:</strong> Hàng = actual class, Cột = predicted class. Đường chéo = correct predictions.</p>
+            <div class="slide-number">23/50</div>
+        </div>
+
+        <!-- Slide 24: Accuracy -->
+        <div class="slide">
+            <h2>✅ Accuracy</h2>
+            <div class="formula">
+                Accuracy = (Số predictions đúng) / (Tổng số predictions)
+            </div>
+            
+            <div class="code-block">
+from sklearn.metrics import accuracy_score
+
+# Tính accuracy cho các models
+acc_lr = accuracy_score(y_test, y_pred_lr)
+acc_dt = accuracy_score(y_test, y_pred_dt)
+acc_rf = accuracy_score(y_test, y_pred_rf)
+acc_svm = accuracy_score(y_test, y_pred_svm)
+acc_nb = accuracy_score(y_test, y_pred_nb)
+
+print(f"Logistic Regression: {acc_lr:.4f}")
+print(f"Decision Tree: {acc_dt:.4f}")
+print(f"Random Forest: {acc_rf:.4f}")
+print(f"SVM: {acc_svm:.4f}")
+print(f"Naive Bayes: {acc_nb:.4f}")
+            </div>
+            
+            <p style="color: red; margin-top: 20px;"><strong>Cảnh báo:</strong> Accuracy không phù hợp với imbalanced data! Có thể bị misleading.</p>
+            <div class="slide-number">24/50</div>
+        </div>
+
+        <!-- Slide 25: Precision, Recall, F1 -->
+        <div class="slide">
+            <h2>🎯 Precision, Recall, F1-Score</h2>
+            <h3>Per-class metrics:</h3>
+            
+            <div class="formula">
+                Precision = TP / (TP + FP)
+            </div>
+            <div class="formula">
+                Recall = TP / (TP + FN)
+            </div>
+            <div class="formula">
+                F1-Score = 2 × (Precision × Recall) / (Precision + Recall)
+            </div>
+            
+            <div class="box" style="margin-top: 20px;">
+                <h3>Diễn giải:</h3>
+                <ul>
+                    <li><strong>Precision cao:</strong> Khi dự đoán class X, ít khi sai</li>
+                    <li><strong>Recall cao:</strong> Tìm được nhiều samples thực sự thuộc class X</li>
+                    <li><strong>F1 cao:</strong> Cân bằng tốt giữa Precision và Recall</li>
+                </ul>
+            </div>
+            <div class="slide-number">25/50</div>
+        </div>
+
+        <!-- Slide 26: Macro vs Micro Averaging -->
+        <div class="slide">
+            <h2>⚖️ Macro vs Micro Averaging</h2>
+            <p>Cách tính metrics overall cho multiclass:</p>
+            
+            <div class="two-column">
+                <div class="box">
+                    <h3 style="font-size: 1.3em;">Macro Average</h3>
+                    <p>Tính metric cho từng class, rồi lấy trung bình.</p>
+                    <div class="formula" style="font-size: 0.9em;">
+                        Macro = (M₁ + M₂ + M₃ + M₄) / 4
+                    </div>
+                    <p><strong>Đặc điểm:</strong> Mỗi class có trọng số bằng nhau → Tốt để đánh giá minority classes</p>
+                </div>
+                
+                <div class="box">
+                    <h3 style="font-size: 1.3em;">Micro Average</h3>
+                    <p>Tính tổng TP, FP, FN của tất cả classes, rồi tính metric.</p>
+                    <div class="formula" style="font-size: 0.9em;">
+                        Micro = Σ TP / (Σ TP + Σ FP)
+                    </div>
+                    <p><strong>Đặc điểm:</strong> Class lớn có ảnh hưởng nhiều hơn → Phản ánh overall accuracy</p>
+                </div>
+            </div>
+            <div class="slide-number">26/50</div>
+        </div>
+
+        <!-- Slide 27: Weighted Average -->
+        <div class="slide">
+            <h2>🏋️ Weighted Average</h2>
+            <p>Tính metric cho từng class, weighted theo số lượng samples thực tế của class đó.</p>
+            
+            <div class="formula">
+                Weighted = (M₁×n₁ + M₂×n₂ + M₃×n₃ + M₄×n₄) / (n₁+n₂+n₃+n₄)
+            </div>
+            
+            <div class="highlight">
+                <h3>Khi nào dùng metric nào?</h3>
+                <ul>
+                    <li><strong>Macro:</strong> Khi muốn treat tất cả classes equally, quan tâm đến minority classes</li>
+                    <li><strong>Micro:</strong> Khi dataset balanced, hoặc quan tâm đến overall performance</li>
+                    <li><strong>Weighted:</strong> Khi muốn account cho class distribution nhưng vẫn quan tâm từng class</li>
+                </ul>
+            </div>
+            
+            <p style="margin-top: 20px;"><strong>Cho bài toán Customer Segmentation:</strong> Nên dùng <strong>Macro</strong> vì chúng ta muốn performance tốt cho tất cả segments, kể cả VIP (minority).</p>
+            <div class="slide-number">27/50</div>
+        </div>
+
+        <!-- Slide 28: Classification Report -->
+        <div class="slide">
+            <h2>📋 Classification Report</h2>
+            <div class="code-block">
+from sklearn.metrics import classification_report
+
+# Generate report cho Random Forest
+report = classification_report(
+    y_test, 
+    y_pred_rf,
+    target_names=['VIP', 'Regular', 'Occasional', 'At-Risk'],
+    digits=4
+)
+
+print(report)
+
+# Output mẫu:
+#               precision    recall  f1-score   support
+# 
+#          VIP     0.8500    0.7727    0.8095       100
+#      Regular     0.8200    0.8500    0.8347       600
+#   Occasional     0.8400    0.8750    0.8571       800
+#      At-Risk     0.8100    0.7800    0.7947       500
+# 
+#     accuracy                         0.8350      2000
+#    macro avg     0.8300    0.8194    0.8240      2000
+# weighted avg     0.8345    0.8350    0.8345      2000
+            </div>
+            <div class="slide-number">28/50</div>
+        </div>
+
+        <!-- Slide 29: Compare All Models -->
+        <div class="slide">
+            <h2>📊 So sánh tất cả Models</h2>
+            <div class="code-block">
+from sklearn.metrics import precision_recall_fscore_support
+
+# Function để tính metrics
+def evaluate_model(y_true, y_pred, model_name):
+    acc = accuracy_score(y_true, y_pred)
+    
+    # Macro average
+    prec_macro, rec_macro, f1_macro, _ = \
+        precision_recall_fscore_support(y_true, y_pred, average='macro')
+    
+    # Micro average  
+    prec_micro, rec_micro, f1_micro, _ = \
+        precision_recall_fscore_support(y_true, y_pred, average='micro')
+    
+    return {
+        'Model': model_name,
+        'Accuracy': acc,
+        'Precision (Macro)': prec_macro,
+        'Recall (Macro)': rec_macro,
+        'F1 (Macro)': f1_macro,
+        'Precision (Micro)': prec_micro,
+        'Recall (Micro)': rec_micro,
+        'F1 (Micro)': f1_micro
+    }
+            </div>
+            <div class="slide-number">29/50</div>
+        </div>
+
+        <!-- Slide 30: Results Comparison Table -->
+        <div class="slide">
+            <h2>📈 Bảng kết quả so sánh</h2>
+            <div class="code-block">
+# Evaluate tất cả models
+results = []
+results.append(evaluate_model(y_test, y_pred_lr, 'Logistic Regression'))
+results.append(evaluate_model(y_test, y_pred_dt, 'Decision Tree'))
+results.append(evaluate_model(y_test, y_pred_rf, 'Random Forest'))
+results.append(evaluate_model(y_test, y_pred_svm, 'SVM'))
+results.append(evaluate_model(y_test, y_pred_nb, 'Naive Bayes'))
+
+# Tạo DataFrame
+results_df = pd.DataFrame(results)
+print(results_df.to_string(index=False))
+
+# Tìm best model
+best_model = results_df.loc[results_df['F1 (Macro)'].idxmax(), 'Model']
+print(f"\nBest model (theo F1 Macro): {best_model}")
+            </div>
+            <p style="margin-top: 20px;"><strong>Tip:</strong> Sử dụng F1 Macro để chọn model vì nó cân bằng giữa precision/recall và treat tất cả classes equally.</p>
+            <div class="slide-number">30/50</div>
+        </div>
+
+        <!-- Slide 31: Imbalanced Data Problem -->
+        <div class="slide">
+            <h2>⚠️ Xử lý Imbalanced Data</h2>
+            <p>Khi dữ liệu không cân bằng, model có thể:</p>
+            <ul>
+                <li>Bias về majority class</li>
+                <li>Poor performance trên minority class</li>
+                <li>High accuracy nhưng low recall cho minority class</li>
+            </ul>
+            
+            <div class="highlight">
+                <h3>Giải pháp:</h3>
+                <ol>
+                    <li><strong>Class Weights:</strong> Tăng penalty cho misclassification của minority class</li>
+                    <li><strong>Resampling:</strong> Thay đổi distribution của training data</li>
+                    <li><strong>Ensemble Methods:</strong> Kết hợp nhiều models</li>
+                    <li><strong>Appropriate Metrics:</strong> Dùng F1, Precision, Recall thay vì Accuracy</li>
+                </ol>
+            </div>
+            <div class="slide-number">31/50</div>
+        </div>
+
+        <!-- Slide 32: Class Weights -->
+        <div class="slide">
+            <h2>⚖️ Class Weights</h2>
+            <p>Gán weights cho classes để model chú ý nhiều hơn đến minority classes.</p>
+            
+            <div class="code-block">
+# Logistic Regression với class weights
+log_reg_balanced = LogisticRegression(
+    multi_class='ovr',
+    max_iter=1000,
+    class_weight='balanced',  # Tự động tính weights
+    random_state=42
+)
+
+log_reg_balanced.fit(X_train_scaled, y_train)
+y_pred_balanced = log_reg_balanced.predict(X_test_scaled)
+
+# Random Forest với class weights
+rf_balanced = RandomForestClassifier(
+    n_estimators=100,
+    class_weight='balanced',
+    random_state=42
+)
+
+rf_balanced.fit(X_train, y_train)
+
+# Manual weights (nếu muốn custom)
+class_weights = {0: 2.0, 1: 1.0, 2: 1.0, 3: 1.5}
+            </div>
+            <div class="slide-number">32/50</div>
+        </div>
+
+        <!-- Slide 33: SMOTE Introduction -->
+        <div class="slide">
+            <h2>🔄 SMOTE - Oversampling</h2>
+            <p><strong>SMOTE (Synthetic Minority Over-sampling Technique)</strong> tạo synthetic samples cho minority classes.</p>
+            
+            <div class="box">
+                <h3>Cách hoạt động:</h3>
+                <ol>
+                    <li>Chọn một sample từ minority class</li>
+                    <li>Tìm k nearest neighbors của nó</li>
+                    <li>Tạo synthetic sample ở giữa sample gốc và neighbor</li>
+                    <li>Lặp lại đến khi đạt desired ratio</li>
+                </ol>
+            </div>
+            
+            <div class="code-block">
+# Cài đặt: pip install imbalanced-learn
+from imblearn.over_sampling import SMOTE
+
+# Khởi tạo SMOTE
+smote = SMOTE(random_state=42)
+
+# Apply SMOTE
+X_train_smote, y_train_smote = smote.fit_resample(X_train, y_train)
+
+print(f"Before SMOTE: {y_train.value_counts().to_dict()}")
+print(f"After SMOTE: {pd.Series(y_train_smote).value_counts().to_dict()}")
+            </div>
+            <div class="slide-number">33/50</div>
+        </div>
+
+        <!-- Slide 34: Random Undersampling -->
+        <div class="slide">
+            <h2>📉 Random Undersampling</h2>
+            <p>Giảm số lượng samples của majority classes để cân bằng với minority class.</p>
+            
+            <div class="code-block">
+from imblearn.under_sampling import RandomUnderSampler
+
+# Khởi tạo undersampler
+rus = RandomUnderSampler(random_state=42)
+
+# Apply undersampling
+X_train_rus, y_train_rus = rus.fit_resample(X_train, y_train)
+
+print(f"Before: {X_train.shape[0]} samples")
+print(f"After: {X_train_rus.shape[0]} samples")
+print(f"Distribution: {pd.Series(y_train_rus).value_counts().to_dict()}")
+            </div>
+            
+            <div class="box" style="margin-top: 20px;">
+                <h3>Ưu nhược điểm:</h3>
+                <p><strong>Ưu:</strong> Nhanh, giảm training time</p>
+                <p><strong>Nhược:</strong> Mất thông tin từ majority class, có thể underfitting</p>
+            </div>
+            <div class="slide-number">34/50</div>
+        </div>
+
+        <!-- Slide 35: SMOTE + Undersampling -->
+        <div class="slide">
+            <h2>🔄📉 Combine SMOTE + Undersampling</h2>
+            <p>Kết hợp cả hai: oversample minority + undersample majority để đạt balance tốt nhất.</p>
+            
+            <div class="code-block">
+from imblearn.combine import SMOTETomek
+from imblearn.under_sampling import TomekLinks
+
+# SMOTETomek = SMOTE + Tomek Links cleaning
+smote_tomek = SMOTETomek(random_state=42)
+
+X_train_combined, y_train_combined = \
+    smote_tomek.fit_resample(X_train, y_train)
+
+print(f"Original: {y_train.value_counts().to_dict()}")
+print(f"Combined: {pd.Series(y_train_combined).value_counts().to_dict()}")
+
+# Train model với resampled data
+rf_resampled = RandomForestClassifier(n_estimators=100, random_state=42)
+rf_resampled.fit(X_train_combined, y_train_combined)
+
+y_pred_resampled = rf_resampled.predict(X_test)
+            </div>
+            <div class="slide-number">35/50</div>
+        </div>
+
+        <!-- Slide 36: Compare Sampling Techniques -->
+        <div class="slide">
+            <h2>📊 So sánh Sampling Techniques</h2>
+            <div class="code-block">
+# Train models với different sampling
+models_sampling = {
+    'No Sampling': (X_train, y_train),
+    'SMOTE': (X_train_smote, y_train_smote),
+    'Undersampling': (X_train_rus, y_train_rus),
+    'SMOTE + Tomek': (X_train_combined, y_train_combined)
+}
+
+results_sampling = []
+
+for name, (X_tr, y_tr) in models_sampling.items():
+    rf = RandomForestClassifier(n_estimators=100, random_state=42)
+    rf.fit(X_tr, y_tr)
+    y_pred = rf.predict(X_test)
+    
+    result = evaluate_model(y_test, y_pred, name)
+    results_sampling.append(result)
+
+sampling_df = pd.DataFrame(results_sampling)
+print(sampling_df[['Model', 'F1 (Macro)', 'Recall (Macro)']].to_string(index=False))
+            </div>
+            <p><strong>Quan sát:</strong> SMOTE thường cải thiện recall cho minority classes.</p>
+            <div class="slide-number">36/50</div>
+        </div>
+
+        <!-- Slide 37: Cross-Validation -->
+        <div class="slide">
+            <h2>🔀 Cross-Validation</h2>
+            <p>Cross-validation giúp đánh giá model robustness bằng cách train/test trên nhiều folds khác nhau.</p>
+            
+            <div class="code-block">
+from sklearn.model_selection import cross_val_score, StratifiedKFold
+
+# Stratified K-Fold giữ class distribution
+skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+
+# Cross-validation cho Random Forest
+rf_clf = RandomForestClassifier(n_estimators=100, random_state=42)
+
+# Tính scores
+cv_scores = cross_val_score(
+    rf_clf, X_train, y_train,
+    cv=skf,
+    scoring='f1_macro'  # Dùng F1 macro
+)
+
+print(f"CV Scores: {cv_scores}")
+print(f"Mean F1 (Macro): {cv_scores.mean():.4f} (+/- {cv_scores.std():.4f})")
+            </div>
+            <p style="margin-top: 20px;"><strong>Lưu ý:</strong> Luôn dùng StratifiedKFold cho multiclass để giữ class distribution.</p>
+            <div class="slide-number">37/50</div>
+        </div>
+
+        <!-- Slide 38: Grid Search -->
+        <div class="slide">
+            <h2>🔍 Hyperparameter Tuning - Grid Search</h2>
+            <div class="code-block">
+from sklearn.model_selection import GridSearchCV
+
+# Define parameter grid cho Random Forest
+param_grid = {
+    'n_estimators': [50, 100, 200],
+    'max_depth': [5, 10, 15, None],
+    'min_samples_split': [2, 10, 20],
+    'min_samples_leaf': [1, 5, 10]
+}
+
+# Grid Search với CV
+grid_search = GridSearchCV(
+    RandomForestClassifier(random_state=42),
+    param_grid,
+    cv=5,
+    scoring='f1_macro',
+    n_jobs=-1,
+    verbose=1
+)
+
+# Fit
+grid_search.fit(X_train, y_train)
+
+print(f"Best parameters: {grid_search.best_params_}")
+print(f"Best F1 (Macro): {grid_search.best_score_:.4f}")
+
+# Use best model
+best_rf = grid_search.best_estimator_
+            </div>
+            <div class="slide-number">38/50</div>
+        </div>
+
+        <!-- Slide 39: ROC Curve for Multiclass -->
+        <div class="slide">
+            <h2>📈 ROC Curve cho Multiclass</h2>
+            <p>ROC curve đánh giá trade-off giữa True Positive Rate và False Positive Rate.</p>
+            
+            <div class="code-block">
+from sklearn.metrics import roc_curve, auc
+from sklearn.preprocessing import label_binarize
+
+# Binarize labels (one-hot encoding)
+y_test_bin = label_binarize(y_test, classes=[0, 1, 2, 3])
+y_pred_proba = rf_clf.predict_proba(X_test)
+
+# Tính ROC curve cho từng class
+fpr = dict()
+tpr = dict()
+roc_auc = dict()
+
+for i in range(4):
+    fpr[i], tpr[i], _ = roc_curve(y_test_bin[:, i], y_pred_proba[:, i])
+    roc_auc[i] = auc(fpr[i], tpr[i])
+
+# Plot
+for i, label in enumerate(['VIP', 'Regular', 'Occasional', 'At-Risk']):
+    plt.plot(fpr[i], tpr[i], 
+             label=f'{label} (AUC = {roc_auc[i]:.2f})')
+
+plt.plot([0, 1], [0, 1], 'k--')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('ROC Curves - Multiclass')
+plt.legend()
+plt.show()
+            </div>
+            <div class="slide-number">39/50</div>
+        </div>
+
+        <!-- Slide 40: Feature Importance -->
+        <div class="slide">
+            <h2>🔍 Feature Importance Analysis</h2>
+            <div class="code-block">
+# Get feature importance từ Random Forest
+importance_df = pd.DataFrame({
+    'feature': X_train.columns,
+    'importance': rf_clf.feature_importances_
+}).sort_values('importance', ascending=False)
+
+# Visualize
+plt.figure(figsize=(10, 6))
+plt.barh(importance_df['feature'], importance_df['importance'])
+plt.xlabel('Importance')
+plt.title('Feature Importance - Random Forest')
+plt.gca().invert_yaxis()
+plt.show()
+
+# Top features
+print("Top 5 features:")
+print(importance_df.head())
+            </div>
+            
+            <p style="margin-top: 20px;"><strong>Insight:</strong> Features quan trọng nhất thường là monetary, frequency, và recency (mô hình RFM trong marketing).</p>
+            <div class="slide-number">40/50</div>
+        </div>
+
+        <!-- Slide 41: Practical Application 1 -->
+        <div class="slide">
+            <h2>💼 Ứng dụng thực tế 1: Campaign Targeting</h2>
+            <div class="highlight">
+                <h3>Tình huống:</h3>
+                <p>Công ty muốn chạy 4 campaigns khác nhau cho 4 segments. Cần predict segment cho 10,000 khách hàng mới.</p>
+            </div>
+            
+            <div class="code-block">
+# Load new customer data
+new_customers = pd.read_csv('new_customers.csv')
+
+# Preprocess (same as training)
+X_new_scaled = scaler.transform(new_customers)
+
+# Predict segments
+predicted_segments = best_rf.predict(X_new_scaled)
+prediction_proba = best_rf.predict_proba(X_new_scaled)
+
+# Thêm vào dataframe
+new_customers['predicted_segment'] = predicted_segments
+new_customers['confidence'] = prediction_proba.max(axis=1)
+
+# Filter high confidence predictions
+high_conf = new_customers[new_customers['confidence'] > 0.7]
+
+print(f"Total predictions: {len(new_customers)}")
+print(f"High confidence (>70%): {len(high_conf)}")
+print(f"\nSegment distribution:")
+print(new_customers['predicted_segment'].value_counts())
+            </div>
+            <div class="slide-number">41/50</div>
+        </div>
+
+        <!-- Slide 42: Practical Application 2 -->
+        <div class="slide">
+            <h2>💼 Ứng dụng thực tế 2: Budget Allocation</h2>
+            <div class="code-block">
+# Tính marketing budget cho từng segment
+segment_info = {
+    0: {'name': 'VIP', 'budget_per_customer': 100},
+    1: {'name': 'Regular', 'budget_per_customer': 30},
+    2: {'name': 'Occasional', 'budget_per_customer': 15},
+    3: {'name': 'At-Risk', 'budget_per_customer': 50}
+}
+
+# Count predictions
+segment_counts = new_customers['predicted_segment'].value_counts()
+
+# Calculate budgets
+total_budget = 0
+for segment_id, count in segment_counts.items():
+    budget = count * segment_info[segment_id]['budget_per_customer']
+    total_budget += budget
+    
+    print(f"{segment_info[segment_id]['name']}: "
+          f"{count} customers × ${segment_info[segment_id]['budget_per_customer']} "
+          f"= ${budget:,}")
+
+print(f"\nTotal Marketing Budget: ${total_budget:,}")
+            </div>
+            <div class="slide-number">42/50</div>
+        </div>
+
+        <!-- Slide 43: Model Interpretation -->
+        <div class="slide">
+            <h2>🔍 Model Interpretation - SHAP</h2>
+            <p>SHAP (SHapley Additive exPlanations) giải thích contribution của từng feature cho một prediction.</p>
+            
+            <div class="code-block">
+# Cài đặt: pip install shap
+import shap
+
+# Create explainer
+explainer = shap.TreeExplainer(rf_clf)
+
+# Calculate SHAP values
+shap_values = explainer.shap_values(X_test[:100])
+
+# Summary plot
+shap.summary_plot(shap_values, X_test[:100], 
+_type="bar",
+                  class_names=['VIP', 'Regular', 'Occasional', 'At-Risk'])
+
+# Force plot cho một customer cụ thể
+shap.force_plot(explainer.expected_value[0], 
+                shap_values[0][0,:], 
+                X_test.iloc[0,:])
+            </div>
+            <p><strong>Giá trị:</strong> Giúp business stakeholders hiểu tại sao model đưa ra prediction đó.</p>
+            <div class="slide-number">43/50</div>
+        </div>
+
+        <!-- Slide 44: Error Analysis -->
+        <div class="slide">
+            <h2>🔍 Error Analysis</h2>
+            <p>Phân tích các predictions sai để cải thiện model.</p>
+            
+            <div class="code-block">
+# Tìm misclassified samples
+misclassified_idx = y_test != y_pred_rf
+misclassified = X_test[misclassified_idx].copy()
+misclassified['true_label'] = y_test[misclassified_idx]
+misclassified['predicted_label'] = y_pred_rf[misclassified_idx]
+
+# Phân tích confusion pairs
+confusion_pairs = misclassified.groupby(
+    ['true_label', 'predicted_label']
+).size().sort_values(ascending=False)
+
+print("Top confusion pairs:")
+print(confusion_pairs.head(10))
+
+# Analyze features của misclassified samples
+print("\nFeature statistics của misclassified VIP customers:")
+vip_errors = misclassified[misclassified['true_label'] == 0]
+print(vip_errors.describe())
+            </div>
+            <div class="slide-number">44/50</div>
+        </div>
+
+        <!-- Slide 45: Model Deployment Preparation -->
+        <div class="slide">
+            <h2>🚀 Chuẩn bị Deploy Model</h2>
+            <h3>Save model và artifacts:</h3>
+            <div class="code-block">
+import pickle
+import joblib
+
+# Save model
+joblib.dump(best_rf, 'customer_segment_model.pkl')
+
+# Save scaler
+joblib.dump(scaler, 'scaler.pkl')
+
+# Save feature names
+feature_names = X_train.columns.tolist()
+with open('feature_names.txt', 'w') as f:
+    f.write('\n'.join(feature_names))
+
+# Save model metadata
+metadata = {
+    'model_type': 'RandomForest',
+    'n_estimators': best_rf.n_estimators,
+    'max_depth': best_rf.max_depth,
+    'training_date': '2024-11-16',
+    'f1_macro': 0.8240,
+    'classes': ['VIP', 'Regular', 'Occasional', 'At-Risk']
+}
+
+import json
+with open('model_metadata.json', 'w') as f:
+    json.dump(metadata, f, indent=4)
+            </div>
+            <div class="slide-number">45/50</div>
+        </div>
+
+        <!-- Slide 46: Model Deployment Code -->
+        <div class="slide">
+            <h2>🚀 Inference Code</h2>
+            <div class="code-block">
+# Load model và dependencies
+import joblib
+import pandas as pd
+
+class CustomerSegmentPredictor:
+    def __init__(self):
+        self.model = joblib.load('customer_segment_model.pkl')
+        self.scaler = joblib.load('scaler.pkl')
+        with open('feature_names.txt', 'r') as f:
+            self.features = f.read().splitlines()
+    
+    def predict(self, customer_data):
+        """
+        Input: DataFrame hoặc dict với customer features
+        Output: segment prediction và confidence
+        """
+        # Convert to DataFrame nếu là dict
+        if isinstance(customer_data, dict):
+            customer_data = pd.DataFrame([customer_data])
+        
+        # Ensure correct feature order
+        X = customer_data[self.features]
+        
+        # Scale
+        X_scaled = self.scaler.transform(X)
+        
+        # Predict
+        prediction = self.model.predict(X_scaled)[0]
+        probas = self.model.predict_proba(X_scaled)[0]
+        
+        return {
+            'segment': prediction,
+            'confidence': float(probas[prediction]),
+            'probabilities': probas.tolist()
+        }
+
+# Usage
+predictor = CustomerSegmentPredictor()
+result = predictor.predict({
+    'recency': 15,
+    'frequency': 25,
+    'monetary': 15000,
+    'avg_order_value': 600,
+    'days_since_first_purchase': 365,
+    'email_open_rate': 0.65,
+    'website_visits': 40
+})
+
+print(result)
+            </div>
+            <div class="slide-number">46/50</div>
+        </div>
+
+        <!-- Slide 47: Model Monitoring -->
+        <div class="slide">
+            <h2>📊 Model Monitoring</h2>
+            <p>Sau khi deploy, cần monitor model performance và data drift.</p>
+            
+            <div class="highlight">
+                <h3>Metrics cần monitor:</h3>
+                <ul>
+                    <li><strong>Prediction Distribution:</strong> Tỷ lệ mỗi segment có thay đổi không?</li>
+                    <li><strong>Confidence Scores:</strong> Average confidence có giảm không?</li>
+                    <li><strong>Feature Distribution:</strong> Input features có khác training data?</li>
+                    <li><strong>Business Metrics:</strong> Campaign performance cho mỗi segment</li>
+                </ul>
+            </div>
+            
+            <div class="box" style="margin-top: 20px;">
+                <h3>Khi nào retrain?</h3>
+                <ul>
+                    <li>Accuracy giảm đáng kể trên validation set</li>
+                    <li>Significant data drift detected</li>
+                    <li>Business rules thay đổi</li>
+                    <li>Định kỳ (ví dụ: quarterly)</li>
+                </ul>
+            </div>
+            <div class="slide-number">47/50</div>
+        </div>
+
+        <!-- Slide 48: Best Practices -->
+        <div class="slide">
+            <h2>✅ Best Practices</h2>
+            <div class="two-column">
+                <div class="box">
+                    <h3 style="font-size: 1.2em;">Data Preparation</h3>
+                    <ul>
+                        <li>Kiểm tra và xử lý missing values</li>
+                        <li>Handle outliers appropriately</li>
+                        <li>Feature engineering based on domain knowledge</li>
+                        <li>Stratified train-test split</li>
+                    </ul>
+                </div>
+                
+                <div class="box">
+                    <h3 style="font-size: 1.2em;">Model Selection</h3>
+                    <ul>
+                        <li>Try multiple algorithms</li>
+                        <li>Use appropriate metrics (F1 Macro)</li>
+                        <li>Cross-validation để validate</li>
+                        <li>Hyperparameter tuning</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="box" style="margin-top: 20px;">
+                <h3>Imbalanced Data</h3>
+                <ul>
+                    <li>Consider class weights</li>
+                    <li>Try SMOTE hoặc sampling techniques</li>
+                    <li>Use stratified sampling</li>
+                    <li>Focus on per-class metrics</li>
+                </ul>
+            </div>
+            <div class="slide-number">48/50</div>
+        </div>
+
+        <!-- Slide 49: Common Pitfalls -->
+        <div class="slide">
+            <h2>⚠️ Các lỗi thường gặp</h2>
+            <div class="highlight">
+                <h3>1. Chỉ nhìn Accuracy</h3>
+                <p>❌ Model có 95% accuracy nhưng recall cho VIP chỉ 20%</p>
+                <p>✅ Phải xem per-class metrics, đặc biệt với imbalanced data</p>
+            </div>
+            
+            <div class="highlight">
+                <h3>2. Data Leakage</h3>
+                <p>❌ Fit scaler trên toàn bộ data trước khi split</p>
+                <p>✅ Chỉ fit scaler trên training set, sau đó transform test set</p>
+            </div>
+            
+            <div class="highlight">
+                <h3>3. Overfitting</h3>
+                <p>❌ Training accuracy 99%, test accuracy 70%</p>
+                <p>✅ Use regularization, pruning, cross-validation</p>
+            </div>
+            
+            <div class="highlight">
+                <h3>4. Không test trên data mới</h3>
+                <p>❌ Chỉ evaluate trên test set một lần</p>
+                <p>✅ Validate trên fresh data định kỳ</p>
+            </div>
+            <div class="slide-number">49/50</div>
+        </div>
+
+        <!-- Slide 50: Summary & Next Steps -->
+        <div class="slide">
+            <h2>🎓 Tổng kết</h2>
+            <h3>Những gì đã học:</h3>
+            <ul>
+                <li>✅ 5 thuật toán multiclass classification chính</li>
+                <li>✅ Evaluation metrics: Accuracy, Precision, Recall, F1</li>
+                <li>✅ Macro vs Micro vs Weighted averaging</li>
+                <li>✅ Xử lý imbalanced data với SMOTE và class weights</li>
+                <li>✅ Hyperparameter tuning và cross-validation</li>
+                <li>✅ Model deployment và monitoring</li>
+            </ul>
+            
+            <h3 style="margin-top: 30px;">Next Steps:</h3>
+            <ul>
+                <li>📚 Thực hành với datasets thực tế từ Kaggle</li>
+                <li>🔍 Tìm hiểu thêm về ensemble methods (XGBoost, LightGBM)</li>
+                <li>🧠 Học deep learning cho complex patterns</li>
+                <li>📊 Apply vào capstone project của bạn</li>
+            </ul>
+            
+            <p style="text-align: center; margin-top: 40px; font-size: 1.3em; color: #667eea;">
+                <strong>Cảm ơn các bạn đã học! 🎉</strong>
+            </p>
+            <div class="slide-number">50/50</div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button id="prevBtn" onclick="changeSlide(-1)">← Trước</button>
+        <button id="nextBtn" onclick="changeSlide(1)">Sau →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            
+            // Scroll to top
+            slides[currentSlide].scrollTop = 0;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === slides.length - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Touch swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) changeSlide(1);
+            if (touchEndX > touchStartX + 50) changeSlide(-1);
+        }
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
