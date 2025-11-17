@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Recording Process - Chapter 2</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+        }
+        
+        .reveal {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .reveal h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+            text-transform: none;
+        }
+        
+        .reveal h2 {
+            color: var(--secondary-color);
+            font-size: 1.8em;
+            margin-bottom: 0.8em;
+            text-transform: none;
+        }
+        
+        .reveal h3 {
+            color: var(--primary-color);
+            font-size: 1.4em;
+            margin-bottom: 0.5em;
+        }
+        
+        .t-account {
+            display: inline-block;
+            border: 2px solid var(--primary-color);
+            min-width: 300px;
+            margin: 20px;
+            text-align: center;
+        }
+        
+        .t-account-title {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        .t-account-body {
+            display: flex;
+            min-height: 150px;
+        }
+        
+        .debit-side, .credit-side {
+            flex: 1;
+            padding: 15px;
+            border-right: 1px solid var(--primary-color);
+        }
+        
+        .credit-side {
+            border-right: none;
+            border-left: 1px solid var(--primary-color);
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .box {
+            border: 2px solid var(--secondary-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+        }
+        
+        .learning-objective {
+            background: linear-gradient(135deg, var(--secondary-color), #5dade2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .example {
+            background-color: #d5f4e6;
+            border-left: 5px solid var(--success-color);
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .journal-entry {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .session-marker {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+        
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 90%;
+        }
+        
+        table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px;
+        }
+        
+        table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        
+        .debit-color {
+            color: #c0392b;
+            font-weight: bold;
+        }
+        
+        .credit-color {
+            color: #16a085;
+            font-weight: bold;
+        }
+        
+        .key-point {
+            font-size: 1.1em;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        
+        .formula {
+            background-color: #e8f4f8;
+            border: 2px dashed var(--secondary-color);
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- SLIDE 1: Title -->
+            <section>
+                <h1>The Recording Process</h1>
+                <h2>Chapter 2: Principles of Accounting</h2>
+                <p style="margin-top: 50px;">Giảng viên: Phạm Thanh Tùng</p>
+                <p>Ngành: Thương mại điện tử</p>
+                <p><em>3 Sessions - 150 minutes each</em></p>
+            </section>
+
+            <!-- SLIDE 2: Course Overview -->
+            <section>
+                <h2>Course Structure</h2>
+                <div class="box">
+                    <h3>📅 Session 1: Accounts, Debits, and Credits</h3>
+                    <p>Understanding the basic building blocks of accounting records</p>
+                </div>
+                <div class="box">
+                    <h3>📅 Session 2: Journal and Ledger</h3>
+                    <p>Learning the recording and posting process</p>
+                </div>
+                <div class="box">
+                    <h3>📅 Session 3: Trial Balance & Practice</h3>
+                    <p>Preparing trial balances and comprehensive examples</p>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <div class="learning-objective">
+                    <p><strong>LO1:</strong> Describe how accounts, debits, and credits are used to record business transactions</p>
+                </div>
+                <div class="learning-objective">
+                    <p><strong>LO2:</strong> Indicate how a journal is used in the recording process</p>
+                </div>
+                <div class="learning-objective">
+                    <p><strong>LO3:</strong> Explain how a ledger and posting help in the recording process</p>
+                </div>
+                <div class="learning-objective">
+                    <p><strong>LO4:</strong> Prepare a trial balance</p>
+                </div>
+            </section>
+
+            <!-- SESSION 1 STARTS HERE -->
+            
+            <!-- SLIDE 4: Session 1 Title -->
+            <section data-background-color="#3498db">
+                <div class="session-marker">Session 1</div>
+                <h1 style="color: white;">Session 1</h1>
+                <h2 style="color: white;">Accounts, Debits, and Credits</h2>
+                <p style="color: white; font-size: 1.2em;">Understanding the Foundation of Accounting Records</p>
+            </section>
+
+            <!-- SLIDE 5: Why This Matters -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>Why Does This Matter?</h2>
+                <div class="example">
+                    <h3>Real-World Scenario: Bank of Taiwan</h3>
+                    <p>Imagine checking your bank balance online and seeing "Account information lost."</p>
+                    <p style="margin-top: 20px;"><strong>How does Bank of Taiwan track thousands of daily transactions?</strong></p>
+                    <ul>
+                        <li>Sophisticated accounting information system</li>
+                        <li>Every transaction properly recorded</li>
+                        <li>Double-entry system ensures accuracy</li>
+                    </ul>
+                </div>
+                <p class="key-point">Even large companies can make mistakes without proper recording!</p>
+            </section>
+
+            <!-- SLIDE 6: The Account -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>What is an Account?</h2>
+                <div class="box">
+                    <p><strong>Definition:</strong> An individual accounting record of increases and decreases in a specific asset, liability, or equity item.</p>
+                </div>
+                <h3 style="margin-top: 30px;">Examples:</h3>
+                <ul>
+                    <li>Cash</li>
+                    <li>Accounts Receivable</li>
+                    <li>Equipment</li>
+                    <li>Accounts Payable</li>
+                    <li>Service Revenue</li>
+                    <li>Salaries and Wages Expense</li>
+                </ul>
+                <p class="highlight" style="margin-top: 30px;">💡 We capitalize account names when referring to specific accounts</p>
+            </section>
+
+            <!-- SLIDE 7: T-Account -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>The T-Account</h2>
+                <p>The simplest form of an account consists of three parts:</p>
+                <div class="t-account">
+                    <div class="t-account-title">Account Title</div>
+                    <div class="t-account-body">
+                        <div class="debit-side">
+                            <strong>Left Side</strong><br>
+                            (Debit Side)
+                        </div>
+                        <div class="credit-side">
+                            <strong>Right Side</strong><br>
+                            (Credit Side)
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 30px;" class="key-point">Why "T-account"? Because it looks like the letter "T"!</p>
+            </section>
+
+            <!-- SLIDE 8: Debits and Credits -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>Understanding Debits and Credits</h2>
+                <div class="box">
+                    <h3>Important Definitions:</h3>
+                    <p><span class="debit-color">DEBIT (Dr.)</span> = Left side of an account</p>
+                    <p><span class="credit-color">CREDIT (Cr.)</span> = Right side of an account</p>
+                </div>
+                <div class="highlight" style="margin-top: 30px;">
+                    <h3>⚠️ Common Misconception</h3>
+                    <p>Debit does NOT mean increase</p>
+                    <p>Credit does NOT mean decrease</p>
+                    <p><strong>They simply indicate POSITION (left or right)</strong></p>
+                </div>
+            </section>
+
+            <!-- SLIDE 9: The Accounting Equation Review -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>Review: The Accounting Equation</h2>
+                <div class="formula">
+                    ASSETS = LIABILITIES + EQUITY
+                </div>
+                <p style="margin-top: 30px;">This equation must ALWAYS balance!</p>
+                <div class="box" style="margin-top: 30px;">
+                    <p><strong>The Double-Entry System</strong> ensures that every transaction affects at least two accounts and keeps the equation in balance.</p>
+                </div>
+            </section>
+
+            <!-- SLIDE 10: Debit and Credit Rules - Assets -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>Debit and Credit Rules: Assets</h2>
+                <div class="t-account">
+                    <div class="t-account-title">ASSETS</div>
+                    <div class="t-account-body">
+                        <div class="debit-side">
+                            <strong class="debit-color">Debit</strong><br><br>
+                            Increase (+)<br><br>
+                            <span style="font-size: 2em;">↑</span>
+                        </div>
+                        <div class="credit-side">
+                            <strong class="credit-color">Credit</strong><br><br>
+                            Decrease (−)<br><br>
+                            <span style="font-size: 2em;">↓</span>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 30px;" class="highlight">Normal Balance: <span class="debit-color">DEBIT</span></p>
+                <p><em>Assets normally have more debits than credits</em></p>
+            </section>
+
+            <!-- SLIDE 11: Debit and Credit Rules - Liabilities -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>Debit and Credit Rules: Liabilities</h2>
+                <div class="t-account">
+                    <div class="t-account-title">LIABILITIES</div>
+                    <div class="t-account-body">
+                        <div class="debit-side">
+                            <strong class="debit-color">Debit</strong><br><br>
+                            Decrease (−)<br><br>
+                            <span style="font-size: 2em;">↓</span>
+                        </div>
+                        <div class="credit-side">
+                            <strong class="credit-color">Credit</strong><br><br>
+                            Increase (+)<br><br>
+                            <span style="font-size: 2em;">↑</span>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 30px;" class="highlight">Normal Balance: <span class="credit-color">CREDIT</span></p>
+                <p><em>Opposite of assets!</em></p>
+            </section>
+
+            <!-- SLIDE 12: Debit and Credit Rules - Equity -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>Debit and Credit Rules: Equity</h2>
+                <div class="t-account">
+                    <div class="t-account-title">EQUITY (Share Capital)</div>
+                    <div class="t-account-body">
+                        <div class="debit-side">
+                            <strong class="debit-color">Debit</strong><br><br>
+                            Decrease (−)<br><br>
+                            <span style="font-size: 2em;">↓</span>
+                        </div>
+                        <div class="credit-side">
+                            <strong class="credit-color">Credit</strong><br><br>
+                            Increase (+)<br><br>
+                            <span style="font-size: 2em;">↑</span>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 30px;" class="highlight">Normal Balance: <span class="credit-color">CREDIT</span></p>
+                <p><em>Same as liabilities!</em></p>
+            </section>
+
+            <!-- SLIDE 13: Expanded Equity Accounts -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>Equity: The Complete Picture</h2>
+                <p>Equity includes several components:</p>
+                <table style="font-size: 0.8em;">
+                    <tr>
+                        <th>Account</th>
+                        <th>Effect on Equity</th>
+                        <th>Normal Balance</th>
+                    </tr>
+                    <tr>
+                        <td>Share Capital—Ordinary</td>
+                        <td>Increase</td>
+                        <td class="credit-color">Credit</td>
+                    </tr>
+                    <tr>
+                        <td>Retained Earnings</td>
+                        <td>Increase</td>
+                        <td class="credit-color">Credit</td>
+                    </tr>
+                    <tr>
+                        <td>Revenues</td>
+                        <td>Increase</td>
+                        <td class="credit-color">Credit</td>
+                    </tr>
+                    <tr>
+                        <td>Expenses</td>
+                        <td>Decrease</td>
+                        <td class="debit-color">Debit</td>
+                    </tr>
+                    <tr>
+                        <td>Dividends</td>
+                        <td>Decrease</td>
+                        <td class="debit-color">Debit</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- SLIDE 14: Revenue Accounts -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>Revenue Accounts</h2>
+                <div class="t-account">
+                    <div class="t-account-title">REVENUES</div>
+                    <div class="t-account-body">
+                        <div class="debit-side">
+                            <strong class="debit-color">Debit</strong><br><br>
+                            Decrease (−)
+                        </div>
+                        <div class="credit-side">
+                            <strong class="credit-color">Credit</strong><br><br>
+                            Increase (+)
+                        </div>
+                    </div>
+                </div>
+                <div class="box" style="margin-top: 30px;">
+                    <p><strong>Why credit?</strong> Revenues increase equity, and equity increases with credits</p>
+                    <p class="highlight">Normal Balance: <span class="credit-color">CREDIT</span></p>
+                </div>
+            </section>
+
+            <!-- SLIDE 15: Expense Accounts -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>Expense Accounts</h2>
+                <div class="t-account">
+                    <div class="t-account-title">EXPENSES</div>
+                    <div class="t-account-body">
+                        <div class="debit-side">
+                            <strong class="debit-color">Debit</strong><br><br>
+                            Increase (+)
+                        </div>
+                        <div class="credit-side">
+                            <strong class="credit-color">Credit</strong><br><br>
+                            Decrease (−)
+                        </div>
+                    </div>
+                </div>
+                <div class="box" style="margin-top: 30px;">
+                    <p><strong>Why debit?</strong> Expenses decrease equity, opposite of revenues</p>
+                    <p class="highlight">Normal Balance: <span class="debit-color">DEBIT</span></p>
+                </div>
+            </section>
+
+            <!-- SLIDE 16: Summary of Debit/Credit Rules -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>Complete Debit/Credit Rules Summary</h2>
+                <table style="font-size: 0.7em;">
+                    <tr>
+                        <th>Account Type</th>
+                        <th>Increase</th>
+                        <th>Decrease</th>
+                        <th>Normal Balance</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Assets</strong></td>
+                        <td class="debit-color">Debit</td>
+                        <td class="credit-color">Credit</td>
+                        <td class="debit-color">Debit</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Liabilities</strong></td>
+                        <td class="credit-color">Credit</td>
+                        <td class="debit-color">Debit</td>
+                        <td class="credit-color">Credit</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Share Capital</strong></td>
+                        <td class="credit-color">Credit</td>
+                        <td class="debit-color">Debit</td>
+                        <td class="credit-color">Credit</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Retained Earnings</strong></td>
+                        <td class="credit-color">Credit</td>
+                        <td class="debit-color">Debit</td>
+                        <td class="credit-color">Credit</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Revenues</strong></td>
+                        <td class="credit-color">Credit</td>
+                        <td class="debit-color">Debit</td>
+                        <td class="credit-color">Credit</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Expenses</strong></td>
+                        <td class="debit-color">Debit</td>
+                        <td class="credit-color">Credit</td>
+                        <td class="debit-color">Debit</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dividends</strong></td>
+                        <td class="debit-color">Debit</td>
+                        <td class="credit-color">Credit</td>
+                        <td class="debit-color">Debit</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- SLIDE 17: Example 1 - Cash Investment -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>Example 1: Owner Investment</h2>
+                <div class="example">
+                    <p><strong>Transaction:</strong> September 1 - Shareholders invest €15,000 cash in exchange for ordinary shares</p>
+                </div>
+                <div style="display: flex; justify-content: space-around; margin-top: 30px;">
+                    <div class="t-account" style="min-width: 200px;">
+                        <div class="t-account-title">Cash</div>
+                        <div class="t-account-body">
+                            <div class="debit-side">
+                                15,000
+                            </div>
+                            <div class="credit-side">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="t-account" style="min-width: 200px;">
+                        <div class="t-account-title">Share Capital—Ordinary</div>
+                        <div class="t-account-body">
+                            <div class="debit-side">
+                                
+                            </div>
+                            <div class="credit-side">
+                                15,000
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 30px;"><span class="debit-color">Debit</span> Cash (asset ↑) / <span class="credit-color">Credit</span> Share Capital (equity ↑)</p>
+            </section>
+
+            <!-- SLIDE 18: Example 2 - Purchase Equipment -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>Example 2: Purchase Equipment for Cash</h2>
+                <div class="example">
+                    <p><strong>Transaction:</strong> September 1 - Purchase equipment for €7,000 cash</p>
+                </div>
+                <div style="display: flex; justify-content: space-around; margin-top: 30px;">
+                    <div class="t-account" style="min-width: 200px;">
+                        <div class="t-account-title">Equipment</div>
+                        <div class="t-account-body">
+                            <div class="debit-side">
+                                7,000
+                            </div>
+                            <div class="credit-side">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="t-account" style="min-width: 200px;">
+                        <div class="t-account-title">Cash</div>
+                        <div class="t-account-body">
+                            <div class="debit-side">
+                                
+                            </div>
+                            <div class="credit-side">
+                                7,000
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 30px;"><span class="debit-color">Debit</span> Equipment (asset ↑) / <span class="credit-color">Credit</span> Cash (asset ↓)</p>
+            </section>
+
+            <!-- SLIDE 19: Practice Exercise -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>Practice: Identify Debit and Credit</h2>
+                <p>For each transaction, identify which account is debited and which is credited:</p>
+                <ol style="text-align: left;">
+                    <li>Paid rent expense $900</li>
+                    <li>Received cash for services performed $2,000</li>
+                    <li>Purchased supplies on account $500</li>
+                    <li>Paid salaries $1,500</li>
+                </ol>
+                <p style="margin-top: 30px; font-size: 0.8em;"><em>Take 5 minutes to work with your partner</em></p>
+            </section>
+
+            <!-- SLIDE 20: Session 1 Summary -->
+            <section>
+                <div class="session-marker">Session 1</div>
+                <h2>Session 1 Summary</h2>
+                <div class="box">
+                    <h3>Key Takeaways:</h3>
+                    <ul>
+                        <li>An account records increases and decreases in specific items</li>
+                        <li>Debit = Left side, Credit = Right side</li>
+                        <li>Assets increase with debits</li>
+                        <li>Liabilities and equity increase with credits</li>
+                        <li>Revenues increase with credits</li>
+                        <li>Expenses increase with debits</li>
+                        <li>Normal balance = side where increases are recorded</li>
+                    </ul>
+                </div>
+                <p class="key-point" style="margin-top: 30px;">Next Session: The Journal and Ledger</p>
+            </section>
+
+            <!-- SESSION 2 STARTS HERE -->
+            
+            <!-- SLIDE 21: Session 2 Title -->
+            <section data-background-color="#27ae60">
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h1 style="color: white;">Session 2</h1>
+                <h2 style="color: white;">The Journal and Ledger</h2>
+                <p style="color: white; font-size: 1.2em;">Recording and Posting Business Transactions</p>
+            </section>
+
+            <!-- SLIDE 22: The Recording Process Overview -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>The Recording Process</h2>
+                <div class="box">
+                    <h3>Three Basic Steps:</h3>
+                    <ol>
+                        <li><strong>ANALYZE</strong> each transaction</li>
+                        <li><strong>JOURNALIZE</strong> the transaction</li>
+                        <li><strong>POST</strong> to ledger accounts</li>
+                    </ol>
+                </div>
+                <p style="margin-top: 30px;" class="key-point">These steps occur repeatedly for every transaction!</p>
+            </section>
+
+            <!-- SLIDE 23: The Journal -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>What is a Journal?</h2>
+                <div class="box">
+                    <p><strong>Definition:</strong> A chronological record of transactions</p>
+                    <p><strong>Also called:</strong> "Book of Original Entry"</p>
+                </div>
+                <h3 style="margin-top: 30px;">Why Use a Journal?</h3>
+                <ul>
+                    <li>✅ Shows complete effect of transaction in one place</li>
+                    <li>✅ Provides chronological record</li>
+                    <li>✅ Helps prevent and locate errors</li>
+                    <li>✅ Easy to compare debits and credits</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 24: General Journal Format -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>General Journal Format</h2>
+                <table style="font-size: 0.7em;">
+                    <tr>
+                        <th>Date</th>
+                        <th>Account Titles and Explanation</th>
+                        <th>Ref.</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </tr>
+                    <tr>
+                        <td>2020<br>Sept. 1</td>
+                        <td style="text-align: left;">Cash<br>&nbsp;&nbsp;Share Capital—Ordinary<br><em>(Issued shares for cash)</em></td>
+                        <td><br>J1</td>
+                        <td>15,000</td>
+                        <td><br>15,000</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 20px; font-size: 0.9em;"><strong>Note:</strong> Debit account first, credit account indented, explanation in parentheses</p>
+            </section>
+
+            <!-- SLIDE 25: Journalizing Steps -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>Steps to Journalize a Transaction</h2>
+                <div class="box">
+                    <ol style="text-align: left;">
+                        <li><strong>Date:</strong> Enter the date in the date column</li>
+                        <li><strong>Debit:</strong> Write debit account title at left margin, amount in debit column</li>
+                        <li><strong>Credit:</strong> Write credit account title indented, amount in credit column</li>
+                        <li><strong>Explanation:</strong> Write brief explanation below credit account</li>
+                        <li><strong>Space:</strong> Leave a blank line between entries</li>
+                    </ol>
+                </div>
+                <p class="highlight" style="margin-top: 20px;">The Ref. column is left blank until posting!</p>
+            </section>
+
+            <!-- SLIDE 26: Example - Complete Journal Entry -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>Complete Journal Entry Example</h2>
+                <div class="example">
+                    <p><strong>Transaction:</strong> October 1 - C.R. Yazici invests ₺10,000 cash in exchange for ordinary shares</p>
+                </div>
+                <div class="journal-entry">
+                    <table style="width: 100%; font-size: 0.8em;">
+                        <tr>
+                            <th>Date</th>
+                            <th>Account Titles and Explanation</th>
+                            <th>Ref.</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                        </tr>
+                        <tr>
+                            <td>Oct. 1</td>
+                            <td style="text-align: left;">Cash<br>&nbsp;&nbsp;Share Capital—Ordinary<br><em>(Issued shares for cash)</em></td>
+                            <td>101<br>311</td>
+                            <td>10,000</td>
+                            <td><br>10,000</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SLIDE 27: Simple vs Compound Entries -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>Simple vs Compound Entries</h2>
+                <div class="box">
+                    <h3>Simple Entry</h3>
+                    <p>Involves only 2 accounts (one debit, one credit)</p>
+                </div>
+                <div class="box" style="margin-top: 20px;">
+                    <h3>Compound Entry</h3>
+                    <p>Requires 3 or more accounts</p>
+                </div>
+                <p class="key-point" style="margin-top: 30px;">Rule: List ALL debits before ANY credits</p>
+            </section>
+
+            <!-- SLIDE 28: Compound Entry Example -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>Compound Entry Example</h2>
+                <div class="example">
+                    <p><strong>Transaction:</strong> July 1 - Purchase delivery truck for £14,000. Pay £8,000 cash, remainder on account</p>
+                </div>
+                <div class="journal-entry">
+                    <table style="width: 100%; font-size: 0.75em;">
+                        <tr>
+                            <th>Date</th>
+                            <th>Account Titles and Explanation</th>
+                            <th>Ref.</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                        </tr>
+                        <tr>
+                            <td>July 1</td>
+                            <td style="text-align: left;">Equipment<br>&nbsp;&nbsp;Cash<br>&nbsp;&nbsp;Accounts Payable<br><em>(Purchased truck for cash with balance on account)</em></td>
+                            <td></td>
+                            <td>14,000</td>
+                            <td><br>8,000<br>6,000</td>
+                        </tr>
+                    </table>
+                </div>
+                <p style="margin-top: 20px;">✓ Debits = Credits (14,000 = 8,000 + 6,000)</p>
+            </section>
+
+            <!-- SLIDE 29: Practice Journalizing -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>Practice: Journalize These Transactions</h2>
+                <ol style="text-align: left; font-size: 0.9em;">
+                    <li>Oct. 2 - Paid office rent ₺900 cash</li>
+                    <li>Oct. 4 - Purchased supplies on account ₺2,500</li>
+                    <li>Oct. 10 - Received cash for services ₺3,600</li>
+                </ol>
+                <p style="margin-top: 30px; font-size: 0.9em;"><em>Work in pairs for 7 minutes</em></p>
+            </section>
+
+            <!-- SLIDE 30: The Ledger -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>What is a Ledger?</h2>
+                <div class="box">
+                    <p><strong>Definition:</strong> The entire group of accounts maintained by a company</p>
+                </div>
+                <h3 style="margin-top: 30px;">General Ledger Contains:</h3>
+                <ul>
+                    <li>All Asset accounts</li>
+                    <li>All Liability accounts</li>
+                    <li>All Equity accounts</li>
+                </ul>
+                <p class="key-point" style="margin-top: 30px;">The ledger shows the balance in each account</p>
+            </section>
+
+            <!-- SLIDE 31: Ledger vs Journal -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>Journal vs Ledger</h2>
+                <table style="font-size: 0.8em;">
+                    <tr>
+                        <th>JOURNAL</th>
+                        <th>LEDGER</th>
+                    </tr>
+                    <tr>
+                        <td>Book of original entry</td>
+                        <td>Book of final entry</td>
+                    </tr>
+                    <tr>
+                        <td>Chronological order</td>
+                        <td>Classified by account</td>
+                    </tr>
+                    <tr>
+                        <td>Shows complete transaction</td>
+                        <td>Shows account balance</td>
+                    </tr>
+                    <tr>
+                        <td>Debits and credits together</td>
+                        <td>Separate account for each item</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- SLIDE 32: Standard Account Form -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>Three-Column Account Form</h2>
+                <div class="journal-entry">
+                    <p><strong>CASH</strong> No. 101</p>
+                    <table style="width: 100%; font-size: 0.7em;">
+                        <tr>
+                            <th>Date</th>
+                            <th>Explanation</th>
+                            <th>Ref.</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                            <th>Balance</th>
+                        </tr>
+                        <tr>
+                            <td>June 1</td>
+                            <td></td>
+                            <td>J1</td>
+                            <td>25,000</td>
+                            <td></td>
+                            <td>25,000</td>
+                        </tr>
+                        <tr>
+                            <td>June 2</td>
+                            <td></td>
+                            <td>J1</td>
+                            <td></td>
+                            <td>8,000</td>
+                            <td>17,000</td>
+                        </tr>
+                        <tr>
+                            <td>June 3</td>
+                            <td></td>
+                            <td>J1</td>
+                            <td>4,200</td>
+                            <td></td>
+                            <td>21,200</td>
+                        </tr>
+                    </table>
+                </div>
+                <p style="margin-top: 20px;">Balance is calculated after EACH transaction</p>
+            </section>
+
+            <!-- SLIDE 33: Posting Process -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>What is Posting?</h2>
+                <div class="box">
+                    <p><strong>Definition:</strong> Transferring journal entries to ledger accounts</p>
+                </div>
+                <h3 style="margin-top: 30px;">Why Post?</h3>
+                <ul>
+                    <li>Accumulates effects of transactions by account</li>
+                    <li>Shows current balance of each account</li>
+                    <li>Organizes information for financial statements</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 34: Four Steps to Post -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>Posting Steps</h2>
+                <div class="box">
+                    <ol style="text-align: left;">
+                        <li><strong>Post Debit:</strong> Transfer debit amount to debit side of ledger account
+                            <ul><li>Include date and journal page</li></ul>
+                        </li>
+                        <li><strong>Record Reference:</strong> Write account number in journal Ref. column</li>
+                        <li><strong>Post Credit:</strong> Transfer credit amount to credit side of ledger account
+                            <ul><li>Include date and journal page</li></ul>
+                        </li>
+                        <li><strong>Record Reference:</strong> Write account number in journal Ref. column</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- SLIDE 35: Posting Illustration -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>Posting Illustration</h2>
+                <div style="font-size: 0.65em;">
+                    <p><strong>JOURNAL</strong></p>
+                    <table style="margin-bottom: 20px;">
+                        <tr>
+                            <th>Date</th>
+                            <th>Account</th>
+                            <th>Ref.</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                        </tr>
+                        <tr>
+                            <td>Sept. 1</td>
+                            <td style="text-align: left;">Cash<br>&nbsp;&nbsp;Share Capital</td>
+                            <td>101<br>311</td>
+                            <td>15,000</td>
+                            <td><br>15,000</td>
+                        </tr>
+                    </table>
+                    
+                    <div style="display: flex; justify-content: space-around;">
+                        <div>
+                            <p><strong>Cash (101)</strong></p>
+                            <table>
+                                <tr><td>Sept. 1 J1</td><td>15,000</td></tr>
+                            </table>
+                        </div>
+                        <div>
+                            <p><strong>Share Capital (311)</strong></p>
+                            <table>
+                                <tr><td>Sept. 1 J1</td><td>15,000</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 36: Chart of Accounts -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>Chart of Accounts</h2>
+                <div class="box">
+                    <p><strong>Definition:</strong> A list of all accounts and their account numbers</p>
+                </div>
+                <div style="font-size: 0.75em; margin-top: 20px;">
+                    <table>
+                        <tr>
+                            <th>Account Number Range</th>
+                            <th>Account Type</th>
+                        </tr>
+                        <tr><td>101-199</td><td>Assets</td></tr>
+                        <tr><td>200-299</td><td>Liabilities</td></tr>
+                        <tr><td>300-399</td><td>Equity</td></tr>
+                        <tr><td>400-499</td><td>Revenues</td></tr>
+                        <tr><td>600-799</td><td>Expenses</td></tr>
+                    </table>
+                </div>
+                <p style="margin-top: 20px;">Gaps allow for adding new accounts later</p>
+            </section>
+
+            <!-- SLIDE 37: Complete Recording Process -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>The Complete Recording Process</h2>
+                <div style="text-align: center;">
+                    <div class="box" style="display: inline-block; width: 80%;">
+                        <h3 style="color: var(--accent-color);">STEP 1: ANALYZE</h3>
+                        <p>Identify accounts affected and transaction type</p>
+                        <p style="font-size: 2em;">↓</p>
+                        
+                        <h3 style="color: var(--accent-color);">STEP 2: JOURNALIZE</h3>
+                        <p>Record in journal with debits and credits</p>
+                        <p style="font-size: 2em;">↓</p>
+                        
+                        <h3 style="color: var(--accent-color);">STEP 3: POST</h3>
+                        <p>Transfer to individual ledger accounts</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 38: Recording Process Example 1 -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>Complete Example: Rent Payment</h2>
+                <div class="example">
+                    <p><strong>Transaction:</strong> October 3 - Paid office rent ₺900 cash</p>
+                </div>
+                
+                <div style="font-size: 0.8em;">
+                    <p><strong>Step 1: Analyze</strong></p>
+                    <p>Rent Expense increases (debit), Cash decreases (credit)</p>
+                    
+                    <p><strong>Step 2: Journal Entry</strong></p>
+                    <div class="journal-entry">
+                        Oct. 3 &nbsp; Rent Expense &nbsp; 729 &nbsp; 900<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cash &nbsp; 101 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 900
+                    </div>
+                    
+                    <p><strong>Step 3: Post to Ledger</strong></p>
+                    <p>Cash balance decreases by 900, Rent Expense increases by 900</p>
+                </div>
+            </section>
+
+            <!-- SLIDE 39: Recording Process Example 2 -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>Complete Example: Service Revenue</h2>
+                <div class="example">
+                    <p><strong>Transaction:</strong> October 31 - Received ₺10,000 cash for services performed</p>
+                </div>
+                
+                <div style="font-size: 0.8em;">
+                    <p><strong>Step 1: Analyze</strong></p>
+                    <p>Cash increases (debit), Service Revenue increases (credit)</p>
+                    
+                    <p><strong>Step 2: Journal Entry</strong></p>
+                    <div class="journal-entry">
+                        Oct. 31 &nbsp; Cash &nbsp; 101 &nbsp; 10,000<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Service Revenue &nbsp; 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10,000
+                    </div>
+                    
+                    <p><strong>Step 3: Post to Ledger</strong></p>
+                    <p>Cash balance increases by 10,000, Service Revenue increases by 10,000</p>
+                </div>
+            </section>
+
+            <!-- SLIDE 40: Session 2 Summary -->
+            <section>
+                <div class="session-marker" style="background-color: #16a085;">Session 2</div>
+                <h2>Session 2 Summary</h2>
+                <div class="box">
+                    <h3>Key Takeaways:</h3>
+                    <ul>
+                        <li>Journal = chronological record of transactions</li>
+                        <li>Ledger = collection of all accounts</li>
+                        <li>Recording Process: Analyze → Journalize → Post</li>
+                        <li>Debit entries first, credit entries indented</li>
+                        <li>Compound entries have 3+ accounts</li>
+                        <li>Chart of accounts organizes account numbers</li>
+                        <li>Posting transfers journal data to ledger</li>
+                    </ul>
+                </div>
+                <p class="key-point" style="margin-top: 30px;">Next Session: Trial Balance and Practice</p>
+            </section>
+
+            <!-- SESSION 3 STARTS HERE -->
+            
+            <!-- SLIDE 41: Session 3 Title -->
+            <section data-background-color="#e74c3c">
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h1 style="color: white;">Session 3</h1>
+                <h2 style="color: white;">Trial Balance and Practice</h2>
+                <p style="color: white; font-size: 1.2em;">Verifying Accuracy and Mastering the Process</p>
+            </section>
+
+            <!-- SLIDE 42: What is a Trial Balance? -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>What is a Trial Balance?</h2>
+                <div class="box">
+                    <p><strong>Definition:</strong> A list of accounts and their balances at a given time</p>
+                </div>
+                <h3 style="margin-top: 30px;">Primary Purpose:</h3>
+                <p class="key-point">Prove that debits equal credits after posting</p>
+                <h3 style="margin-top: 30px;">Additional Benefits:</h3>
+                <ul>
+                    <li>Helps discover errors in journalizing and posting</li>
+                    <li>Useful for preparing financial statements</li>
+                    <li>Shows all account balances in one place</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 43: Trial Balance Format -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Trial Balance Format</h2>
+                <div class="journal-entry">
+                    <p style="text-align: center;"><strong>Yazici Advertising A.Ş.</strong><br>
+                    <strong>Trial Balance</strong><br>
+                    October 31, 2020</p>
+                    <table style="width: 100%; font-size: 0.7em;">
+                        <tr>
+                            <th style="text-align: left;">Account</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                        </tr>
+                        <tr><td>Cash</td><td>₺15,200</td><td></td></tr>
+                        <tr><td>Supplies</td><td>2,500</td><td></td></tr>
+                        <tr><td>Equipment</td><td>5,000</td><td></td></tr>
+                        <tr><td>Accounts Payable</td><td></td><td>₺2,500</td></tr>
+                        <tr><td>Share Capital—Ordinary</td><td></td><td>10,000</td></tr>
+                        <tr><td>Service Revenue</td><td></td><td>10,000</td></tr>
+                        <tr><td>Rent Expense</td><td>900</td><td></td></tr>
+                        <tr style="border-top: 2px solid black;">
+                            <td><strong>Totals</strong></td>
+                            <td><strong>₺28,700</strong></td>
+                            <td><strong>₺28,700</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SLIDE 44: Steps to Prepare Trial Balance -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Steps to Prepare a Trial Balance</h2>
+                <div class="box">
+                    <ol style="text-align: left;">
+                        <li><strong>List accounts</strong> in order (Assets, Liabilities, Equity, Revenues, Expenses)</li>
+                        <li><strong>Enter balances</strong> in appropriate column:
+                            <ul>
+                                <li>Debit balances → Debit column</li>
+                                <li>Credit balances → Credit column</li>
+                            </ul>
+                        </li>
+                        <li><strong>Total</strong> the debit and credit columns</li>
+                        <li><strong>Verify</strong> that totals are equal</li>
+                    </ol>
+                </div>
+                <p class="highlight" style="margin-top: 20px;">If totals don't match, you have an error!</p>
+            </section>
+
+            <!-- SLIDE 45: What Trial Balance Proves -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>What Trial Balance PROVES</h2>
+                <div class="box" style="background-color: #d5f4e6;">
+                    <h3>✓ Trial Balance DOES Prove:</h3>
+                    <ul>
+                        <li>Debits equal credits</li>
+                        <li>Mathematical equality after posting</li>
+                        <li>Ledger is in balance</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SLIDE 46: Limitations of Trial Balance -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>What Trial Balance DOES NOT Prove</h2>
+                <div class="box" style="background-color: #fadbd8;">
+                    <h3>✗ Trial Balance Does NOT Guarantee:</h3>
+                    <ul style="text-align: left;">
+                        <li>All transactions were recorded</li>
+                        <li>Transactions were recorded in correct accounts</li>
+                        <li>Transactions were recorded for correct amounts</li>
+                        <li>The ledger is error-free</li>
+                    </ul>
+                </div>
+                <p class="key-point" style="margin-top: 30px;">A balanced trial balance ≠ No errors!</p>
+            </section>
+
+            <!-- SLIDE 47: Errors That Don't Affect Balance -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Errors NOT Detected by Trial Balance</h2>
+                <ol style="text-align: left; font-size: 0.85em;">
+                    <li><strong>Transaction not journalized</strong>
+                        <p style="font-size: 0.9em;">Example: Forgot to record a sale</p>
+                    </li>
+                    <li><strong>Correct journal entry not posted</strong>
+                        <p style="font-size: 0.9em;">Example: Journalized but never transferred to ledger</p>
+                    </li>
+                    <li><strong>Journal entry posted twice</strong>
+                        <p style="font-size: 0.9em;">Example: Same entry posted on Monday and Tuesday</p>
+                    </li>
+                    <li><strong>Wrong accounts used</strong>
+                        <p style="font-size: 0.9em;">Example: Debited Equipment instead of Supplies</p>
+                    </li>
+                    <li><strong>Offsetting errors</strong>
+                        <p style="font-size: 0.9em;">Example: Two different $500 errors that cancel out</p>
+                    </li>
+                </ol>
+            </section>
+
+            <!-- SLIDE 48: Locating Errors -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Locating Errors in Trial Balance</h2>
+                <div class="box">
+                    <h3>Step-by-Step Error Detection:</h3>
+                    <ol style="text-align: left;">
+                        <li><strong>Calculate difference</strong> between debit and credit totals</li>
+                        <li><strong>If difference is 1, 10, 100, or 1,000:</strong>
+                            <ul><li>Re-add the columns</li></ul>
+                        </li>
+                        <li><strong>If difference is divisible by 2:</strong>
+                            <ul><li>Look for amount equal to half the difference in wrong column</li></ul>
+                        </li>
+                        <li><strong>If difference is divisible by 9:</strong>
+                            <ul><li>Look for transposition error (e.g., 54 written as 45)</li></ul>
+                        </li>
+                        <li><strong>Check if any account balance was omitted</strong></li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- SLIDE 49: Error Example 1 -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Error Detection Example</h2>
+                <div class="example">
+                    <p><strong>Problem:</strong> Trial balance shows:</p>
+                    <p>Total Debits: $45,670</p>
+                    <p>Total Credits: $45,580</p>
+                    <p><strong>Difference:</strong> $90</p>
+                </div>
+                <div class="box" style="margin-top: 20px;">
+                    <p><strong>Solution Steps:</strong></p>
+                    <ol style="text-align: left;">
+                        <li>$90 ÷ 9 = $10 ✓ (divisible by 9)</li>
+                        <li>Look for transposition error</li>
+                        <li>Likely cause: $450 written as $540, or $540 written as $450</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- SLIDE 50: Currency Signs and Underlining -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Professional Formatting Rules</h2>
+                <div class="box">
+                    <h3>Currency Signs:</h3>
+                    <ul style="text-align: left;">
+                        <li>Show currency sign for first item in column</li>
+                        <li>Show currency sign for totals</li>
+                        <li>Do NOT use in journals or ledgers</li>
+                    </ul>
+                </div>
+                <div class="box" style="margin-top: 20px;">
+                    <h3>Underlining:</h3>
+                    <ul style="text-align: left;">
+                        <li><u>Single line</u> = subtotal or amount to be added/subtracted</li>
+                        <li><u><u>Double line</u></u> = final total</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SLIDE 51: Comprehensive Practice Problem -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Practice: Campus Laundromat</h2>
+                <div style="font-size: 0.75em;">
+                    <p><strong>September Transactions:</strong></p>
+                    <ol style="text-align: left;">
+                        <li>Sept. 1: Issued shares for HK$20,000 cash</li>
+                        <li>Sept. 2: Paid rent HK$1,000</li>
+                        <li>Sept. 3: Purchased equipment HK$25,000 (HK$10,000 cash, HK$15,000 note payable)</li>
+                        <li>Sept. 4: Paid insurance HK$1,200</li>
+                        <li>Sept. 10: Received advertising bill HK$200</li>
+                        <li>Sept. 20: Declared and paid dividend HK$700</li>
+                        <li>Sept. 30: Received cash for services HK$6,200</li>
+                    </ol>
+                    <p style="margin-top: 20px;"><strong>Task:</strong> Prepare journal entries and trial balance</p>
+                </div>
+            </section>
+
+            <!-- SLIDE 52: Solution - Journal Entries -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Solution: Journal Entries (Part 1)</h2>
+                <div class="journal-entry" style="font-size: 0.65em;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <th>Date</th>
+                            <th>Account</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                        </tr>
+                        <tr>
+                            <td>Sept. 1</td>
+                            <td style="text-align: left;">Cash<br>&nbsp;&nbsp;Share Capital—Ordinary</td>
+                            <td>20,000</td>
+                            <td><br>20,000</td>
+                        </tr>
+                        <tr>
+                            <td>Sept. 2</td>
+                            <td style="text-align: left;">Rent Expense<br>&nbsp;&nbsp;Cash</td>
+                            <td>1,000</td>
+                            <td><br>1,000</td>
+                        </tr>
+                        <tr>
+                            <td>Sept. 3</td>
+                            <td style="text-align: left;">Equipment<br>&nbsp;&nbsp;Cash<br>&nbsp;&nbsp;Notes Payable</td>
+                            <td>25,000</td>
+                            <td><br>10,000<br>15,000</td>
+                        </tr>
+                        <tr>
+                            <td>Sept. 4</td>
+                            <td style="text-align: left;">Prepaid Insurance<br>&nbsp;&nbsp;Cash</td>
+                            <td>1,200</td>
+                            <td><br>1,200</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SLIDE 53: Solution - Journal Entries Part 2 -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Solution: Journal Entries (Part 2)</h2>
+                <div class="journal-entry" style="font-size: 0.65em;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <th>Date</th>
+                            <th>Account</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                        </tr>
+                        <tr>
+                            <td>Sept. 10</td>
+                            <td style="text-align: left;">Advertising Expense<br>&nbsp;&nbsp;Accounts Payable</td>
+                            <td>200</td>
+                            <td><br>200</td>
+                        </tr>
+                        <tr>
+                            <td>Sept. 20</td>
+                            <td style="text-align: left;">Dividends<br>&nbsp;&nbsp;Cash</td>
+                            <td>700</td>
+                            <td><br>700</td>
+                        </tr>
+                        <tr>
+                            <td>Sept. 30</td>
+                            <td style="text-align: left;">Cash<br>&nbsp;&nbsp;Service Revenue</td>
+                            <td>6,200</td>
+                            <td><br>6,200</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SLIDE 54: Solution - Trial Balance -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Solution: Trial Balance</h2>
+                <div class="journal-entry">
+                    <p style="text-align: center;"><strong>Campus Laundromat Ltd.</strong><br>
+                    <strong>Trial Balance</strong><br>
+                    September 30, 2020</p>
+                    <table style="width: 100%; font-size: 0.7em;">
+                        <tr>
+                            <th style="text-align: left;">Account</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                        </tr>
+                        <tr><td>Cash</td><td>HK$13,300</td><td></td></tr>
+                        <tr><td>Prepaid Insurance</td><td>1,200</td><td></td></tr>
+                        <tr><td>Equipment</td><td>25,000</td><td></td></tr>
+                        <tr><td>Notes Payable</td><td></td><td>HK$15,000</td></tr>
+                        <tr><td>Accounts Payable</td><td></td><td>200</td></tr>
+                        <tr><td>Share Capital—Ordinary</td><td></td><td>20,000</td></tr>
+                        <tr><td>Dividends</td><td>700</td><td></td></tr>
+                        <tr><td>Service Revenue</td><td></td><td>6,200</td></tr>
+                        <tr><td>Advertising Expense</td><td>200</td><td></td></tr>
+                        <tr><td>Rent Expense</td><td>1,000</td><td></td></tr>
+                        <tr style="border-top: 2px solid black;">
+                            <td><strong>Totals</strong></td>
+                            <td><strong>HK$41,400</strong></td>
+                            <td><strong>HK$41,400</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SLIDE 55: E-commerce Application -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Application to E-commerce</h2>
+                <div class="box">
+                    <h3>How Recording Process Applies to Online Business:</h3>
+                    <ul style="text-align: left;">
+                        <li><strong>Daily Sales:</strong> Record online transactions (Debit: Cash/Accounts Receivable, Credit: Sales Revenue)</li>
+                        <li><strong>Inventory Purchases:</strong> Track supplier payments (Debit: Inventory, Credit: Cash/Accounts Payable)</li>
+                        <li><strong>Shipping Costs:</strong> Record delivery expenses (Debit: Shipping Expense, Credit: Cash)</li>
+                        <li><strong>Payment Processing Fees:</strong> Credit card and payment gateway fees (Debit: Bank Charges Expense, Credit: Cash)</li>
+                        <li><strong>Website Hosting:</strong> Monthly technology costs (Debit: Technology Expense, Credit: Cash)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SLIDE 56: Real-World Example -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Real-World Example: Accounting Errors</h2>
+                <div class="example">
+                    <h3>Fidelity Investments Case</h3>
+                    <p><strong>The Error:</strong> Accountant forgot to include a minus sign in a calculation</p>
+                    <p><strong>The Result:</strong> $1.3 billion loss appeared as $1.3 billion gain</p>
+                    <p><strong>The Lesson:</strong> Even sophisticated companies with advanced systems can make mistakes</p>
+                </div>
+                <div class="box" style="margin-top: 20px;">
+                    <p class="key-point">"While many processes are computerized, accounting systems are complex and some steps must be handled manually—and people can make mistakes."</p>
+                </div>
+            </section>
+
+            <!-- SLIDE 57: Common Mistakes to Avoid -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Common Mistakes to Avoid</h2>
+                <div class="box" style="background-color: #fadbd8;">
+                    <ol style="text-align: left;">
+                        <li><strong>Reversing debits and credits</strong>
+                            <p style="font-size: 0.9em;">Always check: Does this account increase or decrease?</p>
+                        </li>
+                        <li><strong>Using wrong account</strong>
+                            <p style="font-size: 0.9em;">Equipment vs. Supplies, Cash vs. Accounts Receivable</p>
+                        </li>
+                        <li><strong>Omitting the credit entry</strong>
+                            <p style="font-size: 0.9em;">Remember: Every debit needs a credit!</p>
+                        </li>
+                        <li><strong>Mathematical errors</strong>
+                            <p style="font-size: 0.9em;">Double-check your calculations</p>
+                        </li>
+                        <li><strong>Transposition errors</strong>
+                            <p style="font-size: 0.9em;">Writing 54 instead of 45</p>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- SLIDE 58: Financial Statements Preview -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>From Trial Balance to Financial Statements</h2>
+                <div style="text-align: center;">
+                    <div class="box" style="display: inline-block; width: 80%;">
+                        <h3>Trial Balance is the Bridge</h3>
+                        <p style="font-size: 2em; margin: 20px 0;">↓</p>
+                        
+                        <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+                            <div style="flex: 1; margin: 10px;">
+                                <p><strong>Income Statement</strong></p>
+                                <p style="font-size: 0.8em;">Revenues & Expenses</p>
+                            </div>
+                            <div style="flex: 1; margin: 10px;">
+                                <p><strong>Statement of Financial Position</strong></p>
+                                <p style="font-size: 0.8em;">Assets, Liabilities, Equity</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 30px;"><em>We'll learn this in Chapter 3!</em></p>
+            </section>
+
+            <!-- SLIDE 59: Chapter Review -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Chapter 2 Complete Review</h2>
+                <div class="box" style="font-size: 0.85em;">
+                    <h3>✓ Learning Objective 1: Accounts, Debits, and Credits</h3>
+                    <p>T-accounts, normal balances, debit/credit rules</p>
+                    
+                    <h3>✓ Learning Objective 2: The Journal</h3>
+                    <p>Journalizing process, simple and compound entries</p>
+                    
+                    <h3>✓ Learning Objective 3: The Ledger and Posting</h3>
+                    <p>Posting process, chart of accounts, ledger organization</p>
+                    
+                    <h3>✓ Learning Objective 4: Trial Balance</h3>
+                    <p>Preparation, limitations, error detection</p>
+                </div>
+            </section>
+
+            <!-- SLIDE 60: Final Practice and Q&A -->
+            <section>
+                <div class="session-marker" style="background-color: #c0392b;">Session 3</div>
+                <h2>Key Formulas to Remember</h2>
+                <div class="formula">
+                    Assets = Liabilities + Equity
+                </div>
+                <div class="formula">
+                    Debits = Credits (Always!)
+                </div>
+                <div class="box" style="margin-top: 30px;">
+                    <h3>Golden Rules:</h3>
+                    <ul>
+                        <li>Assets ↑ with Debits, ↓ with Credits</li>
+                        <li>Liabilities ↑ with Credits, ↓ with Debits</li>
+                        <li>Equity ↑ with Credits, ↓ with Debits</li>
+                        <li>Revenues ↑ with Credits</li>
+                        <li>Expenses ↑ with Debits</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SLIDE 61: Exam Preparation Tips -->
+            <section data-background-color="#f8f9fa">
+                <h2>Exam Preparation Tips</h2>
+                <div class="box">
+                    <h3>How to Master This Chapter:</h3>
+                    <ol style="text-align: left;">
+                        <li><strong>Practice, practice, practice!</strong> Do all end-of-chapter exercises</li>
+                        <li><strong>Create your own examples</strong> using real-life transactions</li>
+                        <li><strong>Draw T-accounts</strong> for every problem</li>
+                        <li><strong>Check your work</strong> by ensuring debits = credits</li>
+                        <li><strong>Understand the "why"</strong> not just the "how"</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- SLIDE 62: Additional Resources -->
+            <section data-background-color="#f8f9fa">
+                <h2>Additional Resources</h2>
+                <div class="box">
+                    <h3>For Further Study:</h3>
+                    <ul style="text-align: left;">
+                        <li>Textbook: Chapter 2 exercises and problems</li>
+                        <li>Practice trial balance problems</li>
+                        <li>Review the Yazici Advertising example (Illustrations 2.20-2.31)</li>
+                        <li>Complete the DO IT! exercises in the textbook</li>
+                        <li>Work through the Practice Problem on page 2-30</li>
+                    </ul>
+                </div>
+                <p style="margin-top: 30px;" class="key-point">Office hours: [Insert your schedule]</p>
+            </section>
+
+            <!-- SLIDE 63: Group Exercise -->
+            <section data-background-color="#e8f4f8">
+                <h2>Group Exercise: Create a Business</h2>
+                <div class="example">
+                    <p><strong>Scenario:</strong> You're starting an online clothing store</p>
+                    <p><strong>Task (20 minutes):</strong></p>
+                    <ol style="text-align: left;">
+                        <li>List 10 transactions that might occur in the first month</li>
+                        <li>Journalize each transaction</li>
+                        <li>Post to T-accounts</li>
+                        <li>Prepare a trial balance</li>
+                    </ol>
+                </div>
+                <p style="margin-top: 30px;"><em>Work in groups of 3-4 students</em></p>
+            </section>
+
+            <!-- SLIDE 64: Case Study Discussion -->
+            <section data-background-color="#fff3cd">
+                <h2>Case Study: Hain Celestial Group</h2>
+                <div class="example">
+                    <p><strong>The Problem:</strong> Organic food company couldn't release financial results for over a year due to "revenue irregularities"</p>
+                    <p><strong>The Impact:</strong> 34% drop in share price</p>
+                </div>
+                <div class="box" style="margin-top: 20px;">
+                    <h3>Discussion Questions:</h3>
+                    <ol style="text-align: left;">
+                        <li>Why is accurate transaction recording so important?</li>
+                        <li>How does this affect stakeholders?</li>
+                        <li>What controls could prevent this?</li>
+                    </ol>
+                </div>
+                <p style="margin-top: 20px; font-size: 0.9em;"><em>Discuss with your neighbor for 5 minutes</em></p>
+            </section>
+
+            <!-- SLIDE 65: Ethics in Accounting -->
+            <section data-background-color="#fadbd8">
+                <h2>Ethics Note: Accounting Integrity</h2>
+                <div class="box">
+                    <h3>Important Distinctions:</h3>
+                    <ul style="text-align: left;">
+                        <li><strong>Error:</strong> Unintentional mistake (neither ethical nor unethical)</li>
+                        <li><strong>Irregularity:</strong> Intentional misstatement (unethical and illegal)</li>
+                    </ul>
+                </div>
+                <div class="example" style="margin-top: 20px;">
+                    <h3>Your Professional Responsibility:</h3>
+                    <p>As future business professionals, you must:</p>
+                    <ul style="text-align: left;">
+                        <li>Record ALL transactions accurately</li>
+                        <li>Never manipulate account balances</li>
+                        <li>Report errors immediately</li>
+                        <li>Follow the double-entry system rigorously</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SLIDE 66: Technology in Accounting -->
+            <section data-background-color="#e8f4f8">
+                <h2>Accounting Software and Technology</h2>
+                <div class="box">
+                    <h3>Modern Accounting Systems:</h3>
+                    <ul style="text-align: left;">
+                        <li><strong>QuickBooks, Xero, SAP:</strong> Automate journalizing and posting</li>
+                        <li><strong>Cloud-based systems:</strong> Real-time updates and access</li>
+                        <li><strong>AI and automation:</strong> Detect errors and anomalies</li>
+                        <li><strong>Blockchain:</strong> Future of transaction recording</li>
+                    </ul>
+                </div>
+                <p style="margin-top: 30px;" class="key-point">But the underlying principles remain the same!</p>
+                <p><em>Understanding manual processes helps you use technology effectively</em></p>
+            </section>
+
+            <!-- SLIDE 67: International Perspective -->
+            <section data-background-color="#f8f9fa">
+                <h2>Global Accounting Standards</h2>
+                <div class="box">
+                    <h3>Double-Entry System Worldwide:</h3>
+                    <p>The recording process is universal:</p>
+                    <ul style="text-align: left;">
+                        <li><strong>IFRS (International):</strong> Used in 140+ countries</li>
+                        <li><strong>GAAP (USA):</strong> US-specific standards</li>
+                        <li><strong>Core principle:</strong> Same double-entry system</li>
+                    </ul>
+                </div>
+                <p style="margin-top: 30px;">Despite some differences in rules, the foundation you're learning applies globally!</p>
+            </section>
+
+            <!-- SLIDE 68: Quick Quiz -->
+            <section data-background-color="#d5f4e6">
+                <h2>Quick Quiz</h2>
+                <div style="font-size: 0.85em;">
+                    <p><strong>1. Which side of an asset account records increases?</strong></p>
+                    <p style="font-size: 0.8em; margin: 10px 0;"><em>Answer: Debit (left) side</em></p>
+                    
+                    <p><strong>2. What is the normal balance of a revenue account?</strong></p>
+                    <p style="font-size: 0.8em; margin: 10px 0;"><em>Answer: Credit</em></p>
+                    
+                    <p><strong>3. True or False: A balanced trial balance guarantees no errors exist.</strong></p>
+                    <p style="font-size: 0.8em; margin: 10px 0;"><em>Answer: False</em></p>
+                    
+                    <p><strong>4. What's the first step in the recording process?</strong></p>
+                    <p style="font-size: 0.8em; margin: 10px 0;"><em>Answer: Analyze the transaction</em></p>
+                </div>
+            </section>
+
+            <!-- SLIDE 69: Assignment and Next Steps -->
+            <section data-background-color="#fff3cd">
+                <h2>Homework Assignment</h2>
+                <div class="box">
+                    <h3>Due Next Week:</h3>
+                    <ol style="text-align: left;">
+                        <li><strong>Read:</strong> Chapter 3 - Adjusting the Accounts</li>
+                        <li><strong>Complete:</strong> Exercises E2.3, E2.5, E2.11, E2.17</li>
+                        <li><strong>Practice:</strong> Problems P2.1 and P2.3</li>
+                        <li><strong>Prepare:</strong> Questions for review session</li>
+                    </ol>
+                </div>
+                <p style="margin-top: 30px;" class="key-point">Start early and practice daily!</p>
+            </section>
+
+            <!-- SLIDE 70: Thank You and Questions -->
+            <section data-background-color="#3498db">
+                <h1 style="color: white;">Thank You!</h1>
+                <h2 style="color: white;">Questions?</h2>
+                <div style="margin-top: 50px; color: white;">
+                    <p style="font-size: 1.2em;">Contact Information:</p>
+                    <p>[Your Email]</p>
+                    <p>[Office Hours]</p>
+                    <p>[Office Location]</p>
+                </div>
+                <p style="color: white; margin-top: 50px; font-style: italic;">
+                    "Accounting is the language of business. Master it, and you can speak to the world."
+                </p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            width: 1200,
+            height: 700,
+            margin: 0.1,
+            controls: true,
+            progress: true,
+            center: true,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: true,
+            embedded: false,
+            help: true,
+            pause: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+            display: 'block',
+            hideAddressBar: true,
+            pdfMaxPagesPerSlide: 1,
+            pdfSeparateFragments: true,
+            pdfPageHeightOffset: -1
+        });
+    </script>
+</body>
+</html>
