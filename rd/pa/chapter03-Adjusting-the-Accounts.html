@@ -1,0 +1,3115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điều chỉnh các Tài khoản - Nguyên lý Kế toán</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px;
+            position: relative;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 40px;
+            color: #667eea;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 36px;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #667eea;
+            font-size: 28px;
+            margin: 25px 0 15px 0;
+        }
+
+        h4 {
+            color: #764ba2;
+            font-size: 22px;
+            margin: 20px 0 10px 0;
+        }
+
+        p, li {
+            font-size: 20px;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            margin-left: 40px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .box {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        button {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .formula {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 22px;
+            text-align: center;
+            margin: 20px 0;
+            border: 2px solid #667eea;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .example {
+            background: #fff9e6;
+            border: 2px dashed #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 24px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .centered {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .journal-entry {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .debit {
+            margin-left: 0;
+        }
+
+        .credit {
+            margin-left: 40px;
+        }
+
+        .key-point {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 22px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .content-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .content-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .content-scroll::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            padding: 20px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: #667eea;
+            transition: width 0.3s;
+            z-index: 2000;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="presentation">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="centered">
+                <h1>ĐIỀU CHỈNH CÁC TÀI KHOẢN</h1>
+                <p class="subtitle">(Adjusting the Accounts)</p>
+                <div style="margin-top: 60px;">
+                    <p style="font-size: 24px;"><strong>Môn học:</strong> Nguyên lý Kế toán</p>
+                    <p style="font-size: 24px; margin-top: 20px;"><strong>Dành cho:</strong> Sinh viên năm 2 - Ngành Thương mại điện tử</p>
+                    <p style="font-size: 20px; margin-top: 40px; color: #666;">Chương 3 - Kế toán Tài chính</p>
+                </div>
+            </div>
+            <div class="slide-number">1 / 65</div>
+        </div>
+
+        <!-- Slide 2: Mục tiêu học tập -->
+        <div class="slide">
+            <h2>🎯 MỤC TIÊU HỌC TẬP</h2>
+            <div class="content-scroll">
+                <p style="font-size: 22px; margin-bottom: 30px;">Sau khi hoàn thành chương này, sinh viên có khả năng:</p>
+                
+                <div class="box">
+                    <h4>1. Hiểu cơ sở dồn tích (Accrual Basis)</h4>
+                    <p>Giải thích cơ sở kế toán dồn tích và lý do cần có các bút toán điều chỉnh</p>
+                </div>
+
+                <div class="box">
+                    <h4>2. Điều chỉnh cho Hoãn lại (Deferrals)</h4>
+                    <p>Chuẩn bị các bút toán điều chỉnh cho chi phí trả trước và doanh thu chưa thực hiện</p>
+                </div>
+
+                <div class="box">
+                    <h4>3. Điều chỉnh cho Dồn tích (Accruals)</h4>
+                    <p>Chuẩn bị các bút toán điều chỉnh cho doanh thu dồn tích và chi phí dồn tích</p>
+                </div>
+
+                <div class="box">
+                    <h4>4. Bảng cân đối thử sau điều chỉnh</h4>
+                    <p>Mô tả bản chất và mục đích của bảng cân đối thử đã điều chỉnh</p>
+                </div>
+            </div>
+            <div class="slide-number">2 / 65</div>
+        </div>
+
+        <!-- Slide 3: Nội dung chính -->
+        <div class="slide">
+            <h2>📚 NỘI DUNG CHÍNH</h2>
+            <div class="content-scroll">
+                <h3>Phần 1: CƠ SỞ KẾ TOÁN DỒN TÍCH (Buổi 1)</h3>
+                <ul>
+                    <li>Năm tài chính và năm dương lịch</li>
+                    <li>Kế toán dồn tích vs. Kế toán tiền mặt</li>
+                    <li>Nguyên tắc ghi nhận doanh thu và chi phí</li>
+                    <li>Nhu cầu và các loại bút toán điều chỉnh</li>
+                </ul>
+
+                <h3>Phần 2: BÚT TOÁN ĐIỀU CHỈNH - HOÃN LẠI (Buổi 2)</h3>
+                <ul>
+                    <li>Chi phí trả trước (Prepaid Expenses)</li>
+                    <li>Doanh thu chưa thực hiện (Unearned Revenues)</li>
+                    <li>Khấu hao (Depreciation)</li>
+                </ul>
+
+                <h3>Phần 3: BÚT TOÁN ĐIỀU CHỈNH - DỒN TÍCH (Buổi 2-3)</h3>
+                <ul>
+                    <li>Doanh thu dồn tích (Accrued Revenues)</li>
+                    <li>Chi phí dồn tích (Accrued Expenses)</li>
+                </ul>
+
+                <h3>Phần 4: BÁO CÁO TÀI CHÍNH SAU ĐIỀU CHỈNH (Buổi 3)</h3>
+                <ul>
+                    <li>Bảng cân đối thử điều chỉnh</li>
+                    <li>Chuẩn bị báo cáo tài chính</li>
+                </ul>
+            </div>
+            <div class="slide-number">3 / 65</div>
+        </div>
+
+        <!-- Slide 4: Tình huống mở đầu -->
+        <div class="slide">
+            <h2>💡 TÌNH HUỐNG THỰC TẾ</h2>
+            <div class="content-scroll">
+                <div class="example">
+                    <h3>Case Study: Công ty dot-com</h3>
+                    <p><strong>Vấn đề:</strong> Trong thời kỳ bùng nổ dot-com, nhiều công ty đã thổi phồng doanh thu bằng cách:</p>
+                    <ul>
+                        <li>Trao đổi không gian quảng cáo trên website mà không có tiền mặt</li>
+                        <li>Ghi nhận doanh thu ngay lập tức dù chưa cung cấp dịch vụ</li>
+                        <li>Dịch chuyển chi phí sang năm sau</li>
+                    </ul>
+                </div>
+
+                <div class="warning">
+                    <h4>⚠️ Hậu quả</h4>
+                    <p>→ Báo cáo tài chính không phản ánh đúng thực tế</p>
+                    <p>→ Không có dòng tiền thực tế</p>
+                    <p>→ Nhà đầu tư bị đánh lừa</p>
+                    <p>→ Cơ quan quản lý phải can thiệp</p>
+                </div>
+
+                <div class="key-point">
+                    Đây là lý do tại sao chúng ta cần hiểu rõ về thời điểm ghi nhận doanh thu và chi phí!
+                </div>
+            </div>
+            <div class="slide-number">4 / 65</div>
+        </div>
+
+        <!-- Slide 5: Giả định kỳ kế toán -->
+        <div class="slide">
+            <h2>📅 GIẢĐỊNH KỲ KẾ TOÁN</h2>
+            <div class="content-scroll">
+                <h3>Time Period Assumption</h3>
+                
+                <div class="box">
+                    <p><strong>Khái niệm:</strong> Đời sống kinh tế của doanh nghiệp có thể chia thành các kỳ kế toán nhân tạo</p>
+                </div>
+
+                <div class="two-columns">
+                    <div>
+                        <h4>Năm tài chính (Fiscal Year)</h4>
+                        <ul>
+                            <li>Kỳ kế toán dài 1 năm</li>
+                            <li>Có thể bắt đầu bất kỳ ngày nào</li>
+                            <li>Ví dụ: 1/4 → 31/3 năm sau</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Năm dương lịch (Calendar Year)</h4>
+                        <ul>
+                            <li>Từ 1/1 → 31/12</li>
+                            <li>Trùng với năm dương lịch</li>
+                            <li>Phổ biến tại Việt Nam</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>Kỳ kế toán trung gian (Interim Periods)</h4>
+                <ul>
+                    <li>Tháng (Monthly)</li>
+                    <li>Quý (Quarterly)</li>
+                    <li>6 tháng (Semi-annually)</li>
+                </ul>
+
+                <div class="key-point">
+                    Các công ty lớn thường phải lập báo cáo tài chính theo quý và theo năm
+                </div>
+            </div>
+            <div class="slide-number">5 / 65</div>
+        </div>
+
+        <!-- Slide 6: Kế toán dồn tích vs. Tiền mặt -->
+        <div class="slide">
+            <h2>💰 HAI CƠ SỞ KẾ TOÁN</h2>
+            <div class="content-scroll">
+                <div class="two-columns">
+                    <div class="box">
+                        <h4>Kế toán Tiền mặt (Cash Basis)</h4>
+                        <ul>
+                            <li><strong>Doanh thu:</strong> Khi nhận tiền</li>
+                            <li><strong>Chi phí:</strong> Khi trả tiền</li>
+                            <li>❌ KHÔNG phù hợp với IFRS</li>
+                            <li>Chỉ dùng cho DN nhỏ</li>
+                        </ul>
+                    </div>
+                    <div class="success">
+                        <h4>Kế toán Dồn tích (Accrual Basis)</h4>
+                        <ul>
+                            <li><strong>Doanh thu:</strong> Khi thực hiện DV</li>
+                            <li><strong>Chi phí:</strong> Khi phát sinh</li>
+                            <li>✅ Phù hợp với IFRS</li>
+                            <li>Bắt buộc với DN vừa & lớn</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Ví dụ so sánh</h3>
+                <table>
+                    <tr>
+                        <th>Giao dịch</th>
+                        <th>Tiền mặt</th>
+                        <th>Dồn tích</th>
+                    </tr>
+                    <tr>
+                        <td>Cung cấp dịch vụ tháng 12</td>
+                        <td>-</td>
+                        <td>Ghi nhận DT tháng 12</td>
+                    </tr>
+                    <tr>
+                        <td>Nhận tiền tháng 1 năm sau</td>
+                        <td>Ghi nhận DT tháng 1</td>
+                        <td>Chỉ ghi giảm công nợ</td>
+                    </tr>
+                </table>
+
+                <div class="warning">
+                    <strong>Lưu ý:</strong> Kế toán tiền mặt thường làm sai lệch kết quả hoạt động kinh doanh!
+                </div>
+            </div>
+            <div class="slide-number">6 / 65</div>
+        </div>
+
+        <!-- Slide 7: Nguyên tắc ghi nhận doanh thu -->
+        <div class="slide">
+            <h2>📈 NGUYÊN TẮC GHI NHẬN DOANH THU</h2>
+            <div class="content-scroll">
+                <h3>Revenue Recognition Principle</h3>
+                
+                <div class="key-point">
+                    Ghi nhận doanh thu trong kỳ kế toán mà nghĩa vụ thực hiện được hoàn thành
+                </div>
+
+                <h4>Khi nào nghĩa vụ được hoàn thành?</h4>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>1. Công ty dịch vụ:</strong> Khi hoàn thành dịch vụ
+                        <p>VD: Tiệm giặt là hoàn thành giặt quần áo</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>2. Công ty thương mại:</strong> Khi chuyển giao hàng hóa
+                        <p>VD: Cửa hàng TMĐT giao hàng cho khách</p>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h4>Ví dụ: Tiệm giặt Soon's</h4>
+                    <p>30/6: Giặt quần áo cho khách (hoàn thành dịch vụ)</p>
+                    <p>7/7: Khách đến lấy và trả tiền</p>
+                    <p><strong>→ Ghi nhận doanh thu:</strong> Ngày 30/6</p>
+                    <p><strong>→ Tại sao?</strong> Vì đã hoàn thành nghĩa vụ thực hiện</p>
+                </div>
+
+                <div class="box">
+                    <p><strong>Quan trọng:</strong> Doanh thu được ghi nhận BẤT KỂ đã nhận tiền hay chưa!</p>
+                </div>
+            </div>
+            <div class="slide-number">7 / 65</div>
+        </div>
+
+        <!-- Slide 8: Nguyên tắc ghi nhận chi phí -->
+        <div class="slide">
+            <h2>📉 NGUYÊN TẮC GHI NHẬN CHI PHÍ</h2>
+            <div class="content-scroll">
+                <h3>Expense Recognition Principle (Matching Principle)</h3>
+                
+                <div class="key-point">
+                    "Chi phí theo sau doanh thu" - Ghi nhận chi phí trong cùng kỳ với doanh thu liên quan
+                </div>
+
+                <h4>Nguyên tắc phù hợp (Matching)</h4>
+                <div class="box">
+                    <p>Chi phí được ghi nhận khi:</p>
+                    <ul>
+                        <li>Tiêu dùng tài sản, HOẶC</li>
+                        <li>Phát sinh nợ phải trả</li>
+                        <li>Để tạo ra doanh thu</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h4>Ví dụ: Tiệm giặt Soon's (tiếp)</h4>
+                    <p>30/6: Giặt quần áo (doanh thu), nhân viên làm việc</p>
+                    <p>5/7: Trả lương cho nhân viên</p>
+                    <p><strong>→ Ghi nhận lương:</strong> Ngày 30/6</p>
+                    <p><strong>→ Tại sao?</strong> Để phù hợp với doanh thu tạo ra ngày 30/6</p>
+                </div>
+
+                <div class="formula">
+                    Doanh thu (Revenue) - Chi phí (Expenses) = Lãi/Lỗ (Profit/Loss)
+                </div>
+
+                <div class="warning">
+                    <strong>Lưu ý:</strong> Chi phí được ghi nhận BẤT KỂ đã trả tiền hay chưa!
+                </div>
+            </div>
+            <div class="slide-number">8 / 65</div>
+        </div>
+
+        <!-- Slide 9: Tại sao cần điều chỉnh -->
+        <div class="slide">
+            <h2>🔧 TẠI SAO CẦN BÚT TOÁN ĐIỀU CHỈNH?</h2>
+            <div class="content-scroll">
+                <h3>The Need for Adjusting Entries</h3>
+
+                <div class="box">
+                    <p><strong>Mục đích:</strong> Đảm bảo tuân thủ nguyên tắc ghi nhận doanh thu và chi phí</p>
+                </div>
+
+                <h4>3 Lý do chính:</h4>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>1. Không hiệu quả khi ghi hàng ngày</strong>
+                        <p>VD: Không cần ghi giảm vật liệu mỗi khi dùng một cái bút</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>2. Chi phí trôi qua theo thời gian</strong>
+                        <p>VD: Bảo hiểm, khấu hao, thuê nhà - hết hạn dần theo thời gian</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>3. Một số khoản chưa được ghi nhận</strong>
+                        <p>VD: Hóa đơn điện chưa nhận được cuối tháng</p>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    Bút toán điều chỉnh được thực hiện MỖI KHI lập báo cáo tài chính
+                </div>
+
+                <div class="warning">
+                    <p><strong>Đặc điểm quan trọng:</strong></p>
+                    <p>Mỗi bút toán điều chỉnh ảnh hưởng đến:</p>
+                    <ul>
+                        <li>1 tài khoản Bảng cân đối kế toán (Balance Sheet)</li>
+                        <li>1 tài khoản Báo cáo kết quả KD (Income Statement)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">9 / 65</div>
+        </div>
+
+        <!-- Slide 10: Các loại điều chỉnh -->
+        <div class="slide">
+            <h2>📋 CÁC LOẠI BÚT TOÁN ĐIỀU CHỈNH</h2>
+            <div class="content-scroll">
+                <h3>Types of Adjusting Entries</h3>
+
+                <div class="two-columns">
+                    <div class="box">
+                        <h4>1. HOÃN LẠI (Deferrals)</h4>
+                        <p><strong>a) Chi phí trả trước</strong></p>
+                        <p>(Prepaid Expenses)</p>
+                        <ul>
+                            <li>Vật liệu</li>
+                            <li>Bảo hiểm trả trước</li>
+                            <li>Khấu hao</li>
+                        </ul>
+                        <br>
+                        <p><strong>b) Doanh thu chưa thực hiện</strong></p>
+                        <p>(Unearned Revenues)</p>
+                        <ul>
+                            <li>Tiền nhận trước</li>
+                            <li>Doanh thu chưa kiếm được</li>
+                        </ul>
+                    </div>
+
+                    <div class="success">
+                        <h4>2. DỒN TÍCH (Accruals)</h4>
+                        <p><strong>a) Doanh thu dồn tích</strong></p>
+                        <p>(Accrued Revenues)</p>
+                        <ul>
+                            <li>Dịch vụ đã thực hiện</li>
+                            <li>Chưa lập hóa đơn</li>
+                            <li>Chưa thu tiền</li>
+                        </ul>
+                        <br>
+                        <p><strong>b) Chi phí dồn tích</strong></p>
+                        <p>(Accrued Expenses)</p>
+                        <ul>
+                            <li>Chi phí đã phát sinh</li>
+                            <li>Chưa trả tiền</li>
+                            <li>Chưa ghi nhận</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    Ghi nhớ: Hoãn lại = Tiền trước, ghi nhận sau | Dồn tích = Ghi nhận trước, tiền sau
+                </div>
+            </div>
+            <div class="slide-number">10 / 65</div>
+        </div>
+
+        <!-- Slide 11: Tổng quan điều chỉnh -->
+        <div class="slide">
+            <h2>🔄 TỔNG QUAN QUY TRÌNH ĐIỀU CHỈNH</h2>
+            <div class="content-scroll">
+                <table>
+                    <tr>
+                        <th>Loại</th>
+                        <th>Lý do điều chỉnh</th>
+                        <th>Bút toán</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Chi phí trả trước</strong></td>
+                        <td>Đã trả tiền, chưa dùng hết</td>
+                        <td>Nợ Chi phí / Có Tài sản</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Doanh thu chưa thực hiện</strong></td>
+                        <td>Đã nhận tiền, chưa thực hiện hết</td>
+                        <td>Nợ Nợ phải trả / Có Doanh thu</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Doanh thu dồn tích</strong></td>
+                        <td>Đã thực hiện, chưa nhận tiền</td>
+                        <td>Nợ Tài sản / Có Doanh thu</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chi phí dồn tích</strong></td>
+                        <td>Đã phát sinh, chưa trả tiền</td>
+                        <td>Nợ Chi phí / Có Nợ phải trả</td>
+                    </tr>
+                </table>
+
+                <div class="key-point">
+                    Quy luật vàng: Điều chỉnh KHÔNG BAO GIỜ liên quan đến tài khoản Tiền mặt!
+                </div>
+            </div>
+            <div class="slide-number">11 / 65</div>
+        </div>
+
+        <!-- Slide 12: Phần 2 - Chi phí trả trước -->
+        <div class="slide">
+            <h2>💼 PHẦN 2: ĐIỀU CHỈNH CHO HOÃN LẠI</h2>
+            <div class="centered">
+                <h3 style="color: #667eea; font-size: 42px;">CHI PHÍ TRẢ TRƯỚC</h3>
+                <p style="font-size: 28px; margin-top: 30px;">(Prepaid Expenses)</p>
+                <div class="box" style="margin-top: 50px;">
+                    <p style="font-size: 24px;">Chi phí đã thanh toán bằng tiền mặt nhưng chưa sử dụng hoặc tiêu thụ hết</p>
+                </div>
+            </div>
+            <div class="slide-number">12 / 65</div>
+        </div>
+
+        <!-- Slide 13: Chi phí trả trước - Khái niệm -->
+        <div class="slide">
+            <h2>📦 CHI PHÍ TRẢ TRƯỚC - KHÁI NIỆM</h2>
+            <div class="content-scroll">
+                <h3>Prepaid Expenses</h3>
+
+                <div class="box">
+                    <p><strong>Định nghĩa:</strong> Các khoản chi phí được thanh toán trước, tạo ra lợi ích kinh tế cho nhiều kỳ kế toán</p>
+                </div>
+
+                <h4>Đặc điểm:</h4>
+                <ul>
+                    <li>Ban đầu ghi nhận là <strong>TÀI SẢN</strong></li>
+                    <li>Giảm dần theo thời gian hoặc khi sử dụng</li>
+                    <li>Cuối kỳ cần điều chỉnh phần đã dùng thành <strong>CHI PHÍ</strong></li>
+                </ul>
+
+                <h4>Các loại phổ biến:</h4>
+                <div class="two-columns">
+                    <div class="timeline-item">
+                        <strong>Hết theo thời gian:</strong>
+                        <ul>
+                            <li>Bảo hiểm trả trước</li>
+                            <li>Thuê nhà trả trước</li>
+                            <li>Khấu hao</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>Hết khi sử dụng:</strong>
+                        <ul>
+                            <li>Vật liệu văn phòng</li>
+                            <li>Hàng tồn kho</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="formula">
+                    Trước điều chỉnh: Tài sản TĂNG ↑ | Chi phí GIẢM ↓
+                </div>
+            </div>
+            <div class="slide-number">13 / 65</div>
+        </div>
+
+        <!-- Slide 14: Điều chỉnh vật liệu -->
+        <div class="slide">
+            <h2>✏️ VÍ DỤ 1: VẬT LIỆU VĂN PHÒNG</h2>
+            <div class="content-scroll">
+                <h3>Công ty Yazici - Vật liệu (Supplies)</h3>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>5/10:</strong> Mua vật liệu ₺2,500
+                        <div class="journal-entry">
+                            <div class="debit">Nợ: Supplies (Vật liệu) ................... ₺2,500</div>
+                            <div class="credit">Có: Accounts Payable ................. ₺2,500</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h4>31/10: Kiểm kê cuối tháng</h4>
+                    <p>Vật liệu còn lại: ₺1,000</p>
+                    <p>Vật liệu đã dùng: ₺2,500 - ₺1,000 = <strong>₺1,500</strong></p>
+                </div>
+
+                <h4>Bút toán điều chỉnh 31/10:</h4>
+                <div class="journal-entry">
+                    <div class="debit">Nợ: Supplies Expense (CP vật liệu) ...... ₺1,500</div>
+                    <div class="credit">Có: Supplies (Vật liệu) ........................ ₺1,500</div>
+                    <p style="margin-top: 10px; font-style: italic;">(Ghi nhận vật liệu đã sử dụng)</p>
+                </div>
+
+                <div class="two-columns" style="margin-top: 20px;">
+                    <div class="box">
+                        <strong>Supplies (Tài sản)</strong>
+                        <p>5/10: 2,500 | 31/10: 1,500</p>
+                        <p>Số dư: <strong>1,000</strong></p>
+                    </div>
+                    <div class="success">
+                        <strong>Supplies Expense</strong>
+                        <p>31/10: 1,500</p>
+                        <p>Số dư: <strong>1,500</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">14 / 65</div>
+        </div>
+
+        <!-- Slide 15: Điều chỉnh bảo hiểm -->
+        <div class="slide">
+            <h2>🛡️ VÍ DỤ 2: BẢO HIỂM TRẢ TRƯỚC</h2>
+            <div class="content-scroll">
+                <h3>Công ty Yazici - Bảo hiểm cháy nổ</h3>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>4/10:</strong> Mua bảo hiểm 1 năm ₺600 (từ 1/10)
+                        <div class="journal-entry">
+                            <div class="debit">Nợ: Prepaid Insurance .................... ₺600</div>
+                            <div class="credit">Có: Cash .......................................... ₺600</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h4>Tính toán 31/10:</h4>
+                    <div class="formula">
+                        Bảo hiểm hết hạn 1 tháng = ₺600 ÷ 12 tháng = ₺50/tháng
+                    </div>
+                    <p>Từ 1/10 → 31/10: <strong>1 tháng = ₺50</strong></p>
+                </div>
+
+                <h4>Bút toán điều chỉnh 31/10:</h4>
+                <div class="journal-entry">
+                    <div class="debit">Nợ: Insurance Expense (CP BH) ............ ₺50</div>
+                    <div class="credit">Có: Prepaid Insurance (BH trả trước) .... ₺50</div>
+                    <p style="margin-top: 10px; font-style: italic;">(Ghi nhận bảo hiểm đã hết hạn)</p>
+                </div>
+
+                <div class="two-columns" style="margin-top: 20px;">
+                    <div class="box">
+                        <strong>Prepaid Insurance</strong>
+                        <p>4/10: 600 | 31/10: 50</p>
+                        <p>Còn lại: <strong>550</strong> (11 tháng)</p>
+                    </div>
+                    <div class="success">
+                        <strong>Insurance Expense</strong>
+                        <p>31/10: 50</p>
+                        <p>Chi phí tháng 10: <strong>50</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">15 / 65</div>
+        </div>
+
+        <!-- Slide 16: Khấu hao - Giới thiệu -->
+        <div class="slide">
+            <h2>🏢 KHẤU HAO - DEPRECIATION</h2>
+            <div class="content-scroll">
+                <h3>Khái niệm quan trọng</h3>
+
+                <div class="key-point">
+                    Khấu hao là quá trình PHÂN BỔ nguyên giá tài sản thành chi phí trong suốt thời gian sử dụng
+                </div>
+
+                <div class="warning">
+                    <h4>⚠️ LƯU Ý QUAN TRỌNG:</h4>
+                    <p><strong>Khấu hao KHÔNG PHẢI là định giá!</strong></p>
+                    <ul>
+                        <li>Khấu hao = Phân bổ chi phí</li>
+                        <li>Khấu hao ≠ Giảm giá trị thị trường</li>
+                        <li>Mục đích: Tuân thủ nguyên tắc phù hợp</li>
+                    </ul>
+                </div>
+
+                <h4>Tại sao cần khấu hao?</h4>
+                <div class="box">
+                    <p>Tài sản dài hạn (máy móc, nhà xưởng) được sử dụng NHIỀU NĂM</p>
+                    <p>→ Không hợp lý khi ghi toàn bộ là chi phí năm mua</p>
+                    <p>→ Cần phân bổ chi phí cho các năm được hưởng lợi</p>
+                </div>
+
+                <h4>Thuật ngữ liên quan:</h4>
+                <ul>
+                    <li><strong>Useful Life (Thời gian sử dụng):</strong> Thời gian dự kiến sử dụng tài sản</li>
+                    <li><strong>Depreciation Expense:</strong> Chi phí khấu hao trong kỳ</li>
+                    <li><strong>Accumulated Depreciation:</strong> Tổng khấu hao lũy kế</li>
+                </ul>
+            </div>
+            <div class="slide-number">16 / 65</div>
+        </div>
+
+        <!-- Slide 17: Tài khoản đối ứng -->
+        <div class="slide">
+            <h2>🔗 TÀI KHOẢN ĐỐI ỨNG (CONTRA ACCOUNT)</h2>
+            <div class="content-scroll">
+                <h3>Accumulated Depreciation</h3>
+
+                <div class="box">
+                    <p><strong>Tài khoản đối ứng:</strong> Tài khoản được khấu trừ vào tài khoản tài sản trên BCĐKT</p>
+                </div>
+
+                <h4>Đặc điểm:</h4>
+                <ul>
+                    <li>Có số dư bên <strong>CÓ</strong> (ngược với tài sản)</li>
+                    <li>KHÔNG ghi giảm trực tiếp vào tài khoản tài sản</li>
+                    <li>Tích lũy qua các kỳ</li>
+                    <li>Cho biết tổng khấu hao từ khi mua đến nay</li>
+                </ul>
+
+                <div class="two-columns">
+                    <div class="warning">
+                        <h4>❌ KHÔNG NÊN:</h4>
+                        <div class="journal-entry">
+                            <div class="debit">Nợ: Depreciation Exp</div>
+                            <div class="credit">Có: <strong>Equipment</strong></div>
+                        </div>
+                        <p>→ Mất thông tin nguyên giá</p>
+                    </div>
+                    <div class="success">
+                        <h4>✅ NÊN:</h4>
+                        <div class="journal-entry">
+                            <div class="debit">Nợ: Depreciation Exp</div>
+                            <div class="credit">Có: <strong>Accum. Depr.</strong></div>
+                        </div>
+                        <p>→ Giữ được cả 2 thông tin</p>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    Lợi ích: Biết được NGUYÊN GIÁ và TỔNG KHẤU HAO → Đánh giá độ cũ của tài sản
+                </div>
+            </div>
+            <div class="slide-number">17 / 65</div>
+        </div>
+
+        <!-- Slide 18: Ví dụ khấu hao -->
+        <div class="slide">
+            <h2>🖥️ VÍ DỤ 3: KHẤU HAO THIẾT BỊ</h2>
+            <div class="content-scroll">
+                <h3>Công ty Yazici - Thiết bị</h3>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>1/10:</strong> Mua thiết bị ₺5,000
+                        <div class="journal-entry">
+                            <div class="debit">Nợ: Equipment .................................. ₺5,000</div>
+                            <div class="credit">Có: Cash ............................................ ₺5,000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h4>Dữ liệu khấu hao:</h4>
+                    <p>Khấu hao thiết bị: ₺480/năm = <strong>₺40/tháng</strong></p>
+                </div>
+
+                <h4>Bút toán điều chỉnh 31/10:</h4>
+                <div class="journal-entry">
+                    <div class="debit">Nợ: Depreciation Expense ............................. ₺40</div>
+                    <div class="credit">Có: Accumulated Depreciation—Equipment ... ₺40</div>
+                    <p style="margin-top: 10px; font-style: italic;">(Ghi nhận khấu hao tháng 10)</p>
+                </div>
+
+                <h4>Trình bày trên BCĐKT:</h4>
+                <table style="width: 70%; margin: 20px auto;">
+                    <tr>
+                        <td><strong>Equipment</strong></td>
+                        <td style="text-align: right;">₺5,000</td>
+                    </tr>
+                    <tr>
+                        <td>Less: Accumulated Depreciation</td>
+                        <td style="text-align: right;">(40)</td>
+                    </tr>
+                    <tr style="background: #fff9e6; font-weight: bold;">
+                        <td><strong>Book Value (Giá trị còn lại)</strong></td>
+                        <td style="text-align: right;"><strong>₺4,960</strong></td>
+                    </tr>
+                </table>
+
+                <div class="warning">
+                    <strong>Chú ý:</strong> Book Value ≠ Fair Value (Giá thị trường)
+                </div>
+            </div>
+            <div class="slide-number">18 / 65</div>
+        </div>
+
+        <!-- Slide 19: Tổng kết chi phí trả trước -->
+        <div class="slide">
+            <h2>📊 TỔNG KẾT: CHI PHÍ TRẢ TRƯỚC</h2>
+            <div class="content-scroll">
+                <h3>Sơ đồ tổng quát</h3>
+
+                <div class="formula">
+                    Chi phí trả trước ban đầu ghi vào TÀI SẢN → Khi dùng/hết hạn → Chuyển thành CHI PHÍ
+                </div>
+
+                <table>
+                    <tr>
+                        <th>Ví dụ</th>
+                        <th>Lý do điều chỉnh</th>
+                        <th>Trước điều chỉnh</th>
+                        <th>Bút toán</th>
+                    </tr>
+                    <tr>
+                        <td>Vật liệu, Bảo hiểm, Thuê nhà</td>
+                        <td>Đã sử dụng/hết hạn một phần</td>
+                        <td>Tài sản ↑<br>Chi phí ↓</td>
+                        <td>Nợ: Chi phí<br>Có: Tài sản</td>
+                    </tr>
+                    <tr>
+                        <td>Khấu hao</td>
+                        <td>Đã sử dụng trong kỳ</td>
+                        <td>Tài sản ↑<br>Chi phí ↓</td>
+                        <td>Nợ: CP khấu hao<br>Có: KH lũy kế</td>
+                    </tr>
+                </table>
+
+                <div class="key-point">
+                    Điểm chung: Tất cả đều GIẢM TÀI SẢN và TĂNG CHI PHÍ
+                </div>
+
+                <div class="box">
+                    <h4>Nếu KHÔNG điều chỉnh:</h4>
+                    <ul>
+                        <li>✗ Tài sản bị thổi phồng (overstated)</li>
+                        <li>✗ Chi phí bị giảm (understated)</li>
+                        <li>✗ Lãi ròng bị thổi phồng</li>
+                        <li>✗ Vốn chủ sở hữu bị thổi phồng</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">19 / 65</div>
+        </div>
+
+        <!-- Slide 20: Doanh thu chưa thực hiện -->
+        <div class="slide">
+            <h2>💰 DOANH THU CHƯA THỰC HIỆN</h2>
+            <div class="centered">
+                <h3 style="color: #667eea; font-size: 42px;">UNEARNED REVENUES</h3>
+                <div class="box" style="margin-top: 50px;">
+                    <p style="font-size: 24px;">Tiền mặt nhận trước cho các dịch vụ sẽ thực hiện trong tương lai</p>
+                </div>
+                
+                <div class="example" style="margin-top: 40px;">
+                    <h4>Ví dụ thực tế:</h4>
+                    <ul style="text-align: left; display: inline-block;">
+                        <li>Thuê nhà nhận trước</li>
+                        <li>Vé máy bay bán trước</li>
+                        <li>Đăng ký tạp chí trả trước</li>
+                        <li>Đặt cọc dịch vụ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">20 / 65</div>
+        </div>
+
+        <!-- Slide 21: Doanh thu chưa thực hiện - Chi tiết -->
+        <div class="slide">
+            <h2>📝 DOANH THU CHƯA THỰC HIỆN - CHI TIẾT</h2>
+            <div class="content-scroll">
+                <h3>Unearned Revenues - Khái niệm</h3>
+
+                <div class="box">
+                    <p><strong>Định nghĩa:</strong> Khoản tiền nhận trước từ khách hàng cho dịch vụ/hàng hóa chưa cung cấp</p>
+                </div>
+
+                <h4>Đặc điểm:</h4>
+                <ul>
+                    <li>Ban đầu ghi nhận là <strong>NỢ PHẢI TRẢ</strong> (Liability)</li>
+                    <li>Là nghĩa vụ phải thực hiện dịch vụ</li>
+                    <li>Khi thực hiện dịch vụ → Chuyển thành <strong>DOANH THU</strong></li>
+                </ul>
+
+                <div class="two-columns">
+                    <div class="warning">
+                        <h4>Quan hệ ngược nhau:</h4>
+                        <p><strong>Công ty A:</strong> Trả tiền thuê trước</p>
+                        <p>→ Prepaid Rent (Tài sản)</p>
+                        <p style="margin-top: 15px;"><strong>Công ty B:</strong> Nhận tiền thuê trước</p>
+                        <p>→ Unearned Rent (Nợ phải trả)</p>
+                    </div>
+                    <div class="success">
+                        <h4>Ví dụ thực tế:</h4>
+                        <ul>
+                            <li>Cathay Pacific: Vé máy bay</li>
+                            <li>VinFast: Đặt cọc xe</li>
+                            <li>Shopee: Ví ShopeePay</li>
+                            <li>Lazada: Lazada Wallet</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="formula">
+                    Trước điều chỉnh: Nợ phải trả TĂNG ↑ | Doanh thu GIẢM ↓
+                </div>
+            </div>
+            <div class="slide-number">21 / 65</div>
+        </div>
+
+        <!-- Slide 22: Ví dụ doanh thu chưa thực hiện -->
+        <div class="slide">
+            <h2>✈️ VÍ DỤ 4: DOANH THU CHƯA THỰC HIỆN</h2>
+            <div class="content-scroll">
+                <h3>Công ty Yazici - Dịch vụ quảng cáo</h3>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>2/10:</strong> Nhận ₺1,200 từ khách hàng R. Knox cho dịch vụ đến 31/12
+                        <div class="journal-entry">
+                            <div class="debit">Nợ: Cash ............................................... ₺1,200</div>
+                            <div class="credit">Có: Unearned Service Revenue ........... ₺1,200</div>
+                        </div>
+                        <p style="margin-top: 10px;">→ Ghi nhận NỢ PHẢI TRẢ vì chưa thực hiện</p>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h4>31/10: Đánh giá công việc</h4>
+                    <p>Dịch vụ đã thực hiện trong tháng 10: <strong>₺400</strong></p>
+                    <p>Còn phải thực hiện (11-12/2020): ₺800</p>
+                </div>
+
+                <h4>Bút toán điều chỉnh 31/10:</h4>
+                <div class="journal-entry">
+                    <div class="debit">Nợ: Unearned Service Revenue ................. ₺400</div>
+                    <div class="credit">Có: Service Revenue ............................... ₺400</div>
+                    <p style="margin-top: 10px; font-style: italic;">(Ghi nhận doanh thu đã thực hiện)</p>
+                </div>
+
+                <div class="two-columns" style="margin-top: 20px;">
+                    <div class="box">
+                        <strong>Unearned Service Revenue</strong>
+                        <p>31/10: 400 | 2/10: 1,200</p>
+                        <p>Còn nợ: <strong>800</strong></p>
+                    </div>
+                    <div class="success">
+                        <strong>Service Revenue</strong>
+                        <p>2/10: --- | 31/10: 400</p>
+                        <p>DT tháng 10: <strong>400</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">22 / 65</div>
+        </div>
+
+        <!-- Slide 23: Thẻ quà tặng -->
+        <div class="slide">
+            <h2>🎁 CASE STUDY: THẺ QUÀ TẶNG</h2>
+            <div class="content-scroll">
+                <h3>Marks & Spencer - Gift Cards</h3>
+
+                <div class="example">
+                    <h4>Tình huống:</h4>
+                    <p><strong>24/12/2019:</strong> Ông Robert mua thẻ quà tặng €100 tại Carrefour</p>
+                    <p><strong>25/12/2019:</strong> Tặng cho vợ là bà Mary</p>
+                    <p><strong>3/1/2020:</strong> Bà Mary dùng thẻ mua đĩa CD €100</p>
+                </div>
+
+                <div class="warning">
+                    <h4>❓ Câu hỏi:</h4>
+                    <p>Carrefour nên ghi nhận doanh thu khi nào?</p>
+                    <ol style="font-size: 18px;">
+                        <li>24/12/2019 - Khi bán thẻ?</li>
+                        <li>3/1/2020 - Khi khách dùng thẻ?</li>
+                    </ol>
+                </div>
+
+                <div class="success">
+                    <h4>✅ Đáp án: 3/1/2020</h4>
+                    <p><strong>Lý do:</strong></p>
+                    <ul>
+                        <li>24/12: Chỉ nhận tiền, chưa thực hiện nghĩa vụ</li>
+                        <li>3/1: Chuyển giao hàng hóa → Thực hiện nghĩa vụ</li>
+                    </ul>
+                    
+                    <h4 style="margin-top: 20px;">Bút toán:</h4>
+                    <div class="journal-entry">
+                        <strong>24/12/2019:</strong>
+                        <div class="debit">Nợ: Cash ........................... 100</div>
+                        <div class="credit">Có: Unearned Revenue ...... 100</div>
+                        <br>
+                        <strong>3/1/2020:</strong>
+                        <div class="debit">Nợ: Unearned Revenue ...... 100</div>
+                        <div class="credit">Có: Sales Revenue ............ 100</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">23 / 65</div>
+        </div>
+
+        <!-- Slide 24: Tóm tắt hoãn lại -->
+        <div class="slide">
+            <h2>📋 TÓM TẮT: ĐIỀU CHỈNH HOÃN LẠI</h2>
+            <div class="content-scroll">
+                <h3>Accounting for Deferrals</h3>
+
+                <table>
+                    <tr>
+                        <th>Loại</th>
+                        <th>Lý do điều chỉnh</th>
+                        <th>Trước điều chỉnh</th>
+                        <th>Bút toán</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Chi phí trả trước</strong><br>(Prepaid Expenses)</td>
+                        <td>Đã sử dụng/hết hạn một phần</td>
+                        <td>Tài sản ↑<br>Chi phí ↓</td>
+                        <td>Nợ: Expenses<br>Có: Assets/Contra Assets</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Doanh thu chưa thực hiện</strong><br>(Unearned Revenues)</td>
+                        <td>Đã thực hiện dịch vụ</td>
+                        <td>Nợ phải trả ↑<br>Doanh thu ↓</td>
+                        <td>Nợ: Liabilities<br>Có: Revenues</td>
+                    </tr>
+                </table>
+
+                <div class="key-point">
+                    Đặc điểm chung: Tiền đã giao dịch TRƯỚC → Ghi nhận doanh thu/chi phí SAU
+                </div>
+
+                <div class="box">
+                    <h4>Ghi nhớ:</h4>
+                    <ul>
+                        <li>Chi phí trả trước: Từ TÀI SẢN → CHI PHÍ</li>
+                        <li>Doanh thu chưa thực hiện: Từ NỢ PHẢI TRẢ → DOANH THU</li>
+                        <li>Không liên quan đến tài khoản Tiền mặt!</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">24 / 65</div>
+        </div>
+
+        <!-- Slide 25: Phần 3 - Dồn tích -->
+        <div class="slide">
+            <h2>💼 PHẦN 3: ĐIỀU CHỈNH CHO DỒN TÍCH</h2>
+            <div class="centered">
+                <h3 style="color: #667eea; font-size: 42px;">ACCRUALS</h3>
+                <p style="font-size: 28px; margin-top: 30px;">(Dồn tích)</p>
+                <div class="box" style="margin-top: 50px;">
+                    <p style="font-size: 24px;">Doanh thu hoặc chi phí đã phát sinh nhưng chưa được ghi nhận</p>
+                </div>
+                <div class="key-point" style="margin-top: 40px;">
+                    Ghi nhận TRƯỚC - Tiền mặt SAU
+                </div>
+            </div>
+            <div class="slide-number">25 / 65</div>
+        </div>
+
+        <!-- Slide 26: Doanh thu dồn tích -->
+        <div class="slide">
+            <h2>📈 DOANH THU DỒN TÍCH</h2>
+            <div class="content-scroll">
+                <h3>Accrued Revenues</h3>
+
+                <div class="box">
+                    <p><strong>Định nghĩa:</strong> Doanh thu từ dịch vụ đã thực hiện nhưng chưa nhận tiền và chưa ghi sổ</p>
+                </div>
+
+                <h4>Khi nào phát sinh?</h4>
+                <ul>
+                    <li><strong>Doanh thu tích lũy theo thời gian:</strong> Lãi tiền gửi, lãi cho vay</li>
+                    <li><strong>Dịch vụ đã thực hiện:</strong> Chưa lập hóa đơn, chưa thu tiền</li>
+                </ul>
+
+                <div class="example">
+                    <h4>Ví dụ thực tế:</h4>
+                    <ul>
+                        <li>Công ty luật hoàn thành tư vấn vào 28/12, lập hóa đơn 15/1 năm sau</li>
+                        <li>Công ty thiết kế website hoàn thành 80% dự án cuối tháng</li>
+                        <li>Lãi tiền gửi ngân hàng tích lũy nhưng chưa nhận</li>
+                    </ul>
+                </div>
+
+                <div class="formula">
+                    Trước điều chỉnh: Tài sản GIẢM ↓ | Doanh thu GIẢM ↓
+                </div>
+
+                <h4>Bút toán điều chỉnh:</h4>
+                <div class="journal-entry">
+                    <div class="debit">Nợ: Tài sản (thường là Accounts Receivable)</div>
+                    <div class="credit">Có: Doanh thu (Revenue)</div>
+                </div>
+
+                <div class="key-point">
+                    Mục đích: Ghi nhận doanh thu trong kỳ mà dịch vụ được thực hiện
+                </div>
+            </div>
+            <div class="slide-number">26 / 65</div>
+        </div>
+
+        <!-- Slide 27: Ví dụ doanh thu dồn tích -->
+        <div class="slide">
+            <h2>💼 VÍ DỤ 5: DOANH THU DỒN TÍCH</h2>
+            <div class="content-scroll">
+                <h3>Công ty Yazici - Dịch vụ chưa lập hóa đơn</h3>
+
+                <div class="example">
+                    <h4>Tình huống tháng 10:</h4>
+                    <p>Công ty Yazici thực hiện dịch vụ quảng cáo trị giá <strong>₺200</strong></p>
+                    <p>Chưa lập hóa đơn cho khách hàng vào 31/10</p>
+                    <p>Sẽ lập hóa đơn và thu tiền vào tháng 11</p>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>31/10:</strong> Thực hiện dịch vụ nhưng chưa lập hóa đơn
+                    </div>
+                    <div class="timeline-item">
+                        <strong>10/11:</strong> Lập hóa đơn và thu tiền
+                    </div>
+                </div>
+
+                <h4>Bút toán điều chỉnh 31/10:</h4>
+                <div class="journal-entry">
+                    <div class="debit">Nợ: Accounts Receivable (Phải thu) ......... ₺200</div>
+                    <div class="credit">Có: Service Revenue (Doanh thu) ............. ₺200</div>
+                    <p style="margin-top: 10px; font-style: italic;">(Ghi nhận doanh thu từ dịch vụ đã thực hiện)</p>
+                </div>
+
+                <h4>Khi thu tiền 10/11:</h4>
+                <div class="journal-entry">
+                    <div class="debit">Nợ: Cash .................................................. ₺200</div>
+                    <div class="credit">Có: Accounts Receivable ......................... ₺200</div>
+                    <p style="margin-top: 10px; font-style: italic;">(Thu tiền từ khách hàng)</p>
+                </div>
+
+                <div class="warning">
+                    <strong>Lưu ý:</strong> Nếu không điều chỉnh → Tài sản và Doanh thu đều bị giảm ₺200
+                </div>
+            </div>
+            <div class="slide-number">27 / 65</div>
+        </div>
+
+        <!-- Slide 28: Chi phí dồn tích -->
+        <div class="slide">
+            <h2>📉 CHI PHÍ DỒN TÍCH</h2>
+            <div class="content-scroll">
+                <h3>Accrued Expenses</h3>
+
+                <div class="box">
+                    <p><strong>Định nghĩa:</strong> Chi phí đã phát sinh nhưng chưa trả tiền và chưa ghi sổ</p>
+                </div>
+
+                <h4>Các loại phổ biến:</h4>
+                <ul>
+                    <li><strong>Lãi vay:</strong> Đã phát sinh nhưng chưa đến kỳ trả</li>
+                    <li><strong>Thuế:</strong> Phát sinh trong kỳ, nộp kỳ sau</li>
+                    <li><strong>Lương:</strong> Nhân viên làm việc nhưng chưa đến ngày trả lương</li>
+                    <li><strong>Tiện ích:</strong> Điện, nước sử dụng nhưng chưa nhận hóa đơn</li>
+                </ul>
+
+                <div class="formula">
+                    Trước điều chỉnh: Nợ phải trả GIẢM ↓ | Chi phí GIẢM ↓
+                </div>
+
+                <h4>Bút toán điều chỉnh:</h4>
+                <div class="journal-entry">
+                    <div class="debit">Nợ: Chi phí (Expense)</div>
+                    <div class="credit">Có: Nợ phải trả (Liability)</div>
+                </div>
+
+                <div class="warning">
+                    <strong>Quan trọng:</strong> Nếu không điều chỉnh:
+                    <ul>
+                        <li>Chi phí bị giảm → Lãi bị thổi phồng</li>
+                        <li>Nợ phải trả bị giảm → BCĐKT không chính xác</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">28 / 65</div>
+        </div>
+
+        <!-- Slide 29: Lãi vay dồn tích -->
+        <div class="slide">
+            <h2>💸 VÍ DỤ 6: LÃI VAY DỒN TÍCH</h2>
+            <div class="content-scroll">
+                <h3>Công ty Yazici - Lãi vay phải trả</h3>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>1/10:</strong> Vay ngân hàng ₺5,000
+                        <ul>
+                            <li>Kỳ hạn: 3 tháng</li>
+                            <li>Lãi suất: 12%/năm</li>
+                            <li>Đến hạn: 1/1 năm sau</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h4>Tính lãi phải trả tại 31/10:</h4>
+                    <div class="formula">
+                        Lãi = Gốc × Lãi suất × Thời gian
+                    </div>
+                    <div class="formula">
+                        = ₺5,000 × 12% × (1/12) = ₺50
+                    </div>
+                    <p><strong>Giải thích:</strong></p>
+                    <ul>
+                        <li>Gốc vay: ₺5,000</li>
+                        <li>Lãi suất năm: 12%</li>
+                        <li>Thời gian: 1 tháng = 1/12 năm</li>
+                    </ul>
+                </div>
+
+                <h4>Bút toán điều chỉnh 31/10:</h4>
+                <div class="journal-entry">
+                    <div class="debit">Nợ: Interest Expense (Chi phí lãi vay) ........ ₺50</div>
+                    <div class="credit">Có: Interest Payable (Lãi phải trả) ............ ₺50</div>
+                    <p style="margin-top: 10px; font-style: italic;">(Ghi nhận lãi vay tháng 10)</p>
+                </div>
+
+                <div class="box">
+                    <p><strong>Tại 31/10:</strong></p>
+                    <p>Interest Expense = ₺50 (Chi phí tháng 10)</p>
+                    <p>Interest Payable = ₺50 (Nợ chưa trả)</p>
+                </div>
+            </div>
+            <div class="slide-number">29 / 65</div>
+        </div>
+
+        <!-- Slide 30: Công thức tính lãi -->
+        <div class="slide">
+            <h2>🧮 CÔNG THỨC TÍNH LÃI</h2>
+            <div class="content-scroll">
+                <h3>Interest Calculation Formula</h3>
+
+                <div class="key-point">
+                    Lãi = Gốc × Lãi suất năm × (Số ngày/360 HOẶC Số tháng/12)
+                </div>
+
+                <h4>Các ví dụ tính lãi:</h4>
+
+                <table>
+                    <tr>
+                        <th>Gốc</th>
+                        <th>Lãi suất</th>
+                        <th>Thời gian</th>
+                        <th>Lãi phải trả</th>
+                    </tr>
+                    <tr>
+                        <td>₺5,000</td>
+                        <td>12%/năm</td>
+                        <td>1 tháng</td>
+                        <td>₺5,000 × 12% × 1/12 = <strong>₺50</strong></td>
+                    </tr>
+                    <tr>
+                        <td>₺10,000</td>
+                        <td>9%/năm</td>
+                        <td>3 tháng</td>
+                        <td>₺10,000 × 9% × 3/12 = <strong>₺225</strong></td>
+                    </tr>
+                    <tr>
+                        <td>₺8,000</td>
+                        <td>6%/năm</td>
+                        <td>60 ngày</td>
+                        <td>₺8,000 × 6% × 60/360 = <strong>₺80</strong></td>
+                    </tr>
+                </table>
+
+                <div class="warning">
+                    <h4>⚠️ LƯU Ý QUAN TRỌNG:</h4>
+                    <ul>
+                        <li>Lãi suất LUÔN là lãi suất NĂM</li>
+                        <li>Phải quy đổi thời gian ra phân số của năm</li>
+                        <li>1 tháng = 1/12 năm</li>
+                        <li>1 quý = 3/12 = 1/4 năm</li>
+                        <li>Thông thường: 1 năm = 360 ngày (quy ước kế toán)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">30 / 65</div>
+        </div>
+
+        <!-- Slide 31: Lương dồn tích -->
+        <div class="slide">
+            <h2>👥 VÍ DỤ 7: LƯƠNG DỒN TÍCH</h2>
+            <div class="content-scroll">
+                <h3>Công ty Yazici - Lương phải trả</h3>
+
+                <div class="example">
+                    <h4>Thông tin:</h4>
+                    <ul>
+                        <li>Lương tuần (5 ngày): ₺2,000</li>
+                        <li>Lương mỗi ngày: ₺2,000 ÷ 5 = ₺400</li>
+                        <li>Ngày trả lương: Thứ 2 hàng tuần</li>
+                        <li>Trả lương gần nhất: 26/10 (Thứ 2)</li>
+                    </ul>
+                </div>
+
+                <div style="text-align: center; margin: 20px 0;">
+                    <table style="margin: 0 auto; font-size: 16px;">
+                        <tr>
+                            <th>Thứ 2</th><th>Thứ 3</th><th>Thứ 4</th><th>Thứ 5</th><th>Thứ 6</th><th>Thứ 7</th><th>CN</th>
+                        </tr>
+                        <tr>
+                            <td style="background: #d4edda;">26</td>
+                            <td>27</td>
+                            <td style="background: #fff9e6;">28</td>
+                            <td style="background: #fff9e6;">29</td>
+                            <td style="background: #fff9e6;">30</td>
+                            <td style="background: #fff9e6;">31</td>
+                            <td>1/11</td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 10px;">🟩 Đã trả lương | 🟨 Chưa trả (cần điều chỉnh)</p>
+                </div>
+
+                <div class="box">
+                    <p><strong>Tính lương dồn tích tại 31/10:</strong></p>
+                    <p>Từ 28/10 → 31/10: 4 ngày làm việc (Thứ 4, 5, 6, Thứ 7)</p>
+                    <p>Lương chưa trả: 4 ngày × ₺400 = <strong>₺1,200</strong></p>
+                </div>
+
+                <h4>Bút toán điều chỉnh 31/10:</h4>
+                <div class="journal-entry">
+                    <div class="debit">Nợ: Salaries and Wages Expense ............. ₺1,200</div>
+                    <div class="credit">Có: Salaries and Wages Payable ............. ₺1,200</div>
+                    <p style="margin-top: 10px; font-style: italic;">(Ghi nhận lương 4 ngày chưa trả)</p>
+                </div>
+            </div>
+            <div class="slide-number">31 / 65</div>
+        </div>
+
+        <!-- Slide 32: Trả lương kỳ sau -->
+        <div class="slide">
+            <h2>💰 TRẢ LƯƠNG KỲ SAU</h2>
+            <div class="content-scroll">
+                <h3>Công ty Yazici - Thanh toán lương tháng 11</h3>
+
+                <div style="text-align: center; margin: 20px 0;">
+                    <table style="margin: 0 auto; font-size: 16px;">
+                        <tr>
+                            <th colspan="7">Tháng 11</th>
+                        </tr>
+                        <tr>
+                            <th>Thứ 2</th><th>Thứ 3</th><th>Thứ 4</th><th>Thứ 5</th><th>Thứ 6</th><th>Thứ 7</th><th>CN</th>
+                        </tr>
+                        <tr>
+                            <td style="background: #fff9e6;">2</td>
+                            <td style="background: #fff9e6;">3</td>
+                            <td style="background: #fff9e6;">4</td>
+                            <td style="background: #fff9e6;">5</td>
+                            <td style="background: #fff9e6;">6</td>
+                            <td>7</td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <td style="background: #d4edda;" colspan="7">9/11: TRẢ LƯƠNG</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="example">
+                    <h4>Phân tích ngày 9/11:</h4>
+                    <p><strong>Lương phải trả ₺4,000 gồm:</strong></p>
+                    <ul>
+                        <li>Lương tháng 10 chưa trả (28-31/10): ₺1,200</li>
+                        <li>Lương tháng 11 (2-6/11): 5 ngày × ₺400 = ₺2,800</li>
+                    </ul>
+                </div>
+
+                <h4>Bút toán thanh toán 9/11:</h4>
+                <div class="journal-entry">
+                    <div class="debit">Nợ: Salaries and Wages Payable ....... ₺1,200</div>
+                    <div class="debit">Nợ: Salaries and Wages Expense ...... ₺2,800</div>
+                    <div class="credit">Có: Cash .......................................... ₺4,000</div>
+                    <p style="margin-top: 10px; font-style: italic;">(Trả lương tuần 28/10 - 6/11)</p>
+                </div>
+
+                <div class="key-point">
+                    Bút toán này XÓA nợ phải trả đã ghi tại 31/10 và ghi nhận chi phí lương tháng 11
+                </div>
+            </div>
+            <div class="slide-number">32 / 65</div>
+        </div>
+
+        <!-- Slide 33: Tóm tắt dồn tích -->
+        <div class="slide">
+            <h2>📊 TÓM TẮT: ĐIỀU CHỈNH DỒN TÍCH</h2>
+            <div class="content-scroll">
+                <h3>Accounting for Accruals</h3>
+
+                <table>
+                    <tr>
+                        <th>Loại</th>
+                        <th>Lý do điều chỉnh</th>
+                        <th>Trước điều chỉnh</th>
+                        <th>Bút toán</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Doanh thu dồn tích</strong><br>(Accrued Revenues)</td>
+                        <td>Đã thực hiện dịch vụ nhưng chưa nhận tiền</td>
+                        <td>Tài sản ↓<br>Doanh thu ↓</td>
+                        <td>Nợ: Assets<br>Có: Revenues</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chi phí dồn tích</strong><br>(Accrued Expenses)</td>
+                        <td>Đã phát sinh chi phí nhưng chưa trả tiền</td>
+                        <td>Chi phí ↓<br>Nợ phải trả ↓</td>
+                        <td>Nợ: Expenses<br>Có: Liabilities</td>
+                    </tr>
+                </table>
+
+                <div class="key-point">
+                    Đặc điểm chung: Ghi nhận doanh thu/chi phí TRƯỚC → Giao dịch tiền mặt SAU
+                </div>
+
+                <div class="two-columns">
+                    <div class="box">
+                        <h4>Ví dụ Accrued Revenues:</h4>
+                        <ul>
+                            <li>Lãi tiền gửi</li>
+                            <li>Dịch vụ đã làm</li>
+                            <li>Hoa hồng kiếm được</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>Ví dụ Accrued Expenses:</h4>
+                        <ul>
+                            <li>Lãi vay</li>
+                            <li>Lương nhân viên</li>
+                            <li>Hóa đơn điện nước</li>
+                            <li>Thuế</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">33 / 65</div>
+        </div>
+
+        <!-- Slide 34: So sánh 4 loại -->
+        <div class="slide">
+            <h2>🔀 SO SÁNH 4 LOẠI ĐIỀU CHỈNH</h2>
+            <div class="content-scroll">
+                <table style="font-size: 17px;">
+                    <tr>
+                        <th style="width: 20%;">Loại</th>
+                        <th style="width: 25%;">Thời điểm tiền</th>
+                        <th style="width: 30%;">Trước điều chỉnh</th>
+                        <th style="width: 25%;">Bút toán</th>
+                    </tr>
+                    <tr>
+                        <td><strong>1. Prepaid Expenses</strong></td>
+                        <td>Trả tiền TRƯỚC</td>
+                        <td>Tài sản ↑<br>Chi phí ↓</td>
+                        <td>Nợ: Expense<br>Có: Asset</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. Unearned Revenues</strong></td>
+                        <td>Nhận tiền TRƯỚC</td>
+                        <td>Nợ PT ↑<br>Doanh thu ↓</td>
+                        <td>Nợ: Liability<br>Có: Revenue</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. Accrued Revenues</strong></td>
+                        <td>Nhận tiền SAU</td>
+                        <td>Tài sản ↓<br>Doanh thu ↓</td>
+                        <td>Nợ: Asset<br>Có: Revenue</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4. Accrued Expenses</strong></td>
+                        <td>Trả tiền SAU</td>
+                        <td>Chi phí ↓<br>Nợ PT ↓</td>
+                        <td>Nợ: Expense<br>Có: Liability</td>
+                    </tr>
+                </table>
+
+                <div class="two-columns" style="margin-top: 30px;">
+                    <div class="box">
+                        <h4>DEFERRALS (Hoãn lại)</h4>
+                        <p>✓ Tiền giao dịch TRƯỚC</p>
+                        <p>✓ Ghi nhận DT/CP SAU</p>
+                        <p>✓ Ban đầu vào BCĐKT</p>
+                    </div>
+                    <div class="success">
+                        <h4>ACCRUALS (Dồn tích)</h4>
+                        <p>✓ Ghi nhận DT/CP TRƯỚC</p>
+                        <p>✓ Tiền giao dịch SAU</p>
+                        <p>✓ Ban đầu chưa ghi</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">34 / 65</div>
+        </div>
+
+        <div class="slide">
+            <h2>📋 BẢNG TỔNG HỢP ĐIỀU CHỈNH</h2>
+            <div class="content-scroll">
+                <h3>Summary of Basic Relationships</h3>
+
+                <table style="font-size: 16px;">
+                    <tr>
+                        <th>Loại</th>
+                        <th>Ví dụ</th>
+                        <th>Ban đầu ghi</th>
+                        <th>Điều chỉnh làm gì</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Chi phí trả trước</strong></td>
+                        <td>Bảo hiểm, Vật liệu, Thuê nhà</td>
+                        <td>TÀI SẢN</td>
+                        <td>Giảm Tài sản<br>Tăng Chi phí</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Doanh thu chưa thực hiện</strong></td>
+                        <td>Tiền thuê trước, Vé máy bay</td>
+                        <td>NỢ PHẢI TRẢ</td>
+                        <td>Giảm Nợ phải trả<br>Tăng Doanh thu</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Doanh thu dồn tích</strong></td>
+                        <td>Lãi tiền gửi, DV chưa thu tiền</td>
+                        <td>CHƯA GHI</td>
+                        <td>Tăng Tài sản<br>Tăng Doanh thu</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chi phí dồn tích</strong></td>
+                        <td>Lãi vay, Lương, Thuế</td>
+                        <td>CHƯA GHI</td>
+                        <td>Tăng Chi phí<br>Tăng Nợ phải trả</td>
+                    </tr>
+                </table>
+
+                <div class="key-point">
+                    Quy tắc chung: Mỗi điều chỉnh ảnh hưởng 1 TK BCĐKT + 1 TK Báo cáo KQKD
+                </div>
+
+                <div class="warning">
+                    <h4>4 điều cần kiểm tra khi làm điều chỉnh:</h4>
+                    <ol>
+                        <li>Điều chỉnh KHÔNG liên quan đến Tiền mặt</li>
+                        <li>Điều chỉnh phải HỢP LÝ (VD: Vật liệu dùng → tăng chi phí)</li>
+                        <li>Kiểm tra lại TÍNH TOÁN</li>
+                        <li>Ảnh hưởng 1 TK BCĐKT + 1 TK BCKQKD</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="slide-number">35 / 65</div>
+        </div>
+
+        <!-- Slide 36: Ví dụ tổng hợp -->
+        <div class="slide">
+            <h2>📝 VÍ DỤ TỔNG HỢP - CÔNG TY YAZICI</h2>
+            <div class="content-scroll">
+                <h3>Tất cả các điều chỉnh tại 31/10/2020</h3>
+
+                <div style="font-size: 17px;">
+                    <div class="journal-entry">
+                        <strong>1. Vật liệu:</strong>
+                        <div class="debit">Nợ: Supplies Expense ........................... ₺1,500</div>
+                        <div class="credit">Có: Supplies ....................................... ₺1,500</div>
+                    </div>
+
+                    <div class="journal-entry">
+                        <strong>2. Bảo hiểm:</strong>
+                        <div class="debit">Nợ: Insurance Expense ............................ ₺50</div>
+                        <div class="credit">Có: Prepaid Insurance ........................... ₺50</div>
+                    </div>
+
+                    <div class="journal-entry">
+                        <strong>3. Khấu hao:</strong>
+                        <div class="debit">Nợ: Depreciation Expense ........................ ₺40</div>
+                        <div class="credit">Có: Accumulated Depreciation—Equipment ... ₺40</div>
+                    </div>
+
+                    <div class="journal-entry">
+                        <strong>4. Doanh thu chưa thực hiện:</strong>
+                        <div class="debit">Nợ: Unearned Service Revenue ................. ₺400</div>
+                        <div class="credit">Có: Service Revenue .............................. ₺400</div>
+                    </div>
+
+                    <div class="journal-entry">
+                        <strong>5. Doanh thu dồn tích:</strong>
+                        <div class="debit">Nợ: Accounts Receivable ........................ ₺200</div>
+                        <div class="credit">Có: Service Revenue .............................. ₺200</div>
+                    </div>
+
+                    <div class="journal-entry">
+                        <strong>6. Lãi vay dồn tích:</strong>
+                        <div class="debit">Nợ: Interest Expense ................................ ₺50</div>
+                        <div class="credit">Có: Interest Payable ................................ ₺50</div>
+                    </div>
+
+                    <div class="journal-entry">
+                        <strong>7. Lương dồn tích:</strong>
+                        <div class="debit">Nợ: Salaries and Wages Expense ............. ₺1,200</div>
+                        <div class="credit">Có: Salaries and Wages Payable ............. ₺1,200</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">36 / 65</div>
+        </div>
+
+        <!-- Slide 37: Phần 4 - Bảng cân đối thử -->
+        <div class="slide">
+            <h2>📊 PHẦN 4: BÁO CÁO TÀI CHÍNH</h2>
+            <div class="centered">
+                <h3 style="color: #667eea; font-size: 42px;">BẢNG CÂN ĐỐI THỬ ĐIỀU CHỈNH</h3>
+                <p style="font-size: 28px; margin-top: 30px;">(Adjusted Trial Balance)</p>
+                <div class="box" style="margin-top: 50px;">
+                    <p style="font-size: 24px;">Danh sách tất cả các tài khoản và số dư của chúng SAU KHI điều chỉnh</p>
+                </div>
+            </div>
+            <div class="slide-number">37 / 65</div>
+        </div>
+
+        <!-- Slide 38: Mục đích BCĐT điều chỉnh -->
+        <div class="slide">
+            <h2>🎯 MỤC ĐÍCH BCĐT ĐIỀU CHỈNH</h2>
+            <div class="content-scroll">
+                <h3>Purpose of Adjusted Trial Balance</h3>
+
+                <div class="key-point">
+                    Chứng minh tổng Nợ = tổng Có sau khi đã điều chỉnh
+                </div>
+
+                <h4>3 Mục đích chính:</h4>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>1. Kiểm tra cân bằng kế toán</strong>
+                        <p>Đảm bảo tổng Nợ = tổng Có sau điều chỉnh</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>2. Cơ sở lập báo cáo tài chính</strong>
+                        <p>Chứa tất cả dữ liệu cần thiết cho BCTC</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>3. Đảm bảo tính đầy đủ</strong>
+                        <p>Tất cả các điều chỉnh đã được thực hiện</p>
+                    </div>
+                </div>
+
+                <div class="two-columns">
+                    <div class="warning">
+                        <h4>Trước điều chỉnh:</h4>
+                        <ul>
+                            <li>Thiếu nhiều khoản</li>
+                            <li>Số liệu chưa chính xác</li>
+                            <li>Chưa thể lập BCTC</li>
+                        </ul>
+                    </div>
+                    <div class="success">
+                        <h4>Sau điều chỉnh:</h4>
+                        <ul>
+                            <li>Đầy đủ các khoản</li>
+                            <li>Số liệu chính xác</li>
+                            <li>Sẵn sàng lập BCTC</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <p><strong>Lưu ý:</strong> BCĐT điều chỉnh là bước cuối trước khi lập báo cáo tài chính</p>
+                </div>
+            </div>
+            <div class="slide-number">38 / 65</div>
+        </div>
+
+        <!-- Slide 39: So sánh trước và sau -->
+        <div class="slide">
+            <h2>🔄 SO SÁNH TRƯỚC VÀ SAU ĐIỀU CHỈNH</h2>
+            <div class="content-scroll">
+                <h3>Công ty Yazici - Một số tài khoản chính</h3>
+
+                <table style="font-size: 17px;">
+                    <tr>
+                        <th>Tài khoản</th>
+                        <th>Trước điều chỉnh</th>
+                        <th>Sau điều chỉnh</th>
+                        <th>Thay đổi</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Supplies</strong></td>
+                        <td>₺2,500</td>
+                        <td>₺1,000</td>
+                        <td>-₺1,500</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Prepaid Insurance</strong></td>
+                        <td>₺600</td>
+                        <td>₺550</td>
+                        <td>-₺50</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Accum. Depreciation</strong></td>
+                        <td>₺0</td>
+                        <td>₺40</td>
+                        <td>+₺40</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Accounts Receivable</strong></td>
+                        <td>₺0</td>
+                        <td>₺200</td>
+                        <td>+₺200</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Service Revenue</strong></td>
+                        <td>₺10,000</td>
+                        <td>₺10,600</td>
+                        <td>+₺600</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Supplies Expense</strong></td>
+                        <td>₺0</td>
+                        <td>₺1,500</td>
+                        <td>+₺1,500</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Salaries Expense</strong></td>
+                        <td>₺4,000</td>
+                        <td>₺5,200</td>
+                        <td>+₺1,200</td>
+                    </tr>
+                </table>
+
+                <div class="key-point">
+                    Nhiều tài khoản MỚI xuất hiện sau điều chỉnh (Depreciation Expense, Interest Payable, v.v.)
+                </div>
+            </div>
+            <div class="slide-number">39 / 65</div>
+        </div>
+
+        <!-- Slide 40: BCĐT đầy đủ -->
+        <div class="slide">
+            <h2>📋 BẢNG CÂN ĐỐI THỬ ĐIỀU CHỈNH</h2>
+            <div class="content-scroll">
+                <h3>Yazici Advertising A.Ş. - 31/10/2020</h3>
+
+                <table style="font-size: 16px;">
+                    <tr>
+                        <th>Tài khoản</th>
+                        <th style="text-align: right;">Nợ</th>
+                        <th style="text-align: right;">Có</th>
+                    </tr>
+                    <tr><td>Cash</td><td style="text-align: right;">₺15,200</td><td></td></tr>
+                    <tr><td>Accounts Receivable</td><td style="text-align: right;">200</td><td></td></tr>
+                    <tr><td>Supplies</td><td style="text-align: right;">1,000</td><td></td></tr>
+                    <tr><td>Prepaid Insurance</td><td style="text-align: right;">550</td><td></td></tr>
+                    <tr><td>Equipment</td><td style="text-align: right;">5,000</td><td></td></tr>
+                    <tr><td>Accumulated Depreciation—Equipment</td><td></td><td style="text-align: right;">₺40</td></tr>
+                    <tr><td>Notes Payable</td><td></td><td style="text-align: right;">5,000</td></tr>
+                    <tr><td>Accounts Payable</td><td></td><td style="text-align: right;">2,500</td></tr>
+                    <tr><td>Interest Payable</td><td></td><td style="text-align: right;">50</td></tr>
+                    <tr><td>Unearned Service Revenue</td><td></td><td style="text-align: right;">800</td></tr>
+                    <tr><td>Salaries and Wages Payable</td><td></td><td style="text-align: right;">1,200</td></tr>
+                    <tr><td>Share Capital—Ordinary</td><td></td><td style="text-align: right;">10,000</td></tr>
+                    <tr><td>Retained Earnings</td><td></td><td style="text-align: right;">0</td></tr>
+                    <tr><td>Dividends</td><td style="text-align: right;">500</td><td></td></tr>
+                    <tr><td>Service Revenue</td><td></td><td style="text-align: right;">10,600</td></tr>
+                    <tr><td>Salaries and Wages Expense</td><td style="text-align: right;">5,200</td><td></td></tr>
+                    <tr><td>Supplies Expense</td><td style="text-align: right;">1,500</td><td></td></tr>
+                    <tr><td>Rent Expense</td><td style="text-align: right;">900</td><td></td></tr>
+                    <tr><td>Insurance Expense</td><td style="text-align: right;">50</td><td></td></tr>
+                    <tr><td>Interest Expense</td><td style="text-align: right;">50</td><td></td></tr>
+                    <tr><td>Depreciation Expense</td><td style="text-align: right;">40</td><td></td></tr>
+                    <tr style="font-weight: bold; background: #f8f9fa;">
+                        <td><strong>TỔNG</strong></td>
+                        <td style="text-align: right;"><strong>₺30,190</strong></td>
+                        <td style="text-align: right;"><strong>₺30,190</strong></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="slide-number">40 / 65</div>
+        </div>
+
+        <!-- Slide 41: Lập BCTC từ BCĐT -->
+        <div class="slide">
+            <h2>📊 LẬP BÁO CÁO TÀI CHÍNH</h2>
+            <div class="content-scroll">
+                <h3>Từ BCĐT điều chỉnh đến BCTC</h3>
+
+                <div class="key-point">
+                    BCĐT điều chỉnh chứa TẤT CẢ thông tin cần thiết để lập báo cáo tài chính
+                </div>
+
+                <h4>Trình tự lập báo cáo:</h4>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>Bước 1: Báo cáo Kết quả Kinh doanh</strong>
+                        <p>Lấy các TK: Doanh thu và Chi phí</p>
+                        <p>→ Tính Lãi/Lỗ ròng</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <strong>Bước 2: Báo cáo Thay đổi VCSH</strong>
+                        <p>Lấy: Retained Earnings đầu kỳ + Lãi ròng - Cổ tức</p>
+                        <p>→ Retained Earnings cuối kỳ</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <strong>Bước 3: Bảng Cân đối Kế toán</strong>
+                        <p>Lấy các TK: Tài sản, Nợ phải trả, Vốn CSH</p>
+                        <p>Dùng Retained Earnings từ Bước 2</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <strong>Bước 4: Báo cáo Lưu chuyển Tiền tệ</strong>
+                        <p>(Sẽ học ở chương sau)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">41 / 65</div>
+        </div>
+
+        <!-- Slide 42: Báo cáo KQKD -->
+        <div class="slide">
+            <h2>📈 BÁO CÁO KẾT QUẢ KINH DOANH</h2>
+            <div class="content-scroll">
+                <h3>Yazici Advertising A.Ş.</h3>
+                <h4 style="text-align: center; color: #666;">Income Statement - For the Month Ended October 31, 2020</h4>
+
+                <table style="width: 80%; margin: 20px auto;">
+                    <tr>
+                        <td colspan="2"><strong>Revenues</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Service revenue</td>
+                        <td style="text-align: right;">₺10,600</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><strong>Expenses</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Salaries and wages expense</td>
+                        <td style="text-align: right;">₺5,200</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Supplies expense</td>
+                        <td style="text-align: right;">1,500</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Rent expense</td>
+                        <td style="text-align: right;">900</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Insurance expense</td>
+                        <td style="text-align: right;">50</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Interest expense</td>
+                        <td style="text-align: right;">50</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Depreciation expense</td>
+                        <td style="text-align: right;"><u>40</u></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 40px;">Total expenses</td>
+                        <td style="text-align: right;"><u>7,740</u></td>
+                    </tr>
+                    <tr style="font-weight: bold; background: #d4edda;">
+                        <td><strong>Net Income</strong></td>
+                        <td style="text-align: right;"><strong>₺2,860</strong></td>
+                    </tr>
+                </table>
+
+                <div class="box">
+                    <p>Lãi ròng ₺2,860 sẽ được chuyển sang Báo cáo Thay đổi VCSH</p>
+                </div>
+            </div>
+            <div class="slide-number">42 / 65</div>
+        </div>
+
+        <!-- Slide 43: Báo cáo VCSH -->
+        <div class="slide">
+            <h2>💎 BÁO CÁO THAY ĐỔI VỐN CHỦ SỞ HỮU</h2>
+            <div class="content-scroll">
+                <h3>Yazici Advertising A.Ş.</h3>
+                <h4 style="text-align: center; color: #666;">Retained Earnings Statement - For the Month Ended October 31, 2020</h4>
+
+                <table style="width: 70%; margin: 20px auto;">
+                    <tr>
+                        <td>Retained Earnings, October 1</td>
+                        <td style="text-align: right;">₺0</td>
+                    </tr>
+                    <tr>
+                        <td>Add: Net income</td>
+                        <td style="text-align: right;"><u>2,860</u></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="text-align: right;">2,860</td>
+                    </tr>
+                    <tr>
+                        <td>Less: Dividends</td>
+                        <td style="text-align: right;"><u>500</u></td>
+                    </tr>
+                    <tr style="font-weight: bold; background: #d4edda;">
+                        <td><strong>Retained Earnings, October 31</strong></td>
+                        <td style="text-align: right;"><strong>₺2,360</strong></td>
+                    </tr>
+                </table>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>Giải thích:</strong>
+                        <ul>
+                            <li>Đầu tháng 10: Công ty mới thành lập → RE = 0</li>
+                            <li>Cộng: Lãi ròng tháng 10 = ₺2,860</li>
+                            <li>Trừ: Cổ tức đã trả = ₺500</li>
+                            <li>Cuối tháng 10: RE = ₺2,360</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    RE cuối kỳ ₺2,360 sẽ được trình bày trên Bảng Cân đối Kế toán
+                </div>
+            </div>
+            <div class="slide-number">43 / 65</div>
+        </div>
+
+        <!-- Slide 44: Bảng cân đối kế toán -->
+        <div class="slide">
+            <h2>🏦 BẢNG CÂN ĐỐI KẾ TOÁN</h2>
+            <div class="content-scroll">
+                <h3>Yazici Advertising A.Ş.</h3>
+                <h4 style="text-align: center; color: #666;">Statement of Financial Position - October 31, 2020</h4>
+
+                <div class="two-columns" style="font-size: 17px;">
+                    <div>
+                        <table style="width: 100%;">
+                            <tr><td colspan="2"><strong>ASSETS</strong></td></tr>
+                            <tr><td>Cash</td><td style="text-align: right;">₺15,200</td></tr>
+                            <tr><td>Accounts Receivable</td><td style="text-align: right;">200</td></tr>
+                            <tr><td>Supplies</td><td style="text-align: right;">1,000</td></tr>
+                            <tr><td>Prepaid Insurance</td><td style="text-align: right;">550</td></tr>
+                            <tr><td>Equipment</td><td style="text-align: right;">₺5,000</td></tr>
+                            <tr><td style="padding-left: 20px;">Less: Accum. Depr.</td><td style="text-align: right;"><u>(40)</u></td></tr>
+                            <tr><td></td><td style="text-align: right;">4,960</td></tr>
+                            <tr style="font-weight: bold; background: #d4edda;">
+                                <td><strong>Total Assets</strong></td>
+                                <td style="text-align: right;"><strong>₺21,910</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div>
+                        <table style="width: 100%;">
+                            <tr><td colspan="2"><strong>LIABILITIES</strong></td></tr>
+                            <tr><td>Notes Payable</td><td style="text-align: right;">₺5,000</td></tr>
+                            <tr><td>Accounts Payable</td><td style="text-align: right;">2,500</td></tr>
+                            <tr><td>Interest Payable</td><td style="text-align: right;">50</td></tr>
+                            <tr><td>Unearned Service Rev.</td><td style="text-align: right;">800</td></tr>
+                            <tr><td>Salaries/Wages Payable</td><td style="text-align: right;"><u>1,200</u></td></tr>
+                            <tr><td><strong>Total Liabilities</strong></td><td style="text-align: right;"><strong>9,550</strong></td></tr>
+                            <tr><td colspan="2"><strong>EQUITY</strong></td></tr>
+                            <tr><td>Share Capital</td><td style="text-align: right;">10,000</td></tr>
+                            <tr><td>Retained Earnings</td><td style="text-align: right;"><u>2,360</u></td></tr>
+                            <tr><td><strong>Total Equity</strong></td><td style="text-align: right;"><strong>12,360</strong></td></tr>
+                            <tr style="font-weight: bold; background: #d4edda;">
+                                <td><strong>Total Liab. & Equity</strong></td>
+                                <td style="text-align: right;"><strong>₺21,910</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="success" style="margin-top: 20px;">
+                    <p>✓ Tổng Tài sản = Tổng Nợ phải trả + Vốn CSH</p>
+                    <p>✓ ₺21,910 = ₺9,550 + ₺12,360</p>
+                </div>
+            </div>
+            <div class="slide-number">44 / 65</div>
+        </div>
+        <div class="slide">
+            <h2>🔄 QUY TRÌNH KẾ TOÁN HOÀN CHỈNH</h2>
+            <div class="content-scroll">
+                <h3>Accounting Cycle (8 bước)</h3>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>1. ANALYZE</strong> - Phân tích giao dịch
+                    </div>
+                    <div class="timeline-item">
+                        <strong>2. JOURNALIZE</strong> - Ghi sổ nhật ký
+                    </div>
+                    <div class="timeline-item">
+                        <strong>3. POST</strong> - Kết chuyển vào sổ cái
+                    </div>
+                    <div class="timeline-item">
+                        <strong>4. TRIAL BALANCE</strong> - Lập bảng cân đối thử
+                    </div>
+                    <div class="timeline-item" style="background: #fff9e6; border-left-color: #ffc107;">
+                        <strong>5. ADJUSTING ENTRIES</strong> - Điều chỉnh ⭐
+                    </div>
+                      <div class="timeline-item" style="background: #fff9e6; border-left-color: #ffc107;">
+                        <strong>6. ADJUSTED TRIAL BALANCE</strong> - BCĐT điều chỉnh ⭐
+                    </div>
+                    <div class="timeline-item" style="background: #d4edda; border-left-color: #28a745;">
+                        <strong>7. FINANCIAL STATEMENTS</strong> - Lập BCTC ⭐
+                    </div>
+                    <div class="timeline-item">
+                        <strong>8. CLOSING ENTRIES</strong> - Kết chuyển (Chương 4)
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    Chương này tập trung vào bước 5, 6, 7 - Phần cốt lõi của kế toán dồn tích
+                </div>
+            </div>
+            <div class="slide-number">45 / 65</div>
+        </div>
+
+        <!-- Slide 46: Ứng dụng TMĐT -->
+        <div class="slide">
+            <h2>🛒 ỨNG DỤNG TRONG THƯƠNG MẠI ĐIỆN TỬ</h2>
+            <div class="content-scroll">
+                <h3>Các điều chỉnh phổ biến trong TMĐT</h3>
+
+                <div class="example">
+                    <h4>1. Chi phí quảng cáo trên Facebook/Google</h4>
+                    <p><strong>Vấn đề:</strong> Chạy quảng cáo tháng 12, hóa đơn về tháng 1</p>
+                    <p><strong>Điều chỉnh 31/12:</strong></p>
+                    <div class="journal-entry">
+                        <div class="debit">Nợ: Advertising Expense</div>
+                        <div class="credit">Có: Accounts Payable</div>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h4>2. Doanh thu từ Affiliate Marketing</h4>
+                    <p><strong>Vấn đề:</strong> Kiếm hoa hồng tháng 12, nhận tiền tháng 1</p>
+                    <p><strong>Điều chỉnh 31/12:</strong></p>
+                    <div class="journal-entry">
+                        <div class="debit">Nợ: Accounts Receivable</div>
+                        <div class="credit">Có: Commission Revenue</div>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h4>3. Dịch vụ Hosting/Domain trả trước</h4>
+                    <p><strong>Vấn đề:</strong> Trả 12 tháng hosting từ tháng 7</p>
+                    <p><strong>Điều chỉnh hàng tháng:</strong></p>
+                    <div class="journal-entry">
+                        <div class="debit">Nợ: Hosting Expense</div>
+                        <div class="credit">Có: Prepaid Hosting</div>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h4>4. Gói dịch vụ bán trước (Subscription)</h4>
+                    <p><strong>Vấn đề:</strong> Khách mua gói 6 tháng từ tháng 10</p>
+                    <p><strong>Điều chỉnh hàng tháng:</strong></p>
+                    <div class="journal-entry">
+                        <div class="debit">Nợ: Unearned Subscription Revenue</div>
+                        <div class="credit">Có: Subscription Revenue</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">46 / 65</div>
+        </div>
+
+        <!-- Slide 47: Case Shopee/Lazada -->
+        <div class="slide">
+            <h2>📦 CASE STUDY: SÀN TMĐT</h2>
+            <div class="content-scroll">
+                <h3>Ví dụ: Shopee/Lazada - Ví điện tử</h3>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>Ngày 15/12:</strong> Khách nạp 1,000,000đ vào ShopeePay
+                        <div class="journal-entry">
+                            <div class="debit">Nợ: Cash .................................. 1,000,000</div>
+                            <div class="credit">Có: Unearned Revenue ............. 1,000,000</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <strong>Ngày 20/12:</strong> Khách mua hàng 300,000đ
+                        <div class="journal-entry">
+                            <div class="debit">Nợ: Unearned Revenue ............... 300,000</div>
+                            <div class="credit">Có: Service Revenue (Phí) ........ 300,000</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <strong>31/12:</strong> Điều chỉnh cuối tháng
+                        <p>Số dư ví còn lại: 700,000đ → Vẫn là Unearned Revenue</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <h4>Phân tích:</h4>
+                    <ul>
+                        <li>Tiền nạp vào ví = Nợ phải trả (chưa phải doanh thu)</li>
+                        <li>Chỉ khi khách dùng → mới ghi nhận doanh thu</li>
+                        <li>Phí dịch vụ = Doanh thu của sàn</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">47 / 65</div>
+        </div>
+
+        <!-- Slide 48: Lỗi thường gặp -->
+        <div class="slide">
+            <h2>⚠️ LỖI THƯỜNG GẶP KHI ĐIỀU CHỈNH</h2>
+            <div class="content-scroll">
+                <h3>Common Mistakes</h3>
+
+                <div class="warning">
+                    <h4>❌ Lỗi 1: Ghi nhận Tiền mặt trong điều chỉnh</h4>
+                    <p>Sai: Nợ Cash / Có Service Revenue</p>
+                    <p>→ Điều chỉnh KHÔNG liên quan đến Cash!</p>
+                </div>
+
+                <div class="warning">
+                    <h4>❌ Lỗi 2: Nhầm lẫn Prepaid và Accrued</h4>
+                    <p>Prepaid = Trả TRƯỚC, ghi nhận SAU</p>
+                    <p>Accrued = Ghi nhận TRƯỚC, trả SAU</p>
+                </div>
+
+                <div class="warning">
+                    <h4>❌ Lỗi 3: Khấu hao trực tiếp vào Tài sản</h4>
+                    <p>Sai: Có Equipment</p>
+                    <p>Đúng: Có Accumulated Depreciation—Equipment</p>
+                </div>
+
+                <div class="warning">
+                    <h4>❌ Lỗi 4: Quên tính toán theo tỷ lệ</h4>
+                    <p>Bảo hiểm 12 tháng → Phải chia 12</p>
+                    <p>Lãi suất 12%/năm → Phải × 1/12 cho 1 tháng</p>
+                </div>
+
+                <div class="warning">
+                    <h4>❌ Lỗi 5: Không điều chỉnh cả 2 phía</h4>
+                    <p>Mỗi điều chỉnh phải có Nợ và Có</p>
+                    <p>Ảnh hưởng đến cả BCĐKT và BCKQKD</p>
+                </div>
+
+                <div class="success">
+                    <h4>✅ Cách tránh lỗi:</h4>
+                    <ul>
+                        <li>Luôn tự hỏi: "Đây là trả trước hay dồn tích?"</li>
+                        <li>Kiểm tra xem có liên quan đến Cash không</li>
+                        <li>Vẽ timeline để rõ ràng</li>
+                        <li>Kiểm tra lại phép tính</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">48 / 65</div>
+        </div>
+
+        <!-- Slide 49: Bài tập thực hành 1 -->
+        <div class="slide">
+            <h2>✍️ BÀI TẬP THỰC HÀNH 1</h2>
+            <div class="content-scroll">
+                <h3>Công ty ABC - Tháng 12/2020</h3>
+
+                <div class="example">
+                    <h4>Thông tin:</h4>
+                    <ol>
+                        <li>1/12: Mua bảo hiểm 1 năm €3,600</li>
+                        <li>5/12: Mua vật liệu €2,800. Còn lại 31/12: €800</li>
+                        <li>31/12: Dịch vụ đã thực hiện chưa lập hóa đơn €1,100</li>
+                        <li>31/12: Lương 3 ngày chưa trả €900</li>
+                        <li>Khấu hao thiết bị tháng 12: €200</li>
+                    </ol>
+                </div>
+
+                <div class="box">
+                    <h4>Yêu cầu:</h4>
+                    <p>Lập các bút toán điều chỉnh tại 31/12/2020</p>
+                </div>
+
+                <div class="key-point">
+                    Thời gian: 15 phút | Làm việc nhóm: 2-3 người
+                </div>
+            </div>
+            <div class="slide-number">49 / 65</div>
+        </div>
+
+        <!-- Slide 50: Đáp án bài tập 1 -->
+        <div class="slide">
+            <h2>✅ ĐÁP ÁN BÀI TẬP 1</h2>
+            <div class="content-scroll">
+                <div class="journal-entry">
+                    <strong>1. Bảo hiểm (€3,600 ÷ 12 tháng = €300/tháng):</strong>
+                    <div class="debit">Nợ: Insurance Expense ......................... €300</div>
+                    <div class="credit">Có: Prepaid Insurance ........................ €300</div>
+                </div>
+
+                <div class="journal-entry">
+                    <strong>2. Vật liệu (€2,800 - €800 = €2,000 đã dùng):</strong>
+                    <div class="debit">Nợ: Supplies Expense .......................... €2,000</div>
+                    <div class="credit">Có: Supplies ....................................... €2,000</div>
+                </div>
+
+                <div class="journal-entry">
+                    <strong>3. Doanh thu dồn tích:</strong>
+                    <div class="debit">Nợ: Accounts Receivable ....................... €1,100</div>
+                    <div class="credit">Có: Service Revenue ............................ €1,100</div>
+                </div>
+
+                <div class="journal-entry">
+                    <strong>4. Lương dồn tích:</strong>
+                    <div class="debit">Nợ: Salaries and Wages Expense ............. €900</div>
+                    <div class="credit">Có: Salaries and Wages Payable ............. €900</div>
+                </div>
+
+                <div class="journal-entry">
+                    <strong>5. Khấu hao:</strong>
+                    <div class="debit">Nợ: Depreciation Expense ....................... €200</div>
+                    <div class="credit">Có: Accumulated Depreciation—Equipment ... €200</div>
+                </div>
+            </div>
+            <div class="slide-number">50 / 65</div>
+        </div>
+
+        <!-- Slide 51: Bài tập thực hành 2 -->
+        <div class="slide">
+            <h2>✍️ BÀI TẬP THỰC HÀNH 2</h2>
+            <div class="content-scroll">
+                <h3>Shop TMĐT XYZ</h3>
+
+                <div class="example">
+                    <h4>Tình huống tháng 11/2020:</h4>
+                    <ol>
+                        <li>1/11: Trả trước hosting 12 tháng 2,400,000đ</li>
+                        <li>10/11: Nhận trước gói dịch vụ 6 tháng 3,600,000đ</li>
+                        <li>15/11: Vay ngân hàng 50,000,000đ, lãi 12%/năm</li>
+                        <li>30/11: Đã thực hiện 1 tháng gói dịch vụ ở khoản (2)</li>
+                        <li>30/11: Kiếm được hoa hồng affiliate 800,000đ chưa nhận</li>
+                    </ol>
+                </div>
+
+                <div class="box">
+                    <h4>Yêu cầu:</h4>
+                    <ol>
+                        <li>Ghi bút toán ban đầu</li>
+                        <li>Lập bút toán điều chỉnh 30/11</li>
+                    </ol>
+                </div>
+
+                <div class="key-point">
+                    Thời gian: 20 phút | Làm việc cá nhân
+                </div>
+            </div>
+            <div class="slide-number">51 / 65</div>
+        </div>
+
+        <!-- Slide 52: Đáp án bài tập 2 -->
+        <div class="slide">
+            <h2>✅ ĐÁP ÁN BÀI TẬP 2</h2>
+            <div class="content-scroll">
+                <h4>Bút toán ban đầu:</h4>
+                <div class="journal-entry" style="font-size: 16px;">
+                    <strong>1/11:</strong>
+                    <div class="debit">Nợ: Prepaid Hosting ......... 2,400,000</div>
+                    <div class="credit">Có: Cash ...................... 2,400,000</div>
+                </div>
+
+                <div class="journal-entry" style="font-size: 16px;">
+                    <strong>10/11:</strong>
+                    <div class="debit">Nợ: Cash ....................... 3,600,000</div>
+                    <div class="credit">Có: Unearned Revenue ..... 3,600,000</div>
+                </div>
+
+                <div class="journal-entry" style="font-size: 16px;">
+                    <strong>15/11:</strong>
+                    <div class="debit">Nợ: Cash ....................... 50,000,000</div>
+                    <div class="credit">Có: Notes Payable .......... 50,000,000</div>
+                </div>
+
+                <h4 style="margin-top: 20px;">Điều chỉnh 30/11:</h4>
+                <div class="journal-entry" style="font-size: 16px;">
+                    <strong>Hosting (2,400k÷12=200k):</strong>
+                    <div class="debit">Nợ: Hosting Expense ........ 200,000</div>
+                    <div class="credit">Có: Prepaid Hosting ........ 200,000</div>
+                </div>
+
+                <div class="journal-entry" style="font-size: 16px;">
+                    <strong>Dịch vụ (3,600k÷6=600k):</strong>
+                    <div class="debit">Nợ: Unearned Revenue ...... 600,000</div>
+                    <div class="credit">Có: Service Revenue ........ 600,000</div>
+                </div>
+
+                <div class="journal-entry" style="font-size: 16px;">
+                    <strong>Lãi vay (50tr×12%×15/360=250k):</strong>
+                    <div class="debit">Nợ: Interest Expense ........ 250,000</div>
+                    <div class="credit">Có: Interest Payable ........ 250,000</div>
+                </div>
+
+                <div class="journal-entry" style="font-size: 16px;">
+                    <strong>Hoa hồng:</strong>
+                    <div class="debit">Nợ: Accounts Receivable ... 800,000</div>
+                    <div class="credit">Có: Commission Revenue ... 800,000</div>
+                </div>
+            </div>
+            <div class="slide-number">52 / 65</div>
+        </div>
+
+        <!-- Slide 53: Câu hỏi ôn tập -->
+        <div class="slide">
+            <h2>❓ CÂU HỎI ÔN TẬP</h2>
+            <div class="content-scroll">
+                <h3>Kiểm tra kiến thức</h3>
+
+                <div class="box">
+                    <h4>1. Khái niệm cơ bản</h4>
+                    <ul>
+                        <li>Sự khác biệt giữa kế toán dồn tích và tiền mặt là gì?</li>
+                        <li>Tại sao cần có bút toán điều chỉnh?</li>
+                        <li>Khi nào ghi nhận doanh thu theo nguyên tắc?</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h4>2. Phân loại điều chỉnh</h4>
+                    <ul>
+                        <li>4 loại điều chỉnh là gì? Cho ví dụ mỗi loại?</li>
+                        <li>Khác biệt giữa Deferrals và Accruals?</li>
+                        <li>Tại sao điều chỉnh không liên quan đến Cash?</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h4>3. Ứng dụng</h4>
+                    <ul>
+                        <li>Làm thế nào tính khấu hao?</li>
+                        <li>Công thức tính lãi vay?</li>
+                        <li>Khi nào dùng Accumulated Depreciation?</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h4>4. Báo cáo tài chính</h4>
+                    <ul>
+                        <li>BCĐT điều chỉnh dùng để làm gì?</li>
+                        <li>Trình tự lập BCTC từ BCĐT điều chỉnh?</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">53 / 65</div>
+        </div>
+
+        <!-- Slide 54: Trắc nghiệm -->
+        <div class="slide">
+            <h2>📝 BÀI TRẮC NGHIỆM</h2>
+            <div class="content-scroll">
+                <h4>Câu 1: Nguyên tắc ghi nhận doanh thu quy định:</h4>
+                <p>A. Ghi nhận khi nhận tiền</p>
+                <p>B. Ghi nhận khi hoàn thành nghĩa vụ thực hiện</p>
+                <p>C. Ghi nhận khi ký hợp đồng</p>
+                <p>D. Ghi nhận khi khách đặt hàng</p>
+
+                <h4>Câu 2: Prepaid Insurance là:</h4>
+                <p>A. Chi phí</p>
+                <p>B. Doanh thu</p>
+                <p>C. Tài sản</p>
+                <p>D. Nợ phải trả</p>
+
+                <h4>Câu 3: Accumulated Depreciation là:</h4>
+                <p>A. Tài khoản chi phí</p>
+                <p>B. Tài khoản đối ứng tài sản</p>
+                <p>C. Tài khoản nợ phải trả</p>
+                <p>D. Tài khoản doanh thu</p>
+
+                <h4>Câu 4: Unearned Revenue ban đầu ghi vào:</h4>
+                <p>A. Tài sản</p>
+                <p>B. Doanh thu</p>
+                <p>C. Nợ phải trả</p>
+                <p>D. Chi phí</p>
+
+                <h4>Câu 5: Accrued Expenses là:</h4>
+                <p>A. Chi phí đã trả nhưng chưa dùng</p>
+                <p>B. Chi phí đã phát sinh nhưng chưa trả</p>
+                <p>C. Chi phí đã trả và đã dùng</p>
+                <p>D. Chi phí chưa phát sinh</p>
+
+                <div class="key-point">
+                    Đáp án: 1-B, 2-C, 3-B, 4-C, 5-B
+                </div>
+            </div>
+            <div class="slide-number">54 / 65</div>
+        </div>
+
+        <!-- Slide 55: Tình huống phức tạp -->
+        <div class="slide">
+            <h2>🎯 TÌNH HUỐNG NÂNG CAO</h2>
+            <div class="content-scroll">
+                <h3>Công ty Công nghệ ABC</h3>
+
+                <div class="example">
+                    <h4>Tình huống:</h4>
+                    <p>Công ty phát triển phần mềm, ký hợp đồng 1 năm với khách:</p>
+                    <ul>
+                        <li>Tổng giá trị: $120,000</li>
+                        <li>Ngày ký: 1/9/2020</li>
+                        <li>Nhận trước 100%: 1/9/2020</li>
+                        <li>Cam kết: Hỗ trợ 12 tháng</li>
+                    </ul>
+                </div>
+
+                <div class="warning">
+                    <h4>Câu hỏi:</h4>
+                    <ol>
+                        <li>Ghi bút toán ngày 1/9/2020?</li>
+                        <li>Điều chỉnh hàng tháng (30/9, 31/10, 30/11)?</li>
+                        <li>Doanh thu năm 2020 là bao nhiêu?</li>
+                        <li>Số dư Unearned Revenue tại 31/12/2020?</li>
+                    </ol>
+                </div>
+
+                <div class="box">
+                    <h4>Gợi ý:</h4>
+                    <p>Doanh thu mỗi tháng = $120,000 ÷ 12 = $10,000</p>
+                    <p>Từ 1/9 → 31/12 = 4 tháng</p>
+                </div>
+            </div>
+            <div class="slide-number">55 / 65</div>
+        </div>
+
+        <!-- Slide 56: Đạo đức nghề nghiệp -->
+        <div class="slide">
+            <h2>⚖️ ĐẠO ĐỨC NGHỀ NGHIỆP</h2>
+            <div class="content-scroll">
+                <h3>Ethics in Adjusting Entries</h3>
+
+                <div class="warning">
+                    <h4>Case: Fannie Mae (USA)</h4>
+                    <p>Công ty bị phát hiện thực hiện các điều chỉnh sai để:</p>
+                    <ul>
+                        <li>Trì hoãn ghi nhận chi phí</li>
+                        <li>Ghi nhận doanh thu sớm hơn</li>
+                        <li>Đạt được mục tiêu lợi nhuận</li>
+                        <li>Nhận thưởng cao hơn</li>
+                    </ul>
+                </div>
+
+                <div class="warning">
+                    <h4>Case: Olympus (JPN)</h4>
+                    <p>Che giấu lỗ đầu tư hơn 10 năm bằng cách:</p>
+                    <ul>
+                        <li>Thổi phồng giá trị tài sản</li>
+                        <li>Điều chỉnh sai để xóa lỗ</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    Kế toán viên có trách nhiệm đảm bảo điều chỉnh phản ánh đúng thực tế!
+                </div>
+
+                <div class="success">
+                    <h4>Nguyên tắc đạo đức:</h4>
+                    <ul>
+                        <li>Trung thực (Honesty)</li>
+                        <li>Khách quan (Objectivity)</li>
+                        <li>Chính trực (Integrity)</li>
+                        <li>Tuân thủ chuẩn mực (Compliance)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">56 / 65</div>
+        </div>
+
+        <!-- Slide 57: Tips học tập -->
+        <div class="slide">
+            <h2>💡 TIPS HỌC TẬP HIỆU QUẢ</h2>
+            <div class="content-scroll">
+                <h3>Làm sao để thành thạo điều chỉnh?</h3>
+
+                <div class="box">
+                    <h4>1. Hiểu Logic, không học thuộc</h4>
+                    <ul>
+                        <li>Tự hỏi: "Tiền giao dịch khi nào?"</li>
+                        <li>Vẽ timeline cho mỗi giao dịch</li>
+                        <li>Hiểu TẠI SAO cần điều chỉnh</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h4>2. Luyện tập nhiều</h4>
+                    <ul>
+                        <li>Làm ít nhất 20-30 bài tập</li>
+                        <li>Tự tạo ví dụ từ cuộc sống</li>
+                        <li>Giải thích cho người khác</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h4>3. Dùng công cụ hỗ trợ</h4>
+                    <ul>
+                        <li>Tạo flashcards cho 4 loại điều chỉnh</li>
+                        <li>Vẽ sơ đồ T-accounts</li>
+                        <li>Làm bảng tổng hợp</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h4>4. Kiểm tra theo checklist</h4>
+                    <ul>
+                        <li>☐ Có liên quan đến Cash không? (Phải KHÔNG)</li>
+                        <li>☐ Ảnh hưởng 1 BCĐKT + 1 BCKQKD?</li>
+                        <li>☐ Tính toán đúng chưa?</li>
+                        <li>☐ Logic hợp lý chưa?</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">57 / 65</div>
+        </div>
+
+        <!-- Slide 58: Tài liệu tham khảo -->
+        <div class="slide">
+            <h2>📚 TÀI LIỆU THAM KHẢO</h2>
+            <div class="content-scroll">
+                <h3>Nguồn học thêm</h3>
+
+                <div class="box">
+                    <h4>Giáo trình chính:</h4>
+                    <p><strong>Financial Accounting - IFRS Edition</strong></p>
+                    <p>Chương 3: Adjusting the Accounts (trang 113-170)</p>
+                </div>
+
+                <div class="box">
+                    <h4>Video hướng dẫn:</h4>
+                    <ul>
+                        <li>Khan Academy: Accrual Accounting</li>
+                        <li>Edspira: Adjusting Entries</li>
+                        <li>AccountingStuff: 4 Types of Adjusting Entries</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h4>Bài tập thực hành:</h4>
+                    <ul>
+                        <li>Sách bài tập kèm theo (Exercises E3.1 - E3.26)</li>
+                        <li>Problems P3.1 - P3.6</li>
+                        <li>Do It! Exercises</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h4>Ứng dụng học tập:</h4>
+                    <ul>
+                        <li>Quizlet: Tạo flashcards về điều chỉnh</li>
+                        <li>Kahoot: Quiz tương tác</li>
+                        <li>Accounting Coach: Bài tập trực tuyến</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h4>Chuẩn mực kế toán:</h4>
+                    <ul>
+                        <li>IAS 1: Presentation of Financial Statements</li>
+                        <li>IAS 18: Revenue (cũ) → IFRS 15 (mới)</li>
+                        <li>Conceptual Framework for Financial Reporting</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">58 / 65</div>
+        </div>
+
+        <!-- Slide 59: Câu hỏi thảo luận -->
+        <div class="slide">
+            <h2>💬 CÂU HỎI THẢO LUẬN NHÓM</h2>
+            <div class="content-scroll">
+                <h3>Discussion Questions</h3>
+
+                <div class="example">
+                    <h4>Tình huống 1: Startup công nghệ</h4>
+                    <p>Một startup nhận 1 tỷ VNĐ từ nhà đầu tư để phát triển sản phẩm trong 12 tháng. CEO muốn ghi nhận toàn bộ là doanh thu ngay lập tức.</p>
+                    <p><strong>Câu hỏi:</strong> Đây có phải là cách ghi nhận đúng? Tại sao? Nên ghi nhận như thế nào?</p>
+                </div>
+
+                <div class="example">
+                    <h4>Tình huống 2: Sàn TMĐT</h4>
+                    <p>Lazada giữ 10% giá trị đơn hàng trong 7 ngày để đảm bảo khách hàng hài lòng trước khi chuyển cho người bán.</p>
+                    <p><strong>Câu hỏi:</strong> Làm thế nào Lazada và người bán nên ghi nhận giao dịch này?</p>
+                </div>
+
+                <div class="example">
+                    <h4>Tình huống 3: Influencer Marketing</h4>
+                    <p>Một influencer nhận 50 triệu để quảng cáo sản phẩm trong 6 tháng, được trả toàn bộ trước.</p>
+                    <p><strong>Câu hỏi:</strong> Influencer nên ghi nhận doanh thu như thế nào mỗi tháng?</p>
+                </div>
+
+                <div class="key-point">
+                    Thảo luận nhóm 4-5 người, thời gian 15 phút, sau đó chia sẻ với lớp
+                </div>
+            </div>
+            <div class="slide-number">59 / 65</div>
+        </div>
+
+        <!-- Slide 60: Bài tập về nhà -->
+        <div class="slide">
+            <h2>🏠 BÀI TẬP VỀ NHÀ</h2>
+            <div class="content-scroll">
+                <h3>Homework Assignment</h3>
+
+                <div class="box">
+                    <h4>Phần 1: Lý thuyết (20 điểm)</h4>
+                    <ol>
+                        <li>Giải thích sự khác biệt giữa accrual basis và cash basis accounting</li>
+                        <li>Tại sao điều chỉnh quan trọng trong kế toán dồn tích?</li>
+                        <li>Phân tích 4 loại điều chỉnh với ví dụ cụ thể từ doanh nghiệp TMĐT</li>
+                    </ol>
+                </div>
+
+                <div class="box">
+                    <h4>Phần 2: Bài tập (60 điểm)</h4>
+                    <p><strong>Công ty TechShop Vietnam</strong></p>
+                    <p>Thông tin tại 31/12/2020:</p>
+                    <ol>
+                        <li>1/7: Mua bảo hiểm 2 năm 4,800,000đ</li>
+                        <li>Vật liệu đầu tháng 12: 3,500,000đ. Mua thêm 2,000,000đ. Còn lại cuối tháng: 1,200,000đ</li>
+                        <li>Mua máy chủ 100,000,000đ ngày 1/1/2020, khấu hao 5 năm</li>
+                        <li>1/10: Khách trả trước gói bảo trì 12 tháng 12,000,000đ</li>
+                        <li>Hoàn thành dự án 8,000,000đ chưa lập hóa đơn</li>
+                        <li>1/9: Vay ngân hàng 200,000,000đ, lãi 9%/năm</li>
+                        <li>Lương 5 ngày cuối tháng chưa trả: 10,000,000đ</li>
+                    </ol>
+                    <p><strong>Yêu cầu:</strong></p>
+                    <ul>
+                        <li>Lập tất cả bút toán điều chỉnh tại 31/12/2020</li>
+                        <li>Tính tổng ảnh hưởng đến Lãi ròng</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h4>Phần 3: Case Study (20 điểm)</h4>
+                    <p>Tìm một công ty TMĐT thực tế (Shopee, Tiki, Sendo...) và phân tích:</p>
+                    <ul>
+                        <li>Các loại điều chỉnh mà họ có thể gặp phải</li>
+                        <li>Tại sao những điều chỉnh này quan trọng với mô hình kinh doanh của họ</li>
+                    </ul>
+                </div>
+
+                <div class="warning">
+                    <p><strong>Hạn nộp:</strong> Trước buổi học tiếp theo</p>
+                    <p><strong>Hình thức:</strong> Nộp qua Google Classroom</p>
+                </div>
+            </div>
+            <div class="slide-number">60 / 65</div>
+        </div>
+
+        <!-- Slide 61: Chuẩn bị cho chương tiếp theo -->
+        <div class="slide">
+            <h2>🔜 CHƯƠNG TIẾP THEO</h2>
+            <div class="content-scroll">
+                <h3>Chương 4: Completing the Accounting Cycle</h3>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>Nội dung sẽ học:</strong>
+                        <ul>
+                            <li>Bút toán kết chuyển (Closing Entries)</li>
+                            <li>Bảng cân đối thử sau kết chuyển</li>
+                            <li>Các bước hoàn thiện chu trình kế toán</li>
+                            <li>Worksheet (Bảng tính)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <h4>Tại sao quan trọng?</h4>
+                    <p>Sau khi điều chỉnh và lập BCTC, chúng ta cần "đóng sổ" các tài khoản để chuẩn bị cho kỳ kế toán mới. Đây là bước cuối cùng trong chu trình kế toán.</p>
+                </div>
+
+                <div class="key-point">
+                    Điều chỉnh (Chương 3) + Kết chuyển (Chương 4) = Hoàn thành chu trình kế toán
+                </div>
+
+                <div class="box">
+                    <h4>Chuẩn bị trước:</h4>
+                    <ul>
+                        <li>Ôn lại các loại tài khoản (Thường trực vs Tạm thời)</li>
+                        <li>Hiểu rõ về Retained Earnings</li>
+                        <li>Đọc trước phần Closing Entries</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">61 / 65</div>
+        </div>
+
+        <!-- Slide 62: Key Takeaways -->
+        <div class="slide">
+            <h2>🎯 KEY TAKEAWAYS</h2>
+            <div class="content-scroll">
+                <h3>Những điều quan trọng cần nhớ</h3>
+
+                <div class="key-point">
+                    1. Kế toán dồn tích ghi nhận khi phát sinh, không phụ thuộc vào tiền mặt
+                </div>
+
+                <div class="key-point">
+                    2. Có 4 loại điều chỉnh: Prepaid Expenses, Unearned Revenues, Accrued Revenues, Accrued Expenses
+                </div>
+
+                <div class="key-point">
+                    3. Điều chỉnh KHÔNG BAO GIỜ liên quan đến tài khoản Cash
+                </div>
+
+                <div class="key-point">
+                    4. Mỗi điều chỉnh ảnh hưởng 1 TK BCĐKT + 1 TK BCKQKD
+                </div>
+
+                <div class="key-point">
+                    5. BCĐT điều chỉnh là cơ sở để lập báo cáo tài chính
+                </div>
+
+                <div class="key-point">
+                    6. Deferrals = Tiền trước, ghi nhận sau | Accruals = Ghi nhận trước, tiền sau
+                </div>
+
+                <div class="key-point">
+                    7. Khấu hao = Phân bổ chi phí, KHÔNG phải định giá
+                </div>
+
+                <div class="key-point">
+                    8. Đạo đức nghề nghiệp rất quan trọng trong điều chỉnh
+                </div>
+            </div>
+            <div class="slide-number">62 / 65</div>
+        </div>
+
+        <!-- Slide 63: Sơ đồ tư duy -->
+        <div class="slide">
+            <h2>🧠 SƠ ĐỒ TƯ DUY</h2>
+            <div class="content-scroll">
+                <h3>Adjusting Entries Mind Map</h3>
+
+                <div style="background: white; padding: 30px; border-radius: 10px; border: 3px solid #667eea;">
+                    <div style="text-align: center; font-size: 24px; font-weight: bold; color: #667eea; margin-bottom: 30px;">
+                        ĐIỀU CHỈNH CÁC TÀI KHOẢN
+                    </div>
+
+                    <div class="two-columns">
+                        <div>
+                            <div style="background: #fff9e6; padding: 15px; border-radius: 8px; border-left: 5px solid #ffc107;">
+                                <h4 style="color: #ffc107;">DEFERRALS (Hoãn lại)</h4>
+                                <p style="font-size: 16px; margin: 10px 0;"><strong>→ Tiền TRƯỚC</strong></p>
+                                
+                                <p style="margin: 10px 0;"><strong>1. Prepaid Expenses</strong></p>
+                                <ul style="font-size: 15px; margin-left: 20px;">
+                                    <li>Vật liệu</li>
+                                    <li>Bảo hiểm</li>
+                                    <li>Khấu hao</li>
+                                </ul>
+                                <p style="font-size: 14px; color: #666;">Nợ: Expense / Có: Asset</p>
+
+                                <p style="margin: 15px 0 10px;"><strong>2. Unearned Revenues</strong></p>
+                                <ul style="font-size: 15px; margin-left: 20px;">
+                                    <li>Tiền thuê trước</li>
+                                    <li>Vé máy bay</li>
+                                    <li>Subscription</li>
+                                </ul>
+                                <p style="font-size: 14px; color: #666;">Nợ: Liability / Có: Revenue</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div style="background: #d4edda; padding: 15px; border-radius: 8px; border-left: 5px solid #28a745;">
+                                <h4 style="color: #28a745;">ACCRUALS (Dồn tích)</h4>
+                                <p style="font-size: 16px; margin: 10px 0;"><strong>→ Tiền SAU</strong></p>
+                                
+                                <p style="margin: 10px 0;"><strong>3. Accrued Revenues</strong></p>
+                                <ul style="font-size: 15px; margin-left: 20px;">
+                                    <li>Lãi tiền gửi</li>
+                                    <li>DV chưa thu tiền</li>
+                                    <li>Hoa hồng</li>
+                                </ul>
+                                <p style="font-size: 14px; color: #666;">Nợ: Asset / Có: Revenue</p>
+
+                                <p style="margin: 15px 0 10px;"><strong>4. Accrued Expenses</strong></p>
+                                <ul style="font-size: 15px; margin-left: 20px;">
+                                    <li>Lãi vay</li>
+                                    <li>Lương</li>
+                                    <li>Tiện ích</li>
+                                </ul>
+                                <p style="font-size: 14px; color: #666;">Nợ: Expense / Có: Liability</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 8px; text-align: center;">
+                        <strong style="color: #667eea;">→ BCĐT Điều chỉnh → Báo cáo Tài chính</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">63 / 65</div>
+        </div>
+
+        <!-- Slide 64: Q&A -->
+        <div class="slide">
+            <h2>❓ HỎI & ĐÁP</h2>
+            <div class="centered">
+                <h3 style="font-size: 36px; margin-bottom: 40px;">Questions & Answers</h3>
+                
+                <div class="box" style="font-size: 22px;">
+                    <p>💭 Có câu hỏi nào về:</p>
+                    <ul style="text-align: left; display: inline-block; margin-top: 20px;">
+                        <li>Cơ sở kế toán dồn tích?</li>
+                        <li>4 loại điều chỉnh?</li>
+                        <li>Cách tính toán cụ thể?</li>
+                        <li>Ứng dụng trong TMĐT?</li>
+                        <li>Bài tập về nhà?</li>
+                    </ul>
+                </div>
+
+                <div style="margin-top: 60px; font-size: 24px; color: #667eea;">
+                    <p>📧 Email: yourname@university.edu.vn</p>
+                    <p>🕐 Giờ tư vấn: Thứ 3, 4 (14:00-16:00)</p>
+                    <p>💬 Forum: Google Classroom</p>
+                </div>
+            </div>
+            <div class="slide-number">64 / 65</div>
+        </div>
+
+        <!-- Slide 65: Kết thúc -->
+        <div class="slide">
+            <div class="centered">
+                <h1 style="font-size: 56px; color: #667eea;">CẢM ƠN!</h1>
+                <p style="font-size: 32px; margin-top: 30px; color: #764ba2;">THANK YOU</p>
+                
+                <div style="margin-top: 80px;">
+                    <h3 style="font-size: 28px; color: #333;">Chúc các bạn học tốt! 📚</h3>
+                    <p style="font-size: 24px; margin-top: 20px; color: #666;">
+                        "Accounting is the language of business"
+                    </p>
+                    <p style="font-size: 20px; margin-top: 10px; color: #999;">
+                        - Warren Buffett
+                    </p>
+                </div>
+
+                <div style="margin-top: 60px; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white;">
+                    <h4 style="font-size: 24px;">Hẹn gặp lại ở Chương 4:</h4>
+                    <p style="font-size: 22px; margin-top: 15px;">Completing the Accounting Cycle</p>
+                </div>
+            </div>
+            <div class="slide-number">65 / 65</div>
+        </div>
+
+    </div>
+
+    <div class="controls">
+        <button onclick="previousSlide()">◀ Trước</button>
+        <button onclick="nextSlide()">Sau ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progressBar');
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            updateProgress();
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function updateProgress() {
+            const progress = ((currentSlide + 1) / slides.length) * 100;
+            progressBar.style.width = progress + '%';
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === ' ') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Touch support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(event) {
+            touchStartX = event.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(event) {
+            touchEndX = event.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                previousSlide();
+            }
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>   
