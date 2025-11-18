@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hoàn thành Chu trình Kế toán - Nguyên lý Kế toán</title>
+    <title>Hoàn Thành Chu Trình Kế Toán - Nguyên Lý Kế Toán</title>
     <style>
         * {
             margin: 0;
@@ -17,12 +17,13 @@
             overflow: hidden;
         }
 
-        .presentation {
+        .slide-container {
             width: 100vw;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
 
         .slide {
@@ -33,8 +34,8 @@
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            padding: 50px;
-            overflow-y: auto;
+            padding: 60px;
+            position: relative;
             animation: slideIn 0.5s ease-out;
         }
 
@@ -56,22 +57,21 @@
         h1 {
             color: #667eea;
             font-size: 2.5em;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             text-align: center;
-            border-bottom: 4px solid #667eea;
-            padding-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         h2 {
             color: #764ba2;
             font-size: 2em;
-            margin: 30px 0 20px 0;
-            border-left: 5px solid #764ba2;
-            padding-left: 15px;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
         }
 
         h3 {
-            color: #555;
+            color: #5a67d8;
             font-size: 1.5em;
             margin: 20px 0 15px 0;
         }
@@ -80,39 +80,40 @@
             font-size: 1.1em;
             line-height: 1.8;
             color: #333;
-            margin: 10px 0;
+            margin-bottom: 15px;
         }
 
         ul, ol {
             margin-left: 30px;
+            margin-bottom: 20px;
         }
 
         .highlight {
-            background-color: #fff3cd;
+            background: linear-gradient(120deg, #ffd700 0%, #ffed4e 100%);
             padding: 2px 8px;
             border-radius: 4px;
-            font-weight: 600;
+            font-weight: bold;
         }
 
-        .important {
-            background-color: #f8d7da;
-            border-left: 4px solid #dc3545;
-            padding: 15px;
+        .key-point {
+            background: #e0e7ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
             margin: 20px 0;
-            border-radius: 5px;
+            border-radius: 8px;
         }
 
-        .note {
-            background-color: #d1ecf1;
-            border-left: 4px solid #0c5460;
-            padding: 15px;
+        .example-box {
+            background: #f0fdf4;
+            border: 2px solid #10b981;
+            padding: 20px;
             margin: 20px 0;
-            border-radius: 5px;
+            border-radius: 8px;
         }
 
-        .example {
-            background-color: #d4edda;
-            border: 2px solid #28a745;
+        .warning-box {
+            background: #fef2f2;
+            border: 2px solid #ef4444;
             padding: 20px;
             margin: 20px 0;
             border-radius: 8px;
@@ -122,778 +123,1475 @@
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 0.95em;
+        }
+
+        th, td {
+            border: 2px solid #667eea;
+            padding: 12px;
+            text-align: left;
         }
 
         th {
-            background-color: #667eea;
+            background: #667eea;
             color: white;
-            padding: 12px;
-            text-align: left;
-            font-size: 1.1em;
-        }
-
-        td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            font-size: 1em;
+            font-weight: bold;
         }
 
         tr:nth-child(even) {
-            background-color: #f8f9fa;
+            background: #f8fafc;
         }
 
-        .controls {
+        .navigation {
             position: fixed;
             bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
+            right: 30px;
             display: flex;
             gap: 15px;
             z-index: 1000;
         }
 
-        button {
-            padding: 12px 30px;
-            font-size: 1em;
+        .nav-btn {
+            background: white;
             border: none;
-            border-radius: 25px;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
             cursor: pointer;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            font-weight: bold;
+            color: #667eea;
         }
 
-        button:hover {
-            transform: translateY(-2px);
+        .nav-btn:hover {
+            transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+            background: #667eea;
+            color: white;
         }
 
         .slide-number {
-            position: fixed;
-            top: 20px;
-            right: 30px;
-            background: rgba(255,255,255,0.9);
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: 600;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             color: #667eea;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-weight: bold;
+            font-size: 1.1em;
         }
 
-        .session-badge {
-            display: inline-block;
-            background: #28a745;
+        .section-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 5px 15px;
+            padding: 40px;
+            text-align: center;
             border-radius: 15px;
-            font-size: 0.9em;
-            margin-bottom: 10px;
+            margin: 50px 0;
         }
 
         .formula {
-            background-color: #f8f9fa;
-            border: 2px dashed #667eea;
-            padding: 15px;
-            margin: 15px 0;
-            text-align: center;
+            background: #fffbeb;
+            border: 2px dashed #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
             font-family: 'Courier New', monospace;
             font-size: 1.2em;
-            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
         }
 
         .two-column {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 30px;
             margin: 20px 0;
         }
 
         .column {
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
         }
 
-        .step-box {
-            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: #667eea;
+            transition: width 0.3s;
+            z-index: 1001;
         }
 
-        .accounting-entry {
-            font-family: 'Courier New', monospace;
-            background-color: #f8f9fa;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .debit-credit {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        .icon {
+            font-size: 3em;
+            text-align: center;
             margin: 20px 0;
         }
 
-        .debit {
-            background-color: #fff3cd;
-            padding: 15px;
-            border-radius: 8px;
-            border: 2px solid #ffc107;
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+                height: 90vh;
+                overflow-y: auto;
+            }
+            
+            h1 { font-size: 1.8em; }
+            h2 { font-size: 1.5em; }
+            p, li { font-size: 1em; }
+            
+            .two-column {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .credit {
-            background-color: #d4edda;
-            padding: 15px;
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .step {
+            background: linear-gradient(90deg, #e0e7ff 0%, #f0f9ff 100%);
+            border-left: 5px solid #667eea;
+            padding: 20px;
             border-radius: 8px;
-            border: 2px solid #28a745;
+            transition: all 0.3s;
+        }
+
+        .step:hover {
+            transform: translateX(10px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 15px;
         }
     </style>
 </head>
 <body>
-    <div class="presentation">
-        <!-- BUỔI 1: WORKSHEET VÀ CLOSING ENTRIES -->
-        
-        <!-- Slide 1: Title -->
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="slide-container">
+        <!-- Slide 1: Trang bìa -->
         <div class="slide active">
+            <div class="icon">📊</div>
             <h1>HOÀN THÀNH CHU TRÌNH KẾ TOÁN</h1>
-            <h2 style="text-align: center; color: #764ba2; margin-top: 50px;">Completing the Accounting Cycle</h2>
-            <div style="text-align: center; margin-top: 80px;">
-                <p style="font-size: 1.3em;"><strong>Môn:</strong> Nguyên lý Kế toán</p>
-                <p style="font-size: 1.3em; margin-top: 20px;"><strong>Đối tượng:</strong> Sinh viên năm 2 - Thương mại điện tử</p>
-                <p style="font-size: 1.3em; margin-top: 20px;"><strong>Thời lượng:</strong> 3 buổi (150 phút/buổi)</p>
+            <h2 style="text-align: center; color: #764ba2; border: none;">Completing the Accounting Cycle</h2>
+            <div style="text-align: center; margin-top: 50px;">
+                <p style="font-size: 1.3em;"><strong>Môn: Nguyên Lý Kế Toán</strong></p>
+                <p style="font-size: 1.2em; margin-top: 20px;">Dành cho sinh viên năm 2</p>
+                <p style="font-size: 1.2em;">Ngành: Thương mại điện tử</p>
+                <p style="font-size: 1.1em; margin-top: 30px; color: #666;">Thời lượng: 3 buổi học (150 phút/buổi)</p>
             </div>
+            <div class="slide-number">Slide 1/65</div>
         </div>
 
         <!-- Slide 2: Mục tiêu học tập -->
         <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>MỤC TIÊU HỌC TẬP</h1>
-            <h2>Learning Objectives</h2>
-            <div style="margin-top: 30px;">
-                <div class="step-box">
-                    <h3>📊 Mục tiêu 1: Worksheet (Bảng tính kế toán)</h3>
-                    <ul>
-                        <li>Chuẩn bị và hoàn thành worksheet</li>
-                        <li>Lập báo cáo tài chính từ worksheet</li>
-                        <li>Chuẩn bị bút toán điều chỉnh từ worksheet</li>
-                    </ul>
-                </div>
-                <div class="step-box">
-                    <h3>🔒 Mục tiêu 2: Closing Entries (Bút toán khóa sổ)</h3>
-                    <ul>
-                        <li>Chuẩn bị bút toán khóa sổ</li>
-                        <li>Ghi sổ bút toán khóa sổ</li>
-                        <li>Lập bảng cân đối thử nghiệm sau khóa sổ</li>
-                    </ul>
-                </div>
+            <h2>🎯 MỤC TIÊU HỌC TẬP</h2>
+            <div class="key-point">
+                <h3>Sau khi hoàn thành chủ đề này, sinh viên có khả năng:</h3>
+                <ol>
+                    <li><strong>Chuẩn bị Worksheet (Bảng tính)</strong>
+                        <ul>
+                            <li>Các bước chuẩn bị worksheet</li>
+                            <li>Lập báo cáo tài chính từ worksheet</li>
+                            <li>Chuẩn bị các bút toán điều chỉnh từ worksheet</li>
+                        </ul>
+                    </li>
+                    <li><strong>Lập bút toán khóa sổ và Bảng cân đối sau khóa sổ</strong>
+                        <ul>
+                            <li>Chuẩn bị closing entries</li>
+                            <li>Ghi sổ các bút toán khóa sổ</li>
+                            <li>Lập post-closing trial balance</li>
+                        </ul>
+                    </li>
+                </ol>
             </div>
+            <div class="slide-number">Slide 2/65</div>
         </div>
 
         <!-- Slide 3: Mục tiêu học tập (tiếp) -->
         <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>MỤC TIÊU HỌC TẬP (tiếp)</h1>
-            <div style="margin-top: 30px;">
-                <div class="step-box">
-                    <h3>🔄 Mục tiêu 3: Chu trình kế toán</h3>
-                    <ul>
-                        <li>Giải thích các bước trong chu trình kế toán</li>
-                        <li>Hiểu bút toán đảo ngược (Reversing entries)</li>
-                        <li>Chuẩn bị bút toán điều chỉnh sai sót</li>
-                    </ul>
-                </div>
-                <div class="step-box">
-                    <h3>📋 Mục tiêu 4: Bảng cân đối kế toán phân loại</h3>
-                    <ul>
-                        <li>Phân loại tài sản và nợ phải trả</li>
-                        <li>Hiểu các mục trong BCĐKT phân loại</li>
-                        <li>Áp dụng vào thương mại điện tử</li>
-                    </ul>
-                </div>
+            <h2>🎯 MỤC TIÊU HỌC TẬP (tiếp theo)</h2>
+            <div class="key-point">
+                <ol start="3">
+                    <li><strong>Giải thích các bước trong chu trình kế toán và cách lập bút toán điều chỉnh sai sót</strong>
+                        <ul>
+                            <li>Tóm tắt chu trình kế toán</li>
+                            <li>Bút toán đảo ngược (Reversing entries)</li>
+                            <li>Bút toán điều chỉnh sai sót (Correcting entries)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Xác định các phần trong Bảng cân đối kế toán được phân loại</strong>
+                        <ul>
+                            <li>Tài sản vô hình (Intangible assets)</li>
+                            <li>Tài sản cố định (Property, plant, and equipment)</li>
+                            <li>Đầu tư dài hạn, tài sản ngắn hạn</li>
+                            <li>Vốn chủ sở hữu, nợ dài hạn và ngắn hạn</li>
+                        </ul>
+                    </li>
+                </ol>
             </div>
+            <div class="slide-number">Slide 3/65</div>
         </div>
 
-        <!-- Slide 4: Giới thiệu Worksheet -->
+        <!-- Slide 4: Tổng quan chương -->
         <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>WORKSHEET LÀ GÌ?</h1>
-            <h2>The Worksheet</h2>
-            <div class="note">
-                <h3>📝 Định nghĩa</h3>
-                <p><strong>Worksheet (Bảng tính kế toán)</strong> là một công cụ có nhiều cột được sử dụng trong quá trình điều chỉnh và lập báo cáo tài chính.</p>
+            <h2>📋 TỔNG QUAN CHƯƠNG</h2>
+            <div class="section-title">
+                <h3>CHƯƠNG 4: Hoàn Thành Chu Trình Kế Toán</h3>
             </div>
-            <h3>Đặc điểm chính:</h3>
+            <div class="two-column">
+                <div class="column">
+                    <h3>🔷 BUỔI 1: WORKSHEET</h3>
+                    <ul>
+                        <li>Khái niệm và mục đích</li>
+                        <li>5 bước chuẩn bị worksheet</li>
+                        <li>Lập BCTC từ worksheet</li>
+                        <li>Bài tập thực hành</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>🔷 BUỔI 2: CLOSING ENTRIES</h3>
+                    <ul>
+                        <li>Khái niệm tài khoản tạm thời/vĩnh viễn</li>
+                        <li>4 bút toán khóa sổ</li>
+                        <li>Post-closing trial balance</li>
+                        <li>Bài tập thực hành</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="column" style="margin-top: 20px;">
+                <h3>🔷 BUỔI 3: ACCOUNTING CYCLE & CLASSIFIED BALANCE SHEET</h3>
+                <ul>
+                    <li>9 bước trong chu trình kế toán</li>
+                    <li>Bút toán điều chỉnh sai sót</li>
+                    <li>Bảng cân đối kế toán phân loại</li>
+                </ul>
+            </div>
+            <div class="slide-number">Slide 4/65</div>
+        </div>
+
+        <!-- PHẦN 1: WORKSHEET -->
+        
+        <!-- Slide 5: Section Title - Worksheet -->
+        <div class="slide">
+            <div class="section-title" style="margin-top: 150px;">
+                <div class="icon">📝</div>
+                <h1>PHẦN 1: WORKSHEET</h1>
+                <h2 style="border: none; color: white; margin-top: 20px;">Bảng Tính Kế Toán</h2>
+            </div>
+            <div class="slide-number">Slide 5/65</div>
+        </div>
+
+        <!-- Slide 6: Worksheet là gì? -->
+        <div class="slide">
+            <h2>📝 WORKSHEET LÀ GÌ?</h2>
+            <div class="key-point">
+                <h3>Định nghĩa:</h3>
+                <p><span class="highlight">Worksheet (Bảng tính)</span> là một biểu mẫu nhiều cột được sử dụng trong quá trình điều chỉnh và chuẩn bị báo cáo tài chính.</p>
+            </div>
+            <h3>🎯 Đặc điểm quan trọng:</h3>
             <ul>
-                <li>✓ Là <span class="highlight">công cụ làm việc</span> của kế toán viên</li>
-                <li>✓ <strong>KHÔNG</strong> phải là sổ sách kế toán chính thức</li>
-                <li>✓ <strong>KHÔNG</strong> phải là nhật ký hay sổ cái</li>
-                <li>✓ Giúp chuẩn bị bút toán điều chỉnh và báo cáo tài chính</li>
-                <li>✓ Thường được làm trên Excel hoặc phần mềm kế toán</li>
+                <li>✅ Là <strong>công cụ làm việc</strong> của kế toán viên</li>
+                <li>✅ <strong>KHÔNG phải</strong> là sổ sách kế toán chính thức</li>
+                <li>✅ <strong>KHÔNG phải</strong> là phần của sổ cái</li>
+                <li>✅ Không bắt buộc phải sử dụng</li>
+                <li>✅ Thường được vi tính hóa (Excel, Google Sheets)</li>
             </ul>
-            <div class="important">
-                <strong>⚠️ Lưu ý quan trọng:</strong> Việc sử dụng worksheet là <strong>TÙY CHỌN</strong>, không bắt buộc trong chu trình kế toán!
+            <div class="example-box">
+                <strong>💡 Lợi ích:</strong>
+                <p>Worksheet giúp kế toán viên có thể chuẩn bị báo cáo tài chính <span class="highlight">sớm hơn</span> - trước khi ghi nhật ký và chuyển bút toán điều chỉnh vào sổ cái.</p>
             </div>
+            <div class="slide-number">Slide 6/65</div>
         </div>
 
-        <!-- Slide 5: Cấu trúc Worksheet -->
+        <!-- Slide 7: Cấu trúc Worksheet -->
         <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>CẤU TRÚC WORKSHEET</h1>
-            <h2>5 cột chính của Worksheet</h2>
-            <table>
+            <h2>🏗️ CẤU TRÚC CỦA WORKSHEET</h2>
+            <h3>Worksheet có 10 cột được chia thành 5 phần:</h3>
+            <table style="font-size: 0.9em;">
                 <thead>
                     <tr>
-                        <th style="width: 30%">Cột</th>
+                        <th>Phần</th>
+                        <th>Cột</th>
                         <th>Mục đích</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>1. Trial Balance</strong><br>(Bảng CĐTN)</td>
-                        <td>Ghi số dư từ sổ cái trước khi điều chỉnh</td>
+                        <td><strong>1. Account Titles</strong></td>
+                        <td>1 cột</td>
+                        <td>Tên tài khoản</td>
                     </tr>
                     <tr>
-                        <td><strong>2. Adjustments</strong><br>(Điều chỉnh)</td>
-                        <td>Ghi các bút toán điều chỉnh</td>
+                        <td><strong>2. Trial Balance</strong></td>
+                        <td>Dr. / Cr.</td>
+                        <td>Số dư trước điều chỉnh</td>
                     </tr>
                     <tr>
-                        <td><strong>3. Adjusted Trial Balance</strong><br>(CĐTN đã điều chỉnh)</td>
-                        <td>Số dư sau khi điều chỉnh</td>
+                        <td><strong>3. Adjustments</strong></td>
+                        <td>Dr. / Cr.</td>
+                        <td>Các bút toán điều chỉnh</td>
                     </tr>
                     <tr>
-                        <td><strong>4. Income Statement</strong><br>(Báo cáo KQ KD)</td>
+                        <td><strong>4. Adjusted Trial Balance</strong></td>
+                        <td>Dr. / Cr.</td>
+                        <td>Số dư sau điều chỉnh</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5. Income Statement</strong></td>
+                        <td>Dr. / Cr.</td>
                         <td>Doanh thu và Chi phí</td>
                     </tr>
                     <tr>
-                        <td><strong>5. Balance Sheet</strong><br>(Bảng CĐ KT)</td>
-                        <td>Tài sản, Nợ phải trả và Vốn CSH</td>
+                        <td><strong>6. Balance Sheet</strong></td>
+                        <td>Dr. / Cr.</td>
+                        <td>Tài sản, Nợ phải trả, Vốn CSH</td>
                     </tr>
                 </tbody>
             </table>
+            <div class="warning-box">
+                <strong>⚠️ Lưu ý:</strong> Mỗi phần có 2 cột: Debit (Nợ) và Credit (Có)
+            </div>
+            <div class="slide-number">Slide 7/65</div>
         </div>
 
-        <!-- Slide 6: Bước 1 - Chuẩn bị Trial Balance -->
+        <!-- Slide 8: 5 bước chuẩn bị Worksheet -->
         <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>BƯỚC 1: CHUẨN BỊ TRIAL BALANCE</h1>
-            <h2>Prepare Trial Balance on Worksheet</h2>
-            <div class="step-box">
-                <h3>Quy trình thực hiện:</h3>
-                <ol>
-                    <li>Liệt kê tất cả các tài khoản có số dư từ sổ cái</li>
-                    <li>Ghi số dư Nợ (Debit) vào cột Debit</li>
-                    <li>Ghi số dư Có (Credit) vào cột Credit</li>
-                    <li>Tính tổng và kiểm tra cân bằng</li>
-                </ol>
-            </div>
-            <div class="example">
-                <h3>📌 Ví dụ: Yazici Advertising A.Ş.</h3>
-                <p><strong>Ngày 31/10/2020</strong></p>
-                <div class="debit-credit">
-                    <div class="debit">
-                        <h4>Debit (Nợ)</h4>
-                        <p>Cash: 15,200<br>
-                        Supplies: 2,500<br>
-                        Equipment: 5,000<br>
-                        Dividends: 500<br>
-                        Expenses: 4,000</p>
-                    </div>
-                    <div class="credit">
-                        <h4>Credit (Có)</h4>
-                        <p>Notes Payable: 5,000<br>
-                        Accounts Payable: 2,500<br>
-                        Share Capital: 10,000<br>
-                        Service Revenue: 10,000</p>
-                    </div>
+            <h2>📊 5 BƯỚC CHUẨN BỊ WORKSHEET</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Prepare Trial Balance</strong><br>
+                    Lập Bảng cân đối số phát sinh trong các cột Trial Balance
                 </div>
-                <p style="text-align: center; margin-top: 15px;"><strong>Tổng Debit = Tổng Credit = 28,700</strong></p>
-            </div>
-        </div>
-
-        <!-- Slide 7: Bước 2 - Nhập Adjustments -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>BƯỚC 2: NHẬP ADJUSTMENTS</h1>
-            <h2>Enter Adjustments in Adjustments Columns</h2>
-            <div class="note">
-                <h3>🔑 Kỹ thuật "Keying" (Đánh dấu)</h3>
-                <p>Sử dụng các chữ cái (a, b, c,...) để đánh dấu cặp Debit-Credit của mỗi bút toán điều chỉnh</p>
-            </div>
-            <div class="example">
-                <h3>📌 Ví dụ Adjustments của Yazici:</h3>
-                <div class="accounting-entry">
-                    <p><strong>(a)</strong> Supplies Expense ... 1,500 Dr</p>
-                    <p style="margin-left: 30px;">Supplies ............... 1,500 Cr</p>
-                    <p style="margin-top: 10px;"><strong>(b)</strong> Insurance Expense .... 50 Dr</p>
-                    <p style="margin-left: 30px;">Prepaid Insurance ..... 50 Cr</p>
-                    <p style="margin-top: 10px;"><strong>(c)</strong> Depreciation Expense . 40 Dr</p>
-                    <p style="margin-left: 30px;">Accum. Depr.-Equip. ... 40 Cr</p>
-                    <p style="margin-top: 10px;"><strong>(d)</strong> Unearned Service Rev .. 400 Dr</p>
-                    <p style="margin-left: 30px;">Service Revenue ....... 400 Cr</p>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Enter Adjustments</strong><br>
+                    Nhập các bút toán điều chỉnh vào cột Adjustments
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Enter Adjusted Balances</strong><br>
+                    Tính và nhập số dư đã điều chỉnh vào cột Adjusted Trial Balance
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>Extend to Financial Statements</strong><br>
+                    Kéo dài số dư vào các cột Income Statement và Balance Sheet
+                </div>
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <strong>Total and Complete</strong><br>
+                    Tính tổng các cột, xác định lãi/lỗ ròng và hoàn thành worksheet
                 </div>
             </div>
-            <div class="important">
-                <strong>⚠️ Quan trọng:</strong> Tổng cột Debit phải bằng tổng cột Credit trong Adjustments!
-            </div>
+            <div class="slide-number">Slide 8/65</div>
         </div>
 
-        <!-- Slide 8: Các loại Adjustments -->
+        <!-- Slide 9: Bước 1 - Trial Balance -->
         <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>CÁC LOẠI ADJUSTMENTS THƯỜNG GẶP</h1>
-            <h2>Types of Adjusting Entries</h2>
+            <h2>BƯỚC 1: CHUẨN BỊ TRIAL BALANCE</h2>
+            <h3>📝 Công việc cần làm:</h3>
+            <ul>
+                <li>Liệt kê <strong>TẤT CẢ</strong> tài khoản có số dư từ sổ cái</li>
+                <li>Nhập số dư vào cột <span class="highlight">Trial Balance</span></li>
+                <li>Số dư Nợ → cột <strong>Debit</strong></li>
+                <li>Số dư Có → cột <strong>Credit</strong></li>
+                <li>Tổng cột Debit = Tổng cột Credit</li>
+            </ul>
+            <div class="example-box">
+                <h4>💼 Ví dụ: Công ty Yazici Advertising - 31/10/2020</h4>
+                <table style="font-size: 0.85em;">
+                    <tr>
+                        <th>Tài khoản</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </tr>
+                    <tr><td>Cash</td><td>15,200</td><td></td></tr>
+                    <tr><td>Supplies</td><td>2,500</td><td></td></tr>
+                    <tr><td>Prepaid Insurance</td><td>600</td><td></td></tr>
+                    <tr><td>Equipment</td><td>5,000</td><td></td></tr>
+                    <tr><td>Accounts Payable</td><td></td><td>2,500</td></tr>
+                    <tr><td>Service Revenue</td><td></td><td>10,000</td></tr>
+                    <tr><td><strong>Tổng cộng</strong></td><td><strong>28,700</strong></td><td><strong>28,700</strong></td></tr>
+                </table>
+            </div>
+            <div class="slide-number">Slide 9/65</div>
+        </div>
+
+        <!-- Slide 10: Bước 2 - Adjustments -->
+        <div class="slide">
+            <h2>BƯỚC 2: NHẬP CÁC BÚT TOÁN ĐIỀU CHỈNH</h2>
+            <h3>🔧 Công việc cần làm:</h3>
+            <ul>
+                <li>Nhập các bút toán điều chỉnh vào cột <span class="highlight">Adjustments</span></li>
+                <li>Nếu cần tài khoản mới → thêm vào dưới trial balance</li>
+                <li>Sử dụng <strong>chữ cái</strong> (a, b, c,...) để đánh dấu từng bút toán</li>
+                <li>Mỗi bút toán: Debit và Credit phải cân bằng</li>
+            </ul>
+            <div class="key-point">
+                <h4>📌 Lưu ý quan trọng:</h4>
+                <p>Chưa ghi nhật ký các bút toán điều chỉnh ngay. Chỉ ghi sau khi hoàn thành worksheet và báo cáo tài chính!</p>
+            </div>
+            <div class="example-box">
+                <h4>Ví dụ các bút toán điều chỉnh:</h4>
+                <ul>
+                    <li>(a) Supplies used: 1,500</li>
+                    <li>(b) Insurance expired: 50</li>
+                    <li>(c) Depreciation: 40</li>
+                    <li>(d) Unearned revenue earned: 400</li>
+                    <li>(e) Accrued revenue: 200</li>
+                </ul>
+            </div>
+            <div class="slide-number">Slide 10/65</div>
+        </div>
+
+        <!-- Slide 11: Bước 3 - Adjusted Trial Balance -->
+        <div class="slide">
+            <h2>BƯỚC 3: TÍNH SỐ DƯ ĐÃ ĐIỀU CHỈNH</h2>
+            <h3>🧮 Công việc cần làm:</h3>
+            <div class="formula">
+                Adjusted Balance = Trial Balance ± Adjustments
+            </div>
+            <h3>Quy tắc tính toán:</h3>
             <div class="two-column">
                 <div class="column">
-                    <h3>💰 DEFERRALS (Trả trước)</h3>
+                    <h4>✅ Tài khoản Debit:</h4>
                     <ul>
-                        <li><strong>Prepaid Expenses</strong>
-                            <ul>
-                                <li>Chi phí trả trước</li>
-                                <li>VD: Bảo hiểm, Văn phòng phẩm</li>
-                            </ul>
-                        </li>
-                        <li><strong>Unearned Revenues</strong>
-                            <ul>
-                                <li>Doanh thu chưa thực hiện</li>
-                                <li>VD: Tiền nhận trước</li>
-                            </ul>
-                        </li>
-                        <li><strong>Depreciation</strong>
-                            <ul>
-                                <li>Khấu hao tài sản</li>
-                                <li>VD: Thiết bị, xe cộ</li>
-                            </ul>
-                        </li>
+                        <li>+ Adjustment Debit</li>
+                        <li>− Adjustment Credit</li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Ví dụ: Supplies</strong><br>
+                        Trial Balance: 2,500 Dr<br>
+                        Adjustment: 1,500 Cr<br>
+                        <strong>Adjusted: 1,000 Dr</strong>
+                    </div>
+                </div>
+                <div class="column">
+                    <h4>✅ Tài khoản Credit:</h4>
+                    <ul>
+                        <li>+ Adjustment Credit</li>
+                        <li>− Adjustment Debit</li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Ví dụ: Service Revenue</strong><br>
+                        Trial Balance: 10,000 Cr<br>
+                        Adjustments: 400 Cr + 200 Cr<br>
+                        <strong>Adjusted: 10,600 Cr</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="warning-box">
+                <strong>⚠️ Kiểm tra:</strong> Tổng cột Debit = Tổng cột Credit trong Adjusted Trial Balance
+            </div>
+            <div class="slide-number">Slide 11/65</div>
+        </div>
+
+        <!-- Slide 12: Bước 4 - Extend to Financial Statements -->
+        <div class="slide">
+            <h2>BƯỚC 4: KÉO DÀI VÀO CÁC CỘT BÁO CÁO TÀI CHÍNH</h2>
+            <h3>📊 Công việc cần làm:</h3>
+            <p>Từ cột <strong>Adjusted Trial Balance</strong>, kéo dài số dư vào:</p>
+            <div class="two-column">
+                <div class="column">
+                    <h4>📈 Income Statement:</h4>
+                    <ul>
+                        <li><strong>Revenue accounts</strong> → Credit column</li>
+                        <li><strong>Expense accounts</strong> → Debit column</li>
                     </ul>
                 </div>
                 <div class="column">
-                    <h3>📈 ACCRUALS (Tích lũy)</h3>
+                    <h4>📊 Balance Sheet:</h4>
                     <ul>
-                        <li><strong>Accrued Revenues</strong>
-                            <ul>
-                                <li>Doanh thu phải thu</li>
-                                <li>VD: Dịch vụ đã cung cấp chưa thu tiền</li>
-                            </ul>
-                        </li>
-                        <li><strong>Accrued Expenses</strong>
-                            <ul>
-                                <li>Chi phí phải trả</li>
-                                <li>VD: Lương phải trả, lãi vay</li>
-                            </ul>
-                        </li>
+                        <li><strong>Assets</strong> → Debit column</li>
+                        <li><strong>Liabilities</strong> → Credit column</li>
+                        <li><strong>Equity</strong> → Credit column</li>
+                        <li><strong>Dividends</strong> → Debit column</li>
                     </ul>
                 </div>
             </div>
+            <div class="key-point">
+                <h4>💡 MẸO NHỚ:</h4>
+                <p><span class="highlight">Mỗi số dư</span> trong Adjusted Trial Balance phải được kéo dài vào <span class="highlight">MỘT TRONG BỐN CỘT</span> của báo cáo tài chính.</p>
+            </div>
+            <div class="warning-box">
+                <strong>⚠️ Lưu ý đặc biệt:</strong>
+                <ul>
+                    <li><strong>Accumulated Depreciation</strong> → Balance Sheet Credit (tài khoản đối ứng)</li>
+                    <li><strong>Dividends</strong> → Balance Sheet Debit (không phải chi phí)</li>
+                </ul>
+            </div>
+            <div class="slide-number">Slide 12/65</div>
         </div>
 
-        <!-- Slide 9: Bước 3 - Adjusted Trial Balance -->
+        <!-- Slide 13: Bước 5 - Total and Complete -->
         <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>BƯỚC 3: TÍNH ADJUSTED TRIAL BALANCE</h1>
-            <h2>Enter Adjusted Balances</h2>
-            <div class="step-box">
-                <h3>Công thức tính:</h3>
-                <div class="formula">
-                    Số dư sau điều chỉnh = Số dư ban đầu ± Điều chỉnh
+            <h2>BƯỚC 5: TÍNH TỔNG VÀ HOÀN THÀNH WORKSHEET</h2>
+            <h3>✅ Công việc cần làm:</h3>
+            <ol>
+                <li><strong>Tính tổng</strong> các cột Income Statement và Balance Sheet</li>
+                <li><strong>Xác định</strong> Lãi ròng (Net Income) hoặc Lỗ ròng (Net Loss)</li>
+                <li><strong>Nhập</strong> Net Income/Loss vào worksheet</li>
+                <li><strong>Tính lại tổng</strong> để cân bằng</li>
+            </ol>
+            <div class="formula">
+                Net Income = Total Credits (Income Statement) − Total Debits (Income Statement)
+            </div>
+            <h3>📌 Quy tắc nhập Net Income:</h3>
+            <div class="two-column">
+                <div class="column" style="background: #f0fdf4; border: 2px solid #10b981;">
+                    <h4>✅ Nếu có LÃI RÒNG:</h4>
+                    <ul>
+                        <li>Income Statement → <strong>Debit</strong></li>
+                        <li>Balance Sheet → <strong>Credit</strong></li>
+                    </ul>
+                    <p style="margin-top: 10px;"><em>Lý do: Lãi làm tăng Retained Earnings (vốn CSH)</em></p>
+                </div>
+                <div class="column" style="background: #fef2f2; border: 2px solid #ef4444;">
+                    <h4>❌ Nếu có LỖ RÒNG:</h4>
+                    <ul>
+                        <li>Income Statement → <strong>Credit</strong></li>
+                        <li>Balance Sheet → <strong>Debit</strong></li>
+                    </ul>
+                    <p style="margin-top: 10px;"><em>Lý do: Lỗ làm giảm Retained Earnings (vốn CSH)</em></p>
                 </div>
             </div>
-            <div class="example">
-                <h3>📌 Ví dụ minh họa:</h3>
-                <table>
+            <div class="slide-number">Slide 13/65</div>
+        </div>
+
+        <!-- Slide 14: Ví dụ hoàn chỉnh Worksheet - Phần 1 -->
+        <div class="slide">
+            <h2>📊 VÍ DỤ: WORKSHEET CỦA YAZICI ADVERTISING (1/2)</h2>
+            <div class="example-box">
+                <table style="font-size: 0.7em;">
                     <thead>
                         <tr>
-                            <th>Tài khoản</th>
-                            <th>Trial Balance Dr</th>
-                            <th>Adjustments Cr</th>
-                            <th>Adjusted TB Dr</th>
+                            <th>Account</th>
+                            <th colspan="2">Trial Balance</th>
+                            <th colspan="2">Adjustments</th>
+                            <th colspan="2">Adj. Trial Balance</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th>Dr</th>
+                            <th>Cr</th>
+                            <th>Dr</th>
+                            <th>Cr</th>
+                            <th>Dr</th>
+                            <th>Cr</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Prepaid Insurance</td>
-                            <td>600</td>
-                            <td>(50)</td>
-                            <td>550</td>
+                            <td>Cash</td>
+                            <td>15,200</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>15,200</td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td>Supplies</td>
                             <td>2,500</td>
-                            <td>(1,500)</td>
+                            <td></td>
+                            <td></td>
+                            <td>(a) 1,500</td>
                             <td>1,000</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Equipment</td>
+                            <td>5,000</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>5,000</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Service Revenue</td>
+                            <td></td>
+                            <td>10,000</td>
+                            <td>(d) 400<br>(e) 200</td>
+                            <td></td>
+                            <td></td>
+                            <td>10,600</td>
+                        </tr>
+                        <tr>
+                            <td>Supplies Expense</td>
+                            <td></td>
+                            <td></td>
+                            <td>(a) 1,500</td>
+                            <td></td>
+                            <td>1,500</td>
+                            <td></td>
+                        </tr>
+                        <tr style="background: #fffbeb; font-weight: bold;">
+                            <td>Totals</td>
+                            <td>28,700</td>
+                            <td>28,700</td>
+                            <td>3,440</td>
+                            <td>3,440</td>
+                            <td>30,190</td>
+                            <td>30,190</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="note">
-                <strong>📝 Lưu ý:</strong> Số dư trong Adjusted Trial Balance chính là số dư sẽ xuất hiện trên báo cáo tài chính!
-            </div>
+            <p style="margin-top: 20px; font-style: italic; color: #666;">*Bảng trên chỉ hiển thị một số tài khoản minh họa</p>
+            <div class="slide-number">Slide 14/65</div>
         </div>
 
-        <!-- Slide 10: Bước 4 - Phân bổ số dư -->
+        <!-- Slide 15: Ví dụ hoàn chỉnh Worksheet - Phần 2 -->
         <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>BƯỚC 4: PHÂN BỔ SỐ DƯ</h1>
-            <h2>Extend to Financial Statement Columns</h2>
-            <div class="step-box">
-                <h3>Nguyên tắc phân bổ:</h3>
-                <ul>
-                    <li>✓ <span class="highlight">Tài sản (Assets)</span> → Balance Sheet Debit</li>
-                    <li>✓ <span class="highlight">Nợ phải trả (Liabilities)</span> → Balance Sheet Credit</li>
-                    <li>✓ <span class="highlight">Vốn chủ sở hữu (Equity)</span> → Balance Sheet Credit</li>
-                    <li>✓ <span class="highlight">Chia cổ tức (Dividends)</span> → Balance Sheet Debit</li>
-                    <li>✓ <span class="highlight">Doanh thu (Revenues)</span> → Income Statement Credit</li>
-                    <li>✓ <span class="highlight">Chi phí (Expenses)</span> → Income Statement Debit</li>
-                </ul>
-            </div>
-            <div class="important">
-                <strong>⚠️ Quan trọng:</strong> Mỗi số dư trong Adjusted Trial Balance phải được phân bổ vào MỘT trong bốn cột của báo cáo tài chính!
-            </div>
-        </div>
-
-        <!-- Slide 11: Bước 5 - Hoàn thành Worksheet -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>BƯỚC 5: HOÀN THÀNH WORKSHEET</h1>
-            <h2>Complete the Worksheet</h2>
-            <div class="step-box">
-                <h3>Các bước thực hiện:</h3>
-                <ol>
-                    <li><strong>Tính tổng</strong> các cột Income Statement và Balance Sheet</li>
-                    <li><strong>Tính Lãi/Lỗ ròng:</strong>
-                        <div class="formula">
-                            Net Income = Total Credits (IS) - Total Debits (IS)
-                        </div>
-                    </li>
-                    <li><strong>Nếu có Lãi ròng:</strong>
-                        <ul>
-                            <li>Ghi vào Income Statement Debit (cân bằng)</li>
-                            <li>Ghi vào Balance Sheet Credit (tăng vốn)</li>
-                        </ul>
-                    </li>
-                    <li><strong>Nếu có Lỗ ròng:</strong>
-                        <ul>
-                            <li>Ghi vào Income Statement Credit</li>
-                            <li>Ghi vào Balance Sheet Debit</li>
-                        </ul>
-                    </li>
-                    <li><strong>2. Retained Earnings Statement</strong> (Báo cáo Lợi nhuận giữ lại)
-                        <ul>
-                            <li>Số dư đầu kỳ + Lãi ròng - Cổ tức = Số dư cuối kỳ</li>
-                        </ul>
-                    </li>
-                    <li><strong>3. Balance Sheet</strong> (Bảng Cân đối Kế toán)
-                        <ul>
-                            <li>Lấy từ cột Balance Sheet của worksheet</li>
-                            <li>Sử dụng Retained Earnings cuối kỳ từ bước 2</li>
-                        </ul>
-                    </li>
-                </ol>
-            </div>
-            <div class="important">
-                <strong>⚠️ Lưu ý:</strong> Chưa cần ghi nhật ký và sổ cái các bút toán điều chỉnh ngay! Làm sau khi hoàn thành báo cáo tài chính.
-            </div>
-        </div>
-
-        <!-- Slide 14: Ví dụ Income Statement -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>VÍ DỤ: INCOME STATEMENT</h1>
-            <h2>Yazici Advertising A.Ş.</h2>
-            <div class="example">
-                <h3>Income Statement - Tháng 10/2020</h3>
-                <table>
+            <h2>📊 VÍ DỤ: WORKSHEET CỦA YAZICI ADVERTISING (2/2)</h2>
+            <div class="example-box">
+                <table style="font-size: 0.7em;">
+                    <thead>
+                        <tr>
+                            <th>Account</th>
+                            <th colspan="2">Income Statement</th>
+                            <th colspan="2">Balance Sheet</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th>Dr</th>
+                            <th>Cr</th>
+                            <th>Dr</th>
+                            <th>Cr</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr>
-                            <td colspan="2"><strong>Revenues (Doanh thu)</strong></td>
+                            <td>Cash</td>
+                            <td></td>
+                            <td></td>
+                            <td>15,200</td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 30px;">Service Revenue</td>
-                            <td style="text-align: right;">10,600</td>
+                            <td>Supplies</td>
+                            <td></td>
+                            <td></td>
+                            <td>1,000</td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td colspan="2"><strong>Expenses (Chi phí)</strong></td>
+                            <td>Equipment</td>
+                            <td></td>
+                            <td></td>
+                            <td>5,000</td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 30px;">Salaries and Wages Expense</td>
-                            <td style="text-align: right;">5,200</td>
+                            <td>Service Revenue</td>
+                            <td></td>
+                            <td>10,600</td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 30px;">Supplies Expense</td>
-                            <td style="text-align: right;">1,500</td>
+                            <td>Supplies Expense</td>
+                            <td>1,500</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
-                        <tr>
-                            <td style="padding-left: 30px;">Rent Expense</td>
-                            <td style="text-align: right;">900</td>
+                        <tr style="background: #e0e7ff;">
+                            <td>Totals (trước Net Income)</td>
+                            <td>7,740</td>
+                            <td>10,600</td>
+                            <td>22,450</td>
+                            <td>19,590</td>
                         </tr>
-                        <tr>
-                            <td style="padding-left: 30px;">Insurance Expense</td>
-                            <td style="text-align: right;">50</td>
+                        <tr style="background: #fef2f2; font-weight: bold;">
+                            <td>Net Income</td>
+                            <td>2,860</td>
+                            <td></td>
+                            <td></td>
+                            <td>2,860</td>
                         </tr>
-                        <tr>
-                            <td style="padding-left: 30px;">Interest Expense</td>
-                            <td style="text-align: right;">50</td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 30px;">Depreciation Expense</td>
-                            <td style="text-align: right;">40</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Total Expenses</strong></td>
-                            <td style="text-align: right;"><strong>7,740</strong></td>
-                        </tr>
-                        <tr style="background-color: #d4edda;">
-                            <td><strong>NET INCOME</strong></td>
-                            <td style="text-align: right;"><strong>2,860</strong></td>
+                        <tr style="background: #fffbeb; font-weight: bold;">
+                            <td>Totals (sau Net Income)</td>
+                            <td>10,600</td>
+                            <td>10,600</td>
+                            <td>22,450</td>
+                            <td>22,450</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+            <div class="key-point" style="margin-top: 20px;">
+                <strong>✅ Kiểm tra:</strong> Net Income = 10,600 - 7,740 = 2,860 ✓
+            </div>
+            <div class="slide-number">Slide 15/65</div>
         </div>
 
-        <!-- Slide 15: Tài khoản tạm thời vs Vĩnh viễn -->
+        <!-- Slide 16: Lập BCTC từ Worksheet -->
         <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>TÀI KHOẢN TẠM THỜI VS VĨNH VIỄN</h1>
-            <h2>Temporary vs Permanent Accounts</h2>
+            <h2>📄 LẬP BÁO CÁO TÀI CHÍNH TỪ WORKSHEET</h2>
+            <h3>🎯 3 báo cáo tài chính được lập từ Worksheet:</h3>
+            <div class="steps-container">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Income Statement</strong><br>
+                    Sử dụng dữ liệu từ cột <span class="highlight">Income Statement</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Retained Earnings Statement</strong><br>
+                    Sử dụng Net Income từ IS và Dividends từ cột <span class="highlight">Balance Sheet</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Balance Sheet (Statement of Financial Position)</strong><br>
+                    Sử dụng dữ liệu từ cột <span class="highlight">Balance Sheet</span>
+                </div>
+            </div>
+            <div class="warning-box">
+                <h4>⚠️ LƯU Ý QUAN TRỌNG:</h4>
+                <ul>
+                    <li>Worksheet <strong>KHÔNG PHẢI</strong> là báo cáo tài chính chính thức</li>
+                    <li>Định dạng worksheet khác với định dạng BCTC</li>
+                    <li>Worksheet là công cụ làm việc nội bộ, <strong>không phân phối</strong> cho bên ngoài</li>
+                    <li>Vẫn phải <strong>ghi nhật ký và chuyển sổ</strong> các bút toán điều chỉnh sau khi lập BCTC</li>
+                </ul>
+            </div>
+            <div class="slide-number">Slide 16/65</div>
+        </div>
+
+        <!-- Slide 17: Ví dụ Income Statement -->
+        <div class="slide">
+            <h2>📊 VÍ DỤ: INCOME STATEMENT TỪ WORKSHEET</h2>
+            <div class="example-box">
+                <h3 style="text-align: center; color: #667eea;">Yazici Advertising A.Ş.</h3>
+                <h4 style="text-align: center;">Income Statement</h4>
+                <h4 style="text-align: center;">For the Month Ended October 31, 2020</h4>
+                <table style="margin-top: 20px;">
+                    <tr>
+                        <td><strong>Revenues</strong></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Service revenue</td>
+                        <td style="text-align: right;">10,600</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Expenses</strong></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Salaries and wages expense</td>
+                        <td style="text-align: right;">5,200</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Supplies expense</td>
+                        <td style="text-align: right;">1,500</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Rent expense</td>
+                        <td style="text-align: right;">900</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Insurance expense</td>
+                        <td style="text-align: right;">50</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Interest expense</td>
+                        <td style="text-align: right;">50</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Depreciation expense</td>
+                        <td style="text-align: right; border-bottom: 2px solid #333;">40</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 40px;"><strong>Total expenses</strong></td>
+                        <td style="text-align: right; border-bottom: 2px solid #333;">7,740</td>
+                    </tr>
+                    <tr style="background: #f0fdf4; font-weight: bold;">
+                        <td><strong>Net income</strong></td>
+                        <td style="text-align: right; border-bottom: 4px double #333;">2,860</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="slide-number">Slide 17/65</div>
+        </div>
+
+        <!-- Slide 18: Ghi nhật ký bút toán điều chỉnh từ Worksheet -->
+        <div class="slide">
+            <h2>📝 GHI NHẬT KÝ BÚT TOÁN ĐIỀU CHỈNH TỪ WORKSHEET</h2>
+            <h3>⚠️ Điểm quan trọng:</h3>
+            <div class="key-point">
+                <p>Worksheet <strong>KHÔNG PHẢI</strong> là nhật ký và <strong>KHÔNG THỂ</strong> dùng làm cơ sở để chuyển sổ vào sổ cái.</p>
+                <p>→ Bạn phải <span class="highlight">ghi nhật ký</span> các bút toán điều chỉnh từ cột Adjustments của worksheet.</p>
+            </div>
+            <h3>🔄 Quy trình:</h3>
+            <ol>
+                <li>Hoàn thành worksheet</li>
+                <li>Lập báo cáo tài chính</li>
+                <li><strong>GHI NHẬT KÝ</strong> các bút toán điều chỉnh</li>
+                <li><strong>CHUYỂN SỔ</strong> vào sổ cái</li>
+            </ol>
+            <div class="example-box">
+                <h4>Ví dụ ghi nhật ký từ Worksheet:</h4>
+                <table style="font-size: 0.9em;">
+                    <tr>
+                        <th>Date</th>
+                        <th>Account</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </tr>
+                    <tr>
+                        <td>Oct 31</td>
+                        <td>Supplies Expense</td>
+                        <td>1,500</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Supplies</td>
+                        <td></td>
+                        <td>1,500</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="3" style="font-style: italic; color: #666;">(To record supplies used)</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="slide-number">Slide 18/65</div>
+        </div>
+
+        <!-- Slide 19: Bài tập thực hành Worksheet -->
+        <div class="slide">
+            <h2>💪 BÀI TẬP THỰC HÀNH: WORKSHEET</h2>
+            <div class="example-box">
+                <h3>Đề bài: Công ty ABC có Trial Balance tại 31/12/2020:</h3>
+                <table style="font-size: 0.85em;">
+                    <tr>
+                        <th>Tài khoản</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </tr>
+                    <tr><td>Cash</td><td>8,000</td><td></td></tr>
+                    <tr><td>Supplies</td><td>3,000</td><td></td></tr>
+                    <tr><td>Prepaid Insurance</td><td>1,200</td><td></td></tr>
+                    <tr><td>Equipment</td><td>20,000</td><td></td></tr>
+                    <tr><td>Accounts Payable</td><td></td><td>5,000</td></tr>
+                    <tr><td>Share Capital</td><td></td><td>15,000</td></tr>
+                    <tr><td>Service Revenue</td><td></td><td>18,000</td></tr>
+                    <tr><td>Rent Expense</td><td>3,600</td><td></td></tr>
+                    <tr><td>Salaries Expense</td><td>2,200</td><td></td></tr>
+                    <tr><td><strong>Total</strong></td><td><strong>38,000</strong></td><td><strong>38,000</strong></td></tr>
+                </table>
+                <h4 style="margin-top: 20px;">Thông tin điều chỉnh:</h4>
+                <ul>
+                    <li>(a) Supplies còn lại cuối kỳ: 1,000</li>
+                    <li>(b) Bảo hiểm hết hạn trong kỳ: 400</li>
+                    <li>(c) Khấu hao thiết bị: 500</li>
+                    <li>(d) Lương phải trả chưa thanh toán: 600</li>
+                </ul>
+            </div>
+            <div class="key-point">
+                <strong>Yêu cầu:</strong> Lập Worksheet đầy đủ và xác định Net Income
+            </div>
+            <div class="slide-number">Slide 19/65</div>
+        </div>
+
+        <!-- Slide 20: Đáp án bài tập Worksheet -->
+        <div class="slide">
+            <h2>✅ ĐÁP ÁN BÀI TẬP WORKSHEET</h2>
+            <div class="example-box">
+                <h4>1. Các bút toán điều chỉnh:</h4>
+                <ul style="font-size: 0.9em;">
+                    <li>(a) Supplies Expense 2,000 / Supplies 2,000</li>
+                    <li>(b) Insurance Expense 400 / Prepaid Insurance 400</li>
+                    <li>(c) Depreciation Expense 500 / Accumulated Depreciation 500</li>
+                    <li>(d) Salaries Expense 600 / Salaries Payable 600</li>
+                </ul>
+                <h4 style="margin-top: 20px;">2. Adjusted Trial Balance:</h4>
+                <table style="font-size: 0.75em;">
+                    <tr>
+                        <th>Tài khoản</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </tr>
+                    <tr><td>Cash</td><td>8,000</td><td></td></tr>
+                    <tr><td>Supplies</td><td>1,000</td><td></td></tr>
+                    <tr><td>Prepaid Insurance</td><td>800</td><td></td></tr>
+                    <tr><td>Equipment</td><td>20,000</td><td></td></tr>
+                    <tr><td>Accumulated Depreciation</td><td></td><td>500</td></tr>
+                    <tr><td>Accounts Payable</td><td></td><td>5,000</td></tr>
+                    <tr><td>Salaries Payable</td><td></td><td>600</td></tr>
+                    <tr><td>Share Capital</td><td></td><td>15,000</td></tr>
+                    <tr><td>Service Revenue</td><td></td><td>18,000</td></tr>
+                    <tr><td>Rent Expense</td><td>3,600</td><td></td></tr>
+                    <tr><td>Salaries Expense</td><td>2,800</td><td></td></tr>
+                    <tr><td>Supplies Expense</td><td>2,000</td><td></td></tr>
+                    <tr><td>Insurance Expense</td><td>400</td><td></td></tr>
+                    <tr><td>Depreciation Expense</td><td>500</td><td></td></tr>
+                    <tr style="background: #fffbeb; font-weight: bold;">
+                        <td><strong>Total</strong></td><td><strong>39,100</strong></td><td><strong>39,100</strong></td></tr>
+                </table>
+            </div>
+            <div class="formula">
+                Net Income = 18,000 - (3,600 + 2,800 + 2,000 + 400 + 500) = 8,700
+            </div>
+            <div class="slide-number">Slide 20/65</div>
+        </div>
+
+        <!-- PHẦN 2: CLOSING ENTRIES -->
+        
+        <!-- Slide 21: Section Title - Closing Entries -->
+        <div class="slide">
+            <div class="section-title" style="margin-top: 150px;">
+                <div class="icon">🔒</div>
+                <h1>PHẦN 2: CLOSING ENTRIES</h1>
+                <h2 style="border: none; color: white; margin-top: 20px;">Bút Toán Khóa Sổ</h2>
+            </div>
+            <div class="slide-number">Slide 21/65</div>
+        </div>
+
+        <!-- Slide 22: Khái niệm Closing the Books -->
+        <div class="slide">
+            <h2>🔒 CLOSING THE BOOKS LÀ GÌ?</h2>
+            <div class="key-point">
+                <h3>Định nghĩa:</h3>
+                <p><span class="highlight">Closing the books (Khóa sổ)</span> là quá trình chuẩn bị các tài khoản cho kỳ kế toán tiếp theo bằng cách:</p>
+                <ul>
+                    <li>✅ Chuyển số dư các tài khoản <strong>tạm thời</strong> về 0</li>
+                    <li>✅ Chuyển kết quả kinh doanh vào <strong>Retained Earnings</strong></li>
+                </ul>
+            </div>
+            <h3>🎯 Mục đích:</h3>
+            <ol>
+                <li><strong>Chuẩn bị</strong> các tài khoản doanh thu, chi phí cho kỳ kế toán mới</li>
+                <li><strong>Cập nhật</strong> số dư Retained Earnings</li>
+                <li><strong>Phân biệt</strong> dữ liệu giữa các kỳ kế toán</li>
+            </ol>
+            <div class="warning-box">
+                <strong>⏰ Thời điểm:</strong> Closing entries được thực hiện <span class="highlight">cuối mỗi kỳ kế toán</span> (thường là cuối năm), sau khi đã lập báo cáo tài chính.
+            </div>
+            <div class="slide-number">Slide 22/65</div>
+        </div>
+
+        <!-- Slide 23: Temporary vs Permanent Accounts -->
+        <div class="slide">
+            <h2>📂 TÀI KHOẢN TẠM THỜI VS VĨNH VIỄN</h2>
             <div class="two-column">
-                <div class="column" style="background-color: #fff3cd;">
-                    <h3>🔄 TEMPORARY (Tạm thời)</h3>
-                    <p><strong>Đặc điểm:</strong></p>
+                <div class="column" style="background: #fff7ed; border: 2px solid #f59e0b;">
+                    <h3>🔄 Temporary Accounts</h3>
+                    <h4>(Tài khoản Tạm thời / Nominal)</h4>
+                    <p><strong>Định nghĩa:</strong> Tài khoản chỉ liên quan đến một kỳ kế toán</p>
+                    <h4>Bao gồm:</h4>
                     <ul>
-                        <li>Chỉ liên quan đến 1 kỳ kế toán</li>
-                        <li>Phải đóng (close) cuối kỳ</li>
-                        <li>Bắt đầu kỳ mới với số dư = 0</li>
+                        <li>✅ Tất cả tài khoản <strong>Doanh thu</strong></li>
+                        <li>✅ Tất cả tài khoản <strong>Chi phí</strong></li>
+                        <li>✅ Tài khoản <strong>Dividends</strong></li>
                     </ul>
-                    <p style="margin-top: 15px;"><strong>Bao gồm:</strong></p>
-                    <ul>
-                        <li>✓ Tất cả tài khoản Doanh thu</li>
-                        <li>✓ Tất cả tài khoản Chi phí</li>
-                        <li>✓ Tài khoản Dividends</li>
-                        <li>✓ Tài khoản Income Summary</li>
-                    </ul>
+                    <p style="background: #fef2f2; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                        <strong>→ Được ĐÓNG</strong> vào cuối kỳ<br>
+                        <strong>→ Số dư = 0</strong> đầu kỳ mới
+                    </p>
                 </div>
-                <div class="column" style="background-color: #d4edda;">
-                    <h3>♾️ PERMANENT (Vĩnh viễn)</h3>
-                    <p><strong>Đặc điểm:</strong></p>
+                <div class="column" style="background: #f0f9ff; border: 2px solid #0ea5e9;">
+                    <h3>♾️ Permanent Accounts</h3>
+                    <h4>(Tài khoản Vĩnh viễn / Real)</h4>
+                    <p><strong>Định nghĩa:</strong> Tài khoản liên quan đến nhiều kỳ kế toán</p>
+                    <h4>Bao gồm:</h4>
                     <ul>
-                        <li>Liên quan đến nhiều kỳ</li>
-                        <li>KHÔNG đóng cuối kỳ</li>
-                        <li>Số dư chuyển sang kỳ sau</li>
+                        <li>✅ Tất cả tài khoản <strong>Tài sản</strong></li>
+                        <li>✅ Tất cả tài khoản <strong>Nợ phải trả</strong></li>
+                        <li>✅ Tài khoản <strong>Vốn CSH</strong><br>(Share Capital, Retained Earnings)</li>
                     </ul>
-                    <p style="margin-top: 15px;"><strong>Bao gồm:</strong></p>
-                    <ul>
-                        <li>✓ Tất cả tài khoản Tài sản</li>
-                        <li>✓ Tất cả tài khoản Nợ phải trả</li>
-                        <li>✓ Tài khoản Share Capital</li>
-                        <li>✓ Tài khoản Retained Earnings</li>
-                    </ul>
+                    <p style="background: #f0fdf4; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                        <strong>→ KHÔNG đóng</strong> cuối kỳ<br>
+                        <strong>→ Số dư chuyển</strong> sang kỳ sau
+                    </p>
                 </div>
             </div>
+            <div class="slide-number">Slide 23/65</div>
         </div>
 
-        <!-- Slide 16: Giới thiệu Closing Entries -->
+        <!-- Slide 24: Income Summary Account -->
         <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>CLOSING ENTRIES LÀ GÌ?</h1>
-            <h2>Bút toán Khóa sổ</h2>
-            <div class="note">
-                <h3>📝 Định nghĩa</h3>
-                <p><strong>Closing Entries</strong> là các bút toán được lập vào cuối kỳ kế toán để chuyển số dư của các tài khoản tạm thời về tài khoản Retained Earnings.</p>
+            <h2>💼 TÀI KHOẢN INCOME SUMMARY</h2>
+            <div class="key-point">
+                <h3>Định nghĩa:</h3>
+                <p><span class="highlight">Income Summary</span> là tài khoản tạm thời được sử dụng <strong>CHỈ TRONG QUÁ TRÌNH KHÓA SỔ</strong> để tổng hợp doanh thu và chi phí trước khi chuyển vào Retained Earnings.</p>
             </div>
-            <h3>Mục đích:</h3>
+            <h3>🎯 Đặc điểm:</h3>
             <ul>
-                <li>✓ Chuyển Lãi/Lỗ ròng và Cổ tức vào Retained Earnings</li>
-                <li>✓ Đưa tất cả tài khoản tạm thời về số dư 0</li>
-                <li>✓ Chuẩn bị sẵn sàng cho kỳ kế toán mới</li>
-                <li>✓ Đảm bảo tài khoản Retained Earnings phản ánh đúng</li>
+                <li>✅ <strong>Tài khoản tạm thời</strong> - chỉ dùng khi khóa sổ</li>
+                <li>✅ <strong>KHÔNG xuất hiện</strong> trong Trial Balance</li>
+                <li>✅ <strong>KHÔNG xuất hiện</strong> trong bất kỳ BCTC nào</li>
+                <li>✅ Số dư cuối cùng = <strong>Net Income hoặc Net Loss</strong></li>
+                <li>✅ Sau khi khóa sổ → số dư = <strong>0</strong></li>
             </ul>
-            <div class="important">
-                <strong>⚠️ Quan trọng:</strong> Closing Entries là bước BẮT BUỘC trong chu trình kế toán!
+            <div class="example-box">
+                <h4>💡 Vì sao dùng Income Summary?</h4>
+                <p>Thay vì đóng từng tài khoản doanh thu/chi phí <strong>trực tiếp</strong> vào Retained Earnings (quá nhiều chi tiết), ta đóng vào Income Summary trước, sau đó đóng Income Summary vào Retained Earnings.</p>
             </div>
+            <div class="formula">
+                Income Summary = Total Revenues - Total Expenses = Net Income (Loss)
+            </div>
+            <div class="slide-number">Slide 24/65</div>
         </div>
 
-        <!-- Slide 17: Tài khoản Income Summary -->
+        <!-- Slide 25: 4 Closing Entries -->
         <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>TÀI KHOẢN INCOME SUMMARY</h1>
-            <h2>Temporary Account for Closing</h2>
-            <div class="note">
-                <h3>💡 Vai trò</h3>
-                <p><strong>Income Summary</strong> là tài khoản tạm thời được sử dụng CHỈ trong quá trình khóa sổ để:</p>
+            <h2>🔢 BỐN BÚT TOÁN KHÓA SỔ</h2>
+            <div class="steps-container">
+                <div class="step" style="background: linear-gradient(90deg, #fef3c7 0%, #fef08a 100%); border-color: #eab308;">
+                    <span class="step-number" style="background: #eab308;">1</span>
+                    <strong>Close Revenue Accounts</strong><br>
+                    Debit: Mỗi tài khoản Doanh thu (số dư của nó)<br>
+                    Credit: Income Summary (tổng doanh thu)
+                </div>
+                <div class="step" style="background: linear-gradient(90deg, #fed7aa 0%, #fdba74 100%); border-color: #f97316;">
+                    <span class="step-number" style="background: #f97316;">2</span>
+                    <strong>Close Expense Accounts</strong><br>
+                    Debit: Income Summary (tổng chi phí)<br>
+                    Credit: Mỗi tài khoản Chi phí (số dư của nó)
+                </div>
+                <div class="step" style="background: linear-gradient(90deg, #ddd6fe 0%, #c4b5fd 100%); border-color: #8b5cf6;">
+                    <span class="step-number" style="background: #8b5cf6;">3</span>
+                    <strong>Close Income Summary</strong><br>
+                    Nếu Lãi: Debit Income Summary / Credit Retained Earnings<br>
+                    Nếu Lỗ: Debit Retained Earnings / Credit Income Summary
+                </div>
+                <div class="step" style="background: linear-gradient(90deg, #fecaca 0%, #fca5a5 100%); border-color: #ef4444;">
+                    <span class="step-number" style="background: #ef4444;">4</span>
+                    <strong>Close Dividends</strong><br>
+                    Debit: Retained Earnings<br>
+                    Credit: Dividends
+                </div>
+            </div>
+            <div class="warning-box">
+                <strong>⚠️ LƯU Ý:</strong> Thứ tự các bút toán rất quan trọng! Phải thực hiện theo đúng trình tự 1 → 2 → 3 → 4
+            </div>
+            <div class="slide-number">Slide 25/65</div>
+        </div>
+
+        <!-- Slide 26: Closing Entry #1 - Revenue -->
+        <div class="slide">
+            <h2>📊 BÚT TOÁN KHÓA SỔ #1: ĐÓNG DOANH THU</h2>
+            <div class="key-point">
+                <h3>Mục đích:</h3>
+                <p>Chuyển <strong>TẤT CẢ</strong> số dư các tài khoản doanh thu vào Income Summary</p>
+            </div>
+            <div class="formula">
+                Debit: Revenue Accounts (số dư Credit của chúng)<br>
+                Credit: Income Summary (tổng doanh thu)
+            </div>
+            <div class="example-box">
+                <h4>Ví dụ: Yazici Advertising - 31/10/2020</h4>
+                <p><strong>Trước khi đóng:</strong></p>
+                <table style="font-size: 0.9em;">
+                    <tr>
+                        <th>Service Revenue</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="text-align: right;">Bal. 10,600</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 15px;"><strong>Bút toán khóa sổ #1:</strong></p>
+                <table style="font-size: 0.9em;">
+                    <tr>
+                        <th>Date</th>
+                        <th>Account</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </tr>
+                    <tr>
+                        <td>Oct 31</td>
+                        <td>Service Revenue</td>
+                        <td>10,600</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Income Summary</td>
+                        <td></td>
+                        <td>10,600</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 15px;"><strong>Sau khi đóng:</strong></p>
+                <table style="font-size: 0.9em;">
+                    <tr>
+                        <th>Service Revenue</th>
+                        <th>Income Summary</th>
+                    </tr>
+                    <tr>
+                        <td>10,600 | Bal. 10,600</td>
+                        <td>| 10,600</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-weight: bold; color: #10b981;">Bal. 0</td>
+                        <td style="text-align: right;">Bal. 10,600</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="slide-number">Slide 26/65</div>
+        </div>
+
+        <!-- Slide 27: Closing Entry #2 - Expenses -->
+        <div class="slide">
+            <h2>📊 BÚT TOÁN KHÓA SỔ #2: ĐÓNG CHI PHÍ</h2>
+            <div class="key-point">
+                <h3>Mục đích:</h3>
+                <p>Chuyển <strong>TẤT CẢ</strong> số dư các tài khoản chi phí vào Income Summary</p>
+            </div>
+            <div class="formula">
+                Debit: Income Summary (tổng chi phí)<br>
+                Credit: Expense Accounts (số dư Debit của từng tài khoản)
+            </div>
+            <div class="example-box">
+                <h4>Ví dụ: Yazici Advertising</h4>
+                <p><strong>Bút toán khóa sổ #2:</strong></p>
+                <table style="font-size: 0.85em;">
+                    <tr>
+                        <th>Date</th>
+                        <th>Account</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </tr>
+                    <tr>
+                        <td>Oct 31</td>
+                        <td>Income Summary</td>
+                        <td>7,740</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Supplies Expense</td>
+                        <td></td>
+                        <td>1,500</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Depreciation Expense</td>
+                        <td></td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Insurance Expense</td>
+                        <td></td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Salaries and Wages Expense</td>
+                        <td></td>
+                        <td>5,200</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Rent Expense</td>
+                        <td></td>
+                        <td>900</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Interest Expense</td>
+                        <td></td>
+                        <td>50</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="slide-number">Slide 27/65</div>
+        </div>
+
+        <!-- Slide 28: Closing Entry #2 - After Posting -->
+        <div class="slide">
+            <h2>📊 SAU KHI ĐÓNG CHI PHÍ</h2>
+            <div class="example-box">
+                <h4>T-accounts sau khi ghi sổ bút toán #2:</h4>
+                <div class="two-column">
+                    <div class="column">
+                        <h4>Salaries and Wages Expense</h4>
+                        <table style="font-size: 0.85em;">
+                            <tr>
+                                <td>Bal. 5,200</td>
+                                <td>| 5,200 (closing)</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align: center; font-weight: bold; color: #10b981;">Bal. 0 ✓</td>
+                            </tr>
+                        </table>
+                        <h4 style="margin-top: 15px;">Rent Expense</h4>
+                        <table style="font-size: 0.85em;">
+                            <tr>
+                                <td>Bal. 900</td>
+                                <td>| 900 (closing)</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align: center; font-weight: bold; color: #10b981;">Bal. 0 ✓</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="column">
+                        <h4>Income Summary</h4>
+                        <table style="font-size: 0.85em;">
+                            <tr>
+                                <td>7,740 (Exp.)</td>
+                                <td>| 10,600 (Rev.)</td>
+                            </tr>
+                            <tr style="background: #f0fdf4;">
+                                <td></td>
+                                <td style="text-align: right; font-weight: bold;">Bal. 2,860 Cr</td>
+                            </tr>
+                        </table>
+                        <p style="margin-top: 10px; padding: 10px; background: #fffbeb; border-radius: 5px;">
+                            <strong>💡 Giải thích:</strong><br>
+                            Số dư Income Summary = <strong>Net Income</strong><br>
+                            10,600 - 7,740 = 2,860
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="key-point">
+                <strong>✅ Kết quả:</strong> Tất cả tài khoản chi phí có số dư = 0<br>
+                Income Summary có số dư Credit = Net Income (2,860)
+            </div>
+            <div class="slide-number">Slide 28/65</div>
+        </div>
+
+        <!-- Slide 29: Closing Entry #3 - Income Summary -->
+        <div class="slide">
+            <h2>📊 BÚT TOÁN KHÓA SỔ #3: ĐÓNG INCOME SUMMARY</h2>
+            <div class="key-point">
+                <h3>Mục đích:</h3>
+                <p>Chuyển số dư Income Summary (= Net Income hoặc Net Loss) vào <strong>Retained Earnings</strong></p>
+            </div>
+            <div class="two-column">
+                <div class="column" style="background: #f0fdf4; border: 2px solid #10b981;">
+                    <h4>✅ Trường hợp có LÃI:</h4>
+                    <p>(Income Summary có số dư Credit)</p>
+                    <div class="formula" style="font-size: 0.9em;">
+                        Dr. Income Summary<br>
+                        Cr. Retained Earnings
+                    </div>
+                </div>
+                <div class="column" style="background: #fef2f2; border: 2px solid #ef4444;">
+                    <h4>❌ Trường hợp có LỖ:</h4>
+                    <p>(Income Summary có số dư Debit)</p>
+                    <div class="formula" style="font-size: 0.9em;">
+                        Dr. Retained Earnings<br>
+                        Cr. Income Summary
+                    </div>
+                </div>
+            </div>
+            <div class="example-box">
+                <h4>Ví dụ: Yazici Advertising (có Lãi ròng 2,860)</h4>
+                <p><strong>Bút toán khóa sổ #3:</strong></p>
+                <table style="font-size: 0.9em;">
+                    <tr>
+                        <th>Date</th>
+                        <th>Account</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </tr>
+                    <tr>
+                        <td>Oct 31</td>
+                        <td>Income Summary</td>
+                        <td>2,860</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Retained Earnings</td>
+                        <td></td>
+                        <td>2,860</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 15px;"><strong>Sau khi ghi sổ:</strong></p>
+                <table style="font-size: 0.9em;">
+                    <tr>
+                        <th>Income Summary</th>
+                        <th>Retained Earnings</th>
+                    </tr>
+                    <tr>
+                        <td>2,860 | Bal. 2,860</td>
+                        <td>| 2,860</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-weight: bold; color: #10b981;">Bal. 0 ✓</td>
+                        <td style="text-align: right; font-weight: bold;">Bal. 2,860</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="slide-number">Slide 29/65</div>
+        </div>
+
+        <!-- Slide 30: Closing Entry #4 - Dividends -->
+        <div class="slide">
+            <h2>📊 BÚT TOÁN KHÓA SỔ #4: ĐÓNG DIVIDENDS</h2>
+            <div class="key-point">
+                <h3>Mục đích:</h3>
+                <p>Chuyển số dư tài khoản Dividends vào <strong>Retained Earnings</strong></p>
+            </div>
+            <div class="formula">
+                Debit: Retained Earnings<br>
+                Credit: Dividends
+            </div>
+            <div class="warning-box">
+                <h4>⚠️ LƯU Ý QUAN TRỌNG:</h4>
                 <ul>
-                    <li>Tập hợp tất cả Doanh thu</li>
-                    <li>Tập hợp tất cả Chi phí</li>
-                    <li>Tính và chuyển Lãi/Lỗ ròng sang Retained Earnings</li>
+                    <li>Dividends <strong>KHÔNG PHẢI</strong> là chi phí</li>
+                    <li>Dividends <strong>KHÔNG đóng</strong> vào Income Summary</li>
+                    <li>Dividends đóng <strong>TRỰC TIẾP</strong> vào Retained Earnings</li>
                 </ul>
             </div>
-            <div class="step-box">
-                <h3>Đặc điểm:</h3>
+            <div class="example-box">
+                <h4>Ví dụ: Yazici Advertising (Dividends = 500)</h4>
+                <p><strong>Bút toán khóa sổ #4:</strong></p>
+                <table style="font-size: 0.9em;">
+                    <tr>
+                        <th>Date</th>
+                        <th>Account</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </tr>
+                    <tr>
+                        <td>Oct 31</td>
+                        <td>Retained Earnings</td>
+                        <td>500</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Dividends</td>
+                        <td></td>
+                        <td>500</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 15px;"><strong>Sau khi ghi sổ:</strong></p>
+                <table style="font-size: 0.9em;">
+                    <tr>
+                        <th>Dividends</th>
+                        <th>Retained Earnings</th>
+                    </tr>
+                    <tr>
+                        <td>Bal. 500 | 500</td>
+                        <td>500 | 2,860</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-weight: bold; color: #10b981;">Bal. 0 ✓</td>
+                        <td style="text-align: right; font-weight: bold; background: #f0fdf4;">Bal. 2,360</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="formula">
+                Retained Earnings (cuối kỳ) = 0 + 2,860 - 500 = 2,360
+            </div>
+            <div class="slide-number">Slide 30/65</div>
+        </div>
+
+        <!-- Slide 31: Sơ đồ Closing Process -->
+        <div class="slide">
+            <h2>🔄 SƠ ĐỒ QUY TRÌNH ĐÓNG SỔ</h2>
+            <div class="example-box">
+                <div style="text-align: center; padding: 30px;">
+                    <div style="display: inline-block; padding: 15px 30px; background: #fef3c7; border: 2px solid #eab308; border-radius: 10px; margin: 10px;">
+                        <strong>REVENUES</strong><br>
+                        (Các tài khoản doanh thu)
+                    </div>
+                    <div style="font-size: 2em; color: #667eea;">↓ ①</div>
+                    <div style="display: inline-block; padding: 20px 40px; background: #e0e7ff; border: 3px solid #667eea; border-radius: 10px; margin: 10px;">
+                        <strong style="font-size: 1.3em;">INCOME SUMMARY</strong>
+                    </div>
+                    <div style="font-size: 2em; color: #667eea;">↑ ②</div>
+                    <div style="display: inline-block; padding: 15px 30px; background: #fed7aa; border: 2px solid #f97316; border-radius: 10px; margin: 10px;">
+                        <strong>EXPENSES</strong><br>
+                        (Các tài khoản chi phí)
+                    </div>
+                    <div style="font-size: 2em; color: #667eea; margin: 20px 0;">↓ ③</div>
+                    <div style="display: inline-block; padding: 20px 40px; background: #ddd6fe; border: 3px solid #8b5cf6; border-radius: 10px; margin: 10px;">
+                        <strong style="font-size: 1.3em;">RETAINED EARNINGS</strong>
+                    </div>
+                    <div style="font-size: 2em; color: #667eea;">↑ ④</div>
+                    <div style="display: inline-block; padding: 15px 30px; background: #fecaca; border: 2px solid #ef4444; border-radius: 10px; margin: 10px;">
+                        <strong>DIVIDENDS</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="key-point">
+                <h4>📌 Kết quả cuối cùng:</h4>
                 <ul>
-                    <li>✓ Chỉ sử dụng trong quá trình closing</li>
-                    <li>✓ KHÔNG xuất hiện trong báo cáo tài chính</li>
-                    <li>✓ Số dư cuối cùng = 0 (sau khi đóng)</li>
-                    <li>✓ Số dư tạm thời = Net Income hoặc Net Loss</li>
+                    <li>✅ Tất cả tài khoản <strong>tạm thời</strong> có số dư = <strong>0</strong></li>
+                    <li>✅ <strong>Retained Earnings</strong> được cập nhật với Net Income và Dividends</li>
+                    <li>✅ Sẵn sàng cho kỳ kế toán mới</li>
                 </ul>
             </div>
+            <div class="slide-number">Slide 31/65</div>
         </div>
 
-        <!-- Slide 18: 4 bút toán Closing -->
+        <!-- Slide 32: Post-Closing Trial Balance -->
         <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>4 BÚT TOÁN CLOSING</h1>
-            <h2>Four Closing Entries</h2>
-            <div class="step-box">
-                <h3>Bút toán 1: Đóng tài khoản Doanh thu</h3>
-                <div class="accounting-entry">
-                    <p>Service Revenue ............... XXX</p>
-                    <p style="margin-left: 30px;">Income Summary ............ XXX</p>
-                </div>
+            <h2>📋 POST-CLOSING TRIAL BALANCE</h2>
+            <div class="key-point">
+                <h3>Định nghĩa:</h3>
+                <p><span class="highlight">Post-Closing Trial Balance</span> là bảng cân đối kế toán được lập <strong>SAU KHI</strong> đã ghi nhật ký và chuyển sổ các bút toán khóa sổ.</p>
             </div>
-            <div class="step-box">
-                <h3>Bút toán 2: Đóng tài khoản Chi phí</h3>
-                <div class="accounting-entry">
-                    <p>Income Summary ................ XXX</p>
-                    <p style="margin-left: 30px;">Salaries Expense .......... XXX</p>
-                    <p style="margin-left: 30px;">Rent Expense .............. XXX</p>
-                    <p style="margin-left: 30px;">Supplies Expense .......... XXX</p>
-                    <p style="margin-left: 30px;">[...các chi phí khác...]</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 19: 4 bút toán Closing (tiếp) -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>4 BÚT TOÁN CLOSING (tiếp)</h1>
-            <div class="step-box">
-                <h3>Bút toán 3: Đóng Income Summary</h3>
-                <p><strong>Nếu có Lãi ròng (Net Income):</strong></p>
-                <div class="accounting-entry">
-                    <p>Income Summary ................ XXX</p>
-                    <p style="margin-left: 30px;">Retained Earnings ......... XXX</p>
-                </div>
-                <p style="margin-top: 15px;"><strong>Nếu có Lỗ ròng (Net Loss):</strong></p>
-                <div class="accounting-entry">
-                    <p>Retained Earnings ............. XXX</p>
-                    <p style="margin-left: 30px;">Income Summary ............ XXX</p>
-                </div>
-            </div>
-            <div class="step-box">
-                <h3>Bút toán 4: Đóng Dividends</h3>
-                <div class="accounting-entry">
-                    <p>Retained Earnings ............. XXX</p>
-                    <p style="margin-left: 30px;">Dividends ................. XXX</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 20: Ví dụ Closing Entries -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>VÍ DỤ CLOSING ENTRIES</h1>
-            <h2>Yazici Advertising - 31/10/2020</h2>
-            <div class="example">
-                <div class="accounting-entry">
-                    <p><strong>(1) Đóng Revenue:</strong></p>
-                    <p>Oct 31 | Service Revenue .......... 10,600</p>
-                    <p style="margin-left: 50px;">Income Summary ......... 10,600</p>
-                    <p style="margin-left: 50px;">(To close revenue account)</p>
-                    
-                    <p style="margin-top: 15px;"><strong>(2) Đóng Expenses:</strong></p>
-                    <p>Oct 31 | Income Summary ........... 7,740</p>
-                    <p style="margin-left: 50px;">Supplies Expense ....... 1,500</p>
-                    <p style="margin-left: 50px;">Depreciation Expense ... 40</p>
-                    <p style="margin-left: 50px;">Insurance Expense ...... 50</p>
-                    <p style="margin-left: 50px;">Salaries Expense ....... 5,200</p>
-                    <p style="margin-left: 50px;">Rent Expense ........... 900</p>
-                    <p style="margin-left: 50px;">Interest Expense ....... 50</p>
-                    <p style="margin-left: 50px;">(To close expense accounts)</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 21: Ví dụ Closing Entries (tiếp) -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>VÍ DỤ CLOSING ENTRIES (tiếp)</h1>
-            <div class="example">
-                <div class="accounting-entry">
-                    <p><strong>(3) Đóng Income Summary (Net Income):</strong></p>
-                    <p>Oct 31 | Income Summary ........... 2,860</p>
-                    <p style="margin-left: 50px;">Retained Earnings ...... 2,860</p>
-                    <p style="margin-left: 50px;">(To close net income to retained earnings)</p>
-                    <p style="margin-left: 50px;">Tính: 10,600 - 7,740 = 2,860</p>
-                    
-                    <p style="margin-top: 20px;"><strong>(4) Đóng Dividends:</strong></p>
-                    <p>Oct 31 | Retained Earnings ........ 500</p>
-                    <p style="margin-left: 50px;">Dividends .............. 500</p>
-                    <p style="margin-left: 50px;">(To close dividends to retained earnings)</p>
-                </div>
-            </div>
-            <div class="note">
-                <p><strong>Kết quả:</strong> Retained Earnings cuối kỳ = 0 + 2,860 - 500 = <strong>2,360</strong></p>
-            </div>
-        </div>
-
-        <!-- Slide 22: Posting Closing Entries -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>GHI SỔ CLOSING ENTRIES</h1>
-            <h2>Posting to Ledger Accounts</h2>
-            <div class="step-box">
-                <h3>Quy trình Posting:</h3>
-                <ol>
-                    <li>Ghi các bút toán closing vào sổ cái (T-accounts)</li>
-                    <li>Tính số dư cuối cùng của mỗi tài khoản</li>
-                    <li>Gạch dưới đơn (_____) cho tài khoản tạm thời</li>
-                    <li>Gạch dưới kép (=====) xác nhận số dư = 0</li>
-                    <li>Gạch dưới đơn cho tài khoản vĩnh viễn</li>
-                    <li>Viết số dư mới phía dưới (carry forward)</li>
-                </ol>
-            </div>
-            <div class="important">
-                <strong>⚠️ Kết quả:</strong> Tất cả tài khoản tạm thời có số dư = 0, sẵn sàng cho kỳ kế toán mới!
-            </div>
-        </div>
-
-        <!-- Slide 23: Post-Closing Trial Balance -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>POST-CLOSING TRIAL BALANCE</h1>
-            <h2>Bảng Cân đối Thử nghiệm sau Khóa sổ</h2>
-            <div class="note">
-                <h3>📝 Định nghĩa</h3>
-                <p><strong>Post-Closing Trial Balance</strong> là bảng liệt kê số dư của các tài khoản VĨNH VIỄN sau khi đã ghi nhật ký và sổ cái các bút toán khóa sổ.</p>
-            </div>
-            <h3>Mục đích:</h3>
+            <h3>🎯 Mục đích:</h3>
             <ul>
-                <li>✓ Chứng minh tính cân bằng của các tài khoản vĩnh viễn</li>
-                <li>✓ Xác nhận quá trình khóa sổ đã hoàn tất đúng</li>
-                <li>✓ Là điểm khởi đầu cho kỳ kế toán mới</li>
+                <li>✅ <strong>Chứng minh</strong> rằng tổng Debit = tổng Credit sau khi khóa sổ</li>
+                <li>✅ <strong>Xác nhận</strong> chỉ còn các tài khoản vĩnh viễn</li>
+                <li>✅ <strong>Chuẩn bị</strong> cho kỳ kế toán mới</li>
             </ul>
-            <div class="important">
-                <strong>⚠️ Lưu ý:</strong> Post-Closing Trial Balance CHỈ chứa tài khoản vĩnh viễn (Balance Sheet accounts)!
+            <h3>📊 Đặc điểm:</h3>
+            <div class="two-column">
+                <div class="column" style="background: #f0fdf4; border: 2px solid #10b981;">
+                    <h4>✅ CÓ TRONG PCTB:</h4>
+                    <ul>
+                        <li>Tất cả tài khoản <strong>Tài sản</strong></li>
+                        <li>Tất cả tài khoản <strong>Nợ phải trả</strong></li>
+                        <li><strong>Share Capital - Ordinary</strong></li>
+                        <li><strong>Retained Earnings</strong> (đã cập nhật)</li>
+                    </ul>
+                </div>
+                <div class="column" style="background: #fef2f2; border: 2px solid #ef4444;">
+                    <h4>❌ KHÔNG CÓ TRONG PCTB:</h4>
+                    <ul>
+                        <li>Tài khoản <strong>Doanh thu</strong></li>
+                        <li>Tài khoản <strong>Chi phí</strong></li>
+                        <li><strong>Dividends</strong></li>
+                        <li><strong>Income Summary</strong></li>
+                    </ul>
+                </div>
             </div>
+            <div class="slide-number">Slide 32/65</div>
         </div>
 
-        <!-- Slide 24: Ví dụ Post-Closing TB -->
+        <!-- Slide 33: Ví dụ Post-Closing Trial Balance -->
         <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>VÍ DỤ POST-CLOSING TRIAL BALANCE</h1>
-            <h2>Yazici Advertising - 31/10/2020</h2>
-            <div class="example">
-                <table>
+            <h2>📊 VÍ DỤ: POST-CLOSING TRIAL BALANCE</h2>
+            <div class="example-box">
+                <h3 style="text-align: center; color: #667eea;">Yazici Advertising A.Ş.</h3>
+                <h4 style="text-align: center;">Post-Closing Trial Balance</h4>
+                <h4 style="text-align: center;">October 31, 2020</h4>
+                <table style="margin-top: 20px; font-size: 0.9em;">
                     <thead>
                         <tr>
                             <th>Account</th>
@@ -902,279 +1600,1100 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Cash</td>
-                            <td>15,200</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Accounts Receivable</td>
-                            <td>200</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Supplies</td>
-                            <td>1,000</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Prepaid Insurance</td>
-                            <td>550</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Equipment</td>
-                            <td>5,000</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Accumulated Depreciation—Equipment</td>
-                            <td></td>
-                            <td>40</td>
-                        </tr>
-                        <tr>
-                            <td>Notes Payable</td>
-                            <td></td>
-                            <td>5,000</td>
-                        </tr>
-                        <tr>
-                            <td>Accounts Payable</td>
-                            <td></td>
-                            <td>2,500</td>
-                        </tr>
-                        <tr>
-                            <td>Unearned Service Revenue</td>
-                            <td></td>
-                            <td>800</td>
-                        </tr>
-                        <tr>
-                            <td>Salaries and Wages Payable</td>
-                            <td></td>
-                            <td>1,200</td>
-                        </tr>
-                        <tr>
-                            <td>Interest Payable</td>
-                            <td></td>
-                            <td>50</td>
-                        </tr>
-                        <tr>
-                            <td>Share Capital—Ordinary</td>
-                            <td></td>
-                            <td>10,000</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Retained Earnings</strong></td>
-                            <td></td>
-                            <td><strong>2,360</strong></td>
-                        </tr>
-                        <tr style="background-color: #d4edda;">
-                            <td><strong>TOTALS</strong></td>
+                        <tr><td>Cash</td><td>15,200</td><td></td></tr>
+                        <tr><td>Accounts Receivable</td><td>200</td><td></td></tr>
+                        <tr><td>Supplies</td><td>1,000</td><td></td></tr>
+                        <tr><td>Prepaid Insurance</td><td>550</td><td></td></tr>
+                        <tr><td>Equipment</td><td>5,000</td><td></td></tr>
+                        <tr><td>Accumulated Depreciation—Equipment</td><td></td><td>40</td></tr>
+                        <tr><td>Notes Payable</td><td></td><td>5,000</td></tr>
+                        <tr><td>Accounts Payable</td><td></td><td>2,500</td></tr>
+                        <tr><td>Unearned Service Revenue</td><td></td><td>800</td></tr>
+                        <tr><td>Salaries and Wages Payable</td><td></td><td>1,200</td></tr>
+                        <tr><td>Interest Payable</td><td></td><td>50</td></tr>
+                        <tr><td>Share Capital—Ordinary</td><td></td><td>10,000</td></tr>
+                        <tr style="background: #f0fdf4;"><td><strong>Retained Earnings</strong></td><td></td><td><strong>2,360</strong></td></tr>
+                        <tr style="background: #fffbeb; font-weight: bold;">
+                            <td><strong>Totals</strong></td>
                             <td><strong>21,950</strong></td>
                             <td><strong>21,950</strong></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+            <div class="key-point">
+                <strong>✅ Kiểm tra:</strong> Chỉ có tài khoản vĩnh viễn, Debit = Credit = 21,950
+            </div>
+            <div class="slide-number">Slide 33/65</div>
         </div>
 
-        <!-- Slide 25: Tóm tắt Buổi 1 -->
+        <!-- Slide 34: Bài tập Closing Entries -->
         <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>TÓM TẮT BUỔI 1</h1>
-            <h2>Key Takeaways</h2>
-            <div class="step-box">
-                <h3>✅ Worksheet (Bảng tính kế toán)</h3>
-                <ul>
-                    <li>5 bước chuẩn bị worksheet</li>
-                    <li>Công cụ TÙY CHỌN để lập BCTC nhanh hơn</li>
-                    <li>Giúp kiểm tra tính chính xác</li>
-                </ul>
-            </div>
-            <div class="step-box">
-                <h3>✅ Closing Entries (Bút toán khóa sổ)</h3>
-                <ul>
-                    <li>4 bút toán khóa sổ BẮT BUỘC</li>
-                    <li>Đóng tài khoản tạm thời về 0</li>
-                    <li>Chuyển Lãi/Lỗ và Cổ tức vào Retained Earnings</li>
-                </ul>
-            </div>
-            <div class="step-box">
-                <h3>✅ Post-Closing Trial Balance</h3>
-                <ul>
-                    <li>Chỉ chứa tài khoản vĩnh viễn</li>
-                    <li>Xác nhận quá trình khóa sổ đúng</li>
-                    <li>Điểm khởi đầu kỳ kế toán mới</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- BUỔI 2: CHU TRÌNH KẾ TOÁN VÀ CORRECTING ENTRIES -->
-
-        <!-- Slide 26: Giới thiệu Buổi 2 -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 2</span>
-            <h1>CHU TRÌNH KẾ TOÁN</h1>
-            <h2>The Accounting Cycle</h2>
-            <div style="text-align: center; margin: 50px 0;">
-                <h3 style="color: #667eea;">Nội dung Buổi 2:</h3>
-                <ul style="list-style: none; font-size: 1.3em; line-height: 2.5;">
-                    <li>📊 9 bước trong Chu trình Kế toán</li>
-                    <li>🔄 Reversing Entries (Bút toán đảo ngược)</li>
-                    <li>✏️ Correcting Entries (Bút toán điều chỉnh sai sót)</li>
-                    <li>🎯 Ứng dụng trong Thương mại điện tử</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Slide 27: Tổng quan Chu trình -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 2</span>
-            <h1>CHU TRÌNH KẾ TOÁN</h1>
-            <h2>9 bước hoàn chỉnh</h2>
-            <div class="note">
-                <h3>📝 Định nghĩa</h3>
-                <p><strong>Chu trình kế toán (Accounting Cycle)</strong> là tập hợp các bước được thực hiện tuần tự trong một kỳ kế toán để ghi nhận, xử lý và báo cáo thông tin tài chính.</p>
-            </div>
-            <div class="step-box">
-                <h3>Đặc điểm:</h3>
-                <ul>
-                    <li>✓ Lặp lại mỗi kỳ kế toán (tháng, quý, năm)</li>
-                    <li>✓ Đảm bảo tính chính xác và đầy đủ</li>
-                    <li>✓ Cung cấp thông tin cho các bên liên quan</li>
-                    <li>✓ Tuân thủ chuẩn mực kế toán</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Slide 28: 9 bước chi tiết -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 2</span>
-            <h1>9 BƯỚC CHU TRÌNH KẾ TOÁN</h1>
-            <div class="step-box">
-                <h3>BƯỚC 1: Phân tích giao dịch</h3>
-                <p>Analyze business transactions</p>
-            </div>
-            <div class="step-box">
-                <h3>BƯỚC 2: Ghi nhật ký</h3>
-                <p>Journalize the transactions</p>
-            </div>
-            <div class="step-box">
-                <h3>BƯỚC 3: Ghi sổ cái</h3>
-                <p>Post to ledger accounts</p>
-            </div>
-            <div class="step-box">
-                <h3>BƯỚC 4: Lập bảng CĐTN chưa điều chỉnh</h3>
-                <p>Prepare a trial balance</p>
-            </div>
-            <div class="step-box">
-                <h3>BƯỚC 5: Ghi nhật ký và sổ cái các bút toán điều chỉnh</h3>
-                <p>Journalize and post adjusting entries</p>
-            </div>
-        </div>
-
-        <!-- Slide 29: 9 bước (tiếp) -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 2</span>
-            <h1>9 BƯỚC CHU TRÌNH KẾ TOÁN (tiếp)</h1>
-            <div class="step-box">
-                <h3>BƯỚC 6: Lập bảng CĐTN đã điều chỉnh</h3>
-                <p>Prepare an adjusted trial balance</p>
-            </div>
-            <div class="step-box">
-                <h3>BƯỚC 7: Lập báo cáo tài chính</h3>
-                <p>Prepare financial statements</p>
-            </div>
-            <div class="step-box">
-                <h3>BƯỚC 8: Ghi nhật ký và sổ cái các bút toán khóa sổ</h3>
-                <p>Journalize and post closing entries</p>
-            </div>
-            <div class="step-box">
-                <h3>BƯỚC 9: Lập bảng CĐTN sau khóa sổ</h3>
-                <p>Prepare a post-closing trial balance</p>
-            </div>
-            <div class="important">
-                <strong>⚠️ Lưu ý:</strong> Các bước 1-3 thực hiện HÀNG NGÀY. Bước 4-9 thực hiện ĐỊNH KỲ (cuối tháng/quý/năm).
-            </div>
-        </div>
-
-        <!-- Slide 30: Sơ đồ Chu trình -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 2</span>
-            <h1>SƠ ĐỒ CHU TRÌNH KẾ TOÁN</h1>
-            <div style="text-align: center;">
-                <div class="step-box" style="background: #fff3cd;">
-                    <h3>↓ Hoạt động hàng ngày ↓</h3>
-                    <p>1. Analyze → 2. Journalize → 3. Post</p>
-                </div>
-                <div style="font-size: 2em; margin: 20px 0;">⬇️</div>
-                <div class="step-box" style="background: #d1ecf1;">
-                    <h3>↓ Hoạt động định kỳ ↓</h3>
-                    <p>4. Trial Balance
-
-        <!-- Slide 12: Ví dụ hoàn chỉnh Worksheet -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>VÍ DỤ WORKSHEET HOÀN CHỈNH</h1>
-            <h2>Yazici Advertising A.Ş.</h2>
-            <div class="example">
-                <h3>📊 Tóm tắt kết quả:</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Báo cáo</th>
-                            <th>Debit</th>
-                            <th>Credit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Income Statement</strong></td>
-                            <td>7,740</td>
-                            <td>10,600</td>
-                        </tr>
-                        <tr>
-                            <td>Net Income</td>
-                            <td>2,860</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tổng cân bằng</strong></td>
-                            <td>10,600</td>
-                            <td>10,600</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" style="height: 10px;"></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Balance Sheet</strong></td>
-                            <td>19,590</td>
-                            <td>22,450</td>
-                        </tr>
-                        <tr>
-                            <td>Net Income (chuyển sang)</td>
-                            <td>-</td>
-                            <td>2,860</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tổng cân bằng</strong></td>
-                            <td>22,450</td>
-                            <td>22,450</td>
-                        </tr>
-                    </tbody>
+            <h2>💪 BÀI TẬP THỰC HÀNH: CLOSING ENTRIES</h2>
+            <div class="example-box">
+                <h3>Đề bài: Công ty DEF có Adjusted Trial Balance 31/12/2020:</h3>
+                <table style="font-size: 0.85em;">
+                    <tr>
+                        <th>Tài khoản</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </tr>
+                    <tr><td>Cash</td><td>12,000</td><td></td></tr>
+                    <tr><td>Equipment</td><td>30,000</td><td></td></tr>
+                    <tr><td>Accumulated Depreciation</td><td></td><td>6,000</td></tr>
+                    <tr><td>Accounts Payable</td><td></td><td>8,000</td></tr>
+                    <tr><td>Share Capital - Ordinary</td><td></td><td>20,000</td></tr>
+                    <tr><td>Retained Earnings (1/1/2020)</td><td></td><td>5,000</td></tr>
+                    <tr><td>Dividends</td><td>3,000</td><td></td></tr>
+                    <tr><td>Service Revenue</td><td></td><td>45,000</td></tr>
+                    <tr><td>Rent Revenue</td><td></td><td>5,000</td></tr>
+                    <tr><td>Salaries Expense</td><td>25,000</td><td></td></tr>
+                    <tr><td>Rent Expense</td><td>12,000</td><td></td></tr>
+                    <tr><td>Depreciation Expense</td><td>3,000</td><td></td></tr>
+                    <tr><td>Utilities Expense</td><td>4,000</td><td></td></tr>
+                    <tr style="background: #fffbeb; font-weight: bold;">
+                        <td><strong>Totals</strong></td>
+                        <td><strong>89,000</strong></td>
+                        <td><strong>89,000</strong></td>
+                    </tr>
                 </table>
             </div>
-        </div>
-
-        <!-- Slide 13: Lập BCTC từ Worksheet -->
-        <div class="slide">
-            <span class="session-badge">BUỔI 1</span>
-            <h1>LẬP BÁO CÁO TÀI CHÍNH TỪ WORKSHEET</h1>
-            <h2>Preparing Financial Statements</h2>
-            <div class="step-box">
-                <h3>Thứ tự lập báo cáo:</h3>
+            <div class="key-point">
+                <strong>Yêu cầu:</strong>
                 <ol>
-                    <li><strong>1. Income Statement</strong> (Báo cáo Kết quả Kinh doanh)
-                        <ul>
-                            <li>Lấy từ cột Income Statement của worksheet</li>
-                            <li>Doanh thu - Chi phí = Lãi/Lỗ ròng</li>
-                        </ul>
+                    <li>Lập 4 bút toán khóa sổ</li>
+                    <li>Xác định Retained Earnings cuối kỳ</li>
+                    <li>Lập Post-Closing Trial Balance</li>
+                </ol>
+            </div>
+            <div class="slide-number">Slide 34/65</div>
+        </div>
+
+        <!-- Slide 35: Đáp án Closing Entries -->
+        <div class="slide">
+            <h2>✅ ĐÁP ÁN BÀI TẬP CLOSING ENTRIES (1/2)</h2>
+            <div class="example-box">
+                <h4>1. Bút toán khóa sổ:</h4>
+                <table style="font-size: 0.8em;">
+                    <tr>
+                        <th>Date</th>
+                        <th>Account</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </tr>
+                    <tr style="background: #fef3c7;">
+                        <td>Dec 31</td>
+                        <td><strong>#1: Close Revenues</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Service Revenue</td>
+                        <td>45,000</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Rent Revenue</td>
+                        <td>5,000</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Income Summary</td>
+                        <td></td>
+                        <td>50,000</td>
+                    </tr>
+                    <tr style="background: #fed7aa;">
+                        <td>Dec 31</td>
+                        <td><strong>#2: Close Expenses</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Income Summary</td>
+                        <td>44,000</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Salaries Expense</td>
+                        <td></td>
+                        <td>25,000</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Rent Expense</td>
+                        <td></td>
+                        <td>12,000</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Depreciation Expense</td>
+                        <td></td>
+                        <td>3,000</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Utilities Expense</td>
+                        <td></td>
+                        <td>4,000</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="slide-number">Slide 35/65</div>
+        </div>
+
+        <!-- Slide 36: Đáp án Closing Entries (2) -->
+        <div class="slide">
+            <h2>✅ ĐÁP ÁN BÀI TẬP CLOSING ENTRIES (2/2)</h2>
+            <div class="example-box">
+                <table style="font-size: 0.85em;">
+                    <tr style="background: #ddd6fe;">
+                        <td>Dec 31</td>
+                        <td><strong>#3: Close Income Summary</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Income Summary (50,000 - 44,000)</td>
+                        <td>6,000</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Retained Earnings</td>
+                        <td></td>
+                        <td>6,000</td>
+                    </tr>
+                    <tr style="background: #fecaca;">
+                        <td>Dec 31</td>
+                        <td><strong>#4: Close Dividends</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Retained Earnings</td>
+                        <td>3,000</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Dividends</td>
+                        <td></td>
+                        <td>3,000</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="formula" style="margin-top: 20px;">
+                <strong>2. Retained Earnings (cuối kỳ):</strong><br>
+                5,000 (đầu kỳ) + 6,000 (Net Income) - 3,000 (Dividends) = 8,000
+            </div>
+            <div class="key-point" style="margin-top: 20px;">
+                <h4>3. Post-Closing Trial Balance:</h4>
+                <p>Debit: Cash 12,000 + Equipment 30,000 = <strong>42,000</strong></p>
+                <p>Credit: Acc. Depreciation 6,000 + Accounts Payable 8,000 + Share Capital 20,000 + Retained Earnings 8,000 = <strong>42,000</strong> ✓</p>
+            </div>
+            <div class="slide-number">Slide 36/65</div>
+        </div>
+
+        <!-- PHẦN 3: ACCOUNTING CYCLE & CORRECTING ENTRIES -->
+        
+        <!-- Slide 37: Section Title - Accounting Cycle -->
+        <div class="slide">
+            <div class="section-title" style="margin-top: 150px;">
+                <div class="icon">🔄</div>
+                <h1>PHẦN 3: CHU TRÌNH KẾ TOÁN</h1>
+                <h2 style="border: none; color: white; margin-top: 20px;">Accounting Cycle & Correcting Entries</h2>
+            </div>
+            <div class="slide-number">Slide 37/65</div>
+        </div>
+
+        <!-- Slide 38: 9 Bước trong Chu trình Kế toán -->
+        <div class="slide">
+            <h2>🔄 CHU TRÌNH KẾ TOÁN - 9 BƯỚC</h2>
+            <div class="key-point">
+                <p>Chu trình kế toán là <span class="highlight">chuỗi các bước</span> được thực hiện trong mỗi kỳ kế toán để xử lý các giao dịch và lập báo cáo tài chính.</p>
+            </div>
+            <div class="steps-container">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Analyze Business Transactions</strong> - Phân tích các giao dịch kinh doanh
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Journalize the Transactions</strong> - Ghi nhật ký các giao dịch
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Post to Ledger Accounts</strong> - Chuyển sổ vào sổ cái
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>Prepare a Trial Balance</strong> - Lập bảng cân đối số phát sinh
+                </div>
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <strong>Journalize and Post Adjusting Entries</strong> - Ghi nhật ký và chuyển sổ bút toán điều chỉnh
+                </div>
+            </div>
+            <div class="slide-number">Slide 38/65</div>
+        </div>
+
+        <!-- Slide 39: 9 Bước (tiếp) -->
+        <div class="slide">
+            <h2>🔄 CHU TRÌNH KẾ TOÁN - 9 BƯỚC (tiếp)</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <span class="step-number">6</span>
+                    <strong>Prepare an Adjusted Trial Balance</strong> - Lập bảng cân đối số phát sinh đã điều chỉnh
+                </div>
+                <div class="step">
+                    <span class="step-number">7</span>
+                    <strong>Prepare Financial Statements</strong> - Lập các báo cáo tài chính
+                </div>
+                <div class="step">
+                    <span class="step-number">8</span>
+                    <strong>Journalize and Post Closing Entries</strong> - Ghi nhật ký và chuyển sổ bút toán khóa sổ
+                </div>
+                <div class="step">
+                    <span class="step-number">9</span>
+                    <strong>Prepare a Post-Closing Trial Balance</strong> - Lập bảng cân đối sau khóa sổ
+                </div>
+            </div>
+            <div class="warning-box">
+                <h4>📅 Tần suất thực hiện:</h4>
+                <ul>
+                    <li><strong>Bước 1-3:</strong> Có thể thực hiện <span class="highlight">hàng ngày</span> trong kỳ kế toán</li>
+                    <li><strong>Bước 4-7:</strong> Thực hiện <span class="highlight">định kỳ</span> (tháng, quý, năm)</li>
+                    <li><strong>Bước 8-9:</strong> Thường chỉ thực hiện <span class="highlight">cuối năm</span></li>
+                </ul>
+            </div>
+            <div class="slide-number">Slide 39/65</div>
+        </div>
+
+        <!-- Slide 40: Sơ đồ Chu trình Kế toán -->
+        <div class="slide">
+            <h2>📊 SƠ ĐỒ CHU TRÌNH KẾ TOÁN</h2>
+            <div class="example-box">
+                <div style="text-align: center; font-size: 0.85em;">
+                    <div style="background: #e0e7ff; padding: 15px; margin: 10px; border-radius: 10px; border: 2px solid #667eea;">
+                        <strong>① ANALYZE TRANSACTIONS</strong>
+                    </div>
+                    ↓
+                    <div style="background: #ddd6fe; padding: 15px; margin: 10px; border-radius: 10px; border: 2px solid #8b5cf6;">
+                        <strong>② JOURNALIZE</strong>
+                    </div>
+                    ↓
+                    <div style="background: #fae8ff; padding: 15px; margin: 10px; border-radius: 10px; border: 2px solid #c084fc;">
+                        <strong>③ POST TO LEDGER</strong>
+                    </div>
+                    ↓
+                    <div style="background: #fef3c7; padding: 15px; margin: 10px; border-radius: 10px; border: 2px solid #eab308;">
+                        <strong>④ TRIAL BALANCE</strong>
+                    </div>
+                    ↓
+                    <div style="background: #fed7aa; padding: 15px; margin: 10px; border-radius: 10px; border: 2px solid #f97316;">
+                        <strong>⑤ ADJUSTING ENTRIES</strong>
+                    </div>
+                    ↓
+                    <div style="background: #fecaca; padding: 15px; margin: 10px; border-radius: 10px; border: 2px solid #ef4444;">
+                        <strong>⑥ ADJUSTED TRIAL BALANCE</strong>
+                    </div>
+                    ↓
+                    <div style="background: #bbf7d0; padding: 15px; margin: 10px; border-radius: 10px; border: 2px solid #10b981;">
+                        <strong>⑦ FINANCIAL STATEMENTS</strong>
+                    </div>
+                    ↓
+                    <div style="background: #bfdbfe; padding: 15px; margin: 10px; border-radius: 10px; border: 2px solid #3b82f6;">
+                        <strong>⑧ CLOSING ENTRIES</strong>
+                    </div>
+                    ↓
+                    <div style="background: #e9d5ff; padding: 15px; margin: 10px; border-radius: 10px; border: 2px solid #a855f7;">
+                        <strong>⑨ POST-CLOSING TRIAL BALANCE</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">Slide 40/65</div>
+        </div>
+
+        <!-- Slide 41: Optional Steps -->
+        <div class="slide">
+            <h2>⚙️ CÁC BƯỚC TÙY CHỌN</h2>
+            <h3>Ngoài 9 bước bắt buộc, có 2 bước tùy chọn:</h3>
+            <div class="two-column">
+                <div class="column">
+                    <h3>📋 1. WORKSHEET</h3>
+                    <ul>
+                        <li>✅ Giúp tổ chức và đơn giản hóa</li>
+                        <li>✅ Thực hiện giữa bước 4 và 7</li>
+                        <li>✅ Không bắt buộc phải sử dụng</li>
+                        <li>✅ Phổ biến ở các công ty nhỏ</li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Vị trí:</strong> Sau Trial Balance, trước hoặc trong khi lập Financial Statements
+                    </div>
+                </div>
+                <div class="column">
+                    <h3>🔄 2. REVERSING ENTRIES</h3>
+                    <ul>
+                        <li>✅ Đơn giản hóa ghi chúng giao dịch kỳ sau</li>
+                        <li>✅ Thực hiện đầu kỳ kế toán mới</li>
+                        <li>✅ Không bắt buộc</li>
+                        <li>✅ Chỉ áp dụng cho một số loại adjustments</li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Vị trí:</strong> Ngày đầu tiên của kỳ kế toán mới (sau Post-Closing TB)
+                    </div>
+                </div>
+            </div>
+            <div class="key-point">
+                <strong>💡 Lưu ý:</strong> Cả hai bước này đều là <span class="highlight">TÙY CHỌN</span> - không làm thay đổi kết quả tài chính, chỉ giúp đơn giản hóa quy trình.
+            </div>
+            <div class="slide-number">Slide 41/65</div>
+        </div>
+
+        <!-- Slide 42: Reversing Entries - Giới thiệu -->
+        <div class="slide">
+            <h2>🔄 REVERSING ENTRIES (BÚT TOÁN ĐẢO NGƯỢC)</h2>
+            <div class="key-point">
+                <h3>Định nghĩa:</h3>
+                <p><span class="highlight">Reversing Entry</span> là bút toán ghi vào <strong>đầu kỳ kế toán mới</strong>, có nội dung <strong>hoàn toàn ngược lại</strong> với bút toán điều chỉnh của kỳ trước.</p>
+            </div>
+            <h3>🎯 Mục đích:</h3>
+            <ul>
+                <li>✅ <strong>Đơn giản hóa</strong> việc ghi chép giao dịch kỳ sau</li>
+                <li>✅ Tránh phải nhớ các khoản <strong>accruals</strong> từ kỳ trước</li>
+                <li>✅ Cho phép ghi các giao dịch kỳ sau <strong>theo cách thông thường</strong></li>
+            </ul>
+            <div class="warning-box">
+                <h4>⚠️ Lưu ý quan trọng:</h4>
+                <ul>
+                    <li>Reversing entries là <strong>TÙY CHỌN</strong>, không bắt buộc</li>
+                    <li>Thường chỉ áp dụng cho <strong>accrued revenues</strong> và <strong>accrued expenses</strong></li>
+                    <li><strong>KHÔNG</strong> thay đổi kết quả tài chính</li>
+                    <li>Chỉ giúp đơn giản hóa ghi chép</li>
+                </ul>
+            </div>
+            <div class="slide-number">Slide 42/65</div>
+        </div>
+
+        <!-- Slide 43: Ví dụ Reversing Entry -->
+        <div class="slide">
+            <h2>📝 VÍ DỤ: REVERSING ENTRY</h2>
+            <div class="example-box">
+                <h4>Tình huống: Lương phải trả tích lũy</h4>
+                <p><strong>31/10/2020:</strong> Adjusting Entry - Accrued Salaries = 1,200</p>
+                <table style="font-size: 0.85em;">
+                    <tr>
+                        <th>Oct 31</th>
+                        <th>Salaries and Wages Expense</th>
+                        <th>1,200</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Salaries and Wages Payable</td>
+                        <td></td>
+                        <td>1,200</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 20px;"><strong>01/11/2020:</strong> Reversing Entry (đầu tháng mới)</p>
+                <table style="font-size: 0.85em; background: #f0fdf4;">
+                    <tr>
+                        <th>Nov 1</th>
+                        <th>Salaries and Wages Payable</th>
+                        <th>1,200</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Salaries and Wages Expense</td>
+                        <td></td>
+                        <td>1,200</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 20px;"><strong>09/11/2020:</strong> Trả lương 4,000 (bao gồm 1,200 tháng trước)</p>
+                <div class="two-column" style="margin-top: 10px;">
+                    <div class="column" style="background: #fef2f2;">
+                        <h4>❌ KHÔNG dùng Reversing:</h4>
+                        <table style="font-size: 0.8em;">
+                            <tr>
+                                <td>Sal. & Wages Payable</td>
+                                <td>1,200</td>
+                            </tr>
+                            <tr>
+                                <td>Sal. & Wages Expense</td>
+                                <td>2,800</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 20px;">Cash</td>
+                                <td>4,000</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="column" style="background: #f0fdf4;">
+                        <h4>✅ Dùng Reversing:</h4>
+                        <table style="font-size: 0.8em;">
+                            <tr>
+                                <td>Sal. & Wages Expense</td>
+                                <td>4,000</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 20px;">Cash</td>
+                                <td></td>
+                                <td>4,000</td>
+                            </tr>
+                        </table>
+                        <p style="margin-top: 5px; font-size: 0.85em;"><em>→ Đơn giản hơn!</em></p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">Slide 43/65</div>
+        </div>
+
+        <!-- Slide 44: Correcting Entries - Giới thiệu -->
+        <div class="slide">
+            <h2>🔧 CORRECTING ENTRIES (BÚT TOÁN ĐIỀU CHỈNH SAI SÓT)</h2>
+            <div class="key-point">
+                <h3>Định nghĩa:</h3>
+                <p><span class="highlight">Correcting Entry</span> là bút toán được lập để <strong>sửa chữa các sai sót</strong> đã được phát hiện trong quá trình ghi chép kế toán.</p>
+            </div>
+            <h3>⚡ Phân biệt với Adjusting Entries:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tiêu chí</th>
+                        <th>Adjusting Entries</th>
+                        <th>Correcting Entries</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Mục đích</strong></td>
+                        <td>Cập nhật tài khoản theo accrual basis</td>
+                        <td>Sửa SAI SÓT</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tần suất</strong></td>
+                        <td>Bắt buộc cuối mỗi kỳ</td>
+                        <td>Khi phát hiện lỗi</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Thời điểm</strong></td>
+                        <td>Cuối kỳ kế toán</td>
+                        <td>Bất cứ khi nào phát hiện</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tài khoản ảnh hưởng</strong></td>
+                        <td>1 tài khoản BS + 1 tài khoản IS</td>
+                        <td>Bất kỳ tài khoản nào</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bắt buộc?</strong></td>
+                        <td>CÓ</td>
+                        <td>Chỉ khi có lỗi</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="slide-number">Slide 44/65</div>
+        </div>
+
+        <!-- Slide 45: Các loại sai sót -->
+        <div class="slide">
+            <h2>🚨 CÁC LOẠI SAI SÓT THƯỜNG GẶP</h2>
+            <div class="two-column">
+                <div class="column">
+                    <h3>❌ Loại 1: Sai số tiền</h3>
+                    <div class="example-box">
+                        <p><strong>Ví dụ:</strong> Ghi 950 thành 590</p>
+                        <p>Thu tiền từ khách: 950</p>
+                        <p><strong>Sai:</strong> Debit Cash 590</p>
+                        <p><strong>Đúng:</strong> Debit Cash 950</p>
+                    </div>
+                </div>
+                <div class="column">
+                    <h3>❌ Loại 2: Sai tài khoản</h3>
+                    <div class="example-box">
+                        <p><strong>Ví dụ:</strong> Ghi sai tài khoản</p>
+                        <p>Chi phí quảng cáo: 75</p>
+                        <p><strong>Sai:</strong> Debit Misc. Expense 75</p>
+                        <p><strong>Đúng:</strong> Debit Advertising Exp. 75</p>
+                    </div>
+                </div>
+            </div>
+            <div class="two-column" style="margin-top: 20px;">
+                <div class="column">
+                    <h3>❌ Loại 3: Thiếu bút toán</h3>
+                    <div class="example-box">
+                        <p><strong>Ví dụ:</strong> Quên ghi một phần</p>
+                        <p>Trả lương 1,900 (bao gồm 700 nợ tháng trước)</p>
+                        <p><strong>Sai:</strong> Chỉ ghi Sal. Exp. 1,900</p>
+                        <p><strong>Đúng:</strong> Sal. Payable 700 + Sal. Exp. 1,200</p>
+                    </div>
+                </div>
+                <div class="column">
+                    <h3>❌ Loại 4: Ghi nhầm Debit/Credit</h3>
+                    <div class="example-box">
+                        <p><strong>Ví dụ:</strong> Đảo Debit và Credit</p>
+                        <p>Mua thiết bị: 310</p>
+                        <p><strong>Sai:</strong> Debit Supplies 310</p>
+                        <p><strong>Đúng:</strong> Debit Equipment 310</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">Slide 45/65</div>
+        </div>
+
+        <!-- Slide 46: Phương pháp lập Correcting Entry -->
+        <div class="slide">
+            <h2>🔧 PHƯƠNG PHÁP LẬP CORRECTING ENTRY</h2>
+            <div class="key-point">
+                <h3>3 Bước cơ bản:</h3>
+            </div>
+            <div class="steps-container">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Xác định bút toán SAI</strong><br>
+                    Phân tích bút toán đã ghi (sai)
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Xác định bút toán ĐÚNG</strong><br>
+                    Xác định bút toán lẽ ra phải ghi
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Lập bút toán ĐIỀU CHỈNH</strong><br>
+                    So sánh bút toán sai và đúng → Lập bút toán để chuyển từ sai sang đúng
+                </div>
+            </div>
+            <div class="example-box">
+                <h4>💡 Công thức chung:</h4>
+                <div class="formula">
+                    Correcting Entry = What SHOULD BE - What WAS recorded
+                </div>
+                <p style="text-align: center; margin-top: 10px;"><em>(Điều chỉnh = Nên là gì - Đã ghi gì)</em></p>
+            </div>
+            <div class="warning-box">
+                <strong>⚠️ Lưu ý:</strong> Correcting entries phải được ghi sổ <strong>TRƯỚC</strong> closing entries
+            </div>
+            <div class="slide-number">Slide 46/65</div>
+        </div>
+
+       <!-- Slide 47: Ví dụ Correcting Entry - Case 1 -->
+        <div class="slide">
+            <h2>📝 VÍ DỤ CORRECTING ENTRY - CASE 1</h2>
+            <div class="example-box">
+                <h4>Tình huống:</h4>
+                <p>Ngày 10/5: Thu tiền từ khách hàng 500, nhưng ghi nhầm vào Service Revenue thay vì Accounts Receivable</p>
+                <h4>Bước 1: Bút toán SAI (đã ghi)</h4>
+                <table style="font-size: 0.9em; background: #fef2f2;">
+                    <tr>
+                        <th>May 10</th>
+                        <th>Cash</th>
+                        <th>500</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Service Revenue</td>
+                        <td></td>
+                        <td>500</td>
+                    </tr>
+                </table>
+                <h4 style="margin-top: 15px;">Bước 2: Bút toán ĐÚNG (lẽ ra phải ghi)</h4>
+                <table style="font-size: 0.9em; background: #f0fdf4;">
+                    <tr>
+                        <th>May 10</th>
+                        <th>Cash</th>
+                        <th>500</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Accounts Receivable</td>
+                        <td></td>
+                        <td>500</td>
+                    </tr>
+                </table>
+                <h4 style="margin-top: 15px;">Bước 3: Bút toán ĐIỀU CHỈNH (phát hiện ngày 20/5)</h4>
+                <table style="font-size: 0.9em; background: #fffbeb;">
+                    <tr>
+                        <th>May 20</th>
+                        <th>Service Revenue</th>
+                        <th>500</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Accounts Receivable</td>
+                        <td></td>
+                        <td>500</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="key-point">
+                <strong>💡 Giải thích:</strong> Cash đã ghi đúng. Chỉ cần điều chỉnh: giảm Service Revenue (đã ghi nhầm tăng) và giảm Accounts Receivable (lẽ ra phải giảm).
+            </div>
+            <div class="slide-number">Slide 47/65</div>
+        </div>
+
+        <!-- Slide 48: Ví dụ Correcting Entry - Case 2 -->
+        <div class="slide">
+            <h2>📝 VÍ DỤ CORRECTING ENTRY - CASE 2</h2>
+            <div class="example-box">
+                <h4>Tình huống:</h4>
+                <p>Ngày 18/5: Mua thiết bị trả chịu 4,500, nhưng ghi nhầm thành 450</p>
+                <h4>Bước 1: Bút toán SAI (đã ghi)</h4>
+                <table style="font-size: 0.9em; background: #fef2f2;">
+                    <tr>
+                        <th>May 18</th>
+                        <th>Equipment</th>
+                        <th>450</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Accounts Payable</td>
+                        <td></td>
+                        <td>450</td>
+                    </tr>
+                </table>
+                <h4 style="margin-top: 15px;">Bước 2: Bút toán ĐÚNG (lẽ ra phải ghi)</h4>
+                <table style="font-size: 0.9em; background: #f0fdf4;">
+                    <tr>
+                        <th>May 18</th>
+                        <th>Equipment</th>
+                        <th>4,500</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Accounts Payable</td>
+                        <td></td>
+                        <td>4,500</td>
+                    </tr>
+                </table>
+                <h4 style="margin-top: 15px;">Bước 3: Bút toán ĐIỀU CHỈNH (phát hiện ngày 3/6)</h4>
+                <table style="font-size: 0.9em; background: #fffbeb;">
+                    <tr>
+                        <th>June 3</th>
+                        <th>Equipment (4,500 - 450)</th>
+                        <th>4,050</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">Accounts Payable</td>
+                        <td></td>
+                        <td>4,050</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="key-point">
+                <strong>💡 Giải thích:</strong> Cả Equipment và Accounts Payable đều bị ghi thiếu 4,050. Cần bổ sung thêm số tiền này.
+            </div>
+            <div class="slide-number">Slide 48/65</div>
+        </div>
+
+        <!-- Slide 49: Bài tập Correcting Entries -->
+        <div class="slide">
+            <h2>💪 BÀI TẬP: CORRECTING ENTRIES</h2>
+            <div class="example-box">
+                <h3>Công ty XYZ phát hiện các lỗi sau trong tháng 1/2020:</h3>
+                <div class="warning-box">
+                    <h4>Lỗi 1:</h4>
+                    <p>Chi phí lương 600 đã được ghi:</p>
+                    <p>Debit: Supplies 600 / Credit: Cash 600</p>
+                </div>
+                <div class="warning-box">
+                    <h4>Lỗi 2:</h4>
+                    <p>Thu tiền từ khách 3,000 đã được ghi:</p>
+                    <p>Debit: Cash 200 / Credit: Service Revenue 200</p>
+                </div>
+                <div class="warning-box">
+                    <h4>Lỗi 3:</h4>
+                    <p>Mua supplies trả chịu 860 đã được ghi:</p>
+                    <p>Debit: Supplies 680 / Credit: Accounts Payable 680</p>
+                </div>
+            </div>
+            <div class="key-point">
+                <strong>Yêu cầu:</strong> Lập bút toán điều chỉnh cho từng lỗi (KHÔNG đảo ngược bút toán sai)
+            </div>
+            <div class="slide-number">Slide 49/65</div>
+        </div>
+
+        <!-- Slide 50: Đáp án Correcting Entries -->
+        <div class="slide">
+            <h2>✅ ĐÁP ÁN: CORRECTING ENTRIES</h2>
+            <div class="example-box">
+                <h4>Lỗi 1: Sai tài khoản chi phí</h4>
+                <table style="font-size: 0.85em; background: #f0fdf4;">
+                    <tr>
+                        <td><strong>Salaries and Wages Expense</strong></td>
+                        <td><strong>600</strong></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Supplies</td>
+                        <td></td>
+                        <td>600</td>
+                    </tr>
+                </table>
+                <p style="font-style: italic; color: #666;">Giải thích: Chuyển từ Supplies (sai) sang Salaries Expense (đúng)</p>
+
+                <h4 style="margin-top: 20px;">Lỗi 2: Sai số tiền và tài khoản</h4>
+                <table style="font-size: 0.85em; background: #f0fdf4;">
+                    <tr>
+                        <td><strong>Service Revenue</strong></td>
+                        <td><strong>200</strong></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cash (3,000 - 200)</strong></td>
+                        <td><strong>2,800</strong></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Accounts Receivable</td>
+                        <td></td>
+                        <td>3,000</td>
+                    </tr>
+                </table>
+                <p style="font-style: italic; color: #666;">Giải thích: Đảo Service Revenue (đã ghi nhầm), bổ sung Cash thiếu, và ghi giảm A/R</p>
+
+                <h4 style="margin-top: 20px;">Lỗi 3: Sai số tiền</h4>
+                <table style="font-size: 0.85em; background: #f0fdf4;">
+                    <tr>
+                        <td><strong>Supplies (860 - 680)</strong></td>
+                        <td><strong>180</strong></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px;">Accounts Payable</td>
+                        <td></td>
+                        <td>180</td>
+                    </tr>
+                </table>
+                <p style="font-style: italic; color: #666;">Giải thích: Bổ sung số tiền ghi thiếu</p>
+            </div>
+            <div class="slide-number">Slide 50/65</div>
+        </div>
+
+        <!-- PHẦN 4: CLASSIFIED BALANCE SHEET -->
+        
+        <!-- Slide 51: Section Title - Classified Balance Sheet -->
+        <div class="slide">
+            <div class="section-title" style="margin-top: 150px;">
+                <div class="icon">📊</div>
+                <h1>PHẦN 4: BẢNG CÂN ĐỐI KẾ TOÁN PHÂN LOẠI</h1>
+                <h2 style="border: none; color: white; margin-top: 20px;">Classified Statement of Financial Position</h2>
+            </div>
+            <div class="slide-number">Slide 51/65</div>
+        </div>
+
+        <!-- Slide 52: Khái niệm Classified Balance Sheet -->
+        <div class="slide">
+            <h2>📊 BẢNG CÂN ĐỐI KẾ TOÁN PHÂN LOẠI</h2>
+            <div class="key-point">
+                <h3>Định nghĩa:</h3>
+                <p><span class="highlight">Classified Statement of Financial Position</span> là bảng cân đối kế toán có <strong>nhóm các tài sản và nợ phải trả tương tự</strong> lại với nhau theo các phân loại chuẩn.</p>
+            </div>
+            <h3>🎯 Mục đích:</h3>
+            <ul>
+                <li>✅ Cải thiện <strong>khả năng đọc hiểu</strong> của người dùng</li>
+                <li>✅ Giúp <strong>phân tích tài chính</strong> dễ dàng hơn</li>
+                <li>✅ Các khoản mục trong cùng nhóm có <strong>đặc điểm kinh tế tương tự</strong></li>
+                <li>✅ Dễ dàng xác định <strong>khả năng thanh toán</strong> (liquidity)</li>
+            </ul>
+            <h3>📋 Các phân loại chuẩn:</h3>
+            <div class="two-column">
+                <div class="column" style="background: #e0e7ff;">
+                    <h4>ASSETS (Tài sản):</h4>
+                    <ul>
+                        <li>Current Assets</li>
+                        <li>Long-term Investments</li>
+                        <li>Property, Plant, & Equipment</li>
+                        <li>Intangible Assets</li>
+                    </ul>
+                </div>
+                <div class="column" style="background: #fef3c7;">
+                    <h4>LIABILITIES & EQUITY:</h4>
+                    <ul>
+                        <li>Current Liabilities</li>
+                        <li>Non-current Liabilities</li>
+                        <li>Equity</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">Slide 52/65</div>
+        </div>
+
+        <!-- Slide 53: Current Assets -->
+        <div class="slide">
+            <h2>💰 CURRENT ASSETS (TÀI SẢN NGẮN HẠN)</h2>
+            <div class="key-point">
+                <h3>Định nghĩa:</h3>
+                <p><span class="highlight">Current Assets</span> là tài sản mà công ty dự kiến <strong>chuyển đổi thành tiền</strong> hoặc <strong>sử dụng hết</strong> trong vòng <strong>1 năm</strong> hoặc <strong>chu kỳ kinh doanh</strong> (operating cycle), tùy khoảng thời gian nào dài hơn.</p>
+            </div>
+            <h3>📝 Bao gồm (theo thứ tự tính thanh khoản):</h3>
+            <div class="steps-container">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Cash</strong> - Tiền mặt, tiền gửi ngân hàng
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Short-term Investments</strong> - Đầu tư ngắn hạn (chứng khoán)
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Accounts Receivable</strong> - Phải thu khách hàng
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>Notes Receivable</strong> - Phải thu theo hối phiếu
+                </div>
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <strong>Inventory</strong> - Hàng tồn kho
+                </div>
+                <div class="step">
+                    <span class="step-number">6</span>
+                    <strong>Supplies</strong> - Vật tư, công cụ dụng cụ
+                </div>
+                <div class="step">
+                    <span class="step-number">7</span>
+                    <strong>Prepaid Expenses</strong> - Chi phí trả trước (bảo hiểm, tiền thuê...)
+                </div>
+            </div>
+            <div class="formula">
+                Thứ tự sắp xếp: Từ CAO đến THẤP theo tính thanh khoản (liquidity)
+            </div>
+            <div class="slide-number">Slide 53/65</div>
+        </div>
+
+        <!-- Slide 54: Long-term Investments -->
+        <div class="slide">
+            <h2>📈 LONG-TERM INVESTMENTS (ĐẦU TƯ DÀI HẠN)</h2>
+            <div class="key-point">
+                <h3>Định nghĩa:</h3>
+                <p><span class="highlight">Long-term Investments</span> là các tài sản mà công ty <strong>KHÔNG dự định</strong> chuyển đổi thành tiền trong <strong>1 năm tới</strong>.</p>
+            </div>
+            <h3>📝 Bao gồm:</h3>
+            <div class="two-column">
+                <div class="column">
+                    <h4>✅ Đầu tư tài chính:</h4>
+                    <ul>
+                        <li><strong>Shares (cổ phiếu)</strong> của công ty khác</li>
+                        <li><strong>Bonds (trái phiếu)</strong> nắm giữ lâu dài</li>
+                        <li>Thường nắm giữ <strong>nhiều năm</strong></li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h4>✅ Tài sản khác:</h4>
+                    <ul>
+                        <li><strong>Land</strong> không sử dụng trong hoạt động hiện tại</li>
+                        <li><strong>Buildings</strong> không dùng trong kinh doanh</li>
+                        <li><strong>Long-term Notes Receivable</strong></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="example-box">
+                <h4>💼 Ví dụ:</h4>
+                <table style="font-size: 0.9em;">
+                    <tr>
+                        <th colspan="2">Long-term Investments</th>
+                    </tr>
+                    <tr>
+                        <td>Investment in shares of Walters Corp.</td>
+                        <td style="text-align: right;">5,200</td>
+                    </tr>
+                    <tr>
+                        <td>Investment in real estate</td>
+                        <td style="text-align: right;">2,000</td>
+                    </tr>
+                    <tr style="background: #fffbeb; font-weight: bold;">
+                        <td>Total Long-term Investments</td>
+                        <td style="text-align: right;">7,200</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="slide-number">Slide 54/65</div>
+        </div>
+
+        <!-- Slide 55: Property, Plant, and Equipment -->
+        <div class="slide">
+            <h2>🏭 PROPERTY, PLANT, AND EQUIPMENT (TÀI SẢN CỐ ĐỊNH)</h2>
+            <div class="key-point">
+                <h3>Định nghĩa:</h3>
+                <p><span class="highlight">Property, Plant, and Equipment (PPE)</span> là tài sản có <strong>tuổi thọ tương đối dài</strong> và đang được công ty <strong>sử dụng trong hoạt động kinh doanh</strong>.</p>
+            </div>
+            <h3>📝 Bao gồm:</h3>
+            <ul>
+                <li><strong>Land</strong> - Đất (KHÔNG khấu hao)</li>
+                <li><strong>Buildings</strong> - Nhà xưởng, tòa nhà</li>
+                <li><strong>Machinery & Equipment</strong> - Máy móc, thiết bị</li>
+                <li><strong>Furniture & Fixtures</strong> - Đồ đạc, trang thiết bị</li>
+                <li><strong>Vehicles</strong> - Phương tiện vận tải</li>
+            </ul>
+            <div class="warning-box">
+                <h4>⚠️ Đặc điểm quan trọng:</h4>
+                <ul>
+                    <li>Hiển thị theo <strong>giá gốc (cost)</strong></li>
+                    <li>Trừ đi <strong>Accumulated Depreciation</strong></li>
+                    <li>= <strong>Net Book Value</strong> (Giá trị còn lại)</li>
+                </ul>
+            </div>
+            <div class="example-box">
+                <h4>💼 Ví dụ trình bày:</h4>
+                <table style="font-size: 0.9em;">
+                    <tr><td>Equipment</td><td style="text-align: right;">24,000</td></tr>
+                    <tr><td>Less: Accumulated Depreciation—Equipment</td><td style="text-align: right;">(5,000)</td></tr>
+                    <tr style="background: #f0fdf4; font-weight: bold;">
+                        <td>Net Equipment</td>
+                        <td style="text-align: right;">19,000</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="slide-number">Slide 55/65</div>
+        </div>
+
+        <!-- Slide 56: Intangible Assets -->
+        <div class="slide">
+            <h2>✨ INTANGIBLE ASSETS (TÀI SẢN VÔ HÌNH)</h2>
+            <div class="key-point">
+                <h3>Định nghĩa:</h3>
+                <p><span class="highlight">Intangible Assets</span> là tài sản có <strong>tuổi thọ dài</strong> nhưng <strong>KHÔNG có hình thái vật chất</strong>, thường rất có giá trị.</p>
+            </div>
+            <h3>📝 Các loại Intangible Assets:</h3>
+            <div class="two-column">
+                <div class="column">
+                    <h4>🔷 Patents (Bằng sáng chế)</h4>
+                    <p>Quyền độc quyền sản xuất/bán một sản phẩm trong thời gian nhất định</p>
+                    <h4 style="margin-top: 15px;">🔷 Copyrights (Bản quyền)</h4>
+                    <p>Quyền sở hữu các tác phẩm văn học, nghệ thuật, âm nhạc</p>
+                </div>
+                <div class="column">
+                    <h4>🔷 Trademarks (Nhãn hiệu)</h4>
+                    <p>Tên thương hiệu, logo, slogan độc quyền</p>
+                    <h4 style="margin-top: 15px;">🔷 Goodwill (Lợi thế thương mại)</h4>
+                    <p>Giá trị vượt trội khi mua lại doanh nghiệp</p>
+                </div>
+            </div>
+            <div class="example-box">
+                <h4>💼 Ví dụ:</h4>
+                <table style="font-size: 0.9em;">
+                    <tr>
+                        <th colspan="2">Intangible Assets</th>
+                    </tr>
+                    <tr>
+                        <td>Patents</td>
+                        <td style="text-align: right;">3,100</td>
+                    </tr>
+                    <tr>
+                        <td>Goodwill</td>
+                        <td style="text-align: right;">6,257</td>
+                    </tr>
+                    <tr>
+                        <td>Other intangible assets</td>
+                        <td style="text-align: right;">3,913</td>
+                    </tr>
+                    <tr style="background: #fffbeb; font-weight: bold;">
+                        <td>Total Intangible Assets</td>
+                        <td style="text-align: right;">13,270</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="slide-number">Slide 56/65</div>
+        </div>
+
+        <!-- Slide 57: Current Liabilities -->
+        <div class="slide">
+            <h2>📉 CURRENT LIABILITIES (NỢ PHẢI TRẢ NGẮN HẠN)</h2>
+            <div class="key-point">
+                <h3>Định nghĩa:</h3>
+                <p><span class="highlight">Current Liabilities</span> là các khoản nợ mà công ty dự kiến <strong>thanh toán trong vòng 1 năm</strong> hoặc <strong>chu kỳ kinh doanh</strong>, tùy khoảng thời gian nào dài hơn.</p>
+            </div>
+            <h3>📝 Bao gồm:</h3>
+            <div class="two-column">
+                <div class="column">
+                    <ul>
+                        <li><strong>Accounts Payable</strong><br>Phải trả người bán</li>
+                        <li><strong>Notes Payable (short-term)</strong><br>Nợ vay ngắn hạn</li>
+                        <li><strong>Salaries and Wages Payable</strong><br>Lương phải trả</li>
+                        <li><strong>Interest Payable</strong><br>Lãi vay phải trả</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <ul>
+                        <li><strong>Income Taxes Payable</strong><br>Thuế thu nhập phải nộp</li>
+                        <li><strong>Unearned Revenue</strong><br>Doanh thu chưa thực hiện</li>
+                        <li><strong>Current portion of long-term debt</strong><br>Phần nợ dài hạn đến hạn</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="key-point" style="margin-top: 20px;">
+                <h4>💡 Tầm quan trọng:</h4>
+                <p><strong>Current Assets vs Current Liabilities</strong> = Đánh giá <span class="highlight">khả năng thanh toán</span> (Liquidity)</p>
+                <p>✅ Current Assets > Current Liabilities → Tốt, có thể trả nợ<br>
+                ❌ Current Assets < Current Liabilities → Rủi ro thanh khoản cao</p>
+            </div>
+            <div class="slide-number">Slide 57/65</div>
+        </div>
+
+        <!-- Slide 58: Non-current Liabilities -->
+        <div class="slide">
+            <h2>📊 NON-CURRENT LIABILITIES (NỢ DÀI HẠN)</h2>
+            <div class="key-point">
+                <h3>Định nghĩa:</h3>
+                <p><span class="highlight">Non-current Liabilities</span> (hay Long-term Liabilities) là các khoản nợ mà công ty dự kiến thanh toán <strong>sau 1 năm</strong>.</p>
+            </div>
+            <h3>📝 Bao gồm:</h3>
+            <ul>
+                <li><strong>Bonds Payable</strong> - Trái phiếu phải trả</li>
+                <li><strong>Mortgages Payable</strong> - Nợ thế chấp</li>
+                <li><strong>Long-term Notes Payable</strong> - Nợ vay dài hạn</li>
+                <li><strong>Lease Liabilities</strong> - Nợ thuê tài chính</li>
+                <li><strong>Pension Liabilities</strong> - Nợ lương hưu</li>
+                <li><strong>Deferred Tax Liabilities</strong> - Thuế hoãn lại phải trả</li>
+            </ul>
+            <div class="example-box">
+                <h4>💼 Ví dụ trình bày:</h4>
+                <table style="font-size: 0.9em;">
+                    <tr>
+                        <th colspan="2">Non-current Liabilities</th>
+                    </tr>
+                    <tr>
+                        <td>Mortgage payable</td>
+                        <td style="text-align: right;">10,000</td>
+                    </tr>
+                    <tr>
+                        <td>Notes payable</td>
+                        <td style="text-align: right;">1,300</td>
+                    </tr>
+                    <tr style="background: #fffbeb; font-weight: bold;">
+                        <td>Total Non-current Liabilities</td>
+                        <td style="text-align: right;">11,300</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="warning-box">
+                <strong>⚠️ Lưu ý:</strong> Nhiều công ty chỉ báo cáo <strong>tổng số nợ dài hạn</strong> trên Balance Sheet, chi tiết được trình bày trong <strong>Notes to Financial Statements</strong>.
+            </div>
+            <div class="slide-number">Slide 58/65</div>
+        </div>
+
+        <!-- Slide 59: Equity -->
+        <div class="slide">
+            <h2>💼 EQUITY (VỐN CHỦ SỞ HỮU)</h2>
+            <div class="key-point">
+                <h3>Định nghĩa:</h3>
+                <p><span class="highlight">Equity</span> là phần vốn chủ sở hữu, đại diện cho <strong>quyền sở hữu</strong> của các cổ đông đối với tổng tài sản của công ty.</p>
+            </div>
+            <h3>📝 Thành phần (Corporation):
