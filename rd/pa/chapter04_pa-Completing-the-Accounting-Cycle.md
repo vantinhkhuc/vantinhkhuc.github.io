@@ -1,3 +1,514 @@
+# SCRIPT BÀI GIẢNG: HOÀN THÀNH CHU TRÌNH KẾ TOÁN
+## Completing the Accounting Cycle
+
+**Môn học:** Nguyên Lý Kế Toán  
+**Đối tượng:** Sinh viên năm 2 - Ngành Thương mại điện tử  
+**Thời lượng:** 3 buổi × 150 phút = 450 phút (7.5 giờ)  
+**Tài liệu tham khảo:** Chapter 4 - Intermediate Accounting (IFRS Edition)
+
+---
+
+# 📅 BUỔI HỌC 1: WORKSHEET (150 phút)
+
+## I. GIỚI THIỆU VÀ ĐỘNG VIÊN (10 phút)
+
+### Slide 1-2: Mở đầu
+
+**Script:**
+
+> Chào các em! Hôm nay chúng ta bắt đầu Chương 4 - một chương rất quan trọng về "Hoàn thành Chu trình Kế toán". 
+>
+> Các em đã học qua Chương 3 về điều chỉnh cuối kỳ. Vậy sau khi điều chỉnh xong, chúng ta làm gì tiếp theo? Đó chính là nội dung của chương này.
+>
+> **[Tương tác]** Các em có biết tại sao chu trình kế toán lại được gọi là "chu trình" không? Đúng rồi! Vì nó lặp đi lặp lại mỗi kỳ kế toán, giống như một vòng tròn không có điểm kết thúc.
+
+### Slide 3-4: Mục tiêu học tập
+
+**Script:**
+
+> Trong 3 buổi học này, chúng ta sẽ học 4 phần chính:
+>
+> **Buổi 1 hôm nay:** Tập trung vào WORKSHEET - một công cụ rất hữu ích giúp các em tổ chức công việc kế toán cuối kỳ.
+>
+> **Buổi 2:** Chúng ta sẽ học về CLOSING ENTRIES - cách "đóng sổ" các tài khoản để chuẩn bị cho kỳ kế toán mới.
+>
+> **Buổi 3:** Tổng hợp toàn bộ chu trình kế toán và học cách sửa sai sót, cùng với cách trình bày Bảng cân đối kế toán chuyên nghiệp.
+>
+> Sau khi học xong chương này, các em sẽ có cái nhìn toàn cảnh về quy trình kế toán từ đầu đến cuối. Đây là kiến thức nền tảng rất quan trọng cho những môn kế toán chuyên sâu sau này.
+
+---
+
+## II. PHẦN 1: WORKSHEET (120 phút)
+
+### Slide 5-6: Khái niệm Worksheet (15 phút)
+
+**Script:**
+
+> **[Chuyển slide - Phần 1]**
+>
+> Bây giờ chúng ta bắt đầu với phần đầu tiên: WORKSHEET hay còn gọi là Bảng tính kế toán.
+>
+> **[Hỏi lớp]** Có ai trong các em đã từng nghe đến hoặc làm việc với worksheet chưa? Có thể là trong Excel?
+>
+> Đúng vậy! Worksheet trong kế toán rất giống với spreadsheet trong Excel. Nó là một bảng có nhiều cột, giúp chúng ta tổ chức và xử lý thông tin một cách có hệ thống.
+>
+> **Định nghĩa:** Worksheet là một biểu mẫu nhiều cột được sử dụng trong quá trình điều chỉnh và chuẩn bị báo cáo tài chính.
+>
+> **[Nhấn mạnh]** Các em cần nhớ 3 điểm quan trọng về worksheet:
+>
+> 1. Nó CHỈ là công cụ làm việc - không phải là sổ sách chính thức
+> 2. Nó KHÔNG phải là phần của sổ cái
+> 3. Sử dụng worksheet là TÙY CHỌN, không bắt buộc
+>
+> Vậy tại sao chúng ta vẫn học về nó? Vì worksheet giúp chúng ta:
+> - Tổ chức công việc tốt hơn
+> - Giảm thiểu sai sót
+> - Lập báo cáo tài chính nhanh hơn - TRƯỚC KHI ghi nhật ký và chuyển sổ các bút toán điều chỉnh
+>
+> Trong thực tế, nhiều công ty nhỏ và vừa vẫn sử dụng worksheet, thường bằng Excel hoặc Google Sheets.
+
+### Slide 7: Cấu trúc Worksheet (10 phút)
+
+**Script:**
+
+> Bây giờ chúng ta xem worksheet có cấu trúc như thế nào.
+>
+> **[Chỉ vào slide]** Worksheet có 10 cột, được chia thành 5 phần chính. Mỗi phần có 2 cột: Debit (Nợ) và Credit (Có).
+>
+> **1. Account Titles:** Cột đầu tiên - liệt kê tên các tài khoản
+>
+> **2. Trial Balance:** Bảng cân đối số phát sinh ban đầu - số liệu từ sổ cái TRƯỚC KHI điều chỉnh
+>
+> **3. Adjustments:** Các bút toán điều chỉnh - chúng ta đã học ở Chương 3
+>
+> **4. Adjusted Trial Balance:** Số dư sau khi đã điều chỉnh
+>
+> **5. Income Statement:** Kéo các tài khoản doanh thu và chi phí vào đây
+>
+> **6. Balance Sheet (Statement of Financial Position):** Kéo các tài khoản tài sản, nợ, vốn vào đây
+>
+> **[Lưu ý]** Các em cần nhớ: mỗi phần đều có 2 cột Debit và Credit. Đây là nguyên tắc ghi sổ kép mà chúng ta đã học.
+
+### Slide 8-13: 5 Bước chuẩn bị Worksheet (40 phút)
+
+**Script - Bước 1:**
+
+> Bây giờ chúng ta đi vào chi tiết 5 bước chuẩn bị worksheet. Các em nên ghi chú cẩn thận phần này vì đây là quy trình chuẩn các em sẽ áp dụng trong bài tập.
+>
+> **BƯỚC 1: PREPARE TRIAL BALANCE**
+>
+> Bước đầu tiên rất đơn giản: Chúng ta lấy tất cả các tài khoản có số dư từ sổ cái, nhập vào cột Trial Balance.
+>
+> **[Nhấn mạnh]** Lưu ý:
+> - Phải liệt kê TẤT CẢ tài khoản có số dư
+> - Số dư Nợ → cột Debit
+> - Số dư Có → cột Credit
+> - Tổng Debit = Tổng Credit (phải cân bằng!)
+>
+> **[Ví dụ]** Công ty Yazici Advertising vào ngày 31/10/2020 có:
+> - Cash: 15,200 (Debit)
+> - Supplies: 2,500 (Debit)
+> - Service Revenue: 10,000 (Credit)
+> - ...và các tài khoản khác
+>
+> Tổng cả hai cột đều là 28,700 - cân bằng hoàn hảo!
+>
+> **[Hỏi lớp]** Nếu trial balance không cân bằng thì sao? Đúng rồi, phải quay lại kiểm tra sổ cái, chắc chắn có sai sót ở đâu đó.
+
+**Script - Bước 2:**
+
+> **BƯỚC 2: ENTER ADJUSTMENTS**
+>
+> Đây là bước quan trọng nhất. Chúng ta sẽ nhập các bút toán điều chỉnh vào cột Adjustments.
+>
+> **Quy tắc:**
+> 1. Sử dụng các tài khoản có sẵn trong trial balance
+> 2. Nếu cần thêm tài khoản mới → thêm vào dưới trial balance
+> 3. Đánh dấu mỗi bút toán bằng chữ cái (a, b, c, d...)
+> 4. Mỗi bút toán phải cân bằng (Debit = Credit)
+>
+> **[Quan trọng]** Các em chưa ghi nhật ký các bút toán này đâu nhé! Chỉ ghi trên worksheet thôi. Sau khi lập xong báo cáo tài chính, chúng ta mới ghi nhật ký.
+>
+> **Ví dụ với Yazici Advertising:**
+> - (a) Supplies used: 1,500
+>   - Debit: Supplies Expense 1,500
+>   - Credit: Supplies 1,500
+>
+> - (b) Insurance expired: 50
+>   - Debit: Insurance Expense 50
+>   - Credit: Prepaid Insurance 50
+>
+> - (c) Depreciation: 40
+> - (d) Unearned revenue earned: 400
+> - (e) Accrued revenue: 200
+> - (f) Interest accrued: 50
+> - (g) Salaries accrued: 1,200
+>
+> Tổng cột Adjustments: Debit = Credit = 3,440 ✓
+
+**Script - Bước 3:**
+
+> **BƯỚC 3: ENTER ADJUSTED BALANCES**
+>
+> Bước này chúng ta sẽ tính toán. Công thức rất đơn giản:
+>
+> **Adjusted Balance = Trial Balance ± Adjustments**
+>
+> **Quy tắc tính:**
+> - **Với tài khoản Debit:**
+>   - Cộng các adjustment ở cột Debit
+>   - Trừ các adjustment ở cột Credit
+>
+> - **Với tài khoản Credit:**
+>   - Cộng các adjustment ở cột Credit
+>   - Trừ các adjustment ở cột Debit
+>
+> **[Ví dụ cụ thể]**
+>
+> **Supplies:**
+> - Trial Balance: 2,500 Debit
+> - Adjustment: 1,500 Credit (dùng đi)
+> - Adjusted: 2,500 - 1,500 = 1,000 Debit ✓
+>
+> **Service Revenue:**
+> - Trial Balance: 10,000 Credit
+> - Adjustments: 400 Cr + 200 Cr = 600 Credit
+> - Adjusted: 10,000 + 600 = 10,600 Credit ✓
+>
+> **[Kiểm tra]** Sau khi tính xong, các em phải kiểm tra: Tổng Debit = Tổng Credit trong cột Adjusted Trial Balance.
+>
+> Với Yazici: 30,190 = 30,190 ✓
+
+**Script - Bước 4:**
+
+> **BƯỚC 4: EXTEND TO FINANCIAL STATEMENTS**
+>
+> Bước này chúng ta "kéo dài" số dư từ Adjusted Trial Balance vào 2 nhóm cột báo cáo tài chính.
+>
+> **[Nguyên tắc quan trọng]** Mỗi số dư phải được kéo vào MỘT trong BỐN cột:
+>
+> **Vào INCOME STATEMENT:**
+> - Revenue accounts → Credit column
+> - Expense accounts → Debit column
+>
+> **Vào BALANCE SHEET:**
+> - Assets → Debit column
+> - Liabilities → Credit column
+> - Equity → Credit column
+> - Dividends → Debit column (vì làm giảm vốn)
+>
+> **[Lưu ý đặc biệt]** Các em hay nhầm:
+> - Accumulated Depreciation → Balance Sheet CREDIT (vì là contra asset)
+> - Dividends → Balance Sheet DEBIT (không phải expense!)
+>
+> **[Mẹo nhớ]** Nếu không biết cho vào đâu, hãy tự hỏi:
+> - Đây có phải là doanh thu hoặc chi phí? → Income Statement
+> - Còn lại tất cả → Balance Sheet
+
+**Script - Bước 5:**
+
+> **BƯỚC 5: TOTAL AND COMPLETE**
+>
+> Đây là bước cuối cùng - cũng là lúc chúng ta xác định công ty lãi hay lỗ!
+>
+> **Các bước cụ thể:**
+>
+> **1. Tính tổng các cột IS và BS**
+> - Income Statement: Cột Debit và Credit
+> - Balance Sheet: Cột Debit và Credit
+>
+> **2. Tính Net Income hoặc Net Loss:**
+>
+> Net Income = Total Credits (IS) - Total Debits (IS)
+>
+> Với Yazici:
+> - IS Credits: 10,600 (doanh thu)
+> - IS Debits: 7,740 (chi phí)
+> - Net Income: 10,600 - 7,740 = **2,860** ✓
+>
+> **3. Nhập Net Income vào worksheet:**
+>
+> **[Quan trọng]** Nếu có LÃI:
+> - Income Statement → Debit (để cân bằng)
+> - Balance Sheet → Credit (tăng vốn CSH)
+>
+> Nếu có LỖ thì ngược lại!
+>
+> **4. Tính lại tổng:**
+> - IS: 10,600 = 10,600 ✓
+> - BS: 22,450 = 22,450 ✓
+>
+> Hoàn thành! Worksheet của chúng ta đã cân bằng hoàn hảo.
+
+### Slide 14-15: Ví dụ hoàn chỉnh (10 phút)
+
+**Script:**
+
+> Các em xem ví dụ hoàn chỉnh của Yazici Advertising trên slide. 
+>
+> **[Chỉ từng phần]**
+> - Trial Balance: 28,700 = 28,700
+> - Adjustments: 3,440 = 3,440
+> - Adjusted TB: 30,190 = 30,190
+> - Income Statement cân bằng sau khi thêm Net Income
+> - Balance Sheet cân bằng sau khi thêm Net Income
+>
+> Các em thấy không? Mỗi bước đều phải cân bằng. Đây là cách chúng ta tự kiểm tra công việc của mình.
+>
+> **[Thực hành ngay]** Các em hãy dành 2 phút xem kỹ worksheet này, nếu có câu hỏi gì thì giơ tay nhé!
+
+### Slide 16-18: Lập BCTC từ Worksheet (15 phút)
+
+**Script:**
+
+> Sau khi hoàn thành worksheet, chúng ta có thể lập báo cáo tài chính rất nhanh!
+>
+> **Ba báo cáo chính:**
+>
+> **1. Income Statement:**
+> - Lấy dữ liệu từ cột Income Statement
+> - Revenues: 10,600
+> - Expenses: 7,740
+> - Net Income: 2,860
+>
+> **2. Retained Earnings Statement:**
+> - Beginning balance: 0 (công ty mới)
+> - Add: Net Income 2,860
+> - Less: Dividends 500
+> - Ending: 2,360
+>
+> **3. Balance Sheet:**
+> - Lấy từ cột Balance Sheet
+> - Lưu ý: Retained Earnings phải dùng số cuối cùng từ Retained Earnings Statement (2,360)
+>
+> **[Nhấn mạnh]** Các em nhớ:
+> - Worksheet KHÔNG phải là báo cáo tài chính chính thức
+> - Định dạng khác nhau
+> - Worksheet là nội bộ, BCTC là cho bên ngoài
+>
+> **[Câu hỏi kiểm tra]** Vậy sau khi lập BCTC từ worksheet xong, chúng ta làm gì tiếp? 
+>
+> → Đúng rồi! Phải ghi nhật ký và chuyển sổ các bút toán điều chỉnh. Đây là bước không thể bỏ qua!
+
+### Slide 19-20: Bài tập thực hành + Đáp án (20 phút)
+
+**Script:**
+
+> Bây giờ đến phần thực hành! Các em sẽ có 12 phút để làm bài tập này theo nhóm 2-3 người.
+>
+> **[Đọc đề bài]** Công ty ABC có Trial Balance và 4 adjustment cần thực hiện...
+>
+> **Yêu cầu:** Lập Worksheet đầy đủ và xác định Net Income.
+>
+> **[Hướng dẫn]**
+> - Bước 1: Ghi Trial Balance
+> - Bước 2: Nhập adjustments với chữ cái (a, b, c, d)
+> - Bước 3: Tính Adjusted TB
+> - Bước 4: Kéo vào IS và BS
+> - Bước 5: Tính Net Income
+>
+> Các em hãy làm việc nhóm, thảo luận với nhau. Sau 12 phút chúng ta sẽ cùng chữa bài.
+>
+> **[Sau 12 phút]**
+>
+> Được rồi, chúng ta cùng xem đáp án!
+>
+> **[Chữa bài chi tiết]**
+> - Adjustments: (a) 2,000, (b) 400, (c) 500, (d) 600
+> - Adjusted TB cân bằng tại 39,100
+> - Net Income = 18,000 - 9,300 = 8,700
+>
+> Có nhóm nào tính được Net Income = 8,700 không? Rất tốt!
+>
+> **[Giải thích sai sót thường gặp]**
+> - Quên trừ khi có adjustment ở cột ngược lại
+> - Kéo sai tài khoản vào IS/BS
+> - Đặt Net Income sai vị trí
+
+---
+
+## III. TỔNG KẾT VÀ GIAO BÀI TẬP (10 phút)
+
+**Script:**
+
+> Tốt lắm các em! Chúng ta vừa hoàn thành phần Worksheet - phần đầu tiên của Chương 4.
+>
+> **Tóm tắt buổi học hôm nay:**
+> 1. Worksheet là công cụ hỗ trợ, không bắt buộc
+> 2. 5 bước chuẩn bị phải thực hiện tuần tự
+> 3. Mỗi bước đều phải cân bằng Debit = Credit
+> 4. Từ worksheet, chúng ta lập BCTC rất nhanh
+> 5. Vẫn phải ghi nhật ký adjusting entries sau khi lập BCTC
+>
+> **Bài tập về nhà:**
+> - Exercises E4.1, E4.2, E4.3 trong sách giáo khoa
+> - Làm thêm worksheet cho công ty DEF (tài liệu trên LMS)
+> - Chuẩn bị cho buổi sau: đọc trước về Closing Entries
+>
+> **Buổi sau:** Chúng ta sẽ học về Closing Entries - cách "khóa sổ" các tài khoản cuối kỳ. Đây là một phần rất quan trọng và thú vị!
+>
+> Có câu hỏi gì không các em? Hẹn gặp lại các em buổi sau!
+
+---
+
+# 📅 BUỔI HỌC 2: CLOSING ENTRIES (150 phút)
+
+## I. REVIEW VÀ GIỚI THIỆU (10 phút)
+
+**Script:**
+
+> Chào mừng các em đến với buổi học thứ 2 về Chu trình Kế toán!
+>
+> **[Ôn tập nhanh]**
+> Buổi trước chúng ta đã học về Worksheet - công cụ giúp lập BCTC nhanh hơn. Ai còn nhớ 5 bước chuẩn bị worksheet?
+>
+> **[Gọi sinh viên trả lời]**
+> Rất tốt! Trial Balance → Adjustments → Adjusted TB → Extend to IS/BS → Calculate Net Income.
+>
+> **Hôm nay:** Chúng ta sẽ học một phần CỰC KỲ quan trọng - CLOSING ENTRIES hay còn gọi là "Khóa sổ".
+>
+> **[Đặt vấn đề]** Các em thử nghĩ xem: Nếu chúng ta không "xóa sổ" các tài khoản doanh thu và chi phí cuối năm, thì sang năm mới sẽ ra sao?
+>
+> → Đúng rồi! Số liệu của năm cũ và năm mới sẽ lẫn lộn với nhau. Chúng ta sẽ không biết năm nay kinh doanh thế nào!
+>
+> Đó chính là lý do chúng ta cần Closing Entries.
+
+---
+
+## II. PHẦN 2: CLOSING ENTRIES (120 phút)
+
+### Slide 21-23: Khái niệm và phân loại tài khoản (20 phút)
+
+**Script:**
+
+> **CLOSING THE BOOKS - KHÓA SỔ LÀ GÌ?**
+>
+> "Closing the books" là quá trình chuẩn bị các tài khoản cho kỳ kế toán tiếp theo. Chúng ta làm điều này bằng cách:
+> 1. Chuyển số dư các tài khoản TẠM THỜI về 0
+> 2. Chuyển kết quả kinh doanh vào Retained Earnings
+>
+> **[Vẽ sơ đồ trên bảng]** Hãy tưởng tượng như các em đóng sổ nhật ký cũ và mở sổ mới vào đầu năm.
+>
+> **MỤC ĐÍCH:**
+> - Chuẩn bị cho kỳ kế toán mới
+> - Cập nhật Retained Earnings
+> - Phân biệt rõ dữ liệu giữa các năm
+>
+> **[Chuyển sang phân loại tài khoản]**
+>
+> Để hiểu closing entries, các em PHẢI nắm vững sự khác biệt giữa 2 loại tài khoản:
+>
+> **TEMPORARY ACCOUNTS (Tạm thời):**
+> - Chỉ liên quan đến MỘT kỳ kế toán
+> - Bao gồm: TẤT CẢ doanh thu, TẤT CẢ chi phí, và Dividends
+> - Được ĐÓNG về 0 cuối kỳ
+> - Bắt đầu kỳ mới với số dư = 0
+>
+> **[Ví dụ]** Service Revenue năm 2020 là 100,000. Sang năm 2021, tài khoản này phải = 0 để tính doanh thu mới cho năm 2021.
+>
+> **PERMANENT ACCOUNTS (Vĩnh viễn):**
+> - Liên quan đến NHIỀU kỳ kế toán
+> - Bao gồm: Tài sản, Nợ phải trả, Vốn CSH
+> - KHÔNG đóng cuối kỳ
+> - Số dư chuyển tiếp sang kỳ sau
+>
+> **[Ví dụ]** Tiền trong tài khoản Cash cuối năm 2020 sẽ là số dư đầu năm 2021.
+>
+> **[Hỏi lớp]** Equipment là temporary hay permanent? → Permanent!
+> Rent Expense? → Temporary!
+> Dividends? → Temporary! (Nhiều em hay nhầm cái này)
+>
+> **[Nhấn mạnh]** Dividends không phải là chi phí, nhưng nó vẫn là temporary account và được đóng cuối kỳ.
+
+### Slide 24: Income Summary (10 phút)
+
+**Script:**
+
+> Trước khi học 4 bút toán khóa sổ, chúng ta cần biết về một tài khoản đặc biệt: **INCOME SUMMARY**
+>
+> **Đặc điểm:**
+> - Tài khoản TẠM THỜI
+> - CHỈ sử dụng trong quá trình khóa sổ
+> - KHÔNG xuất hiện trong Trial Balance
+> - KHÔNG xuất hiện trong bất kỳ BCTC nào
+> - Sau khi khóa sổ → số dư = 0
+>
+> **Mục đích:** Tập hợp tất cả doanh thu và chi phí trước khi chuyển vào Retained Earnings.
+>
+> **[Vẽ sơ đồ]**
+> ```
+> Revenues → Income Summary ← Expenses
+>              ↓
+>       Retained Earnings
+> ```
+>
+> **[Giải thích]** Tại sao không đóng trực tiếp vào Retained Earnings?
+>
+> Vì nếu có 20 tài khoản doanh thu và 30 tài khoản chi phí, Retained Earnings sẽ có 50 dòng ghi chú! Quá rối!
+>
+> Thay vào đó:
+> - Đóng 20 revenues → Income Summary
+> - Đóng 30 expenses → Income Summary
+> - Income Summary có số dư = Net Income
+> - Đóng Income Summary → Retained Earnings (chỉ 1 dòng!)
+>
+> Đơn giản và gọn gàng hơn nhiều phải không các em?
+
+### Slide 25-31: Bốn bút toán khóa sổ (50 phút)
+
+**Script - Tổng quan:**
+
+> Bây giờ đến phần cốt lõi: BỐN BÚT TOÁN KHÓA SỔ
+>
+> **[Nhấn mạnh]** Các em phải nhớ:
+> - Thứ tự RẤT quan trọng: 1 → 2 → 3 → 4
+> - KHÔNG được đảo lộn thứ tự
+> - Mỗi bút toán có mục đích riêng
+>
+> Chúng ta sẽ đi chi tiết từng bút toán với ví dụ của Yazici Advertising.
+
+**Script - Bút toán #1:**
+
+> **BÚT TOÁN #1: CLOSE REVENUE ACCOUNTS**
+>
+> **Mục đích:** Chuyển TẤT CẢ số dư các tài khoản doanh thu vào Income Summary.
+>
+> **Công thức:**
+> ```
+> Debit: Revenue Accounts (số dư của chúng)
+> Credit: Income Summary (tổng doanh thu)
+> ```
+>
+> **[Giải thích logic]**
+> - Revenue accounts có số dư Credit
+> - Muốn làm nó về 0 → phải Debit
+> - Income Summary nhận Credit (vì doanh thu làm tăng lợi nhuận)
+>
+> **VÍ DỤ YAZICI:**
+>
+> Trước khi đóng:
+> ```
+> Service Revenue
+> ----------------
+>           | 10,600 (Bal)
+> ```
+>
+> Bút toán khóa sổ:
+> ```
+> Oct 31  Service Revenue          10,600
+>             Income Summary                10,600
+> ```
+>
+> Sau khi đóng:
+> ```
+> Service Revenue          Income Summary
+> ----------------         ----------------
+> 10,600 | 10,600                  | 10,600
+> -------|-------          
+>    0   |                 
+> ```
+>
+> **[Kiểm tra]** Service Revenue có số dư = 0 chư
 > **[Gợi ý]**
 > - Xác định rõ: Đã ghi gì? Lẽ ra phải ghi gì?
 > - So sánh từng tài khoản: Đúng không? Thiếu bao nhiêu? Thừa bao nhiêu?
@@ -1655,514 +2166,4 @@ Debt-to-Equity = Total Liabilities / Total Equity
 >
 > **[Gợi ý]**
 > - Xác định rõ: Đã ghi gì? Lẽ ra phải ghi gì?
-> - So sánh từng tài khoản:# SCRIPT BÀI GIẢNG: HOÀN THÀNH CHU TRÌNH KẾ TOÁN
-## Completing the Accounting Cycle
-
-**Môn học:** Nguyên Lý Kế Toán  
-**Đối tượng:** Sinh viên năm 2 - Ngành Thương mại điện tử  
-**Thời lượng:** 3 buổi × 150 phút = 450 phút (7.5 giờ)  
-**Tài liệu tham khảo:** Chapter 4 - Intermediate Accounting (IFRS Edition)
-
----
-
-# 📅 BUỔI HỌC 1: WORKSHEET (150 phút)
-
-## I. GIỚI THIỆU VÀ ĐỘNG VIÊN (10 phút)
-
-### Slide 1-2: Mở đầu
-
-**Script:**
-
-> Chào các em! Hôm nay chúng ta bắt đầu Chương 4 - một chương rất quan trọng về "Hoàn thành Chu trình Kế toán". 
->
-> Các em đã học qua Chương 3 về điều chỉnh cuối kỳ. Vậy sau khi điều chỉnh xong, chúng ta làm gì tiếp theo? Đó chính là nội dung của chương này.
->
-> **[Tương tác]** Các em có biết tại sao chu trình kế toán lại được gọi là "chu trình" không? Đúng rồi! Vì nó lặp đi lặp lại mỗi kỳ kế toán, giống như một vòng tròn không có điểm kết thúc.
-
-### Slide 3-4: Mục tiêu học tập
-
-**Script:**
-
-> Trong 3 buổi học này, chúng ta sẽ học 4 phần chính:
->
-> **Buổi 1 hôm nay:** Tập trung vào WORKSHEET - một công cụ rất hữu ích giúp các em tổ chức công việc kế toán cuối kỳ.
->
-> **Buổi 2:** Chúng ta sẽ học về CLOSING ENTRIES - cách "đóng sổ" các tài khoản để chuẩn bị cho kỳ kế toán mới.
->
-> **Buổi 3:** Tổng hợp toàn bộ chu trình kế toán và học cách sửa sai sót, cùng với cách trình bày Bảng cân đối kế toán chuyên nghiệp.
->
-> Sau khi học xong chương này, các em sẽ có cái nhìn toàn cảnh về quy trình kế toán từ đầu đến cuối. Đây là kiến thức nền tảng rất quan trọng cho những môn kế toán chuyên sâu sau này.
-
----
-
-## II. PHẦN 1: WORKSHEET (120 phút)
-
-### Slide 5-6: Khái niệm Worksheet (15 phút)
-
-**Script:**
-
-> **[Chuyển slide - Phần 1]**
->
-> Bây giờ chúng ta bắt đầu với phần đầu tiên: WORKSHEET hay còn gọi là Bảng tính kế toán.
->
-> **[Hỏi lớp]** Có ai trong các em đã từng nghe đến hoặc làm việc với worksheet chưa? Có thể là trong Excel?
->
-> Đúng vậy! Worksheet trong kế toán rất giống với spreadsheet trong Excel. Nó là một bảng có nhiều cột, giúp chúng ta tổ chức và xử lý thông tin một cách có hệ thống.
->
-> **Định nghĩa:** Worksheet là một biểu mẫu nhiều cột được sử dụng trong quá trình điều chỉnh và chuẩn bị báo cáo tài chính.
->
-> **[Nhấn mạnh]** Các em cần nhớ 3 điểm quan trọng về worksheet:
->
-> 1. Nó CHỈ là công cụ làm việc - không phải là sổ sách chính thức
-> 2. Nó KHÔNG phải là phần của sổ cái
-> 3. Sử dụng worksheet là TÙY CHỌN, không bắt buộc
->
-> Vậy tại sao chúng ta vẫn học về nó? Vì worksheet giúp chúng ta:
-> - Tổ chức công việc tốt hơn
-> - Giảm thiểu sai sót
-> - Lập báo cáo tài chính nhanh hơn - TRƯỚC KHI ghi nhật ký và chuyển sổ các bút toán điều chỉnh
->
-> Trong thực tế, nhiều công ty nhỏ và vừa vẫn sử dụng worksheet, thường bằng Excel hoặc Google Sheets.
-
-### Slide 7: Cấu trúc Worksheet (10 phút)
-
-**Script:**
-
-> Bây giờ chúng ta xem worksheet có cấu trúc như thế nào.
->
-> **[Chỉ vào slide]** Worksheet có 10 cột, được chia thành 5 phần chính. Mỗi phần có 2 cột: Debit (Nợ) và Credit (Có).
->
-> **1. Account Titles:** Cột đầu tiên - liệt kê tên các tài khoản
->
-> **2. Trial Balance:** Bảng cân đối số phát sinh ban đầu - số liệu từ sổ cái TRƯỚC KHI điều chỉnh
->
-> **3. Adjustments:** Các bút toán điều chỉnh - chúng ta đã học ở Chương 3
->
-> **4. Adjusted Trial Balance:** Số dư sau khi đã điều chỉnh
->
-> **5. Income Statement:** Kéo các tài khoản doanh thu và chi phí vào đây
->
-> **6. Balance Sheet (Statement of Financial Position):** Kéo các tài khoản tài sản, nợ, vốn vào đây
->
-> **[Lưu ý]** Các em cần nhớ: mỗi phần đều có 2 cột Debit và Credit. Đây là nguyên tắc ghi sổ kép mà chúng ta đã học.
-
-### Slide 8-13: 5 Bước chuẩn bị Worksheet (40 phút)
-
-**Script - Bước 1:**
-
-> Bây giờ chúng ta đi vào chi tiết 5 bước chuẩn bị worksheet. Các em nên ghi chú cẩn thận phần này vì đây là quy trình chuẩn các em sẽ áp dụng trong bài tập.
->
-> **BƯỚC 1: PREPARE TRIAL BALANCE**
->
-> Bước đầu tiên rất đơn giản: Chúng ta lấy tất cả các tài khoản có số dư từ sổ cái, nhập vào cột Trial Balance.
->
-> **[Nhấn mạnh]** Lưu ý:
-> - Phải liệt kê TẤT CẢ tài khoản có số dư
-> - Số dư Nợ → cột Debit
-> - Số dư Có → cột Credit
-> - Tổng Debit = Tổng Credit (phải cân bằng!)
->
-> **[Ví dụ]** Công ty Yazici Advertising vào ngày 31/10/2020 có:
-> - Cash: 15,200 (Debit)
-> - Supplies: 2,500 (Debit)
-> - Service Revenue: 10,000 (Credit)
-> - ...và các tài khoản khác
->
-> Tổng cả hai cột đều là 28,700 - cân bằng hoàn hảo!
->
-> **[Hỏi lớp]** Nếu trial balance không cân bằng thì sao? Đúng rồi, phải quay lại kiểm tra sổ cái, chắc chắn có sai sót ở đâu đó.
-
-**Script - Bước 2:**
-
-> **BƯỚC 2: ENTER ADJUSTMENTS**
->
-> Đây là bước quan trọng nhất. Chúng ta sẽ nhập các bút toán điều chỉnh vào cột Adjustments.
->
-> **Quy tắc:**
-> 1. Sử dụng các tài khoản có sẵn trong trial balance
-> 2. Nếu cần thêm tài khoản mới → thêm vào dưới trial balance
-> 3. Đánh dấu mỗi bút toán bằng chữ cái (a, b, c, d...)
-> 4. Mỗi bút toán phải cân bằng (Debit = Credit)
->
-> **[Quan trọng]** Các em chưa ghi nhật ký các bút toán này đâu nhé! Chỉ ghi trên worksheet thôi. Sau khi lập xong báo cáo tài chính, chúng ta mới ghi nhật ký.
->
-> **Ví dụ với Yazici Advertising:**
-> - (a) Supplies used: 1,500
->   - Debit: Supplies Expense 1,500
->   - Credit: Supplies 1,500
->
-> - (b) Insurance expired: 50
->   - Debit: Insurance Expense 50
->   - Credit: Prepaid Insurance 50
->
-> - (c) Depreciation: 40
-> - (d) Unearned revenue earned: 400
-> - (e) Accrued revenue: 200
-> - (f) Interest accrued: 50
-> - (g) Salaries accrued: 1,200
->
-> Tổng cột Adjustments: Debit = Credit = 3,440 ✓
-
-**Script - Bước 3:**
-
-> **BƯỚC 3: ENTER ADJUSTED BALANCES**
->
-> Bước này chúng ta sẽ tính toán. Công thức rất đơn giản:
->
-> **Adjusted Balance = Trial Balance ± Adjustments**
->
-> **Quy tắc tính:**
-> - **Với tài khoản Debit:**
->   - Cộng các adjustment ở cột Debit
->   - Trừ các adjustment ở cột Credit
->
-> - **Với tài khoản Credit:**
->   - Cộng các adjustment ở cột Credit
->   - Trừ các adjustment ở cột Debit
->
-> **[Ví dụ cụ thể]**
->
-> **Supplies:**
-> - Trial Balance: 2,500 Debit
-> - Adjustment: 1,500 Credit (dùng đi)
-> - Adjusted: 2,500 - 1,500 = 1,000 Debit ✓
->
-> **Service Revenue:**
-> - Trial Balance: 10,000 Credit
-> - Adjustments: 400 Cr + 200 Cr = 600 Credit
-> - Adjusted: 10,000 + 600 = 10,600 Credit ✓
->
-> **[Kiểm tra]** Sau khi tính xong, các em phải kiểm tra: Tổng Debit = Tổng Credit trong cột Adjusted Trial Balance.
->
-> Với Yazici: 30,190 = 30,190 ✓
-
-**Script - Bước 4:**
-
-> **BƯỚC 4: EXTEND TO FINANCIAL STATEMENTS**
->
-> Bước này chúng ta "kéo dài" số dư từ Adjusted Trial Balance vào 2 nhóm cột báo cáo tài chính.
->
-> **[Nguyên tắc quan trọng]** Mỗi số dư phải được kéo vào MỘT trong BỐN cột:
->
-> **Vào INCOME STATEMENT:**
-> - Revenue accounts → Credit column
-> - Expense accounts → Debit column
->
-> **Vào BALANCE SHEET:**
-> - Assets → Debit column
-> - Liabilities → Credit column
-> - Equity → Credit column
-> - Dividends → Debit column (vì làm giảm vốn)
->
-> **[Lưu ý đặc biệt]** Các em hay nhầm:
-> - Accumulated Depreciation → Balance Sheet CREDIT (vì là contra asset)
-> - Dividends → Balance Sheet DEBIT (không phải expense!)
->
-> **[Mẹo nhớ]** Nếu không biết cho vào đâu, hãy tự hỏi:
-> - Đây có phải là doanh thu hoặc chi phí? → Income Statement
-> - Còn lại tất cả → Balance Sheet
-
-**Script - Bước 5:**
-
-> **BƯỚC 5: TOTAL AND COMPLETE**
->
-> Đây là bước cuối cùng - cũng là lúc chúng ta xác định công ty lãi hay lỗ!
->
-> **Các bước cụ thể:**
->
-> **1. Tính tổng các cột IS và BS**
-> - Income Statement: Cột Debit và Credit
-> - Balance Sheet: Cột Debit và Credit
->
-> **2. Tính Net Income hoặc Net Loss:**
->
-> Net Income = Total Credits (IS) - Total Debits (IS)
->
-> Với Yazici:
-> - IS Credits: 10,600 (doanh thu)
-> - IS Debits: 7,740 (chi phí)
-> - Net Income: 10,600 - 7,740 = **2,860** ✓
->
-> **3. Nhập Net Income vào worksheet:**
->
-> **[Quan trọng]** Nếu có LÃI:
-> - Income Statement → Debit (để cân bằng)
-> - Balance Sheet → Credit (tăng vốn CSH)
->
-> Nếu có LỖ thì ngược lại!
->
-> **4. Tính lại tổng:**
-> - IS: 10,600 = 10,600 ✓
-> - BS: 22,450 = 22,450 ✓
->
-> Hoàn thành! Worksheet của chúng ta đã cân bằng hoàn hảo.
-
-### Slide 14-15: Ví dụ hoàn chỉnh (10 phút)
-
-**Script:**
-
-> Các em xem ví dụ hoàn chỉnh của Yazici Advertising trên slide. 
->
-> **[Chỉ từng phần]**
-> - Trial Balance: 28,700 = 28,700
-> - Adjustments: 3,440 = 3,440
-> - Adjusted TB: 30,190 = 30,190
-> - Income Statement cân bằng sau khi thêm Net Income
-> - Balance Sheet cân bằng sau khi thêm Net Income
->
-> Các em thấy không? Mỗi bước đều phải cân bằng. Đây là cách chúng ta tự kiểm tra công việc của mình.
->
-> **[Thực hành ngay]** Các em hãy dành 2 phút xem kỹ worksheet này, nếu có câu hỏi gì thì giơ tay nhé!
-
-### Slide 16-18: Lập BCTC từ Worksheet (15 phút)
-
-**Script:**
-
-> Sau khi hoàn thành worksheet, chúng ta có thể lập báo cáo tài chính rất nhanh!
->
-> **Ba báo cáo chính:**
->
-> **1. Income Statement:**
-> - Lấy dữ liệu từ cột Income Statement
-> - Revenues: 10,600
-> - Expenses: 7,740
-> - Net Income: 2,860
->
-> **2. Retained Earnings Statement:**
-> - Beginning balance: 0 (công ty mới)
-> - Add: Net Income 2,860
-> - Less: Dividends 500
-> - Ending: 2,360
->
-> **3. Balance Sheet:**
-> - Lấy từ cột Balance Sheet
-> - Lưu ý: Retained Earnings phải dùng số cuối cùng từ Retained Earnings Statement (2,360)
->
-> **[Nhấn mạnh]** Các em nhớ:
-> - Worksheet KHÔNG phải là báo cáo tài chính chính thức
-> - Định dạng khác nhau
-> - Worksheet là nội bộ, BCTC là cho bên ngoài
->
-> **[Câu hỏi kiểm tra]** Vậy sau khi lập BCTC từ worksheet xong, chúng ta làm gì tiếp? 
->
-> → Đúng rồi! Phải ghi nhật ký và chuyển sổ các bút toán điều chỉnh. Đây là bước không thể bỏ qua!
-
-### Slide 19-20: Bài tập thực hành + Đáp án (20 phút)
-
-**Script:**
-
-> Bây giờ đến phần thực hành! Các em sẽ có 12 phút để làm bài tập này theo nhóm 2-3 người.
->
-> **[Đọc đề bài]** Công ty ABC có Trial Balance và 4 adjustment cần thực hiện...
->
-> **Yêu cầu:** Lập Worksheet đầy đủ và xác định Net Income.
->
-> **[Hướng dẫn]**
-> - Bước 1: Ghi Trial Balance
-> - Bước 2: Nhập adjustments với chữ cái (a, b, c, d)
-> - Bước 3: Tính Adjusted TB
-> - Bước 4: Kéo vào IS và BS
-> - Bước 5: Tính Net Income
->
-> Các em hãy làm việc nhóm, thảo luận với nhau. Sau 12 phút chúng ta sẽ cùng chữa bài.
->
-> **[Sau 12 phút]**
->
-> Được rồi, chúng ta cùng xem đáp án!
->
-> **[Chữa bài chi tiết]**
-> - Adjustments: (a) 2,000, (b) 400, (c) 500, (d) 600
-> - Adjusted TB cân bằng tại 39,100
-> - Net Income = 18,000 - 9,300 = 8,700
->
-> Có nhóm nào tính được Net Income = 8,700 không? Rất tốt!
->
-> **[Giải thích sai sót thường gặp]**
-> - Quên trừ khi có adjustment ở cột ngược lại
-> - Kéo sai tài khoản vào IS/BS
-> - Đặt Net Income sai vị trí
-
----
-
-## III. TỔNG KẾT VÀ GIAO BÀI TẬP (10 phút)
-
-**Script:**
-
-> Tốt lắm các em! Chúng ta vừa hoàn thành phần Worksheet - phần đầu tiên của Chương 4.
->
-> **Tóm tắt buổi học hôm nay:**
-> 1. Worksheet là công cụ hỗ trợ, không bắt buộc
-> 2. 5 bước chuẩn bị phải thực hiện tuần tự
-> 3. Mỗi bước đều phải cân bằng Debit = Credit
-> 4. Từ worksheet, chúng ta lập BCTC rất nhanh
-> 5. Vẫn phải ghi nhật ký adjusting entries sau khi lập BCTC
->
-> **Bài tập về nhà:**
-> - Exercises E4.1, E4.2, E4.3 trong sách giáo khoa
-> - Làm thêm worksheet cho công ty DEF (tài liệu trên LMS)
-> - Chuẩn bị cho buổi sau: đọc trước về Closing Entries
->
-> **Buổi sau:** Chúng ta sẽ học về Closing Entries - cách "khóa sổ" các tài khoản cuối kỳ. Đây là một phần rất quan trọng và thú vị!
->
-> Có câu hỏi gì không các em? Hẹn gặp lại các em buổi sau!
-
----
-
-# 📅 BUỔI HỌC 2: CLOSING ENTRIES (150 phút)
-
-## I. REVIEW VÀ GIỚI THIỆU (10 phút)
-
-**Script:**
-
-> Chào mừng các em đến với buổi học thứ 2 về Chu trình Kế toán!
->
-> **[Ôn tập nhanh]**
-> Buổi trước chúng ta đã học về Worksheet - công cụ giúp lập BCTC nhanh hơn. Ai còn nhớ 5 bước chuẩn bị worksheet?
->
-> **[Gọi sinh viên trả lời]**
-> Rất tốt! Trial Balance → Adjustments → Adjusted TB → Extend to IS/BS → Calculate Net Income.
->
-> **Hôm nay:** Chúng ta sẽ học một phần CỰC KỲ quan trọng - CLOSING ENTRIES hay còn gọi là "Khóa sổ".
->
-> **[Đặt vấn đề]** Các em thử nghĩ xem: Nếu chúng ta không "xóa sổ" các tài khoản doanh thu và chi phí cuối năm, thì sang năm mới sẽ ra sao?
->
-> → Đúng rồi! Số liệu của năm cũ và năm mới sẽ lẫn lộn với nhau. Chúng ta sẽ không biết năm nay kinh doanh thế nào!
->
-> Đó chính là lý do chúng ta cần Closing Entries.
-
----
-
-## II. PHẦN 2: CLOSING ENTRIES (120 phút)
-
-### Slide 21-23: Khái niệm và phân loại tài khoản (20 phút)
-
-**Script:**
-
-> **CLOSING THE BOOKS - KHÓA SỔ LÀ GÌ?**
->
-> "Closing the books" là quá trình chuẩn bị các tài khoản cho kỳ kế toán tiếp theo. Chúng ta làm điều này bằng cách:
-> 1. Chuyển số dư các tài khoản TẠM THỜI về 0
-> 2. Chuyển kết quả kinh doanh vào Retained Earnings
->
-> **[Vẽ sơ đồ trên bảng]** Hãy tưởng tượng như các em đóng sổ nhật ký cũ và mở sổ mới vào đầu năm.
->
-> **MỤC ĐÍCH:**
-> - Chuẩn bị cho kỳ kế toán mới
-> - Cập nhật Retained Earnings
-> - Phân biệt rõ dữ liệu giữa các năm
->
-> **[Chuyển sang phân loại tài khoản]**
->
-> Để hiểu closing entries, các em PHẢI nắm vững sự khác biệt giữa 2 loại tài khoản:
->
-> **TEMPORARY ACCOUNTS (Tạm thời):**
-> - Chỉ liên quan đến MỘT kỳ kế toán
-> - Bao gồm: TẤT CẢ doanh thu, TẤT CẢ chi phí, và Dividends
-> - Được ĐÓNG về 0 cuối kỳ
-> - Bắt đầu kỳ mới với số dư = 0
->
-> **[Ví dụ]** Service Revenue năm 2020 là 100,000. Sang năm 2021, tài khoản này phải = 0 để tính doanh thu mới cho năm 2021.
->
-> **PERMANENT ACCOUNTS (Vĩnh viễn):**
-> - Liên quan đến NHIỀU kỳ kế toán
-> - Bao gồm: Tài sản, Nợ phải trả, Vốn CSH
-> - KHÔNG đóng cuối kỳ
-> - Số dư chuyển tiếp sang kỳ sau
->
-> **[Ví dụ]** Tiền trong tài khoản Cash cuối năm 2020 sẽ là số dư đầu năm 2021.
->
-> **[Hỏi lớp]** Equipment là temporary hay permanent? → Permanent!
-> Rent Expense? → Temporary!
-> Dividends? → Temporary! (Nhiều em hay nhầm cái này)
->
-> **[Nhấn mạnh]** Dividends không phải là chi phí, nhưng nó vẫn là temporary account và được đóng cuối kỳ.
-
-### Slide 24: Income Summary (10 phút)
-
-**Script:**
-
-> Trước khi học 4 bút toán khóa sổ, chúng ta cần biết về một tài khoản đặc biệt: **INCOME SUMMARY**
->
-> **Đặc điểm:**
-> - Tài khoản TẠM THỜI
-> - CHỈ sử dụng trong quá trình khóa sổ
-> - KHÔNG xuất hiện trong Trial Balance
-> - KHÔNG xuất hiện trong bất kỳ BCTC nào
-> - Sau khi khóa sổ → số dư = 0
->
-> **Mục đích:** Tập hợp tất cả doanh thu và chi phí trước khi chuyển vào Retained Earnings.
->
-> **[Vẽ sơ đồ]**
-> ```
-> Revenues → Income Summary ← Expenses
->              ↓
->       Retained Earnings
-> ```
->
-> **[Giải thích]** Tại sao không đóng trực tiếp vào Retained Earnings?
->
-> Vì nếu có 20 tài khoản doanh thu và 30 tài khoản chi phí, Retained Earnings sẽ có 50 dòng ghi chú! Quá rối!
->
-> Thay vào đó:
-> - Đóng 20 revenues → Income Summary
-> - Đóng 30 expenses → Income Summary
-> - Income Summary có số dư = Net Income
-> - Đóng Income Summary → Retained Earnings (chỉ 1 dòng!)
->
-> Đơn giản và gọn gàng hơn nhiều phải không các em?
-
-### Slide 25-31: Bốn bút toán khóa sổ (50 phút)
-
-**Script - Tổng quan:**
-
-> Bây giờ đến phần cốt lõi: BỐN BÚT TOÁN KHÓA SỔ
->
-> **[Nhấn mạnh]** Các em phải nhớ:
-> - Thứ tự RẤT quan trọng: 1 → 2 → 3 → 4
-> - KHÔNG được đảo lộn thứ tự
-> - Mỗi bút toán có mục đích riêng
->
-> Chúng ta sẽ đi chi tiết từng bút toán với ví dụ của Yazici Advertising.
-
-**Script - Bút toán #1:**
-
-> **BÚT TOÁN #1: CLOSE REVENUE ACCOUNTS**
->
-> **Mục đích:** Chuyển TẤT CẢ số dư các tài khoản doanh thu vào Income Summary.
->
-> **Công thức:**
-> ```
-> Debit: Revenue Accounts (số dư của chúng)
-> Credit: Income Summary (tổng doanh thu)
-> ```
->
-> **[Giải thích logic]**
-> - Revenue accounts có số dư Credit
-> - Muốn làm nó về 0 → phải Debit
-> - Income Summary nhận Credit (vì doanh thu làm tăng lợi nhuận)
->
-> **VÍ DỤ YAZICI:**
->
-> Trước khi đóng:
-> ```
-> Service Revenue
-> ----------------
->           | 10,600 (Bal)
-> ```
->
-> Bút toán khóa sổ:
-> ```
-> Oct 31  Service Revenue          10,600
->             Income Summary                10,600
-> ```
->
-> Sau khi đóng:
-> ```
-> Service Revenue          Income Summary
-> ----------------         ----------------
-> 10,600 | 10,600                  | 10,600
-> -------|-------          
->    0   |                 
-> ```
->
-> **[Kiểm tra]** Service Revenue có số dư = 0 chư
+> - So sánh từng tài khoản:
