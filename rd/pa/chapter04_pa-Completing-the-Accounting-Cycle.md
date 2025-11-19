@@ -1862,4 +1862,610 @@ Debt-to-Equity = Total Liabilities / Total Equity
 > Các em đã làm rất tốt! Closing Entries là một trong những phần khó nhất nhưng các em đã nắm vững. Hẹn gặp lại các em buổi sau!
 
 ---
+# 📅 BUỔI HỌC 3: ACCOUNTING CYCLE & CLASSIFIED BALANCE SHEET (150 phút)
 
+## I. REVIEW VÀ GIỚI THIỆU (15 phút)
+
+**Script:**
+
+> Chào mừng các em đến với buổi học cuối cùng của Chương 4!
+>
+> **[Ôn tập nhanh 2 buổi trước]**
+>
+> **Buổi 1:** Worksheet - 5 bước chuẩn bị
+> **Buổi 2:** Closing Entries - 4 bút toán khóa sổ
+>
+> **[Mini Quiz - 5 câu nhanh]**
+>
+> 1. Worksheet có bao nhiêu cột? → 10 cột
+> 2. Net Income được tính ở bước nào của worksheet? → Bước 5
+> 3. Dividends là temporary hay permanent? → Temporary
+> 4. Bút toán nào đóng Dividends? → Bút toán #4
+> 5. Post-Closing Trial Balance có chứa Revenue accounts không? → Không!
+>
+> Rất tốt! Các em đã nắm vững nội dung.
+>
+> **BUỔI HỌC HÔM NAY:**
+>
+> Chúng ta sẽ học 2 phần lớn:
+>
+> **Phần 1 (60 phút):** Toàn cảnh CHU TRÌNH KẾ TOÁN và CORRECTING ENTRIES
+> - 9 bước bắt buộc
+> - 2 bước tùy chọn
+> - Cách sửa sai sót
+>
+> **Phần 2 (75 phút):** CLASSIFIED BALANCE SHEET
+> - Phân loại tài sản
+> - Phân loại nợ và vốn
+> - Cách trình bày chuyên nghiệp
+>
+> Đây là buổi tổng hợp, giúp các em có cái nhìn toàn cảnh về kế toán tài chính!
+
+---
+
+# 📅 BUỔI HỌC 3: ACCOUNTING CYCLE & CLASSIFIED BALANCE SHEET (150 phút)
+
+## I. REVIEW VÀ GIỚI THIỆU (15 phút)
+
+**Script:**
+
+> Chào mừng các em đến với buổi học cuối cùng của Chương 4!
+>
+> **[Ôn tập nhanh 2 buổi trước]**
+>
+> **Buổi 1:** Worksheet - 5 bước chuẩn bị
+> **Buổi 2:** Closing Entries - 4 bút toán khóa sổ
+>
+> **[Mini Quiz - 5 câu nhanh]**
+>
+> 1. Worksheet có bao nhiêu cột? → 10 cột
+> 2. Net Income được tính ở bước nào của worksheet? → Bước 5
+> 3. Dividends là temporary hay permanent? → Temporary
+> 4. Bút toán nào đóng Dividends? → Bút toán #4
+> 5. Post-Closing Trial Balance có chứa Revenue accounts không? → Không!
+>
+> Rất tốt! Các em đã nắm vững nội dung.
+>
+> **BUỔI HỌC HÔM NAY:**
+>
+> Chúng ta sẽ học 2 phần lớn:
+>
+> **Phần 1 (60 phút):** Toàn cảnh CHU TRÌNH KẾ TOÁN và CORRECTING ENTRIES
+> - 9 bước bắt buộc
+> - 2 bước tùy chọn
+> - Cách sửa sai sót
+>
+> **Phần 2 (75 phút):** CLASSIFIED BALANCE SHEET
+> - Phân loại tài sản
+> - Phân loại nợ và vốn
+> - Cách trình bày chuyên nghiệp
+>
+> Đây là buổi tổng hợp, giúp các em có cái nhìn toàn cảnh về kế toán tài chính!
+
+## II. PHẦN 3: ACCOUNTING CYCLE & CORRECTING ENTRIES (60 phút)
+
+### Slide 37-40: 9 Bước trong Chu trình Kế toán (20 phút)
+
+**Script:**
+
+> **CHU TRÌNH KẾ TOÁN - THE BIG PICTURE**
+>
+> Các em đã học rời rạc từng phần. Bây giờ chúng ta sẽ xem toàn cảnh!
+>
+> **[Vẽ vòng tròn trên bảng]**
+>
+> Chu trình kế toán là chuỗi các bước được thực hiện LIÊN TỤC trong mỗi kỳ kế toán.
+>
+> **9 BƯỚC BẮT BUỘC:**
+>
+> **BƯỚC 1: ANALYZE BUSINESS TRANSACTIONS**
+> - Phân tích các giao dịch kinh doanh
+> - Xác định tài khoản nào bị ảnh hưởng
+> - Xác định tăng hay giảm
+>
+> **[Ví dụ]** Bán hàng thu tiền mặt 1,000
+> → Cash tăng, Revenue tăng
+>
+> **BƯỚC 2: JOURNALIZE THE TRANSACTIONS**
+> - Ghi vào sổ nhật ký tổng hợp
+> - Theo thứ tự thời gian
+> - Có giải thích
+>
+> **BƯỚC 3: POST TO LEDGER ACCOUNTS**
+> - Chuyển từ journal vào ledger
+> - Cập nhật số dư từng tài khoản
+>
+> **[Nhấn mạnh]** Bước 1-3 có thể làm HÀNG NGÀY trong kỳ kế toán.
+>
+> **BƯỚC 4: PREPARE A TRIAL BALANCE**
+> - Lập bảng cân đối số phát sinh
+> - Kiểm tra Debit = Credit
+> - Phát hiện sai sót ghi sổ
+>
+> **[Hỏi lớp]** Nếu Trial Balance cân bằng, có nghĩa là không có lỗi à?
+> → Không! Vẫn có thể có lỗi (ví dụ: ghi nhầm tài khoản, ghi sai số tiền nhưng vẫn cân bằng)
+>
+> **BƯỚC 5: JOURNALIZE AND POST ADJUSTING ENTRIES**
+> - Ghi nhật ký các bút toán điều chỉnh
+> - Chuyển sổ vào ledger
+> - Đây là nội dung Chương 3!
+>
+> **BƯỚC 6: PREPARE ADJUSTED TRIAL BALANCE**
+> - Lập bảng cân đối SAU điều chỉnh
+> - Đảm bảo tất cả adjustments đã được ghi
+>
+> **BƯỚC 7: PREPARE FINANCIAL STATEMENTS**
+> - Income Statement
+> - Retained Earnings Statement
+> - Balance Sheet
+> - Statement of Cash Flows
+>
+> **[Nhấn mạnh]** Bước 4-7 thường làm ĐỊNH KỲ (tháng, quý, năm).
+>
+> **BƯỚC 8: JOURNALIZE AND POST CLOSING ENTRIES**
+> - 4 bút toán khóa sổ (học ở buổi 2)
+> - Đóng temporary accounts về 0
+>
+> **BƯỚC 9: PREPARE POST-CLOSING TRIAL BALANCE**
+> - Kiểm tra sau khi đóng sổ
+> - Chỉ có permanent accounts
+> - Chuẩn bị cho kỳ mới
+>
+> **[Nhấn mạnh]** Bước 8-9 thường chỉ làm CUỐI NĂM.
+>
+> **[Hiển thị sơ đồ tổng thể]**
+>
+> Các em thấy không? Đây là một vòng tròn khép kín:
+> ```
+> Analyze → Journalize → Post → Trial Balance → 
+> Adjust → Adjusted TB → Financial Statements → 
+> Close → Post-Closing TB → [Quay lại Analyze cho kỳ mới]
+> ```
+
+### Slide 41: Optional Steps (10 phút)
+
+**Script:**
+
+> Ngoài 9 bước bắt buộc, có 2 bước TÙY CHỌN:
+>
+> **1. WORKSHEET**
+> - Vị trí: Giữa bước 4 và 7
+> - Lợi ích: Lập BCTC nhanh hơn
+> - Không bắt buộc phải làm
+>
+> **2. REVERSING ENTRIES**
+> - Vị trí: Ngày đầu tiên của kỳ mới (sau bước 9)
+> - Lợi ích: Đơn giản hóa ghi chép kỳ sau
+> - Chỉ áp dụng cho một số adjustments
+>
+> **[Giải thích Reversing Entries]**
+>
+> Đây là kỹ thuật nâng cao, chúng ta sẽ học ví dụ đơn giản:
+>
+> **Tình huống:** Ngày 31/10 accrued salaries 1,200
+> ```
+> Oct 31  Salaries Expense       1,200
+>             Salaries Payable           1,200
+> ```
+>
+> **Ngày 1/11 (đầu tháng mới), làm Reversing Entry:**
+> ```
+> Nov 1   Salaries Payable       1,200
+>             Salaries Expense           1,200
+> ```
+> (Hoàn toàn ngược lại!)
+>
+> **Ngày 9/11 trả lương 4,000:**
+>
+> **Nếu KHÔNG dùng reversing:**
+> ```
+> Salaries Payable    1,200
+> Salaries Expense    2,800
+>     Cash                    4,000
+> ```
+> (Phải nhớ có 1,200 accrued từ tháng trước!)
+>
+> **Nếu DÙNG reversing:**
+> ```
+> Salaries Expense    4,000
+>     Cash                    4,000
+> ```
+> (Đơn giản hơn! Không cần nhớ accrual)
+>
+> **[Nhấn mạnh]** Reversing entries KHÔNG thay đổi kết quả, chỉ giúp ghi chép đơn giản hơn.
+
+### Slide 42-50: Correcting Entries (30 phút)
+
+**Script - Giới thiệu:**
+
+> Bây giờ chúng ta đến phần RẤT thực tế: **CORRECTING ENTRIES**
+>
+> Trong thực tế làm kế toán, chúng ta KHÔNG THỂ TRÁNH KHỎI sai sót:
+> - Ghi sai số tiền
+> - Ghi nhầm tài khoản
+> - Quên ghi một phần
+> - Đảo Debit/Credit
+>
+> **[Hỏi lớp]** Các em nghĩ sao nếu phát hiện sai sót sau khi đã ghi sổ?
+>
+> → Phải làm CORRECTING ENTRY để sửa!
+>
+> **PHÂN BIỆT:**
+>
+> | Tiêu chí | Adjusting Entries | Correcting Entries |
+> |----------|-------------------|-------------------|
+> | Mục đích | Cập nhật theo accrual basis | Sửa SAI SÓT |
+> | Tần suất | Bắt buộc cuối kỳ | Khi phát hiện lỗi |
+> | Thời điểm | Cuối kỳ | Bất cứ lúc nào |
+> | Tài khoản | 1 BS + 1 IS | Bất kỳ |
+>
+> **[Nhấn mạnh]** Correcting entries chỉ cần làm khi CÓ SAI SÓT!
+
+**Script - Các loại sai sót:**
+
+> **4 LOẠI SAI SÓT THƯỜNG GẶP:**
+>
+> **LOẠI 1: SAI SỐ TIỀN**
+> ```
+> Thực tế: Thu tiền 950
+> Đã ghi: Debit Cash 590 (ghi thiếu)
+> ```
+>
+> **LOẠI 2: SAI TÀI KHOẢN**
+> ```
+> Thực tế: Chi phí quảng cáo 75
+> Đã ghi: Debit Miscellaneous Expense 75
+> Đúng ra: Debit Advertising Expense 75
+> ```
+>
+> **LOẠI 3: THIẾU BÚT TOÁN**
+> ```
+> Thực tế: Trả lương 1,900 (bao gồm 700 accrued từ trước)
+> Đã ghi: Debit Salaries Expense 1,900
+> Thiếu: Phải debit Salaries Payable 700
+> ```
+>
+> **LOẠI 4: GHI NHẦM DEBIT/CREDIT**
+> ```
+> Mua thiết bị 310
+> Đã ghi: Debit Supplies 310
+> Đúng ra: Debit Equipment 310
+> ```
+
+**Script - Phương pháp lập Correcting Entry:**
+
+> **3 BƯỚC LẬP CORRECTING ENTRY:**
+>
+> **BƯỚC 1:** Xác định bút toán SAI (đã ghi gì?)
+> **BƯỚC 2:** Xác định bút toán ĐÚNG (lẽ ra phải ghi gì?)
+> **BƯỚC 3:** Lập bút toán điều chỉnh (từ SAI → ĐÚNG)
+>
+> **[Công thức]**
+> ```
+> Correcting Entry = What SHOULD BE - What WAS recorded
+> ```
+>
+> **VÍ DỤ 1: SAI TÀI KHOẢN**
+>
+> Ngày 10/5: Thu tiền từ khách 500, nhưng ghi:
+> ```
+> SAI (đã ghi):
+> Cash                    500
+>     Service Revenue         500
+>
+> ĐÚNG (lẽ ra phải ghi):
+> Cash                    500
+>     Accounts Receivable     500
+> ```
+>
+> **Phân tích:**
+> - Cash: Đúng rồi, không cần sửa
+> - Service Revenue: Đã tăng nhầm, phải GIẢM (Debit)
+> - Accounts Receivable: Lẽ ra phải giảm, chưa giảm (Credit)
+>
+> **CORRECTING ENTRY (20/5):**
+> ```
+> Service Revenue         500
+>     Accounts Receivable     500
+> ```
+>
+> **[Giải thích]** Chúng ta "đảo ngược" phần sai và "làm đúng" phần đúng.
+>
+> **VÍ DỤ 2: SAI SỐ TIỀN**
+>
+> Ngày 18/5: Mua thiết bị 4,500, nhưng ghi thành 450:
+> ```
+> SAI (đã ghi):
+> Equipment               450
+>     Accounts Payable        450
+>
+> ĐÚNG (lẽ ra phải ghi):
+> Equipment             4,500
+>     Accounts Payable      4,500
+> ```
+>
+> **Phân tích:**
+> - Equipment: Thiếu 4,050
+> - Accounts Payable: Thiếu 4,050
+>
+> **CORRECTING ENTRY (3/6):**
+> ```
+> Equipment             4,050
+>     Accounts Payable      4,050
+> ```
+>
+> **[Nhấn mạnh]** Chỉ cần bổ sung phần THIẾU!
+
+**Script - Bài tập thực hành:**
+
+> **BÀI TẬP:** Công ty XYZ có 3 lỗi trong tháng 1/2020.
+>
+> Các em hãy lập correcting entry cho từng lỗi.
+>
+> **[Gợi ý]**
+> - Xác định rõ: Đã ghi gì? Lẽ ra phải ghi gì?
+> - So sánh từng tài khoản:
+
+## II. PHẦN 3: ACCOUNTING CYCLE & CORRECTING ENTRIES (60 phút)
+
+### Slide 37-40: 9 Bước trong Chu trình Kế toán (20 phút)
+
+**Script:**
+
+> **CHU TRÌNH KẾ TOÁN - THE BIG PICTURE**
+>
+> Các em đã học rời rạc từng phần. Bây giờ chúng ta sẽ xem toàn cảnh!
+>
+> **[Vẽ vòng tròn trên bảng]**
+>
+> Chu trình kế toán là chuỗi các bước được thực hiện LIÊN TỤC trong mỗi kỳ kế toán.
+>
+> **9 BƯỚC BẮT BUỘC:**
+>
+> **BƯỚC 1: ANALYZE BUSINESS TRANSACTIONS**
+> - Phân tích các giao dịch kinh doanh
+> - Xác định tài khoản nào bị ảnh hưởng
+> - Xác định tăng hay giảm
+>
+> **[Ví dụ]** Bán hàng thu tiền mặt 1,000
+> → Cash tăng, Revenue tăng
+>
+> **BƯỚC 2: JOURNALIZE THE TRANSACTIONS**
+> - Ghi vào sổ nhật ký tổng hợp
+> - Theo thứ tự thời gian
+> - Có giải thích
+>
+> **BƯỚC 3: POST TO LEDGER ACCOUNTS**
+> - Chuyển từ journal vào ledger
+> - Cập nhật số dư từng tài khoản
+>
+> **[Nhấn mạnh]** Bước 1-3 có thể làm HÀNG NGÀY trong kỳ kế toán.
+>
+> **BƯỚC 4: PREPARE A TRIAL BALANCE**
+> - Lập bảng cân đối số phát sinh
+> - Kiểm tra Debit = Credit
+> - Phát hiện sai sót ghi sổ
+>
+> **[Hỏi lớp]** Nếu Trial Balance cân bằng, có nghĩa là không có lỗi à?
+> → Không! Vẫn có thể có lỗi (ví dụ: ghi nhầm tài khoản, ghi sai số tiền nhưng vẫn cân bằng)
+>
+> **BƯỚC 5: JOURNALIZE AND POST ADJUSTING ENTRIES**
+> - Ghi nhật ký các bút toán điều chỉnh
+> - Chuyển sổ vào ledger
+> - Đây là nội dung Chương 3!
+>
+> **BƯỚC 6: PREPARE ADJUSTED TRIAL BALANCE**
+> - Lập bảng cân đối SAU điều chỉnh
+> - Đảm bảo tất cả adjustments đã được ghi
+>
+> **BƯỚC 7: PREPARE FINANCIAL STATEMENTS**
+> - Income Statement
+> - Retained Earnings Statement
+> - Balance Sheet
+> - Statement of Cash Flows
+>
+> **[Nhấn mạnh]** Bước 4-7 thường làm ĐỊNH KỲ (tháng, quý, năm).
+>
+> **BƯỚC 8: JOURNALIZE AND POST CLOSING ENTRIES**
+> - 4 bút toán khóa sổ (học ở buổi 2)
+> - Đóng temporary accounts về 0
+>
+> **BƯỚC 9: PREPARE POST-CLOSING TRIAL BALANCE**
+> - Kiểm tra sau khi đóng sổ
+> - Chỉ có permanent accounts
+> - Chuẩn bị cho kỳ mới
+>
+> **[Nhấn mạnh]** Bước 8-9 thường chỉ làm CUỐI NĂM.
+>
+> **[Hiển thị sơ đồ tổng thể]**
+>
+> Các em thấy không? Đây là một vòng tròn khép kín:
+> ```
+> Analyze → Journalize → Post → Trial Balance → 
+> Adjust → Adjusted TB → Financial Statements → 
+> Close → Post-Closing TB → [Quay lại Analyze cho kỳ mới]
+> ```
+
+### Slide 41: Optional Steps (10 phút)
+
+**Script:**
+
+> Ngoài 9 bước bắt buộc, có 2 bước TÙY CHỌN:
+>
+> **1. WORKSHEET**
+> - Vị trí: Giữa bước 4 và 7
+> - Lợi ích: Lập BCTC nhanh hơn
+> - Không bắt buộc phải làm
+>
+> **2. REVERSING ENTRIES**
+> - Vị trí: Ngày đầu tiên của kỳ mới (sau bước 9)
+> - Lợi ích: Đơn giản hóa ghi chép kỳ sau
+> - Chỉ áp dụng cho một số adjustments
+>
+> **[Giải thích Reversing Entries]**
+>
+> Đây là kỹ thuật nâng cao, chúng ta sẽ học ví dụ đơn giản:
+>
+> **Tình huống:** Ngày 31/10 accrued salaries 1,200
+> ```
+> Oct 31  Salaries Expense       1,200
+>             Salaries Payable           1,200
+> ```
+>
+> **Ngày 1/11 (đầu tháng mới), làm Reversing Entry:**
+> ```
+> Nov 1   Salaries Payable       1,200
+>             Salaries Expense           1,200
+> ```
+> (Hoàn toàn ngược lại!)
+>
+> **Ngày 9/11 trả lương 4,000:**
+>
+> **Nếu KHÔNG dùng reversing:**
+> ```
+> Salaries Payable    1,200
+> Salaries Expense    2,800
+>     Cash                    4,000
+> ```
+> (Phải nhớ có 1,200 accrued từ tháng trước!)
+>
+> **Nếu DÙNG reversing:**
+> ```
+> Salaries Expense    4,000
+>     Cash                    4,000
+> ```
+> (Đơn giản hơn! Không cần nhớ accrual)
+>
+> **[Nhấn mạnh]** Reversing entries KHÔNG thay đổi kết quả, chỉ giúp ghi chép đơn giản hơn.
+
+### Slide 42-50: Correcting Entries (30 phút)
+
+**Script - Giới thiệu:**
+
+> Bây giờ chúng ta đến phần RẤT thực tế: **CORRECTING ENTRIES**
+>
+> Trong thực tế làm kế toán, chúng ta KHÔNG THỂ TRÁNH KHỎI sai sót:
+> - Ghi sai số tiền
+> - Ghi nhầm tài khoản
+> - Quên ghi một phần
+> - Đảo Debit/Credit
+>
+> **[Hỏi lớp]** Các em nghĩ sao nếu phát hiện sai sót sau khi đã ghi sổ?
+>
+> → Phải làm CORRECTING ENTRY để sửa!
+>
+> **PHÂN BIỆT:**
+>
+> | Tiêu chí | Adjusting Entries | Correcting Entries |
+> |----------|-------------------|-------------------|
+> | Mục đích | Cập nhật theo accrual basis | Sửa SAI SÓT |
+> | Tần suất | Bắt buộc cuối kỳ | Khi phát hiện lỗi |
+> | Thời điểm | Cuối kỳ | Bất cứ lúc nào |
+> | Tài khoản | 1 BS + 1 IS | Bất kỳ |
+>
+> **[Nhấn mạnh]** Correcting entries chỉ cần làm khi CÓ SAI SÓT!
+
+**Script - Các loại sai sót:**
+
+> **4 LOẠI SAI SÓT THƯỜNG GẶP:**
+>
+> **LOẠI 1: SAI SỐ TIỀN**
+> ```
+> Thực tế: Thu tiền 950
+> Đã ghi: Debit Cash 590 (ghi thiếu)
+> ```
+>
+> **LOẠI 2: SAI TÀI KHOẢN**
+> ```
+> Thực tế: Chi phí quảng cáo 75
+> Đã ghi: Debit Miscellaneous Expense 75
+> Đúng ra: Debit Advertising Expense 75
+> ```
+>
+> **LOẠI 3: THIẾU BÚT TOÁN**
+> ```
+> Thực tế: Trả lương 1,900 (bao gồm 700 accrued từ trước)
+> Đã ghi: Debit Salaries Expense 1,900
+> Thiếu: Phải debit Salaries Payable 700
+> ```
+>
+> **LOẠI 4: GHI NHẦM DEBIT/CREDIT**
+> ```
+> Mua thiết bị 310
+> Đã ghi: Debit Supplies 310
+> Đúng ra: Debit Equipment 310
+> ```
+
+**Script - Phương pháp lập Correcting Entry:**
+
+> **3 BƯỚC LẬP CORRECTING ENTRY:**
+>
+> **BƯỚC 1:** Xác định bút toán SAI (đã ghi gì?)
+> **BƯỚC 2:** Xác định bút toán ĐÚNG (lẽ ra phải ghi gì?)
+> **BƯỚC 3:** Lập bút toán điều chỉnh (từ SAI → ĐÚNG)
+>
+> **[Công thức]**
+> ```
+> Correcting Entry = What SHOULD BE - What WAS recorded
+> ```
+>
+> **VÍ DỤ 1: SAI TÀI KHOẢN**
+>
+> Ngày 10/5: Thu tiền từ khách 500, nhưng ghi:
+> ```
+> SAI (đã ghi):
+> Cash                    500
+>     Service Revenue         500
+>
+> ĐÚNG (lẽ ra phải ghi):
+> Cash                    500
+>     Accounts Receivable     500
+> ```
+>
+> **Phân tích:**
+> - Cash: Đúng rồi, không cần sửa
+> - Service Revenue: Đã tăng nhầm, phải GIẢM (Debit)
+> - Accounts Receivable: Lẽ ra phải giảm, chưa giảm (Credit)
+>
+> **CORRECTING ENTRY (20/5):**
+> ```
+> Service Revenue         500
+>     Accounts Receivable     500
+> ```
+>
+> **[Giải thích]** Chúng ta "đảo ngược" phần sai và "làm đúng" phần đúng.
+>
+> **VÍ DỤ 2: SAI SỐ TIỀN**
+>
+> Ngày 18/5: Mua thiết bị 4,500, nhưng ghi thành 450:
+> ```
+> SAI (đã ghi):
+> Equipment               450
+>     Accounts Payable        450
+>
+> ĐÚNG (lẽ ra phải ghi):
+> Equipment             4,500
+>     Accounts Payable      4,500
+> ```
+>
+> **Phân tích:**
+> - Equipment: Thiếu 4,050
+> - Accounts Payable: Thiếu 4,050
+>
+> **CORRECTING ENTRY (3/6):**
+> ```
+> Equipment             4,050
+>     Accounts Payable      4,050
+> ```
+>
+> **[Nhấn mạnh]** Chỉ cần bổ sung phần THIẾU!
+
+**Script - Bài tập thực hành:**
+
+> **BÀI TẬP:** Công ty XYZ có 3 lỗi trong tháng 1/2020.
+>
+> Các em hãy lập correcting entry cho từng lỗi.
+>
+> **[Gợi ý]**
+> - Xác định rõ: Đã ghi gì? Lẽ ra phải ghi gì?
+> - So sánh từng tài khoản:
