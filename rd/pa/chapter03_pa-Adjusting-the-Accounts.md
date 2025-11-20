@@ -525,9 +525,6 @@ Lãi tháng 10 = 5,000 × 12% × (1/12) = 50
 
 **Bút toán điều chỉnh 31/10:**
 ```
-Nợ: Interest Expense ............
-**Bút toán điều chỉnh 31/10:**
-```
 Nợ: Interest Expense ............. 50
 Có: Interest Payable ............. 50
 ```
