@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kế Toán Trong Doanh Nghiệp Thương Mại</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* CORE SETUP */
+        * { box-sizing: border-box; }
+        body {
+            background-color: #e0e0e0;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: 1fr;
+            margin: 0;
+            min-height: 100vh;
+            padding: 20px 0;
+            place-items: center;
+            font-family: 'Open Sans', sans-serif;
+        }
+        p { margin: 0; margin-bottom: 15px; }
+
+        /* SLIDE CONTAINER */
+        .slide-container {
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            height: 720px;
+            justify-content: center;
+            overflow: hidden;
+            padding: 60px;
+            position: relative;
+            width: 1280px;
+        }
+
+        /* BACKGROUND DECORATION (Professional Blue Theme) */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 15px;
+            background: linear-gradient(90deg, #1a237e, #283593, #3949ab);
+            z-index: 2;
+        }
+        .slide-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0; right: 0;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(57,73,171,0.1) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 100% 0 0 0;
+            z-index: 0;
+        }
+
+        .slide-container > * { position: relative; z-index: 1; }
+
+        /* TYPOGRAPHY */
+        .slide-container h1, .slide-container h2, .slide-container h3 {
+            color: #1a237e; /* Deep Navy Blue */
+            font-family: 'Merriweather', serif;
+            margin: 0;
+        }
+        .slide-container h1 { font-size: 64px; font-weight: 700; }
+        .slide-container h2.slide-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: left;
+            width: 100%;
+            border-bottom: 3px solid #ffc107; /* Accent Yellow */
+            padding-bottom: 10px;
+        }
+        .slide-container h3 { font-size: 28px; font-weight: 700; margin-bottom: 15px; color: #283593; }
+        .slide-container p, .slide-container li, .slide-container th, .slide-container td {
+            color: #424242;
+            font-size: 20px;
+            line-height: 1.6;
+        }
+        .slide-container .subtitle {
+            font-size: 24px; color: #5c6bc0; font-weight: 600; margin-top: 20px;
+        }
+
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: center;
+            width: 100%;
+            align-items: center;
+        }
+
+        /* LAYOUTS */
+        .title-layout { text-align: center; max-width: 900px; }
+        
+        .section-title-layout {
+            text-align: center;
+            background: #1a237e;
+            color: white;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0; left: 0;
+        }
+        .section-title-layout h2 { color: white; font-size: 60px; border: none; margin-bottom: 20px; }
+        .section-title-layout hr { width: 100px; height: 4px; background: #ffc107; border: none; margin-top: 0; }
+
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; width: 100%; align-items: center; }
+        .two-column.tiled > div {
+            background: #f5f5f5; padding: 30px; border-radius: 8px; border-left: 5px solid #3949ab;
+            height: 100%; display: flex; flex-direction: column; justify-content: center;
+        }
+
+        .image-wrapper { border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); height: 350px; width: 100%; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .two-column .image-wrapper img { object-fit: contain; background: #fff; }
+
+        /* LISTS */
+        ul { list-style: none; padding: 0; }
+        ul li { margin-bottom: 12px; padding-left: 30px; position: relative; }
+        ul li::before {
+            content: '\f054'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            position: absolute; left: 0; top: 4px; color: #ffc107; font-size: 16px;
+        }
+
+        /* TABLES (Journal Entries) */
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #fff; font-size: 18px; }
+        th, td { border: 1px solid #e0e0e0; padding: 12px 15px; text-align: left; }
+        th { background-color: #3949ab; color: white; font-weight: 600; text-transform: uppercase; font-size: 16px; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        .credit-col { padding-left: 40px; } /* Indent for credits */
+
+        /* MATH */
+        math { font-size: 24px; color: #1a237e; }
+
+        /* TILED CONTENT */
+        .tiled-content { display: flex; gap: 30px; width: 100%; align-items: stretch; }
+        .tile {
+            flex: 1; background: #fafafa; padding: 25px; border-radius: 8px;
+            border-top: 4px solid #1a237e; text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .tile .icon { font-size: 40px; color: #3949ab; margin-bottom: 15px; }
+
+        /* BLEED IMAGE */
+        .slide-container.bleed-image-layout {
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            align-items: start;
+        }
+        .slide-container.bleed-image-layout .content-container { padding: 60px; display: flex; flex-direction: column; justify-content: center; height: 100%; }
+        .slide-container.bleed-image-layout .image-container { height: 100%; width: 100%; }
+        .slide-container.bleed-image-layout img.bleed-image-side { width: 100%; height: 100%; max-height: 720px; object-fit: cover; }
+
+        /* FULL BG */
+        .slide-container.full-bg-image { padding: 0; }
+        .content-overlay {
+            background: rgba(26, 35, 126, 0.85); padding: 40px; border-radius: 8px;
+            color: white; text-align: center; max-width: 80%;
+        }
+        .full-bg-image h2 { color: #ffc107; border: none; }
+        .full-bg-image p { color: #fff; }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<div class="slide-container full-bg-image" style="background-image: url('https://placehold.co/1280x720/1A237E/FFFFFF?text=Accounting+for+Merchandise+Operations'); background-size: cover; display: flex; align-items: center; justify-content: center;">
+    <div class="content-overlay">
+        <h1>Kế Toán Trong Doanh Nghiệp Thương Mại</h1>
+        <p class="subtitle">Nguyên Lý Kế Toán • Chương 5</p>
+        <p>Dành cho Sinh viên ngành Thương mại điện tử</p>
+    </div>
+</div>
+
+<!-- Slide 2: Learning Objectives -->
+<div class="slide-container">
+    <h2 class="slide-title">Mục Tiêu Bài Giảng</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <ul>
+                    <li>Mô tả hoạt động thương mại và các hệ thống kiểm kê hàng tồn kho.</li>
+                    <li>Ghi nhận các giao dịch mua hàng theo hệ thống kiểm kê thường xuyên.</li>
+                    <li>Ghi nhận các giao dịch bán hàng theo hệ thống kiểm kê thường xuyên.</li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li>Áp dụng các bước của chu trình kế toán cho công ty thương mại.</li>
+                    <li>Lập các báo cáo tài chính cho công ty thương mại.</li>
+                    <li>Mô tả năm báo cáo tài chính và cách lập chúng.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: Merchandising Operations -->
+<div class="slide-container bleed-image-layout">
+    <div class="content-container">
+        <h2>Hoạt Động Thương Mại</h2>
+        <p>Các công ty thương mại mua và bán hàng hóa (merchandise) là nguồn doanh thu chính, thay vì cung cấp dịch vụ.</p>
+        <p><strong>Nhà Bán Lẻ (Retailers):</strong> Bán trực tiếp cho người tiêu dùng (ví dụ: Walmart, Carrefour).</p>
+        <p><strong>Nhà Bán Sỉ (Wholesalers):</strong> Bán cho các nhà bán lẻ (ví dụ: nhà cung cấp lớn).</p>
+    </div>
+    <div class="image-container">
+        <img class="bleed-image-side" src="https://placehold.co/640x720/A5D6A7/1A237E?text=Hình+ảnh+Siêu+thị+hoạt+động+Thương+mại" alt="Hoạt động thương mại">
+    </div>
+</div>
+
+<!-- Slide 4: Income Measurement Process -->
+<div class="slide-container">
+    <h2 class="slide-title">Quy Trình Xác Định Thu Nhập</h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-money-bill-wave"></i></div>
+                <h3>Doanh Thu Bán Hàng</h3>
+                <p>Nguồn doanh thu chính từ việc bán hàng hóa.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-minus"></i></div>
+                <h3>Giá Vốn Hàng Bán</h3>
+                <p>Tổng chi phí hàng hóa đã bán trong kỳ (COGS).</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-equals"></i></div>
+                <h3>Lợi Nhuận Gộp</h3>
+                <p>Doanh Thu Bán Hàng trừ Giá Vốn Hàng Bán.</p>
+            </div>
+        </div>
+        <div style="margin-top: 30px; font-size: 22px; font-weight: bold; color: #1a237e;">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                <mrow>
+                    <mtext>Lợi Nhuận Gộp</mtext>
+                    <mo>-</mo>
+                    <mtext>Chi Phí Hoạt Động</mtext>
+                    <mo>=</mo>
+                    <mtext>Thu Nhập Ròng (Lỗ)</mtext>
+                </mrow>
+            </math>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 5: Operating Cycles -->
+<div class="slide-container">
+    <h2 class="slide-title">So Sánh Chu Kỳ Hoạt Động</h2>
+    <div class="content-area">
+        <div class="two-column tiled">
+            <div>
+                <h3>Công ty Dịch vụ</h3>
+                <p>Chu kỳ hoạt động ngắn hơn.</p>
+                <p>Tiền &rarr; Thực hiện Dịch vụ &rarr; Tiền (hoặc Khoản Phải Thu &rarr; Tiền)</p>
+            </div>
+            <div>
+                <h3>Công ty Thương mại</h3>
+                <p>Chu kỳ hoạt động dài hơn do phải mua hàng tồn kho.</p>
+                <p>Tiền &rarr; Mua Hàng Tồn Kho &rarr; Bán Hàng &rarr; Khoản Phải Thu &rarr; Tiền</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 6: Merchandising Operating Cycle Diagram -->
+<div class="slide-container">
+    <h2 class="slide-title">Sơ Đồ Chu Kỳ Hoạt Động Thương Mại</h2>
+    <div class="content-area">
+        <div class="image-wrapper" style="height: 450px;">
+            <img src="https://placehold.co/1000x450/3F51B5/FFFFFF?text=Sơ+đồ+Chu+kỳ+Hoạt+động+Thương+mại" alt="Sơ đồ chu kỳ hoạt động thương mại">
+        </div>
+        <p style="text-align: center; margin-top: 20px;">Chu kỳ lặp lại: Tiền mua Hàng tồn kho, Hàng tồn kho được bán thành Khoản phải thu, Khoản phải thu được thu thành Tiền.</p>
+    </div>
+</div>
+
+<!-- Slide 7: Flow of Costs -->
+<div class="slide-container">
+    <h2 class="slide-title">Luồng Chi Phí Hàng Tồn Kho</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <p>Các công ty hạch toán chi phí hàng tồn kho qua hai giai đoạn:</p>
+                <ol style="margin-left: 20px; font-size: 20px; line-height: 1.8;">
+                    <li><strong>Hàng Có Sẵn Để Bán:</strong> Hàng Tồn Kho Đầu Kỳ + Giá Vốn Hàng Mua.</li>
+                    <li><strong>Phân Bổ:</strong> Hàng được bán sẽ được phân bổ vào Giá Vốn Hàng Bán. Hàng chưa bán vẫn nằm trong Hàng Tồn Kho Cuối Kỳ.</li>
+                </ol>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://placehold.co/400x350/FFC107/1A237E?text=Sơ+đồ+Luồng+Chi+phí+Hàng+Tồn+kho" alt="Sơ đồ luồng chi phí hàng tồn kho">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 8: Inventory Systems -->
+<div class="slide-container">
+    <h2 class="slide-title">Các Hệ Thống Kiểm Kê Hàng Tồn Kho</h2>
+    <div class="content-area">
+        <p style="text-align: center; margin-bottom: 40px;">Các công ty sử dụng một trong hai hệ thống để hạch toán hàng tồn kho:</p>
+        <div class="two-column tiled">
+            <div>
+                <div class="icon" style="text-align: center; font-size: 50px; color: #1a237e;"><i class="fa-solid fa-barcode"></i></div>
+                <h3>Hệ Thống Thường Xuyên (Perpetual)</h3>
+                <p>Duy trì hồ sơ chi tiết về giá vốn của từng giao dịch mua và bán. Hồ sơ liên tục cho thấy hàng tồn kho hiện có.</p>
+            </div>
+            <div>
+                <div class="icon" style="text-align: center; font-size: 50px; color: #1a237e;"><i class="fa-solid fa-calendar-days"></i></div>
+                <h3>Hệ Thống Định Kỳ (Periodic)</h3>
+                <p>Không theo dõi chi tiết hàng tồn kho hàng ngày. Giá vốn hàng bán chỉ được xác định vào cuối kỳ kế toán.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 9: Perpetual System Details -->
+<div class="slide-container bleed-image-layout">
+    <div class="content-container">
+        <h2>Hệ Thống Thường Xuyên</h2>
+        <p><strong>Theo dõi liên tục:</strong> Hồ sơ liên tục cho thấy số lượng và giá vốn hàng tồn kho.</p>
+        <p><strong>Giá Vốn Hàng Bán:</strong> Được xác định ngay sau mỗi lần bán hàng.</p>
+        <p><strong>Kiểm soát:</strong> Cung cấp khả năng kiểm soát hàng tồn kho tốt hơn hệ thống định kỳ.</p>
+        <p>Ngày nay phổ biến nhờ công nghệ (máy quét mã vạch).</p>
+    </div>
+    <div class="image-container">
+        <img class="bleed-image-side" src="https://placehold.co/640x720/E1F5FE/1A237E?text=Hình+ảnh+Máy+quét+mã+vạch" alt="Máy quét mã vạch">
+    </div>
+</div>
+
+<!-- Slide 10: Periodic System Details -->
+<div class="slide-container">
+    <h2 class="slide-title">Chi Tiết Hệ Thống Định Kỳ</h2>
+    <div class="content-area">
+        <ul>
+            <li>Không có hồ sơ chi tiết hàng ngày về hàng hóa tồn kho.</li>
+            <li>Phải tiến hành kiểm kê vật chất cuối kỳ để xác định giá vốn hàng tồn kho.</li>
+            <li><strong>Tính Giá Vốn Hàng Bán (COGS):</strong></li>
+        </ul>
+        <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin-top: 20px; width: 80%;">
+            <p>Hàng Tồn Kho Đầu Kỳ</p>
+            <p>+ Giá Vốn Hàng Mua Thuần</p>
+            <hr style="border-top: 2px solid #1a237e;">
+            <p>= Hàng Có Sẵn Để Bán</p>
+            <p>- Hàng Tồn Kho Cuối Kỳ (Kiểm kê vật chất)</p>
+            <hr style="border-top: 2px solid #1a237e;">
+            <p><strong>= Giá Vốn Hàng Bán</strong></p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 11: Comparison Summary -->
+<div class="slide-container">
+    <h2 class="slide-title">So Sánh Thường Xuyên và Định Kỳ</h2>
+    <div class="content-area">
+        <table>
+            <thead>
+                <tr>
+                    <th>Đặc Điểm</th>
+                    <th>Hệ Thống Thường Xuyên</th>
+                    <th>Hệ Thống Định Kỳ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Cập nhật Hồ sơ</td>
+                    <td>Liên tục (mỗi giao dịch)</td>
+                    <td>Chỉ cuối kỳ</td>
+                </tr>
+                <tr>
+                    <td>Tính COGS</td>
+                    <td>Tại thời điểm bán hàng</td>
+                    <td>Cuối kỳ</td>
+                </tr>
+                <tr>
+                    <td>Kiểm soát Hàng tồn kho</td>
+                    <td>Cao (dữ liệu thời gian thực)</td>
+                    <td>Thấp hơn (khoảng trống dữ liệu)</td>
+                </tr>
+                <tr>
+                    <td>Thực hiện</td>
+                    <td>Yêu cầu phần mềm/máy quét</td>
+                    <td>Đơn giản hơn, ít công nghệ hơn</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 12: Practice DO IT! 1 -->
+<div class="slide-container">
+    <h2 class="slide-title">Luyện Tập: DO IT! 1</h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="tile">
+                <h3>Câu hỏi</h3>
+                <p>Đúng hay Sai: Nguồn doanh thu chính của công ty thương mại là từ việc thực hiện dịch vụ cho khách hàng.</p>
+            </div>
+            <div class="tile" style="background-color: #e8eaf6;">
+                <h3>Trả lời</h3>
+                <p><strong>Sai.</strong> Nguồn doanh thu chính là từ việc bán hàng hóa (merchandise).</p>
+            </div>
+        </div>
+        <div class="tiled-content" style="margin-top: 20px;">
+            <div class="tile">
+                <h3>Câu hỏi</h3>
+                <p>Đúng hay Sai: Chu kỳ hoạt động của công ty dịch vụ thường ngắn hơn công ty thương mại.</p>
+            </div>
+            <div class="tile" style="background-color: #e8eaf6;">
+                <h3>Trả lời</h3>
+                <p><strong>Đúng.</strong> Công ty thương mại có thêm bước mua và giữ hàng tồn kho.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 13: Section Title: Purchases -->
+<div class="slide-container">
+    <div class="section-title-layout">
+        <hr>
+        <h2>Ghi Nhận Giao Dịch Mua Hàng</h2>
+        <p>Hệ Thống Kiểm Kê Thường Xuyên</p>
+    </div>
+</div>
+
+<!-- Slide 14: Purchasing Documentation -->
+<div class="slide-container bleed-image-layout">
+    <div class="content-container">
+        <h2>Tài Liệu Nguồn</h2>
+        <p>Mọi giao dịch mua hàng phải được hỗ trợ bằng các tài liệu kinh doanh.</p>
+        <ul>
+            <li><strong>Mua bằng Tiền mặt:</strong> Phiếu chi hoặc hóa đơn tiền mặt.</li>
+            <li><strong>Mua chịu (Credit Purchase):</strong> Hóa đơn mua hàng (Purchase Invoice).</li>
+        </ul>
+        <p>Hóa đơn chỉ ra tổng giá mua, mô tả hàng hóa và điều khoản bán hàng.</p>
+    </div>
+    <div class="image-container">
+        <img class="bleed-image-side" src="https://placehold.co/640x720/BBDEFB/1A237E?text=Hình+ảnh+Hóa+đơn+mua+hàng" alt="Hóa đơn mua hàng">
+    </div>
+</div>
+
+<!-- Slide 15: Recording Purchases Entry -->
+<div class="slide-container">
+    <h2 class="slide-title">Ghi Nhận Mua Hàng</h2>
+    <div class="content-area">
+        <p>Theo hệ thống thường xuyên, công ty ghi nhận việc mua hàng hóa để bán vào tài khoản <strong>Hàng Tồn Kho (Inventory)</strong>.</p>
+        <p><em>Ví dụ: Công ty A mua chịu €3,800 hàng hóa từ Công ty B.</em></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Tên Tài Khoản và Giải Thích</th>
+                    <th>Nợ (Debit)</th>
+                    <th>Có (Credit)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>4/5</td>
+                    <td>Hàng Tồn Kho</td>
+                    <td>3,800</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="credit-col">Khoản Phải Trả</td>
+                    <td></td>
+                    <td>3,800</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="3" style="font-style: italic; color: #666;">(Ghi nhận mua hàng hóa chịu)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 16: Freight Costs -->
+<div class="slide-container">
+    <h2 class="slide-title">Chi Phí Vận Chuyển (Freight Costs)</h2>
+    <div class="content-area">
+        <p>Thỏa thuận bán hàng chỉ ra ai sẽ thanh toán chi phí vận chuyển.</p>
+        <div class="two-column tiled">
+            <div>
+                <h3>FOB Điểm Giao Hàng (Shipping Point)</h3>
+                <p><strong>Người Mua</strong> thanh toán chi phí vận chuyển.</p>
+                <p>Quyền sở hữu chuyển sang người mua tại điểm gửi hàng.</p>
+            </div>
+            <div>
+                <h3>FOB Điểm Đến (Destination)</h3>
+                <p><strong>Người Bán</strong> thanh toán chi phí vận chuyển.</p>
+                <p>Quyền sở hữu chuyển sang người mua tại địa điểm kinh doanh của người mua.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 17: FOB Visual -->
+<div class="slide-container">
+    <h2 class="slide-title">Minh Họa Điều Khoản FOB</h2>
+    <div class="content-area">
+        <div class="image-wrapper" style="height: 500px;">
+            <img src="https://placehold.co/1000x500/9FA8DA/1A237E?text=Sơ+đồ+FOB+Shipping+Point+và+FOB+Destination" alt="Sơ đồ FOB Shipping Point và FOB Destination">
+        </div>
+    </div>
+</div>
+
+<!-- Slide 18: Freight Accounting (Buyer) -->
+<div class="slide-container">
+    <h2 class="slide-title">Chi Phí Vận Chuyển: Người Mua Trả</h2>
+    <div class="content-area">
+        <p><strong>FOB Điểm Giao Hàng:</strong> Chi phí vận chuyển do người mua chịu được coi là một phần của giá vốn hàng mua.</p>
+        <p><em>Ví dụ: Công ty A trả €150 phí vận chuyển cho hàng đã mua.</em></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Tên Tài Khoản</th>
+                    <th>Nợ</th>
+                    <th>Có</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>6/5</td>
+                    <td>Hàng Tồn Kho</td>
+                    <td>150</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="credit-col">Tiền mặt</td>
+                    <td></td>
+                    <td>150</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="3" style="font-style: italic;">(Ghi nhận thanh toán phí vận chuyển hàng mua)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 19: Freight Accounting (Seller) -->
+<div class="slide-container">
+    <h2 class="slide-title">Chi Phí Vận Chuyển: Người Bán Trả</h2>
+    <div class="content-area">
+        <p><strong>FOB Điểm Đến:</strong> Chi phí vận chuyển do người bán chịu là một chi phí hoạt động.</p>
+        <p><em>Ví dụ: Công ty B trả €150 phí vận chuyển cho hàng đã bán.</em></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Tên Tài Khoản</th>
+                    <th>Nợ</th>
+                    <th>Có</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>4/5</td>
+                    <td>Chi phí Vận chuyển Hàng bán (Freight-Out)</td>
+                    <td>150</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="credit-col">Tiền mặt</td>
+                    <td></td>
+                    <td>150</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="3" style="font-style: italic;">(Ghi nhận thanh toán phí vận chuyển hàng bán)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 20: Purchase Returns -->
+<div class="slide-container">
+    <h2 class="slide-title">Hàng Mua Bị Trả Lại & Giảm Giá</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>Định Nghĩa</h3>
+                <ul>
+                    <li><strong>Hàng Mua Bị Trả Lại:</strong> Người mua trả lại hàng và nhận lại tiền/giảm khoản nợ.</li>
+                    <li><strong>Giảm Giá Hàng Mua:</strong> Người mua giữ hàng nhưng được giảm giá.</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Ảnh Hưởng Kế Toán</h3>
+                <p>Trong hệ thống thường xuyên, việc này làm giảm giá vốn hàng mua.</p>
+                <p><strong>Hành động:</strong> Giảm (Ghi Có) tài khoản Hàng Tồn Kho.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 21: Recording Returns -->
+<div class="slide-container">
+    <h2 class="slide-title">Ghi Nhận Hàng Mua Bị Trả Lại</h2>
+    <div class="content-area">
+        <p><em>Ví dụ: Công ty A trả lại hàng trị giá €300 cho Công ty B.</em></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Tên Tài Khoản</th>
+                    <th>Nợ</th>
+                    <th>Có</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>8/5</td>
+                    <td>Khoản Phải Trả</td>
+                    <td>300</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="credit-col">Hàng Tồn Kho</td>
+                    <td></td>
+                    <td>300</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="3" style="font-style: italic;">(Ghi nhận hàng mua bị trả lại)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 22: Purchase Discounts -->
+<div class="slide-container">
+    <h2 class="slide-title">Chiết Khấu Mua Hàng</h2>
+    <div class="content-area">
+        <p>Các điều khoản tín dụng có thể cho phép người mua được hưởng chiết khấu tiền mặt nếu thanh toán sớm.</p>
+        <div class="tiled-content">
+            <div class="tile">
+                <h3>2/10, n/30</h3>
+                <p>Chiết khấu <strong>2%</strong> nếu thanh toán trong vòng <strong>10 ngày</strong>.</p>
+                <p>Nếu không, thanh toán toàn bộ (net) trong <strong>30 ngày</strong>.</p>
+            </div>
+            <div class="tile">
+                <h3>1/10 EOM</h3>
+                <p>Chiết khấu <strong>1%</strong> nếu thanh toán trong vòng <strong>10 ngày đầu</strong> của tháng tiếp theo.</p>
+            </div>
+        </div>
+        <p style="margin-top: 20px;">Chiết khấu làm giảm giá vốn mua hàng.</p>
+    </div>
+</div>
+
+<!-- Slide 23: Recording Payment (With Discount) -->
+<div class="slide-container">
+    <h2 class="slide-title">Thanh Toán Có Chiết Khấu</h2>
+    <div class="content-area">
+        <p><em>Ví dụ: Công ty A thanh toán số dư nợ €3,500 (€3,800 - €300 trả lại) trong thời hạn chiết khấu (2%). Chiết khấu = €3,500 x 2% = €70.</em></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Tên Tài Khoản</th>
+                    <th>Nợ</th>
+                    <th>Có</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>14/5</td>
+                    <td>Khoản Phải Trả</td>
+                    <td>3,500</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="credit-col">Hàng Tồn Kho (Khoản Chiết khấu)</td>
+                    <td></td>
+                    <td>70</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="credit-col">Tiền mặt (€3,500 - €70)</td>
+                    <td></td>
+                    <td>3,430</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 24: Summary of Purchasing -->
+<div class="slide-container">
+    <h2 class="slide-title">Tóm Tắt Giao Dịch Mua Hàng</h2>
+    <div class="content-area">
+        <p>Ảnh hưởng đến tài khoản Hàng Tồn Kho (T-Account):</p>
+        <div style="border: 2px solid #1a237e; border-radius: 8px; padding: 20px; background: white; width: 60%;">
+            <h3 style="text-align: center; border-bottom: 2px solid #1a237e; margin-bottom: 10px;">Hàng Tồn Kho (Inventory)</h3>
+            <div style="display: flex; justify-content: space-between;">
+                <div style="width: 48%;">
+                    <p><strong>Nợ (+)</strong></p>
+                    <p>Mua hàng: €3,800</p>
+                    <p>Chi phí vận chuyển vào: €150</p>
+                </div>
+                <div style="border-left: 2px solid #1a237e; width: 48%; padding-left: 10px;">
+                    <p><strong>Có (-)</strong></p>
+                    <p>Hàng mua trả lại: €300</p>
+                    <p>Chiết khấu mua hàng: €70</p>
+                </div>
+            </div>
+            <hr>
+            <p><strong>Số Dư: €3,580</strong> (Giá vốn mua hàng thuần)</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 25: Practice DO IT! 2 -->
+<div class="slide-container">
+    <h2 class="slide-title">Luyện Tập: DO IT! 2</h2>
+    <div class="content-area">
+        <p>Công ty Zhu mua chịu hàng hóa từ Công ty Gão với giá ¥15,000. Trả lại hàng bị lỗi ¥2,000.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Tên Tài Khoản</th>
+                    <th>Nợ</th>
+                    <th>Có</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>5/9</td>
+                    <td>Hàng Tồn Kho</td>
+                    <td>15,000</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="credit-col">Khoản Phải Trả</td>
+                    <td></td>
+                    <td>15,000</td>
+                </tr>
+                <tr>
+                    <td>8/9</td>
+                    <td>Khoản Phải Trả</td>
+                    <td>2,000</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="credit-col">Hàng Tồn Kho</td>
+                    <td></td>
+                    <td>2,000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 26: Section Title: Sales -->
+<div class="slide-container">
+    <div class="section-title-layout">
+        <hr>
+        <h2>Ghi Nhận Giao Dịch Bán Hàng</h2>
+        <p>Hệ Thống Kiểm Kê Thường Xuyên</p>
+    </div>
+</div>
+
+<!-- Slide 27: Revenue Recognition -->
+<div class="slide-container">
+    <h2 class="slide-title">Ghi Nhận Doanh Thu</h2>
+    <div class="content-area">
+        <ul>
+            <li><strong>Nguyên tắc:</strong> Ghi nhận doanh thu bán hàng khi nghĩa vụ thực hiện được hoàn thành (hàng hóa chuyển giao).</li>
+            <li>Được hỗ trợ bởi các tài liệu (Hóa đơn bán hàng).</li>
+            <li><strong>Quy tắc Đặc biệt (Perpetual):</strong> Cần hai bút toán cho mỗi lần bán hàng.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 28: Recording Sales Entries -->
+<div class="slide-container">
+    <h2 class="slide-title">Các Bút Toán Ghi Nhận Bán Hàng</h2>
+    <div class="content-area">
+        <p>Người bán thực hiện hai bút toán:</p>
+        <ol>
+            <li>Ghi nhận doanh thu: Tăng Tiền/Phải Thu và Tăng Doanh Thu Bán Hàng.</li>
+            <li>Ghi nhận giá vốn: Tăng Giá Vốn Hàng Bán và Giảm Hàng Tồn Kho.</li>
+        </ol>
+        <p><em>Ví dụ: Công ty B bán chịu hàng hóa với giá €3,800. Giá vốn là €2,400.</em></p>
+        <table style="font-size: 16px;">
+            <tr>
+                <td>4/5</td>
+                <td>Khoản Phải Thu</td>
+                <td>3,800</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="credit-col">Doanh Thu Bán Hàng</td>
+                <td></td>
+                <td>3,800</td>
+            </tr>
+            <tr style="background-color: #e8eaf6;">
+                <td>4/5</td>
+                <td>Giá Vốn Hàng Bán (COGS)</td>
+                <td>2,400</td>
+                <td></td>
+            </tr>
+            <tr style="background-color: #e8eaf6;">
+                <td></td>
+                <td class="credit-col">Hàng Tồn Kho</td>
+                <td></td>
+                <td>2,400</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 29: Sales Returns & Allowances -->
+<div class="slide-container">
+    <h2 class="slide-title">Hàng Bán Bị Trả Lại & Giảm Giá</h2>
+    <div class="content-area">
+        <ul>
+            <li>Là mặt "đối diện" của hàng mua bị trả lại.</li>
+            <li><strong>Tài khoản Giảm Trừ Doanh Thu:</strong> Hàng Bán Bị Trả Lại và Giảm Giá (Số dư Nợ).</li>
+            <li>Dùng tài khoản này để theo dõi khối lượng hàng trả lại (thay vì ghi Nợ trực tiếp vào Doanh Thu Bán Hàng).</li>
+            <li>Cần hai bút toán cho việc trả lại:
+                <ol>
+                    <li>Ghi nhận giảm khoản phải thu của khách hàng.</li>
+                    <li>Ghi nhận hàng tồn kho được trả lại (nếu hàng ở tình trạng tốt).</li>
+                </ol>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 30: Recording Sales Returns -->
+<div class="slide-container">
+    <h2 class="slide-title">Ghi Nhận Hàng Bán Bị Trả Lại</h2>
+    <div class="content-area">
+        <p><em>Ví dụ: Trả lại hàng. Giá bán €300, Giá vốn €140.</em></p>
+        <table style="font-size: 16px;">
+            <tr>
+                <td>8/5</td>
+                <td>Hàng Bán Bị Trả Lại và Giảm Giá</td>
+                <td>300</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="credit-col">Khoản Phải Thu</td>
+                <td></td>
+                <td>300</td>
+            </tr>
+            <tr style="background-color: #e8eaf6;">
+                <td>8/5</td>
+                <td>Hàng Tồn Kho</td>
+                <td>140</td>
+                <td></td>
+            </tr>
+            <tr style="background-color: #e8eaf6;">
+                <td></td>
+                <td class="credit-col">Giá Vốn Hàng Bán</td>
+                <td></td>
+                <td>140</td>
+            </tr>
+        </table>
+        <p style="font-size: 16px; margin-top: 10px;">*Nếu hàng bị lỗi, Hàng Tồn Kho được ghi Nợ theo Giá trị Hợp lý (ví dụ: giá phế liệu), không phải giá vốn ban đầu.</p>
+    </div>
+</div>
+
+<!-- Slide 31: Sales Discounts -->
+<div class="slide-container">
+    <h2 class="slide-title">Chiết Khấu Bán Hàng</h2>
+    <div class="content-area">
+        <ul>
+            <li>Được cung cấp cho khách hàng để khuyến khích thanh toán nhanh chóng.</li>
+            <li><strong>Tài khoản Giảm Trừ Doanh Thu:</strong> Chiết Khấu Bán Hàng (Số dư Nợ).</li>
+        </ul>
+        <p><em>Ví dụ: Nhận thanh toán €3,430 (đã trừ chiết khấu €70) từ Công ty A.</em></p>
+        <table>
+            <tr>
+                <td>14/5</td>
+                <td>Tiền mặt</td>
+                <td>3,430</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Chiết Khấu Bán Hàng</td>
+                <td>70</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="credit-col">Khoản Phải Thu</td>
+                <td></td>
+                <td>3,500</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 32: Net Sales -->
+<div class="slide-container">
+    <h2 class="slide-title">Tính Doanh Thu Thuần</h2>
+    <div class="content-area">
+        <p>Doanh thu Thuần (Net Sales) là con số được báo cáo trên Báo cáo Kết quả Kinh doanh.</p>
+        <div style="font-size: 28px; color: #1a237e; margin: 30px 0; text-align: center; background: #f5f5f5; padding: 20px; border-radius: 8px;">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                <mrow>
+                    <mtext>Doanh Thu Bán Hàng</mtext>
+                    <mo>-</mo>
+                    <mtext>Hàng Bán Bị Trả Lại &amp; Giảm Giá</mtext>
+                    <mo>-</mo>
+                    <mtext>Chiết Khấu Bán Hàng</mtext>
+                    <mo>=</mo>
+                    <mtext mathvariant="bold">Doanh Thu Thuần</mtext>
+                </mrow>
+            </math>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 33: Section Title: Accounting Cycle -->
+<div class="slide-container">
+    <div class="section-title-layout">
+        <hr>
+        <h2>Chu Trình Kế Toán</h2>
+        <p>Cho Công Ty Thương Mại</p>
+    </div>
+</div>
+
+<!-- Slide 34: Adjusting Entries -->
+<div class="slide-container bleed-image-layout">
+    <div class="content-container">
+        <h2>Bút Toán Điều Chỉnh</h2>
+        <p>Công ty thương mại có các bút toán điều chỉnh tương tự công ty dịch vụ (Chi phí trả trước, Dồn tích).</p>
+        <p><strong>Điều chỉnh Bổ sung: Hao hụt Hàng Tồn Kho (Inventory Shrinkage).</strong></p>
+        <p>Số dư sổ sách có thể khác với kiểm kê vật chất do mất mát, lãng phí hoặc sai sót.</p>
+        <p><strong>Điều chỉnh:</strong> Ghi Nợ Giá Vốn Hàng Bán, Ghi Có Hàng Tồn Kho với số tiền thiếu hụt.</p>
+    </div>
+    <div class="image-container">
+        <img class="bleed-image-side" src="https://placehold.co/640x720/F0F4C3/1A237E?text=Hình+ảnh+Điều+chỉnh+Hàng+tồn+kho" alt="Điều chỉnh hàng tồn kho">
+    </div>
+</div>
+
+<!-- Slide 35: Adjusting Entry Example -->
+<div class="slide-container">
+    <h2 class="slide-title">Ví Dụ Điều Chỉnh Hàng Tồn Kho</h2>
+    <div class="content-area">
+        <p>Số dư Hàng Tồn Kho chưa điều chỉnh: €40,500<br>Kiểm kê vật chất: €40,000<br><strong>Chênh lệch (Hao hụt): €500</strong></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Tên Tài Khoản</th>
+                    <th>Nợ</th>
+                    <th>Có</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>31/12</td>
+                    <td>Giá Vốn Hàng Bán</td>
+                    <td>500</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="credit-col">Hàng Tồn Kho</td>
+                    <td></td>
+                    <td>500</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="3" style="font-style: italic;">(Điều chỉnh hàng tồn kho theo kiểm kê vật chất)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 36: Closing Entries -->
+<div class="slide-container bleed-image-layout">
+    <div class="content-container">
+        <h2>Bút Toán Kết Chuyển</h2>
+        <p>Kết chuyển tất cả các tài khoản tạm thời vào Lợi Nhuận Gộp (Income Summary).</p>
+        <p><strong>Các Tài khoản Đặc biệt cần Kết chuyển:</strong></p>
+        <ul>
+            <li>Doanh Thu Bán Hàng (Số dư Có -> Ghi Nợ để kết chuyển)</li>
+            <li>Hàng Bán Bị Trả Lại & Giảm Giá (Số dư Nợ -> Ghi Có để kết chuyển)</li>
+            <li>Chiết Khấu Bán Hàng (Số dư Nợ -> Ghi Có để kết chuyển)</li>
+            <li>Giá Vốn Hàng Bán (Số dư Nợ -> Ghi Có để kết chuyển)</li>
+        </ul>
+    </div>
+    <div class="image-container">
+        <img class="bleed-image-side" src="https://placehold.co/640x720/FBE0C4/1A237E?text=Hình+ảnh+Kết+chuyển+tài+khoản" alt="Kết chuyển tài khoản">
+    </div>
+</div>
+
+<!-- Slide 37: Section Title: Financial Statements -->
+<div class="slide-container">
+    <div class="section-title-layout">
+        <hr>
+        <h2>Báo Cáo Tài Chính</h2>
+        <p>Báo Cáo Kết Quả</p>
+    </div>
+</div>
+
+<!-- Slide 38: Income Statement Formats -->
+<div class="slide-container">
+    <h2 class="slide-title">Các Hình Thức Báo Cáo Kết Quả Kinh Doanh</h2>
+    <div class="content-area">
+        <div class="two-column tiled">
+            <div>
+                <h3>Nhiều Bước (Multiple-Step)</h3>
+                <p>Trình bày nhiều bước để xác định lợi nhuận ròng.</p>
+                <ul>
+                    <li>Lợi nhuận Gộp (Gross Profit)</li>
+                    <li>Thu nhập từ Hoạt động (Income from Operations)</li>
+                    <li>Lợi nhuận Ròng (Net Income)</li>
+                </ul>
+                <p><em>Cung cấp chi tiết hơn để phân tích.</em></p>
+            </div>
+            <div>
+                <h3>Một Bước (Single-Step)</h3>
+                <p>Trừ tổng chi phí khỏi tổng doanh thu trong một bước.</p>
+                <ul>
+                    <li>Doanh Thu - Chi Phí = Lợi Nhuận Ròng</li>
+                </ul>
+                <p><em>Đơn giản hơn, nhưng ít thông tin hơn.</em></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 39: Multiple-Step Layout -->
+<div class="slide-container">
+    <h2 class="slide-title">Bố Cục Báo Cáo Nhiều Bước</h2>
+    <div class="content-area">
+        <div class="image-wrapper" style="height: 500px;">
+            <img src="https://placehold.co/1000x500/CFD8DC/1A237E?text=Mẫu+Báo+cáo+Kết+quả+Kinh+doanh+Nhiều+bước" alt="Báo cáo kết quả kinh doanh nhiều bước">
+        </div>
+    </div>
+</div>
+
+<!-- Slide 40: Key Income Items -->
+<div class="slide-container">
+    <h2 class="slide-title">Các Khoản Mục Thu Nhập Chính</h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="tile">
+                <h3>Lợi Nhuận Gộp</h3>
+                <p>Doanh Thu Thuần - Giá Vốn Hàng Bán</p>
+                <p><em>Lợi nhuận từ hoạt động thương mại.</em></p>
+            </div>
+            <div class="tile">
+                <h3>Chi Phí Hoạt Động</h3>
+                <p>Chi phí Bán hàng + Chi phí Quản lý</p>
+                <p><em>Chi phí phát sinh để tạo ra doanh thu.</em></p>
+            </div>
+            <div class="tile">
+                <h3>Thu nhập/Chi phí Khác</h3>
+                <p>Các khoản mục ngoài hoạt động chính (Lãi, Lỗ, Thu nhập Lãi).</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 41: Gross Profit Rate -->
+<div class="slide-container">
+    <h2 class="slide-title">Tỷ Suất Lợi Nhuận Gộp</h2>
+    <div class="content-area">
+        <p>Các nhà phân tích sử dụng chỉ số này để đánh giá hiệu quả hoạt động.</p>
+        <div style="font-size: 26px; color: #1a237e; margin: 30px 0; text-align: center; background: #f5f5f5; padding: 20px; border-radius: 8px;">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                <mrow>
+                    <mfrac>
+                        <mtext>Lợi Nhuận Gộp</mtext>
+                        <mtext>Doanh Thu Thuần</mtext>
+                    </mfrac>
+                    <mo>=</mo>
+                    <mtext mathvariant="bold">Tỷ Suất Lợi Nhuận Gộp</mtext>
+                </mrow>
+            </math>
+        </div>
+        <p>Ví dụ: €144,000 / €460,000 = <strong>31.3%</strong></p>
+        <p>Có nghĩa là 31.3 cent trên mỗi euro doanh thu được dùng để bù đắp chi phí hoạt động và tạo ra lợi nhuận.</p>
+    </div>
+</div>
+
+<!-- Slide 42: Classified Balance Sheet -->
+<div class="slide-container">
+    <h2 class="slide-title">Báo Cáo Tình Hình Tài Chính Phân Loại</h2>
+    <div class="content-area">
+        <ul>
+            <li><strong>Hàng Tồn Kho:</strong> Được báo cáo là Tài sản Ngắn hạn.</li>
+            <li>Được liệt kê sau các khoản mục thanh khoản hơn (hoặc theo thứ tự thanh khoản giảm dần).</li>
+            <li>Thường ít thanh khoản hơn Tiền và Khoản Phải Thu.</li>
+        </ul>
+        <table style="width: 60%; margin-top: 20px;">
+            <tr><th colspan="2">Tài Sản Ngắn Hạn</th></tr>
+            <tr><td>Bảo hiểm Trả trước</td><td>€ 1,800</td></tr>
+            <tr><td><strong>Hàng Tồn Kho</strong></td><td><strong>40,000</strong></td></tr>
+            <tr><td>Khoản Phải Thu</td><td>16,100</td></tr>
+            <tr><td>Tiền mặt</td><td>9,500</td></tr>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 43: Practice DO IT! 5 -->
+<div class="slide-container">
+    <h2 class="slide-title">Luyện Tập: DO IT! 5</h2>
+    <div class="content-area">
+        <p>Phân loại các tài khoản sau:</p>
+        <div class="two-column">
+            <div>
+                <p><strong>Tài Khoản</strong></p>
+                <ul>
+                    <li>Doanh Thu Bán Hàng</li>
+                    <li>Giá Vốn Hàng Bán</li>
+                    <li>Hàng Tồn Kho</li>
+                    <li>Hàng Bán Bị Trả Lại</li>
+                </ul>
+            </div>
+            <div>
+                <p><strong>Báo Cáo / Phân Loại</strong></p>
+                <ul>
+                    <li>Bảng KQKD / Doanh thu</li>
+                    <li>Bảng KQKD / Giá vốn</li>
+                    <li>Bảng Cân đối KT / Tài sản Ngắn hạn</li>
+                    <li>Bảng KQKD / Giảm trừ Doanh thu (Contra)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 44: Recap of 5 Statements -->
+<div class="slide-container">
+    <h2 class="slide-title">Năm Báo Cáo Tài Chính</h2>
+    <div class="content-area">
+        <ol style="font-size: 22px; line-height: 2;">
+            <li><strong>Báo cáo Kết quả Kinh doanh:</strong> Doanh thu, Chi phí, Lợi nhuận ròng.</li>
+            <li><strong>Báo cáo Thu nhập Toàn diện Khác:</strong> Lợi nhuận Ròng +/- các khoản mục Thu nhập toàn diện khác.</li>
+            <li><strong>Báo cáo Lợi nhuận Giữ lại:</strong> Thay đổi trong lợi nhuận giữ lại.</li>
+            <li><strong>Báo cáo Tình hình Tài chính:</strong> Tài sản, Nợ phải trả, Vốn chủ sở hữu.</li>
+            <li><strong>Báo cáo Lưu chuyển Tiền tệ:</strong> Dòng tiền vào/ra.</li>
+        </ol>
+    </div>
+</div>
+
+<!-- Slide 45: Q&A -->
+<div class="slide-container">
+    <h2 class="slide-title" style="text-align: center; border: none;">Câu Hỏi?</h2>
+    <div class="content-area">
+        <p style="text-align: center; font-size: 24px; color: #1a237e; font-weight: bold;">Chúc thầy/cô có một bài giảng thành công!</p>
+    </div>
+</div>
+
+</body>
+</html>
