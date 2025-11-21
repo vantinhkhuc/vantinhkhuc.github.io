@@ -1,0 +1,3102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kế Toán Trong Doanh Nghiệp Thương Mại</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px;
+            display: none;
+            flex-direction: column;
+            position: relative;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-header {
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin: 20px 0 15px 0;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            font-style: italic;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            line-height: 1.8;
+        }
+
+        li {
+            margin: 15px 0;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .example {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #764ba2;
+        }
+
+        .formula {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            text-align: center;
+            margin: 20px 0;
+            border: 2px solid #ffc107;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1em;
+        }
+
+        th, td {
+            border: 2px solid #667eea;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-prev {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-next {
+            background: #667eea;
+            color: white;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-number {
+            color: #666;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .column {
+            padding: 15px;
+        }
+
+        .diagram {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            border: 2px dashed #667eea;
+        }
+
+        .key-point {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #2196f3;
+            font-weight: 500;
+        }
+
+        .warning {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ff9800;
+        }
+
+        .session-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        strong {
+            color: #667eea;
+        }
+
+        .comparison-table td:first-child {
+            font-weight: bold;
+            background: #f0f0f0;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+                width: 95%;
+                height: 90vh;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Slide 1: Trang bìa -->
+        <div class="slide active">
+            <div class="slide-header" style="text-align: center; border: none;">
+                <h1 style="font-size: 3em; margin-bottom: 30px;">KẾ TOÁN TRONG<br/>DOANH NGHIỆP THƯƠNG MẠI</h1>
+                <p class="subtitle" style="font-size: 1.5em; margin: 20px 0;">Accounting for Merchandise Operations</p>
+                <p style="color: #666; font-size: 1.2em; margin-top: 40px;">Môn: Nguyên Lý Kế Toán</p>
+                <p style="color: #666; font-size: 1.2em;">Dành cho Sinh viên năm 2 - Ngành Thương mại điện tử</p>
+                <p style="color: #666; font-size: 1em; margin-top: 40px;">Thời lượng: 2 buổi học (150 phút/buổi)</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Mục tiêu học tập -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>MỤC TIÊU HỌC TẬP</h2>
+                <p class="subtitle">Learning Objectives</p>
+            </div>
+            <div class="content">
+                <p style="margin-bottom: 20px; font-size: 1.1em;">Sau khi hoàn thành chương này, sinh viên có thể:</p>
+                <ol>
+                    <li><strong>Mô tả</strong> hoạt động thương mại và các hệ thống hàng tồn kho</li>
+                    <li><strong>Ghi nhận</strong> các giao dịch mua hàng trong hệ thống kiểm kê thường xuyên</li>
+                    <li><strong>Ghi nhận</strong> các giao dịch bán hàng trong hệ thống kiểm kê thường xuyên</li>
+                    <li><strong>Áp dụng</strong> các bước trong chu trình kế toán cho doanh nghiệp thương mại</li>
+                    <li><strong>Chuẩn bị</strong> báo cáo tài chính cho doanh nghiệp thương mại</li>
+                </ol>
+                <div class="highlight" style="margin-top: 30px;">
+                    <h3 style="margin-top: 0;">Tại sao nội dung này quan trọng?</h3>
+                    <p>Thương mại là một trong những ngành công nghiệp lớn nhất và có ảnh hưởng nhất trên thế giới. Hiểu được báo cáo tài chính của các công ty thương mại là điều cần thiết cho sự nghiệp của bạn trong lĩnh vực Thương mại điện tử.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Nội dung bài học -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>NỘI DUNG BÀI HỌC</h2>
+                <p class="subtitle">Course Outline</p>
+            </div>
+            <div class="content">
+                <div class="session-header">BUỔI 1: Cơ bản về Doanh nghiệp Thương mại</div>
+                <h3>Phần 1: Giới thiệu và Hoạt động Thương mại</h3>
+                <ul>
+                    <li>Đặc điểm của doanh nghiệp thương mại</li>
+                    <li>Chu trình hoạt động</li>
+                    <li>Hệ thống hàng tồn kho</li>
+                </ul>
+
+                <h3>Phần 2: Ghi nhận Giao dịch Mua hàng</h3>
+                <ul>
+                    <li>Chi phí vận chuyển</li>
+                    <li>Trả hàng và giảm giá mua</li>
+                    <li>Chiết khấu thanh toán</li>
+                </ul>
+
+                <div class="session-header" style="margin-top: 20px;">BUỔI 2: Kế toán Nâng cao và Báo cáo</div>
+                <h3>Phần 3: Ghi nhận Giao dịch Bán hàng</h3>
+                <ul>
+                    <li>Trả hàng và giảm giá bán</li>
+                    <li>Chiết khấu bán hàng</li>
+                </ul>
+
+                <h3>Phần 4: Chu trình Kế toán và Báo cáo Tài chính</h3>
+                <ul>
+                    <li>Bút toán điều chỉnh và kết chuyển</li>
+                    <li>Báo cáo kết quả kinh doanh</li>
+                    <li>Báo cáo tình hình tài chính</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- BUỔI 1 -->
+        <!-- Slide 4: Buổi 1 - Giới thiệu -->
+        <div class="slide">
+            <div class="slide-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; text-align: center;">
+                <h1 style="color: white; font-size: 2.5em;">BUỔI 1</h1>
+                <p style="font-size: 1.5em; margin-top: 10px;">Cơ bản về Doanh nghiệp Thương mại</p>
+                <p style="font-size: 1.1em; margin-top: 20px;">Thời lượng: 150 phút</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Doanh nghiệp thương mại là gì? -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>DOANH NGHIỆP THƯƠNG MẠI LÀ GÌ?</h2>
+                <p class="subtitle">What is a Merchandising Company?</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p style="font-size: 1.2em;"><strong>Định nghĩa:</strong> Doanh nghiệp thương mại là doanh nghiệp <strong>mua và bán hàng hóa</strong> thay vì cung cấp dịch vụ như nguồn doanh thu chính.</p>
+                </div>
+
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Nhà bán lẻ (Retailers)</h3>
+                        <p>Bán trực tiếp cho người tiêu dùng</p>
+                        <ul style="margin-left: 20px;">
+                            <li>Carrefour</li>
+                            <li>Metro</li>
+                            <li>Tesco</li>
+                            <li>Các shop online</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Nhà bán sỉ (Wholesalers)</h3>
+                        <p>Bán cho các nhà bán lẻ</p>
+                        <ul style="margin-left: 20px;">
+                            <li>Nhà phân phối</li>
+                            <li>Đại lý cấp 1</li>
+                            <li>Nhà cung cấp B2B</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ thực tế:</h3>
+                    <p><strong>Lazada</strong> mua hàng từ các nhà cung cấp và bán cho người tiêu dùng → Nhà bán lẻ trực tuyến</p>
+                    <p><strong>Alibaba</strong> kết nối nhà sản xuất với các doanh nghiệp → Nền tảng bán sỉ</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: So sánh DN thương mại vs DN dịch vụ -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>SO SÁNH: THƯƠNG MẠI VS DỊCH VỤ</h2>
+                <p class="subtitle">Merchandising vs Service Company</p>
+            </div>
+            <div class="content">
+                <table class="comparison-table">
+                    <tr>
+                        <th>Đặc điểm</th>
+                        <th>DN Dịch vụ</th>
+                        <th>DN Thương mại</th>
+                    </tr>
+                    <tr>
+                        <td>Nguồn doanh thu chính</td>
+                        <td>Dịch vụ (Service Revenue)</td>
+                        <td>Bán hàng (Sales Revenue)</td>
+                    </tr>
+                    <tr>
+                        <td>Tài sản quan trọng</td>
+                        <td>Thiết bị, nhân sự</td>
+                        <td>Hàng tồn kho (Inventory)</td>
+                    </tr>
+                    <tr>
+                        <td>Chi phí chính</td>
+                        <td>Chi phí hoạt động</td>
+                        <td>Giá vốn hàng bán (Cost of Goods Sold)</td>
+                    </tr>
+                    <tr>
+                        <td>Chu trình hoạt động</td>
+                        <td>Ngắn hơn</td>
+                        <td>Dài hơn</td>
+                    </tr>
+                </table>
+
+                <div class="key-point">
+                    <strong>Điểm khác biệt quan trọng:</strong> DN thương mại có thêm hai khoản mục đặc biệt:
+                    <ul style="margin-left: 30px; margin-top: 10px;">
+                        <li><strong>Giá vốn hàng bán (Cost of Goods Sold)</strong> - Chi phí mua hàng đã bán</li>
+                        <li><strong>Lợi nhuận gộp (Gross Profit)</strong> - Doanh thu thuần trừ giá vốn hàng bán</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Quy trình đo lường thu nhập -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>QUY TRÌNH ĐO LƯỜNG THU NHẬP</h2>
+                <p class="subtitle">Income Measurement Process</p>
+            </div>
+            <div class="content">
+                <div class="diagram">
+                    <h3 style="color: #667eea;">Công thức cơ bản</h3>
+                    <div class="formula" style="font-size: 1.3em; margin: 30px 0;">
+                        <strong>Doanh thu bán hàng</strong><br/>
+                        <span style="font-size: 2em;">−</span><br/>
+                        <strong>Giá vốn hàng bán</strong><br/>
+                        <span style="font-size: 2em;">=</span><br/>
+                        <strong>Lợi nhuận gộp</strong><br/>
+                        <span style="font-size: 2em;">−</span><br/>
+                        <strong>Chi phí hoạt động</strong><br/>
+                        <span style="font-size: 2em;">=</span><br/>
+                        <strong style="color: #667eea;">Lợi nhuận thuần</strong>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ: Cửa hàng điện tử</h3>
+                    <table>
+                        <tr>
+                            <td>Doanh thu bán hàng</td>
+                            <td style="text-align: right;">500.000.000 đ</td>
+                        </tr>
+                        <tr>
+                            <td>Giá vốn hàng bán</td>
+                            <td style="text-align: right;">(300.000.000 đ)</td>
+                        </tr>
+                        <tr style="background: #e3f2fd;">
+                            <td><strong>Lợi nhuận gộp</strong></td>
+                            <td style="text-align: right;"><strong>200.000.000 đ</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Chi phí hoạt động</td>
+                            <td style="text-align: right;">(150.000.000 đ)</td>
+                        </tr>
+                        <tr style="background: #c8e6c9;">
+                            <td><strong>Lợi nhuận thuần</strong></td>
+                            <td style="text-align: right;"><strong>50.000.000 đ</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Chu trình hoạt động -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>CHU TRÌNH HOẠT ĐỘNG</h2>
+                <p class="subtitle">Operating Cycle</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Chu trình hoạt động</strong> là khoảng thời gian trung bình từ khi mua hàng tồn kho đến khi thu tiền từ việc bán hàng.</p>
+                </div>
+
+                <h3>DN Dịch vụ (chu trình ngắn):</h3>
+                <div class="diagram" style="padding: 30px;">
+                    <p style="font-size: 1.2em;">Cung cấp dịch vụ → Thu tiền</p>
+                </div>
+
+                <h3>DN Thương mại (chu trình dài hơn):</h3>
+                <div class="diagram" style="padding: 30px;">
+                    <p style="font-size: 1.2em;">
+                        Mua hàng tồn kho → Bán hàng → Thu tiền
+                    </p>
+                    <p style="margin-top: 20px; color: #666;">
+                        (Có thể bán chịu → Phải chờ thu tiền → Chu trình dài hơn)
+                    </p>
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ thực tế:</h3>
+                    <ul>
+                        <li><strong>Shop thời trang online:</strong> Mua hàng từ nhà cung cấp (T1) → Bán hàng (T2) → Thu tiền COD (T2+2 ngày) = Chu trình ~2 tháng</li>
+                        <li><strong>Siêu thị điện máy:</strong> Nhập hàng (T1) → Bán trả góp (T2-T6) → Thu hết tiền (T6) = Chu trình ~6 tháng</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Dòng chi phí -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>DÒNG CHI PHÍ HÀNG TỒN KHO</h2>
+                <p class="subtitle">Flow of Costs</p>
+            </div>
+            <div class="content">
+                <div class="diagram" style="padding: 40px;">
+                    <div class="formula" style="background: #e3f2fd; border-color: #2196f3;">
+                        <strong>Hàng tồn kho đầu kỳ</strong><br/>
+                        <span style="font-size: 1.5em;">+</span><br/>
+                        <strong>Hàng mua trong kỳ</strong><br/>
+                        <span style="font-size: 1.5em;">=</span><br/>
+                        <strong>Hàng có thể bán</strong>
+                    </div>
+                    <p style="margin: 30px 0; font-size: 1.2em;">↓ Chia thành 2 phần:</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="formula" style="background: #fff3e0; border-color: #ff9800;">
+                            <strong>Hàng đã bán</strong><br/>
+                            →<br/>
+                            <strong>Giá vốn hàng bán</strong><br/>
+                            (Cost of Goods Sold)
+                        </div>
+                        <div class="formula" style="background: #f1f8e9; border-color: #8bc34a;">
+                            <strong>Hàng chưa bán</strong><br/>
+                            →<br/>
+                            <strong>Hàng tồn kho cuối kỳ</strong><br/>
+                            (Ending Inventory)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ số liệu:</h3>
+                    <table>
+                        <tr>
+                            <td>Tồn kho đầu tháng</td>
+                            <td style="text-align: right;">50.000.000 đ</td>
+                        </tr>
+                        <tr>
+                            <td>Mua hàng trong tháng</td>
+                            <td style="text-align: right;">300.000.000 đ</td>
+                        </tr>
+                        <tr style="background: #e3f2fd;">
+                            <td><strong>Hàng có thể bán</strong></td>
+                            <td style="text-align: right;"><strong>350.000.000 đ</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Tồn kho cuối tháng</td>
+                            <td style="text-align: right;">(80.000.000 đ)</td>
+                        </tr>
+                        <tr style="background: #fff3e0;">
+                            <td><strong>Giá vốn hàng bán</strong></td>
+                            <td style="text-align: right;"><strong>270.000.000 đ</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Hệ thống hàng tồn kho -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>HỆ THỐNG HÀNG TỒN KHO</h2>
+                <p class="subtitle">Inventory Systems</p>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.1em; margin-bottom: 20px;">Có 2 hệ thống chính để theo dõi hàng tồn kho:</p>
+
+                <div class="two-column">
+                    <div class="column">
+                        <div class="highlight">
+                            <h3 style="margin-top: 0;">1. Kiểm kê thường xuyên</h3>
+                            <p style="font-size: 0.9em;">(Perpetual Inventory System)</p>
+                        </div>
+                        <ul>
+                            <li>Ghi nhận chi tiết <strong>từng lần</strong> mua/bán</li>
+                            <li>Luôn biết tồn kho hiện tại</li>
+                            <li>Tính giá vốn <strong>ngay khi bán</strong></li>
+                            <li>Phù hợp: hàng giá trị cao</li>
+                        </ul>
+                        <div class="example">
+                            <strong>Ví dụ:</strong> Đại lý xe hơi, cửa hàng điện tử, shop online có phần mềm quản lý
+                        </div>
+                    </div>
+
+                    <div class="column">
+                        <div class="highlight">
+                            <h3 style="margin-top: 0;">2. Kiểm kê định kỳ</h3>
+                            <p style="font-size: 0.9em;">(Periodic Inventory System)</p>
+                        </div>
+                        <ul>
+                            <li>Không ghi chi tiết từng lần</li>
+                            <li>Tính tồn kho bằng <strong>kiểm kê thực tế</strong></li>
+                            <li>Tính giá vốn <strong>cuối kỳ</strong></li>
+                            <li>Phù hợp: hàng giá trị thấp, số lượng lớn</li>
+                        </ul>
+                        <div class="example">
+                            <strong>Ví dụ:</strong> Cửa hàng tạp hóa nhỏ, siêu thị mini
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-point" style="margin-top: 20px;">
+                    <strong>Lưu ý:</strong> Bài học này tập trung vào <strong>Hệ thống kiểm kê thường xuyên</strong> vì được sử dụng phổ biến trong thương mại điện tử và các doanh nghiệp hiện đại.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: So sánh 2 hệ thống -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>SO SÁNH HAI HỆ THỐNG</h2>
+                <p class="subtitle">Perpetual vs Periodic System</p>
+            </div>
+            <div class="content">
+                <table>
+                    <tr>
+                        <th>Tiêu chí</th>
+                        <th>Kiểm kê thường xuyên</th>
+                        <th>Kiểm kê định kỳ</th>
+                    </tr>
+                    <tr>
+                        <td>Ghi nhận mua hàng</td>
+                        <td>Ghi: <strong>Nợ Hàng tồn kho</strong></td>
+                        <td>Ghi: <strong>Nợ Mua hàng</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Khi bán hàng</td>
+                        <td>Ghi <strong>2 bút toán</strong>:<br/>1. Ghi doanh thu<br/>2. Ghi giá vốn</td>
+                        <td>Ghi <strong>1 bút toán</strong>:<br/>Chỉ ghi doanh thu</td>
+                    </tr>
+                    <tr>
+                        <td>Biết tồn kho</td>
+                        <td>Bất cứ lúc nào</td>
+                        <td>Chỉ sau khi kiểm kê</td>
+                    </tr>
+                    <tr>
+                        <td>Tính giá vốn</td>
+                        <td>Ngay khi bán</td>
+                        <td>Cuối kỳ</td>
+                    </tr>
+                    <tr>
+                        <td>Kiểm soát</td>
+                        <td>Tốt hơn</td>
+                        <td>Kém hơn</td>
+                    </tr>
+                    <tr>
+                        <td>Chi phí</td>
+                        <td>Cao hơn (cần phần mềm)</td>
+                        <td>Thấp hơn</td>
+                    </tr>
+                </table>
+
+                <div class="warning" style="margin-top: 20px;">
+                    <strong>⚠ Quan trọng:</strong> Ngay cả khi dùng hệ thống kiểm kê thường xuyên, doanh nghiệp vẫn phải <strong>kiểm kê thực tế định kỳ</strong> để:
+                    <ul style="margin-left: 30px; margin-top: 10px;">
+                        <li>Phát hiện hàng thất thoát, hư hỏng</li>
+                        <li>Điều chỉnh sổ sách cho đúng thực tế</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Ưu điểm hệ thống thường xuyên -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>ƯU ĐIỂM HỆ THỐNG KIỂM KÊ THƯỜNG XUYÊN</h2>
+                <p class="subtitle">Advantages of Perpetual System</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3 style="margin-top: 0;">Tại sao nên dùng hệ thống này?</h3>
+                </div>
+
+                <div class="key-point">
+                    <strong>1. Kiểm soát tốt hơn</strong>
+                    <p>Luôn biết số lượng tồn kho → Phát hiện ngay khi có sai lệch, mất mát</p>
+                </div>
+
+                <div class="key-point">
+                    <strong>2. Ra quyết định nhanh</strong>
+                    <p>Biết ngay hàng nào sắp hết → Đặt hàng kịp thời</p>
+                </div>
+
+                <div class="key-point">
+                    <strong>3. Phù hợp với công nghệ</strong>
+                    <p>Máy quét mã vạch, phần mềm quản lý làm việc tự động, giảm sai sót</p>
+                </div>
+
+                <div class="key-point">
+                    <strong>4. Thông tin chi tiết</strong>
+                    <p>Biết từng sản phẩm bán được bao nhiêu → Lập kế hoạch kinh doanh tốt hơn</p>
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ thực tế: Amazon.com</h3>
+                    <p>Thành công của Amazon phần lớn nhờ vào hệ thống quản lý hàng tồn kho cực kỳ hiện đại:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>Theo dõi từng sản phẩm trong kho real-time</li>
+                        <li>Tự động đặt hàng khi tồn kho thấp</li>
+                        <li>Tối ưu hóa vị trí lưu kho</li>
+                        <li>Dự báo nhu cầu chính xác</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Phần 2 - Giới thiệu giao dịch mua hàng -->
+        <div class="slide">
+            <div class="slide-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px;">
+                <h2 style="color: white;">PHẦN 2: GHI NHẬN GIAO DỊCH MUA HÀNG</h2>
+                <p style="font-size: 1.2em; margin-top: 10px;">Recording Purchases</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>Nội dung phần này:</h3>
+                    <ol>
+                        <li>Ghi nhận mua hàng cơ bản</li>
+                        <li>Chi phí vận chuyển (Freight costs)</li>
+                        <li>Trả hàng và giảm giá mua (Purchase returns & allowances)</li>
+                        <li>Chiết khấu thanh toán (Purchase discounts)</li>
+                        <li>Tổng hợp giao dịch mua hàng</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Ghi nhận mua hàng cơ bản -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>GHI NHẬN MUA HÀNG CƠ BẢN</h2>
+                <p class="subtitle">Recording Basic Purchases</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Nguyên tắc:</strong> Ghi nhận khi <strong>nhận được hàng</strong>, không phải khi đặt hàng</p>
+                </div>
+
+                <h3>Chứng từ:</h3>
+                <ul>
+                    <li><strong>Hóa đơn mua hàng</strong> (Purchase Invoice) - Do người bán lập</li>
+                    <li><strong>Biên lai tiền mặt</strong> (Cash Receipt) - Nếu mua bằng tiền mặt</li>
+                </ul>
+
+                <h3>Bút toán khi mua hàng:</h3>
+                <div class="formula" style="text-align: left; padding: 25px;">
+                    <strong>Nợ:</strong> Hàng tồn kho (Inventory)<br/>
+                    <strong>Có:</strong> Tiền mặt (Cash) hoặc Phải trả người bán (Accounts Payable)
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ 1: Mua hàng trả tiền mặt</h3>
+                    <p>Ngày 1/6: Công ty mua hàng trị giá 10.000.000 đ, thanh toán bằng tiền mặt</p>
+                    <table style="margin-top: 15px;">
+                        <tr>
+                            <th>Tài khoản</th>
+                            <th>Nợ</th>
+                            <th>Có</th>
+                        </tr>
+                        <tr>
+                            <td>Hàng tồn kho</td>
+                            <td>10.000.000</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Tiền mặt</td>
+                            <td></td>
+                            <td>10.000.000</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ 2: Mua hàng chịu (trả sau)</h3>
+                    <p>Ngày 4/6: Công ty mua hàng trị giá 25.000.000 đ, thanh toán sau 30 ngày</p>
+                    <table style="margin-top: 15px;">
+                        <tr>
+                            <th>Tài khoản</th>
+                            <th>Nợ</th>
+                            <th>Có</th>
+                        </tr>
+                        <tr>
+                            <td>Hàng tồn kho</td>
+                            <td>25.000.000</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Phải trả người bán</td>
+                            <td></td>
+                            <td>25.000.000</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Chi phí vận chuyển - Khái niệm -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>CHI PHÍ VẬN CHUYỂN</h2>
+                <p class="subtitle">Freight Costs</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Câu hỏi quan trọng:</strong> Ai chịu chi phí vận chuyển? Người mua hay người bán?</p>
+                </div>
+
+                <h3>Điều khoản vận chuyển (Freight Terms):</h3>
+                
+                <div class="two-column">
+                    <div class="column">
+                        <div class="key-point">
+                            <h3 style="margin-top: 0;">FOB Shipping Point</h3>
+                            <p style="font-size: 0.9em;">(Free On Board - Điểm giao hàng)</p>
+                        </div>
+                        <ul>
+                            <li><strong>Người MUA</strong> trả phí vận chuyển</li>
+                            <li>Quyền sở hữu chuyển ngay khi hàng xuất kho</li>
+                            <li>Rủi ro chuyển cho người mua</li>
+                        </ul>
+                        <div class="diagram">
+                            <p style="font-size: 1.1em;">📦 Nhà kho người bán</p>
+                            <p style="margin: 10px 0;">↓ (Quyền sở hữu chuyển)</p>
+                            <p>🚚 Vận chuyển (Người mua trả tiền)</p>
+                            <p style="margin: 10px 0;">↓</p>
+                            <p style="font-size: 1.1em;">🏢 Người mua</p>
+                        </div>
+                    </div>
+
+                    <div class="column">
+                        <div class="key-point">
+                            <h3 style="margin-top: 0;">FOB Destination</h3>
+                            <p style="font-size: 0.9em;">(Free On Board - Điểm đến)</p>
+                        </div>
+                        <ul>
+                            <li><strong>Người BÁN</strong> trả phí vận chuyển</li>
+                            <li>Quyền sở hữu chuyển khi hàng đến nơi</li>
+                            <li>Rủi ro người bán chịu</li>
+                        </ul>
+                        <div class="diagram">
+                            <p style="font-size: 1.1em;">📦 Nhà kho người bán</p>
+                            <p style="margin: 10px 0;">↓</p>
+                            <p>🚚 Vận chuyển (Người bán trả tiền)</p>
+                            <p style="margin: 10px 0;">↓ (Quyền sở hữu chuyển)</p>
+                            <p style="font-size: 1.1em;">🏢 Người mua</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <strong>Lưu ý:</strong> Trong thương mại điện tử, thường dùng FOB Shipping Point (người mua trả phí ship)
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Ghi nhận chi phí vận chuyển -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>GHI NHẬN CHI PHÍ VẬN CHUYỂN</h2>
+                <p class="subtitle">Recording Freight Costs</p>
+            </div>
+            <div class="content">
+                <h3>1. Người MUA trả phí vận chuyển (FOB Shipping Point):</h3>
+                <div class="formula" style="text-align: left; padding: 25px; background: #fff3e0;">
+                    <strong>Nợ:</strong> Hàng tồn kho (Inventory)<br/>
+                    <strong>Có:</strong> Tiền mặt (Cash)
+                </div>
+                <p style="margin: 15px 0;"><strong>Giải thích:</strong> Chi phí vận chuyển là một phần của giá mua hàng → Tăng giá trị hàng tồn kho</p>
+
+                <div class="example">
+                    <h3>Ví dụ 1:</h3>
+                    <p>Ngày 6/6: Mua hàng 25.000.000 đ, FOB Shipping Point, trả phí vận chuyển 500.000 đ</p>
+                    <table style="margin-top: 15px;">
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Hàng tồn kho</td><td>25.000.000</td><td></td></tr>
+                        <tr><td>Phải trả người bán</td><td></td><td>25.000.000</td></tr>
+                        <tr style="background: #fff3e0;"><td colspan="3"><em>Ghi nhận mua hàng</em></td></tr>
+                    </table>
+                    <table style="margin-top: 10px;">
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Hàng tồn kho</td><td>500.000</td><td></td></tr>
+                        <tr><td>Tiền mặt</td><td></td><td>500.000</td></tr>
+                        <tr style="background: #fff3e0;"><td colspan="3"><em>Ghi nhận phí vận chuyển</em></td></tr>
+                    </table>
+                    <p style="margin-top: 15px;"><strong>→ Tổng giá trị hàng tồn kho: 25.500.000 đ</strong></p>
+                </div>
+
+                <h3>2. Người BÁN trả phí vận chuyển (FOB Destination):</h3>
+                <div class="formula" style="text-align: left; padding: 25px; background: #e3f2fd;">
+                    <strong>Nợ:</strong> Chi phí vận chuyển bán hàng (Freight-Out)<br/>
+                    <strong>Có:</strong> Tiền mặt (Cash)
+                </div>
+                <p style="margin: 15px 0;"><strong>Giải thích:</strong> Đây là chi phí hoạt động của người bán, không liên quan đến hàng tồn kho</p>
+
+                <div class="example">
+                    <h3>Ví dụ 2 (Góc độ người bán):</h3>
+                    <p>Người bán trả 500.000 đ phí ship cho khách hàng</p>
+                    <table style="margin-top: 15px;">
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Chi phí vận chuyển bán hàng</td><td>500.000</td><td></td></tr>
+                        <tr><td>Tiền mặt</td><td></td><td>500.000</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Trả hàng và giảm giá mua -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>TRẢ HÀNG VÀ GIẢM GIÁ MUA</h2>
+                <p class="subtitle">Purchase Returns and Allowances</p>
+            </div>
+            <div class="content">
+                <div class="two-column">
+                    <div class="column">
+                        <div class="key-point">
+                            <h3 style="margin-top: 0;">Trả hàng</h3>
+                            <p>(Purchase Return)</p>
+                        </div>
+                        <p>Trả lại hàng cho người bán vì:</p>
+                        <ul style="margin-left: 20px;">
+                            <li>Hàng bị hỏng</li>
+                            <li>Hàng sai quy cách</li>
+                            <li>Chất lượng kém</li>
+                        </ul>
+                    </div>
+
+                    <div class="column">
+                        <div class="key-point">
+                            <h3 style="margin-top: 0;">Giảm giá</h3>
+                            <p>(Purchase Allowance)</p>
+                        </div>
+                        <p>Giữ hàng nhưng được giảm giá vì:</p>
+                        <ul style="margin-left: 20px;">
+                            <li>Hàng có khuyết điểm nhỏ</li>
+                            <li>Chất lượng không như mong đợi</li>
+                            <li>Thương lượng giữ hàng</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Bút toán ghi nhận:</h3>
+                <div class="formula" style="text-align: left; padding: 25px;">
+                    <strong>Nợ:</strong> Phải trả người bán (Accounts Payable)<br/>
+                    <strong>Có:</strong> Hàng tồn kho (Inventory)
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ 1: Trả hàng</h3>
+                    <p>Ngày 8/6: Phát hiện hàng mua ngày 4/6 bị lỗi, trả lại 3.000.000 đ</p>
+                    <table style="margin-top: 15px;">
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Phải trả người bán</td><td>3.000.000</td><td></td></tr>
+                        <tr><td>Hàng tồn kho</td><td></td><td>3.000.000</td></tr>
+                    </table>
+                    <p style="margin-top: 10px;"><strong>Giải thích:</strong> Giảm cả nợ phải trả và giá trị hàng tồn kho</p>
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ 2: Được giảm giá</h3>
+                    <p>Ngày 10/6: Hàng có một chút xước nhẹ, người bán đồng ý giảm 500.000 đ</p>
+                    <table style="margin-top: 15px;">
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Phải trả người bán</td><td>500.000</td><td></td></tr>
+                        <tr><td>Hàng tồn kho</td><td></td><td>500.000</td></tr>
+                    </table>
+                    <p style="margin-top: 10px;"><strong>Giải thích:</strong> Bút toán giống như trả hàng</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Chiết khấu thanh toán -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>CHIẾT KHẤU THANH TOÁN</h2>
+                <p class="subtitle">Purchase Discounts</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Định nghĩa:</strong> Giảm giá khi thanh toán sớm để khuyến khích người mua trả tiền nhanh</p>
+                </div>
+
+                <h3>Điều khoản thanh toán phổ biến:</h3>
+                <div class="example">
+                    <h3>2/10, n/30</h3>
+                    <p><strong>Đọc là:</strong> "Hai mười, ròng ba mươi" (Two-ten, net thirty)</p>
+                    <p><strong>Ý nghĩa:</strong></p>
+                    <ul>
+                        <li><strong>2/10:</strong> Được giảm 2% nếu thanh toán trong vòng 10 ngày</li>
+                        <li><strong>n/30:</strong> Phải thanh toán toàn bộ trong vòng 30 ngày</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Các điều khoản khác:</h3>
+                    <ul>
+                        <li><strong>1/10, n/60:</strong> Giảm 1% nếu trả trong 10 ngày, không thì trả đủ trong 60 ngày</li>
+                        <li><strong>3/15, n/30:</strong> Giảm 3% nếu trả trong 15 ngày, không thì trả đủ trong 30 ngày</li>
+                        <li><strong>n/30:</strong> Không có chiết khấu, phải trả trong 30 ngày</li>
+                    </ul>
+                </div>
+
+                <div class="warning">
+                    <strong>Lưu ý quan trọng:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Chiết khấu tính trên số tiền <strong>SAU KHI</strong> đã trừ hàng trả lại</li>
+                        <li>Chiết khấu <strong>KHÔNG</strong> áp dụng cho phí vận chuyển</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: Ghi nhận chiết khấu thanh toán -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>GHI NHẬN CHIẾT KHẤU THANH TOÁN</h2>
+                <p class="subtitle">Recording Purchase Discounts</p>
+            </div>
+            <div class="content">
+                <h3>Bút toán khi được chiết khấu:</h3>
+                <div class="formula" style="text-align: left; padding: 25px;">
+                    <strong>Nợ:</strong> Phải trả người bán (số tiền gốc)<br/>
+                    <strong>Có:</strong> Hàng tồn kho (số tiền chiết khấu)<br/>
+                    <strong>Có:</strong> Tiền mặt (số tiền thực trả)
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ đầy đủ:</h3>
+                    <p><strong>Ngày 4/6:</strong> Mua hàng 25.000.000 đ, điều khoản 2/10, n/30</p>
+                    <p><strong>Ngày 8/6:</strong> Trả hàng 3.000.000 đ</p>
+                    <p><strong>Ngày 14/6:</strong> Thanh toán số tiền còn lại (trong kỳ chiết khấu)</p>
+
+                    <h4 style="margin-top: 20px;">Bước 1: Tính toán</h4>
+                    <table>
+                        <tr><td>Số tiền mua ban đầu</td><td style="text-align: right;">25.000.000 đ</td></tr>
+                        <tr><td>Trả hàng</td><td style="text-align: right;">(3.000.000 đ)</td></tr>
+                        <tr style="background: #e3f2fd;"><td><strong>Số tiền còn nợ</strong></td><td style="text-align: right;"><strong>22.000.000 đ</strong></td></tr>
+                        <tr><td>Chiết khấu 2%</td><td style="text-align: right;">(440.000 đ)</td></tr>
+                        <tr style="background: #c8e6c9;"><td><strong>Số tiền thực trả</strong></td><td style="text-align: right;"><strong>21.560.000 đ</strong></td></tr>
+                    </table>
+
+                    <h4 style="margin-top: 20px;">Bước 2: Bút toán</h4>
+                    <table>
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Phải trả người bán</td><td>22.000.000</td><td></td></tr>
+                        <tr><td>Hàng tồn kho</td><td></td><td>440.000</td></tr>
+                        <tr><td>Tiền mặt</td><td></td><td>21.560.000</td></tr>
+                    </table>
+                </div>
+
+                <div class="key-point">
+                    <strong>Tại sao giảm Hàng tồn kho?</strong><br/>
+                    Vì chiết khấu giúp giảm giá mua thực tế → Giá trị hàng tồn kho cũng giảm</div>
+            </div>
+        </div>
+
+        <!-- Slide 20: Nên lấy chiết khấu không? -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>CÓ NÊN LẤY CHIẾT KHẤU KHÔNG?</h2>
+                <p class="subtitle">Should We Take the Discount?</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3 style="margin-top: 0;">Câu trả lời: LUÔN LUÔN nên lấy chiết khấu!</h3>
+                </div>
+
+                <h3>Phân tích kinh tế:</h3>
+                <div class="example">
+                    <p><strong>Tình huống:</strong> Nợ 22.000.000 đ, điều khoản 2/10, n/30</p>
+                    <p><strong>Lựa chọn:</strong></p>
+                    <ul>
+                        <li><strong>Option 1:</strong> Trả ngay trong 10 ngày → Được giảm 2% = 440.000 đ</li>
+                        <li><strong>Option 2:</strong> Trả sau 30 ngày → Không được giảm, dùng tiền 20 ngày</li>
+                    </ul>
+                </div>
+
+                <div class="formula">
+                    <strong>Tính lãi suất thực tế:</strong><br/><br/>
+                    Bỏ chiết khấu 2% để dùng tiền thêm 20 ngày<br/>
+                    = 2% × (365 ngày / 20 ngày)<br/>
+                    = 2% × 18.25<br/>
+                    = <strong style="color: #d32f2f; font-size: 1.3em;">36.5% / năm</strong>
+                </div>
+
+                <div class="warning">
+                    <strong>Kết luận:</strong> Bỏ qua chiết khấu = Chấp nhận lãi suất 36.5%/năm!<br/>
+                    Trong khi lãi suất ngân hàng chỉ khoảng 6-10%/năm<br/>
+                    <br/>
+                    <strong>→ Nên vay ngân hàng (lãi 10%) để trả sớm và lấy chiết khấu!</strong>
+                </div>
+
+                <div class="example">
+                    <h3>So sánh cụ thể:</h3>
+                    <table>
+                        <tr>
+                            <th>Phương án</th>
+                            <th>Chi phí</th>
+                            <th>Tổng thanh toán</th>
+                        </tr>
+                        <tr style="background: #c8e6c9;">
+                            <td><strong>Vay ngân hàng 10%/năm</strong><br/>trả sớm lấy chiết khấu</td>
+                            <td>Lãi vay ~120.000 đ<br/>(22M × 10% × 20/365)</td>
+                            <td><strong>21.680.000 đ</strong></td>
+                        </tr>
+                        <tr style="background: #ffcdd2;">
+                            <td><strong>Không lấy chiết khấu</strong><br/>trả sau 30 ngày</td>
+                            <td>Mất chiết khấu 440.000 đ</td>
+                            <td><strong>22.000.000 đ</strong></td>
+                        </tr>
+                        <tr style="background: #fff3e0;">
+                            <td colspan="2"><strong>Tiết kiệm được:</strong></td>
+                            <td><strong>320.000 đ</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 21: Tổng hợp giao dịch mua hàng -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>TỔNG HỢP GIAO DỊCH MUA HÀNG</h2>
+                <p class="subtitle">Summary of Purchase Transactions</p>
+            </div>
+            <div class="content">
+                <div class="example">
+                    <h3>Ví dụ tổng hợp - Công ty Sauk Stereo:</h3>
+                    
+                    <p><strong>4/5:</strong> Mua hàng từ PW Audio Supply 3.800€, điều khoản 2/10, n/30, FOB Shipping Point</p>
+                    <p><strong>6/5:</strong> Trả phí vận chuyển 150€</p>
+                    <p><strong>8/5:</strong> Trả lại hàng lỗi 300€</p>
+                    <p><strong>14/5:</strong> Thanh toán (trong kỳ chiết khấu)</p>
+                </div>
+
+                <h3>Các bút toán:</h3>
+                <table style="font-size: 0.9em;">
+                    <tr><th>Ngày</th><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                    <tr>
+                        <td rowspan="2">4/5</td>
+                        <td>Hàng tồn kho</td>
+                        <td>3.800</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Phải trả người bán</td>
+                        <td></td>
+                        <td>3.800</td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td rowspan="2">6/5</td>
+                        <td>Hàng tồn kho</td>
+                        <td>150</td>
+                        <td></td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td>Tiền mặt</td>
+                        <td></td>
+                        <td>150</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">8/5</td>
+                        <td>Phải trả người bán</td>
+                        <td>300</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Hàng tồn kho</td>
+                        <td></td>
+                        <td>300</td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td rowspan="3">14/5</td>
+                        <td>Phải trả người bán (3.800-300)</td>
+                        <td>3.500</td>
+                        <td></td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td>Hàng tồn kho (3.500×2%)</td>
+                        <td></td>
+                        <td>70</td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td>Tiền mặt</td>
+                        <td></td>
+                        <td>3.430</td>
+                    </tr>
+                </table>
+
+                <h3 style="margin-top: 20px;">Tài khoản Hàng tồn kho (T-account):</h3>
+                <div class="diagram">
+                    <table style="width: 100%; text-align: center;">
+                        <tr style="background: #667eea; color: white;">
+                            <th colspan="2">Hàng tồn kho (Inventory)</th>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; border-right: 2px solid #667eea;"><strong>Nợ (Debit)</strong></td>
+                            <td style="width: 50%;"><strong>Có (Credit)</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="border-right: 2px solid #667eea;">4/5: Mua hàng 3.800</td>
+                            <td>8/5: Trả hàng 300</td>
+                        </tr>
+                        <tr>
+                            <td style="border-right: 2px solid #667eea;">6/5: Phí ship 150</td>
+                            <td>14/5: Chiết khấu 70</td>
+                        </tr>
+                        <tr style="background: #e3f2fd;">
+                            <td colspan="2"><strong>Số dư: 3.580€</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 22: Nghỉ giải lao -->
+        <div class="slide">
+            <div class="slide-header" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 40px; border-radius: 15px; text-align: center;">
+                <h1 style="color: white; font-size: 3em;">☕ NGHỈ GIẢI LAO</h1>
+                <p style="font-size: 1.5em; margin-top: 20px;">Break Time - 15 phút</p>
+                <p style="font-size: 1.2em; margin-top: 30px;">Chuẩn bị cho phần tiếp theo:<br/><strong>Ghi nhận Giao dịch Bán hàng</strong></p>
+            </div>
+        </div>
+
+        <!-- BUỔI 2 BẮT ĐẦU -->
+        <!-- Slide 23: Buổi 2 - Giới thiệu -->
+        <div class="slide">
+            <div class="slide-header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 30px; border-radius: 15px; text-align: center;">
+                <h1 style="color: white; font-size: 2.5em;">BUỔI 2</h1>
+                <p style="font-size: 1.5em; margin-top: 10px;">Ghi nhận Bán hàng & Báo cáo Tài chính</p>
+                <p style="font-size: 1.1em; margin-top: 20px;">Thời lượng: 150 phút</p>
+            </div>
+        </div>
+
+        <!-- Slide 24: Ôn tập buổi 1 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>ÔN TẬP BUỔI 1</h2>
+                <p class="subtitle">Review - Session 1</p>
+            </div>
+            <div class="content">
+                <h3>Những điểm chính đã học:</h3>
+                
+                <div class="key-point">
+                    <strong>1. Đặc điểm DN Thương mại:</strong>
+                    <ul style="margin-left: 20px;">
+                        <li>Nguồn doanh thu: Bán hàng (Sales Revenue)</li>
+                        <li>Chi phí chính: Giá vốn hàng bán (COGS)</li>
+                        <li>Tài sản quan trọng: Hàng tồn kho</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    <strong>2. Hệ thống Kiểm kê Thường xuyên:</strong>
+                    <ul style="margin-left: 20px;">
+                        <li>Ghi nhận chi tiết từng giao dịch</li>
+                        <li>Luôn biết tồn kho hiện tại</li>
+                        <li>Tính giá vốn ngay khi bán</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    <strong>3. Giao dịch Mua hàng:</strong>
+                    <ul style="margin-left: 20px;">
+                        <li>Mua hàng: Nợ Hàng tồn kho</li>
+                        <li>Phí vận chuyển (FOB Shipping Point): Nợ Hàng tồn kho</li>
+                        <li>Trả hàng/Giảm giá: Có Hàng tồn kho</li>
+                        <li>Chiết khấu thanh toán: Có Hàng tồn kho</li>
+                    </ul>
+                </div>
+
+                <div class="formula">
+                    <strong>Nhớ công thức:</strong><br/>
+                    Giá trị Hàng tồn kho = Giá mua + Phí ship - Trả hàng - Chiết khấu
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 25: Phần 3 - Giới thiệu Bán hàng -->
+        <div class="slide">
+            <div class="slide-header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 30px; border-radius: 15px;">
+                <h2 style="color: white;">PHẦN 3: GHI NHẬN GIAO DỊCH BÁN HÀNG</h2>
+                <p style="font-size: 1.2em; margin-top: 10px;">Recording Sales Transactions</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>Nội dung phần này:</h3>
+                    <ol>
+                        <li>Nguyên tắc ghi nhận doanh thu</li>
+                        <li>Ghi nhận bán hàng cơ bản</li>
+                        <li>Trả hàng và giảm giá bán (Sales Returns & Allowances)</li>
+                        <li>Chiết khấu bán hàng (Sales Discounts)</li>
+                    </ol>
+                </div>
+
+                <div class="key-point">
+                    <strong>Điểm khác biệt quan trọng:</strong><br/>
+                    Khi bán hàng trong hệ thống kiểm kê thường xuyên, cần ghi <strong>2 bút toán</strong>:
+                    <ol style="margin-left: 20px; margin-top: 10px;">
+                        <li>Ghi nhận doanh thu (giá bán)</li>
+                        <li>Ghi nhận giá vốn (giá mua)</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 26: Nguyên tắc ghi nhận doanh thu -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>NGUYÊN TẮC GHI NHẬN DOANH THU</h2>
+                <p class="subtitle">Revenue Recognition Principle</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p style="font-size: 1.2em;"><strong>Nguyên tắc cơ bản:</strong> Ghi nhận doanh thu khi <strong>hàng hóa chuyển giao</strong> cho người mua, không phải khi thu tiền.</p>
+                </div>
+
+                <h3>Thời điểm ghi nhận:</h3>
+                <div class="two-column">
+                    <div class="column">
+                        <div class="key-point">
+                            <h3 style="margin-top: 0;">✓ GHI NHẬN</h3>
+                        </div>
+                        <ul>
+                            <li>Khi giao hàng cho khách</li>
+                            <li>Khi khách nhận hàng</li>
+                            <li>Khi quyền sở hữu chuyển</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="warning">
+                            <h3 style="margin-top: 0;">✗ CHƯA GHI NHẬN</h3>
+                        </div>
+                        <ul>
+                            <li>Khi khách đặt hàng</li>
+                            <li>Khi nhận tiền đặt cọc</li>
+                            <li>Khi đóng gói hàng</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ thực tế:</h3>
+                    <table>
+                        <tr>
+                            <th>Ngày</th>
+                            <th>Sự kiện</th>
+                            <th>Ghi nhận?</th>
+                        </tr>
+                        <tr>
+                            <td>1/6</td>
+                            <td>Khách đặt hàng online</td>
+                            <td style="color: #d32f2f;">✗ Chưa</td>
+                        </tr>
+                        <tr>
+                            <td>2/6</td>
+                            <td>Khách chuyển tiền đặt cọc 30%</td>
+                            <td style="color: #d32f2f;">✗ Chưa (Ghi Nợ Tiền, Có Tiền nhận trước)</td>
+                        </tr>
+                        <tr>
+                            <td>3/6</td>
+                            <td>Chuẩn bị và đóng gói hàng</td>
+                            <td style="color: #d32f2f;">✗ Chưa</td>
+                        </tr>
+                        <tr style="background: #c8e6c9;">
+                            <td>4/6</td>
+                            <td>Giao hàng cho khách</td>
+                            <td style="color: #2e7d32;"><strong>✓ GHI NHẬN!</strong></td>
+                        </tr>
+                        <tr>
+                            <td>10/6</td>
+                            <td>Khách trả hết tiền còn lại</td>
+                            <td style="color: #1976d2;">Thu tiền (không ảnh hưởng doanh thu)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 27: Ghi nhận bán hàng cơ bản -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>GHI NHẬN BÁN HÀNG CƠ BẢN</h2>
+                <p class="subtitle">Recording Basic Sales</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3 style="margin-top: 0;">Quy tắc: Luôn ghi 2 bút toán!</h3>
+                </div>
+
+                <h3>Bút toán 1: Ghi nhận doanh thu</h3>
+                <div class="formula" style="text-align: left; background: #e8f5e9;">
+                    <strong>Nợ:</strong> Tiền mặt hoặc Phải thu khách hàng<br/>
+                    <strong>Có:</strong> Doanh thu bán hàng (Sales Revenue)
+                </div>
+
+                <h3>Bút toán 2: Ghi nhận giá vốn</h3>
+                <div class="formula" style="text-align: left; background: #fff3e0;">
+                    <strong>Nợ:</strong> Giá vốn hàng bán (Cost of Goods Sold)<br/>
+                    <strong>Có:</strong> Hàng tồn kho (Inventory)
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ 1: Bán hàng nhận tiền mặt</h3>
+                    <p>Ngày 4/5: PW Audio bán hàng cho Sauk Stereo 3.800€, giá vốn 2.400€, nhận tiền mặt ngay</p>
+                    
+                    <h4>Bút toán 1: Ghi doanh thu</h4>
+                    <table>
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Tiền mặt</td><td>3.800</td><td></td></tr>
+                        <tr><td>Doanh thu bán hàng</td><td></td><td>3.800</td></tr>
+                    </table>
+
+                    <h4 style="margin-top: 15px;">Bút toán 2: Ghi giá vốn</h4>
+                    <table>
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Giá vốn hàng bán</td><td>2.400</td><td></td></tr>
+                        <tr><td>Hàng tồn kho</td><td></td><td>2.400</td></tr>
+                    </table>
+
+                    <p style="margin-top: 15px;"><strong>Kết quả:</strong> Lợi nhuận gộp = 3.800 - 2.400 = 1.400€</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 28: Bán hàng chịu -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>BÁN HÀNG CHỊU</h2>
+                <p class="subtitle">Credit Sales</p>
+            </div>
+            <div class="content">
+                <div class="example">
+                    <h3>Ví dụ 2: Bán hàng chịu (trả sau)</h3>
+                    <p>Ngày 4/5: PW Audio bán hàng cho Sauk Stereo 3.800€, điều khoản 2/10, n/30<br/>
+                    Giá vốn hàng đã bán: 2.400€</p>
+
+                    <h4>Bút toán 1: Ghi doanh thu</h4>
+                    <table>
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Phải thu khách hàng</td><td>3.800</td><td></td></tr>
+                        <tr><td>Doanh thu bán hàng</td><td></td><td>3.800</td></tr>
+                    </table>
+
+                    <h4 style="margin-top: 15px;">Bút toán 2: Ghi giá vốn</h4>
+                    <table>
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Giá vốn hàng bán</td><td>2.400</td><td></td></tr>
+                        <tr><td>Hàng tồn kho</td><td></td><td>2.400</td></tr>
+                    </table>
+                </div>
+
+                <div class="key-point" style="margin-top: 20px;">
+                    <strong>So sánh Bán tiền mặt vs Bán chịu:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>Giống nhau:</strong> Cả hai đều ghi 2 bút toán, doanh thu và giá vốn giống nhau</li>
+                        <li><strong>Khác nhau:</strong> 
+                            <ul style="margin-left: 20px;">
+                                <li>Bán tiền mặt: Nợ <strong>Tiền mặt</strong></li>
+                                <li>Bán chịu: Nợ <strong>Phải thu khách hàng</strong></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="warning">
+                    <strong>Lưu ý:</strong> Bán chịu tạo ra rủi ro thu hồi nợ → Cần quản lý công nợ tốt
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 29: Trả hàng và giảm giá bán -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>TRẢ HÀNG VÀ GIẢM GIÁ BÁN</h2>
+                <p class="subtitle">Sales Returns and Allowances</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Định nghĩa:</strong> Khi khách hàng trả lại hàng hoặc được giảm giá sau khi đã mua</p>
+                </div>
+
+                <h3>Tại sao cần tài khoản riêng?</h3>
+                <div class="key-point">
+                    Không ghi trực tiếp vào <strong>Doanh thu bán hàng</strong> mà dùng tài khoản đối ứng:<br/>
+                    <strong>Trả hàng và giảm giá bán (Sales Returns and Allowances)</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Để biết mức độ hàng bị trả lại</li>
+                        <li>Đánh giá chất lượng sản phẩm/dịch vụ</li>
+                        <li>So sánh giữa các kỳ</li>
+                    </ul>
+                </div>
+
+                <h3>Bút toán ghi nhận (cũng 2 bút toán):</h3>
+                
+                <h4>Bút toán 1: Giảm doanh thu</h4>
+                <div class="formula" style="text-align: left; background: #ffebee;">
+                    <strong>Nợ:</strong> Trả hàng và giảm giá bán<br/>
+                    <strong>Có:</strong> Tiền mặt hoặc Phải thu khách hàng
+                </div>
+
+                <h4>Bút toán 2: Nhập lại hàng vào kho</h4>
+                <div class="formula" style="text-align: left; background: #e3f2fd;">
+                    <strong>Nợ:</strong> Hàng tồn kho<br/>
+                    <strong>Có:</strong> Giá vốn hàng bán
+                </div>
+
+                <div class="warning">
+                    <strong>Lưu ý:</strong> Nếu hàng bị hỏng/lỗi, nhập lại với <strong>giá trị hợp lý</strong> (fair value), không phải giá gốc
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 30: Ví dụ trả hàng -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>VÍ DỤ TRẢ HÀNG VÀ GIẢM GIÁ</h2>
+            </div>
+            <div class="content">
+                <div class="example">
+                    <h3>Ví dụ 1: Khách trả hàng (hàng còn tốt)</h3>
+                    <p>Ngày 8/5: Khách trả lại hàng đã mua 300€ (giá vốn 140€). Hàng vẫn còn tốt.</p>
+
+                    <h4>Bút toán 1: Giảm doanh thu</h4>
+                    <table>
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Trả hàng và giảm giá bán</td><td>300</td><td></td></tr>
+                        <tr><td>Phải thu khách hàng</td><td></td><td>300</td></tr>
+                    </table>
+
+                    <h4 style="margin-top: 15px;">Bút toán 2: Nhập hàng vào kho</h4>
+                    <table>
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Hàng tồn kho</td><td>140</td><td></td></tr>
+                        <tr><td>Giá vốn hàng bán</td><td></td><td>140</td></tr>
+                    </table>
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ 2: Khách trả hàng (hàng bị lỗi)</h3>
+                    <p>Ngày 8/5: Khách trả lại hàng đã mua 300€ (giá vốn 140€). Hàng bị lỗi, chỉ còn giá trị 50€.</p>
+
+                    <h4>Bút toán 1: Giảm doanh thu (giống ví dụ 1)</h4>
+                    <table>
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Trả hàng và giảm giá bán</td><td>300</td><td></td></tr>
+                        <tr><td>Phải thu khách hàng</td><td></td><td>300</td></tr>
+                    </table>
+
+                    <h4 style="margin-top: 15px;">Bút toán 2: Nhập hàng với giá trị hợp lý</h4>
+                    <table>
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Hàng tồn kho</td><td style="background: #fff3e0;">50</td><td></td></tr>
+                        <tr><td>Giá vốn hàng bán</td><td></td><td style="background: #fff3e0;">50</td></tr>
+                    </table>
+                    <p style="margin-top: 10px;"><strong>Lưu ý:</strong> Chỉ nhập với giá 50€ (giá trị còn lại), không phải 140€</p>
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ 3: Giảm giá (không trả hàng)</h3>
+                    <p>Khách phàn nàn hàng có vấn đề nhỏ, đồng ý giữ lại nếu được giảm giá 50€</p>
+
+                    <h4>Chỉ có 1 bút toán:</h4>
+                    <table>
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Trả hàng và giảm giá bán</td><td>50</td><td></td></tr>
+                        <tr><td>Phải thu khách hàng</td><td></td><td>50</td></tr>
+                    </table>
+                    <p style="margin-top: 10px;"><strong>Giải thích:</strong> Không có bút toán 2 vì hàng không trả lại</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 31: Chiết khấu bán hàng -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>CHIẾT KHẤU BÁN HÀNG</h2>
+                <p class="subtitle">Sales Discounts</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Định nghĩa:</strong> Giảm giá khi khách hàng thanh toán sớm (tương tự chiết khấu mua hàng nhưng từ góc độ người bán)</p>
+                </div>
+
+                <h3>Tài khoản sử dụng:</h3>
+                <div class="key-point">
+                    <strong>Chiết khấu bán hàng (Sales Discounts)</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Là tài khoản đối ứng doanh thu (giống như Trả hàng và giảm giá bán)</li>
+                        <li>Số dư bên Nợ (Debit)</li>
+                        <li>Giảm doanh thu thuần</li>
+                    </ul>
+                </div>
+
+                <h3>Bút toán khi khách trả tiền sớm:</h3>
+                <div class="formula" style="text-align: left;">
+                    <strong>Nợ:</strong> Tiền mặt (số tiền thực nhận)<br/>
+                    <strong>Nợ:</strong> Chiết khấu bán hàng (số tiền chiết khấu)<br/>
+                    <strong>Có:</strong> Phải thu khách hàng (số tiền gốc)
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ:</h3>
+                    <p><strong>Ngày 4/5:</strong> Bán hàng 3.800€, điều khoản 2/10, n/30</p>
+                    <p><strong>Ngày 8/5:</strong> Khách trả hàng 300€</p>
+                    <p><strong>Ngày 14/5:</strong> Khách thanh toán (trong kỳ chiết khấu)</p>
+
+                    <h4>Tính toán:</h4>
+                    <table>
+                        <tr><td>Số tiền bán ban đầu</td><td style="text-align: right;">3.800€</td></tr>
+                        <tr><td>Trả hàng</td><td style="text-align: right;">(300€)</td></tr>
+                        <tr style="background: #e3f2fd;"><td><strong>Còn phải thu</strong></td><td style="text-align: right;"><strong>3.500€</strong></td></tr>
+                        <tr><td>Chiết khấu 2%</td><td style="text-align: right;">(70€)</td></tr>
+                        <tr style="background: #c8e6c9;"><td><strong>Số tiền thực nhận</strong></td><td style="text-align: right;"><strong>3.430€</strong></td></tr>
+                    </table>
+
+                    <h4 style="margin-top: 20px;">Bút toán ngày 14/5:</h4>
+                    <table>
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Tiền mặt</td><td>3.430</td><td></td></tr>
+                        <tr><td>Chiết khấu bán hàng</td><td>70</td><td></td></tr>
+                        <tr><td>Phải thu khách hàng</td><td></td><td>3.500</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 32: Tổng hợp giao dịch bán hàng -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>TỔNG HỢP GIAO DỊCH BÁN HÀNG</h2>
+                <p class="subtitle">Summary of Sales Transactions</p>
+            </div>
+            <div class="content">
+                <h3>Các tài khoản liên quan:</h3>
+                <table>
+                    <tr>
+                        <th>Tài khoản</th>
+                        <th>Loại</th>
+                        <th>Số dư</th>
+                        <th>Tác động</th>
+                    </tr>
+                    <tr style="background: #c8e6c9;">
+                        <td><strong>Doanh thu bán hàng</strong></td>
+                        <td>Doanh thu</td>
+                        <td>Có (Credit)</td>
+                        <td>Tăng doanh thu</td>
+                    </tr>
+                    <tr style="background: #ffcdd2;">
+                        <td><strong>Trả hàng và giảm giá</strong></td>
+                        <td>Đối ứng DT</td>
+                        <td>Nợ (Debit)</td>
+                        <td>Giảm doanh thu</td>
+                    </tr>
+                    <tr style="background: #ffcdd2;">
+                        <td><strong>Chiết khấu bán hàng</strong></td>
+                        <td>Đối ứng DT</td>
+                        <td>Nợ (Debit)</td>
+                        <td>Giảm doanh thu</td>
+                    </tr>
+                </table>
+
+                <h3 style="margin-top: 30px;">Tính Doanh thu thuần (Net Sales):</h3>
+                <div class="formula" style="font-size: 1.1em;">
+                    <strong>Doanh thu bán hàng</strong><br/>
+                    <span style="font-size: 1.5em;">−</span><br/>
+                    <strong>Trả hàng và giảm giá bán</strong><br/>
+                    <span style="font-size: 1.5em;">−</span><br/>
+                    <strong>Chiết khấu bán hàng</strong><br/>
+                    <span style="font-size: 1.5em;">=</span><br/>
+                    <strong style="color: #1976d2; font-size: 1.2em;">Doanh thu thuần</strong>
+                </div>
+
+                <div class="example" style="margin-top: 20px;">
+                    <h3>Ví dụ tính toán:</h3>
+                    <table>
+                        <tr>
+                            <td>Doanh thu bán hàng</td>
+                            <td style="text-align: right;">480.000€</td>
+                        </tr>
+                        <tr>
+                            <td>Trừ: Trả hàng và giảm giá</td>
+                            <td style="text-align: right;">(12.000€)</td>
+                        </tr>
+                        <tr>
+                            <td>Trừ: Chiết khấu bán hàng</td>
+                            <td style="text-align: right;">(8.000€)</td>
+                        </tr>
+                        <tr style="background: #e3f2fd;">
+                            <td><strong>Doanh thu thuần</strong></td>
+                            <td style="text-align: right;"><strong>460.000€</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 33: So sánh mua vs bán -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>SO SÁNH: MUA HÀNG VS BÁN HÀNG</h2>
+                <p class="subtitle">Comparison: Purchases vs Sales</p>
+            </div>
+            <div class="content">
+                <table style="font-size: 0.95em;">
+                    <tr>
+                        <th>Giao dịch</th>
+                        <th>Người MUA ghi</th>
+                        <th>Người BÁN ghi</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Mua/Bán hàng</strong></td>
+                        <td>Nợ: Hàng tồn kho<br/>Có: Tiền/Phải trả</td>
+                        <td>Nợ: Tiền/Phải thu<br/>Có: Doanh thu<br/><br/>
+                        Nợ: Giá vốn<br/>Có: Hàng tồn kho</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phí vận chuyển<br/>(FOB Shipping)</strong></td>
+                        <td>Nợ: Hàng tồn kho<br/>Có: Tiền mặt</td>
+                        <td>Không liên quan</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phí vận chuyển<br/>(FOB Destination)</strong></td>
+                        <td>Không liên quan</td>
+                        <td>Nợ: Chi phí vận chuyển<br/>Có: Tiền mặt</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Trả hàng</strong></td>
+                        <td>Nợ: Phải trả<br/>Có: Hàng tồn kho</td>
+                        <td>Nợ: Trả hàng và giảm giá<br/>Có: Phải thu<br/><br/>
+                        Nợ: Hàng tồn kho<br/>Có: Giá vốn</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chiết khấu</strong></td>
+                        <td>Nợ: Phải trả<br/>Có: Hàng tồn kho<br/>Có: Tiền mặt</td>
+                        <td>Nợ: Tiền mặt<br/>Nợ: Chiết khấu bán hàng<br/>Có: Phải thu</td>
+                    </tr>
+                </table>
+
+                <div class="key-point" style="margin-top: 20px;">
+                    <strong>Điểm quan trọng:</strong> Mỗi giao dịch đều có 2 góc nhìn (người mua và người bán), cần hiểu cả hai để làm kế toán đúng!
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 34: Phần 4 - Chu trình kế toán -->
+        <div class="slide">
+            <div class="slide-header" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; padding: 30px; border-radius: 15px;">
+                <h2 style="color: white;">PHẦN 4: CHU TRÌNH KẾ TOÁN</h2>
+                <p style="font-size: 1.2em; margin-top: 10px;">The Accounting Cycle</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>Nội dung phần này:</h3>
+                    <ol>
+                        <li>Bút toán điều chỉnh (Adjusting Entries)</li>
+                        <li>Bút toán kết chuyển (Closing Entries)</li>
+                        <li>Tóm tắt bút toán cho DN thương mại</li>
+                    </ol>
+                </div>
+
+                <div class="key-point">
+                    <strong>Lưu ý:</strong> Chu trình kế toán cho DN thương mại <strong>tương tự</strong> DN dịch vụ, chỉ có thêm một số điều chỉnh đặc biệt cho hàng tồn kho.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 35: Chu trình kế toán - Tổng quan -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>CHU TRÌNH KẾ TOÁN - TỔNG QUAN</h2>
+                <p class="subtitle">The Accounting Cycle Steps</p>
+            </div>
+            <div class="content">
+                <div class="diagram">
+                    <h3 style="color: #667eea;">9 bước trong chu trình kế toán</h3>
+                </div>
+
+                <table style="font-size: 0.95em;">
+                    <tr>
+                        <th style="width: 15%;">Bước</th>
+                        <th>Nội dung</th>
+                        <th style="width: 20%;">Thời điểm</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Phân tích giao dịch</td>
+                        <td>Khi phát sinh</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ghi nhật ký</td>
+                        <td>Khi phát sinh</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Chuyển vào sổ cái</td>
+                        <td>Định kỳ</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Lập bảng cân đối thử</td>
+                        <td>Cuối kỳ</td>
+                    </tr>
+                    <tr style="background: #fff3e0;">
+                        <td>5</td>
+                        <td><strong>Bút toán điều chỉnh</strong></td>
+                        <td>Cuối kỳ</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Lập bảng cân đối sau điều chỉnh</td>
+                        <td>Cuối kỳ</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Lập báo cáo tài chính</td>
+                        <td>Cuối kỳ</td>
+                    </tr>
+                    <tr style="background: #e3f2fd;">
+                        <td>8</td>
+                        <td><strong>Bút toán kết chuyển</strong></td>
+                        <td>Cuối kỳ</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Lập bảng cân đối sau kết chuyển</td>
+                        <td>Cuối kỳ</td>
+                    </tr>
+                </table>
+
+                <div class="key-point" style="margin-top: 20px;">
+                    <strong>Tập trung vào:</strong> Bước 5 (Điều chỉnh) và Bước 8 (Kết chuyển) - Hai bước đặc biệt cho DN thương mại
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 36: Bút toán điều chỉnh -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>BÚT TOÁN ĐIỀU CHỈNH</h2>
+                <p class="subtitle">Adjusting Entries</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Điều chỉnh đặc biệt cho DN thương mại:</strong> Điều chỉnh hàng tồn kho</p>
+                </div>
+
+                <h3>Tại sao cần điều chỉnh?</h3>
+                <div class="key-point">
+                    <p>Ngay cả với hệ thống kiểm kê thường xuyên, sổ sách có thể không khớp với thực tế vì:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>Hàng bị hỏng, hết hạn</li>
+                        <li>Hàng bị mất, thất thoát</li>
+                        <li>Lỗi ghi nhận</li>
+                        <li>Chênh lệch kiểm kê</li>
+                    </ul>
+                </div>
+
+                <h3>Quy trình:</h3>
+                <div class="example">
+                    <ol>
+                        <li><strong>Kiểm kê thực tế:</strong> Đếm hàng tồn kho cuối kỳ</li>
+                        <li><strong>So sánh:</strong> Số liệu thực tế vs Số liệu sổ sách</li>
+                        <li><strong>Điều chỉnh:</strong> Ghi nhận chênh lệch</li>
+                    </ol>
+                </div>
+
+                <h3>Bút toán điều chỉnh:</h3>
+                <div class="formula" style="text-align: left;">
+                    <strong>Nếu thực tế < sổ sách:</strong><br/>
+                    Nợ: Giá vốn hàng bán<br/>
+                    Có: Hàng tồn kho
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ:</h3>
+                    <p>Theo sổ sách: Hàng tồn kho = 40.500€</p>
+                    <p>Kiểm kê thực tế: Hàng tồn kho = 40.000€</p>
+                    <p><strong>Chênh lệch:</strong> Thiếu 500€</p>
+
+                    <table>
+                        <tr><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                        <tr><td>Giá vốn hàng bán</td><td>500</td><td></td></tr>
+                        <tr><td>Hàng tồn kho</td><td></td><td>500</td></tr>
+                    </table>
+
+                    <p style="margin-top: 15px;"><strong>Giải thích:</strong> Hàng thiếu = Đã bị tiêu hao → Tính vào giá vốn</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 37: Bút toán kết chuyển -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>BÚT TOÁN KẾT CHUYỂN</h2>
+                <p class="subtitle">Closing Entries</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Mục đích:</strong> Đóng các tài khoản tạm thời (doanh thu, chi phí) vào tài khoản Lợi nhuận giữ lại</p>
+                </div>
+
+                <h3>Các tài khoản cần kết chuyển:</h3>
+                <div class="two-column">
+                    <div class="column">
+                        <div class="key-point">
+                            <h3 style="margin-top: 0;">Có số dư Có</h3>
+                        </div>
+                        <ul>
+                            <li>Doanh thu bán hàng</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="warning">
+                            <h3 style="margin-top: 0;">Có số dư Nợ</h3>
+                        </div>
+                        <ul>
+                            <li>Giá vốn hàng bán</li>
+                            <li>Trả hàng và giảm giá</li>
+                            <li>Chiết khấu bán hàng</li>
+                            <li>Chi phí hoạt động</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 20px;">4 bút toán kết chuyển:</h3>
+                <div class="formula" style="text-align: left; background: #e8f5e9;">
+                    <strong>1. Kết chuyển doanh thu:</strong><br/>
+                    Nợ: Doanh thu bán hàng<br/>
+                    Có: Tổng hợp thu nhập (Income Summary)
+                </div>
+
+                <div class="formula" style="text-align: left; background: #ffebee;">
+                    <strong>2. Kết chuyển chi phí:</strong><br/>
+                    Nợ: Tổng hợp thu nhập<br/>
+                    Có: Giá vốn hàng bán<br/>
+                    Có: Trả hàng và giảm giá<br/>
+                    Có: Chiết khấu bán hàng<br/>
+                    Có: Các chi phí hoạt động
+                </div>
+
+                <div class="formula" style="text-align: left; background: #e3f2fd;">
+                    <strong>3. Kết chuyển lãi/lỗ:</strong><br/>
+                    Nợ: Tổng hợp thu nhập<br/>
+                    Có: Lợi nhuận giữ lại
+                </div>
+
+                <div class="formula" style="text-align: left; background: #fff3e0;">
+                    <strong>4. Kết chuyển cổ tức:</strong><br/>
+                    Nợ: Lợi nhuận giữ lại<br/>
+                    Có: Cổ tức (Dividends)
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 38: Ví dụ bút toán kết chuyển -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>VÍ DỤ BÚT TOÁN KẾT CHUYỂN</h2>
+            </div>
+            <div class="content">
+                <div class="example">
+                    <h3>Số liệu công ty PW Audio Supply (31/12):</h3>
+                    <table style="font-size: 0.9em;">
+                        <tr><td>Doanh thu bán hàng</td><td style="text-align: right;">480.000€</td></tr>
+                        <tr><td>Giá vốn hàng bán</td><td style="text-align: right;">316.000€</td></tr>
+                        <tr><td>Trả hàng và giảm giá</td><td style="text-align: right;">12.000€</td></tr>
+                        <tr><td>Chiết khấu bán hàng</td><td style="text-align: right;">8.000€</td></tr>
+                        <tr><td>Chi phí hoạt động</td><td style="text-align: right;">114.000€</td></tr>
+                        <tr><td>Cổ tức</td><td style="text-align: right;">15.000€</td></tr>
+                    </table>
+                </div>
+
+                <h3>Bút toán kết chuyển:</h3>
+                <table style="font-size: 0.85em;">
+                    <tr><th>Ngày</th><th>Tài khoản</th><th>Nợ</th><th>Có</th></tr>
+                    <tr>
+                        <td rowspan="2">31/12</td>
+                        <td>Doanh thu bán hàng</td>
+                        <td>480.000</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Tổng hợp thu nhập</td>
+                        <td></td>
+                        <td>480.000</td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td rowspan="5">31/12</td>
+                        <td>Tổng hợp thu nhập</td>
+                        <td>450.000</td>
+                        <td></td>
+                    </tr>
+                     <tr style="background: #f0f0f0;">
+                        <td>Giá vốn hàng bán</td>
+                        <td></td>
+                        <td>316.000</td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td>Trả hàng và giảm giá</td>
+                        <td></td>
+                        <td>12.000</td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td>Chiết khấu bán hàng</td>
+                        <td></td>
+                        <td>8.000</td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td>Chi phí hoạt động</td>
+                        <td></td>
+                        <td>114.000</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">31/12</td>
+                        <td>Tổng hợp thu nhập</td>
+                        <td>30.000</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Lợi nhuận giữ lại</td>
+                        <td></td>
+                        <td>30.000</td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td rowspan="2">31/12</td>
+                        <td>Lợi nhuận giữ lại</td>
+                        <td>15.000</td>
+                        <td></td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td>Cổ tức</td>
+                        <td></td>
+                        <td>15.000</td>
+                    </tr>
+                </table>
+
+                <div class="key-point" style="margin-top: 20px;">
+                    <strong>Lợi nhuận thuần = 480.000 - 450.000 = 30.000€</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 39: Tóm tắt bút toán -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>TÓM TẮT CÁC BÚT TOÁN</h2>
+                <p class="subtitle">Summary of Merchandising Entries</p>
+            </div>
+            <div class="content">
+                <table style="font-size: 0.85em;">
+                    <tr>
+                        <th style="width: 35%;">Giao dịch</th>
+                        <th>Bút toán</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Mua hàng chịu</strong></td>
+                        <td>Nợ: Hàng tồn kho<br/>Có: Phải trả người bán</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phí vận chuyển<br/>(FOB Shipping Point)</strong></td>
+                        <td>Nợ: Hàng tồn kho<br/>Có: Tiền mặt</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Trả hàng mua</strong></td>
+                        <td>Nợ: Phải trả người bán<br/>Có: Hàng tồn kho</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Thanh toán có chiết khấu</strong></td>
+                        <td>Nợ: Phải trả người bán<br/>Có: Hàng tồn kho<br/>Có: Tiền mặt</td>
+                    </tr>
+                    <tr style="background: #e3f2fd;">
+                        <td><strong>Bán hàng chịu</strong></td>
+                        <td>1. Nợ: Phải thu khách hàng<br/>&nbsp;&nbsp;&nbsp;Có: Doanh thu bán hàng<br/>
+                        2. Nợ: Giá vốn hàng bán<br/>&nbsp;&nbsp;&nbsp;Có: Hàng tồn kho</td>
+                    </tr>
+                    <tr style="background: #e3f2fd;">
+                        <td><strong>Khách trả hàng</strong></td>
+                        <td>1. Nợ: Trả hàng và giảm giá<br/>&nbsp;&nbsp;&nbsp;Có: Phải thu khách hàng<br/>
+                        2. Nợ: Hàng tồn kho<br/>&nbsp;&nbsp;&nbsp;Có: Giá vốn hàng bán</td>
+                    </tr>
+                    <tr style="background: #e3f2fd;">
+                        <td><strong>Thu tiền có chiết khấu</strong></td>
+                        <td>Nợ: Tiền mặt<br/>Nợ: Chiết khấu bán hàng<br/>Có: Phải thu khách hàng</td>
+                    </tr>
+                    <tr style="background: #fff3e0;">
+                        <td><strong>Điều chỉnh tồn kho</strong></td>
+                        <td>Nợ: Giá vốn hàng bán<br/>Có: Hàng tồn kho</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 40: Phần 5 - Báo cáo tài chính -->
+        <div class="slide">
+            <div class="slide-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px;">
+                <h2 style="color: white;">PHẦN 5: BÁO CÁO TÀI CHÍNH</h2>
+                <p style="font-size: 1.2em; margin-top: 10px;">Financial Statements</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <h3>5 Báo cáo tài chính chính:</h3>
+                    <ol>
+                        <li><strong>Báo cáo kết quả kinh doanh</strong> (Income Statement)</li>
+                        <li><strong>Báo cáo thu nhập toàn diện</strong> (Comprehensive Income Statement)</li>
+                        <li><strong>Báo cáo lợi nhuận giữ lại</strong> (Retained Earnings Statement)</li>
+                        <li><strong>Báo cáo tình hình tài chính</strong> (Statement of Financial Position)</li>
+                        <li><strong>Báo cáo lưu chuyển tiền tệ</strong> (Cash Flow Statement)</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 41: Báo cáo kết quả kinh doanh -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>BÁO CÁO KẾT QUẢ KINH DOANH</h2>
+                <p class="subtitle">Income Statement</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Mục đích:</strong> Báo cáo hiệu quả hoạt động kinh doanh trong một kỳ</p>
+                </div>
+
+                <h3>Cấu trúc báo cáo (Multiple-step format):</h3>
+                <div class="diagram" style="text-align: left; padding: 30px;">
+                    <div style="margin: 15px 0; padding: 15px; background: #e8f5e9; border-radius: 8px;">
+                        <strong style="color: #2e7d32;">I. PHẦN BÁN HÀNG</strong>
+                        <p style="margin-left: 20px;">Doanh thu bán hàng<br/>
+                        - Trả hàng và giảm giá<br/>
+                        - Chiết khấu bán hàng<br/>
+                        = <strong>Doanh thu thuần</strong></p>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: #fff3e0; border-radius: 8px;">
+                        <strong style="color: #f57c00;">II. GIÁ VỐN HÀNG BÁN</strong>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: #e3f2fd; border-radius: 8px;">
+                        <strong style="color: #1976d2;">III. LỢI NHUẬN GỘP</strong>
+                        <p style="margin-left: 20px;">= Doanh thu thuần - Giá vốn</p>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: #f3e5f5; border-radius: 8px;">
+                        <strong style="color: #7b1fa2;">IV. CHI PHÍ HOẠT ĐỘNG</strong>
+                        <p style="margin-left: 20px;">Chi phí bán hàng<br/>
+                        Chi phí quản lý doanh nghiệp</p>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: #e0f2f1; border-radius: 8px;">
+                        <strong style="color: #00695c;">V. LỢI NHUẬN TỪ HOẠT ĐỘNG</strong>
+                        <p style="margin-left: 20px;">= Lợi nhuận gộp - Chi phí hoạt động</p>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: #fce4ec; border-radius: 8px;">
+                        <strong style="color: #c2185b;">VI. THU NHẬP VÀ CHI PHÍ KHÁC</strong>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: #fff8e1; border-radius: 8px;">
+                        <strong style="color: #f57f17;">VII. CHI PHÍ LÃI VAY</strong>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: #c8e6c9; border-radius: 8px;">
+                        <strong style="color: #1b5e20; font-size: 1.1em;">VIII. LỢI NHUẬN THUẦN</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 42: Ví dụ BCKQKD -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>VÍ DỤ BÁO CÁO KẾT QUẢ KINH DOANH</h2>
+            </div>
+            <div class="content">
+                <div class="example">
+                    <h3 style="text-align: center;">PW AUDIO SUPPLY</h3>
+                    <h4 style="text-align: center; margin-bottom: 20px;">Báo cáo Kết quả Kinh doanh<br/>Năm kết thúc 31/12/2020</h4>
+                    
+                    <table style="font-size: 0.9em;">
+                        <tr>
+                            <td colspan="2"><strong>Doanh thu bán hàng</strong></td>
+                            <td></td>
+                            <td style="text-align: right;">480.000€</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Trừ: Trả hàng và giảm giá</td>
+                            <td style="text-align: right;">12.000€</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chiết khấu bán hàng</td>
+                            <td style="text-align: right;">8.000€</td>
+                            <td style="text-align: right;">20.000€</td>
+                        </tr>
+                        <tr style="background: #e3f2fd;">
+                            <td colspan="2"><strong>Doanh thu thuần</strong></td>
+                            <td></td>
+                            <td style="text-align: right;"><strong>460.000€</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Giá vốn hàng bán</td>
+                            <td></td>
+                            <td style="text-align: right;">316.000€</td>
+                        </tr>
+                        <tr style="background: #c8e6c9;">
+                            <td colspan="2"><strong>Lợi nhuận gộp</strong></td>
+                            <td></td>
+                            <td style="text-align: right;"><strong>144.000€</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><strong>Chi phí hoạt động</strong></td>
+                        </tr>
+                        <tr>
+                            <td width="30px;"></td>
+                            <td>Lương và tiền công</td>
+                            <td style="text-align: right;">64.000€</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Chi phí điện nước</td>
+                            <td style="text-align: right;">17.000€</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Chi phí quảng cáo</td>
+                            <td style="text-align: right;">16.000€</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Chi phí khấu hao</td>
+                            <td style="text-align: right;">8.000€</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Chi phí vận chuyển bán hàng</td>
+                            <td style="text-align: right;">7.000€</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Chi phí bảo hiểm</td>
+                            <td style="text-align: right;">2.000€</td>
+                            <td style="text-align: right;">114.000€</td>
+                        </tr>
+                        <tr style="background: #fff3e0;">
+                            <td colspan="2"><strong>Lợi nhuận từ hoạt động</strong></td>
+                            <td></td>
+                            <td style="text-align: right;"><strong>30.000€</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><strong>Thu nhập và chi phí khác</strong></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Lãi tiền gửi</td>
+                            <td style="text-align: right;">3.000€</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Lãi bán thiết bị</td>
+                            <td style="text-align: right;">600€</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Lỗ do phá hoại</td>
+                            <td style="text-align: right;">(200€)</td>
+                            <td style="text-align: right;">3.400€</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Chi phí lãi vay</td>
+                            <td></td>
+                            <td style="text-align: right;">1.800€</td>
+                        </tr>
+                        <tr style="background: #a5d6a7;">
+                            <td colspan="2"><strong>LỢI NHUẬN THUẦN</strong></td>
+                            <td></td>
+                            <td style="text-align: right;"><strong>31.600€</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 43: Tỷ suất lợi nhuận gộp -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>TỶ SUẤT LỢI NHUẬN GỘP</h2>
+                <p class="subtitle">Gross Profit Rate</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Chỉ số quan trọng:</strong> Đo lường hiệu quả định giá và mua hàng</p>
+                </div>
+
+                <h3>Công thức:</h3>
+                <div class="formula" style="font-size: 1.2em;">
+                    Tỷ suất lợi nhuận gộp = <strong>Lợi nhuận gộp</strong> ÷ <strong>Doanh thu thuần</strong> × 100%
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ PW Audio Supply:</h3>
+                    <table>
+                        <tr>
+                            <td>Lợi nhuận gộp</td>
+                            <td style="text-align: right;">144.000€</td>
+                        </tr>
+                        <tr>
+                            <td>Doanh thu thuần</td>
+                            <td style="text-align: right;">460.000€</td>
+                        </tr>
+                        <tr style="background: #c8e6c9;">
+                            <td><strong>Tỷ suất lợi nhuận gộp</strong></td>
+                            <td style="text-align: right;"><strong>31.3%</strong></td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 15px;">Tính: 144.000 ÷ 460.000 × 100% = 31.3%</p>
+                </div>
+
+                <h3>Ý nghĩa:</h3>
+                <div class="key-point">
+                    <strong>31.3% có nghĩa gì?</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Cứ bán 100€ hàng → Thu được 31.3€ lợi nhuận gộp</li>
+                        <li>69.7€ còn lại là giá vốn</li>
+                        <li>Từ 31.3€ này phải trừ chi phí hoạt động</li>
+                    </ul>
+                </div>
+
+                <h3>Cách sử dụng:</h3>
+                <ul>
+                    <li>So sánh giữa các kỳ → Xu hướng tăng/giảm</li>
+                    <li>So sánh với đối thủ cạnh tranh</li>
+                    <li>So sánh với trung bình ngành</li>
+                </ul>
+
+                <div class="warning">
+                    <strong>Cảnh báo:</strong> Nếu tỷ suất giảm → Có thể do:
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Giá bán giảm (cạnh tranh gay gắt)</li>
+                        <li>Giá mua tăng (chi phí đầu vào tăng)</li>
+                        <li>Chiết khấu cho khách nhiều hơn</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 44: Báo cáo thu nhập toàn diện -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>BÁO CÁO THU NHẬP TOÀN DIỆN</h2>
+                <p class="subtitle">Comprehensive Income Statement</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Mục đích:</strong> Báo cáo <strong>TẤT CẢ</strong> các khoản thu nhập, kể cả những khoản không tính vào lợi nhuận thuần</p>
+                </div>
+
+                <h3>Thu nhập toàn diện khác (Other Comprehensive Income):</h3>
+                <div class="key-point">
+                    <p>Các khoản không tính vào lợi nhuận thuần:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>Lãi/lỗ chưa thực hiện từ chứng khoán đầu tư</li>
+                        <li>Chênh lệch tỷ giá ngoại tệ</li>
+                        <li>Điều chỉnh kế hoạch hưu trí</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3 style="text-align: center;">PW AUDIO SUPPLY</h3>
+                    <h4 style="text-align: center; margin-bottom: 20px;">Báo cáo Thu nhập Toàn diện<br/>Năm kết thúc 31/12/2020</h4>
+                    
+                    <table>
+                        <tr style="background: #e3f2fd;">
+                            <td><strong>Lợi nhuận thuần</strong></td>
+                            <td style="text-align: right;"><strong>31.600€</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>Thu nhập toàn diện khác:</strong></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Lãi chưa thực hiện từ chứng khoán</td>
+                            <td style="text-align: right;">2.300€</td>
+                        </tr>
+                        <tr style="background: #c8e6c9;">
+                            <td><strong>THU NHẬP TOÀN DIỆN</strong></td>
+                            <td style="text-align: right;"><strong>33.900€</strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="warning">
+                    <strong>Lưu ý:</strong> Thu nhập toàn diện khác thường biến động và chưa thực hiện → Cần thận trọng khi đánh giá
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 45: Báo cáo lợi nhuận giữ lại -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>BÁO CÁO LỢI NHUẬN GIỮ LẠI</h2>
+                <p class="subtitle">Retained Earnings Statement</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Mục đích:</strong> Báo cáo sự thay đổi của lợi nhuận giữ lại trong kỳ</p>
+                </div>
+
+                <h3>Cấu trúc:</h3>
+                <div class="formula" style="font-size: 1.1em; text-align: left;">
+                    <strong>Lợi nhuận giữ lại đầu kỳ</strong><br/>
+                    <span style="font-size: 1.3em;">+</span> Lợi nhuận thuần trong kỳ<br/>
+                    <span style="font-size: 1.3em;">−</span> Cổ tức đã chia<br/>
+                    <span style="font-size: 1.3em;">=</span> <strong>Lợi nhuận giữ lại cuối kỳ</strong>
+                </div>
+
+                <div class="example">
+                    <h3 style="text-align: center;">PW AUDIO SUPPLY</h3>
+                    <h4 style="text-align: center; margin-bottom: 20px;">Báo cáo Lợi nhuận Giữ lại<br/>Năm kết thúc 31/12/2020</h4>
+                    
+                    <table>
+                        <tr>
+                            <td>Lợi nhuận giữ lại, 1/1/2020</td>
+                            <td style="text-align: right;">33.000€</td>
+                        </tr>
+                        <tr>
+                            <td>Cộng: Lợi nhuận thuần</td>
+                            <td style="text-align: right;">31.600€</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: right; border-top: 1px solid #000;">64.600€</td>
+                        </tr>
+                        <tr>
+                            <td>Trừ: Cổ tức</td>
+                            <td style="text-align: right;">15.000€</td>
+                        </tr>
+                        <tr style="background: #c8e6c9;">
+                            <td><strong>Lợi nhuận giữ lại, 31/12/2020</strong></td>
+                            <td style="text-align: right; border-top: 1px solid #000;"><strong>49.600€</strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="key-point">
+                    <strong>Ý nghĩa:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Lợi nhuận tăng 31.600€</li>
+                        <li>Chia cổ tức 15.000€</li>
+                        <li>Giữ lại để tái đầu tư: 16.600€</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 46: Báo cáo tình hình tài chính -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>BÁO CÁO TÌNH HÌNH TÀI CHÍNH</h2>
+                <p class="subtitle">Statement of Financial Position (Balance Sheet)</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Mục đích:</strong> Báo cáo tài sản, nợ phải trả và vốn chủ sở hữu tại một thời điểm</p>
+                </div>
+
+                <h3>Đặc điểm của DN Thương mại:</h3>
+                <div class="key-point">
+                    <strong>Hàng tồn kho</strong> là tài sản quan trọng:
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Nằm trong Tài sản ngắn hạn</li>
+                        <li>Đứng sau Phải thu khách hàng</li>
+                        <li>Đứng trước Chi phí trả trước</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Phần Tài sản - PW Audio Supply (31/12/2020):</h3>
+                    <table style="font-size: 0.9em;">
+                        <tr style="background: #e3f2fd;">
+                            <td colspan="2"><strong>TÀI SẢN</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>Tài sản dài hạn</strong></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Thiết bị</td>
+                            <td style="text-align: right;">80.000€</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Trừ: Khấu hao lũy kế</td>
+                            <td style="text-align: right;">(24.000€)</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: right; border-top: 1px solid #000;">56.000€</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>Tài sản ngắn hạn</strong></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Chi phí trả trước</td>
+                            <td style="text-align: right;">1.800€</td>
+                        </tr>
+                        <tr style="background: #fff3e0;">
+                            <td>&nbsp;&nbsp;<strong>Hàng tồn kho</strong></td>
+                            <td style="text-align: right;"><strong>40.000€</strong></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Phải thu khách hàng</td>
+                            <td style="text-align: right;">16.100€</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Tiền mặt</td>
+                            <td style="text-align: right;">9.500€</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: right; border-top: 1px solid #000;">67.400€</td>
+                        </tr>
+                        <tr style="background: #c8e6c9;">
+                            <td><strong>TỔNG TÀI SẢN</strong></td>
+                            <td style="text-align: right; border-top: 2px solid #000;"><strong>123.400€</strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="warning">
+                    <strong>Lưu ý:</strong> Hàng tồn kho được ghi theo <strong>giá gốc</strong> (cost), không phải giá bán dự kiến
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 47: Báo cáo lưu chuyển tiền tệ -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>BÁO CÁO LƯU CHUYỂN TIỀN TỆ</h2>
+                <p class="subtitle">Cash Flow Statement</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Mục đích:</strong> Báo cáo các luồng tiền vào/ra theo 3 hoạt động chính</p>
+                </div>
+
+                <h3>3 Hoạt động chính:</h3>
+                
+                <div class="key-point">
+                    <strong>1. Hoạt động kinh doanh (Operating Activities)</strong>
+                    <p>Các luồng tiền từ hoạt động chính:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>Thu tiền từ khách hàng (+)</li>
+                        <li>Trả tiền cho nhà cung cấp (-)</li>
+                        <li>Trả lương nhân viên (-)</li>
+                        <li>Chi phí hoạt động khác (-)</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    <strong>2. Hoạt động đầu tư (Investing Activities)</strong>
+                    <p>Mua bán tài sản dài hạn:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>Mua thiết bị, đất đai (-)</li>
+                        <li>Bán thiết bị (+)</li>
+                        <li>Đầu tư chứng khoán (-)</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    <strong>3. Hoạt động tài chính (Financing Activities)</strong>
+                    <p>Vốn từ chủ sở hữu và nợ vay:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>Phát hành cổ phiếu (+)</li>
+                        <li>Vay ngân hàng (+)</li>
+                        <li>Trả nợ vay (-)</li>
+                        <li>Chia cổ tức (-)</li>
+                    </ul>
+                </div>
+
+                <div class="formula">
+                    <strong>Công thức tổng quát:</strong><br/>
+                    Tiền từ HĐ Kinh doanh + Tiền từ HĐ Đầu tư + Tiền từ HĐ Tài chính<br/>
+                    = Tăng/Giảm Tiền trong kỳ
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 48: Mối quan hệ giữa các báo cáo -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>MỐI QUAN HỆ GIỮA CÁC BÁO CÁO</h2>
+                <p class="subtitle">Interrelationships of Financial Statements</p>
+            </div>
+            <div class="content">
+                <div class="diagram" style="padding: 40px;">
+                    <div style="background: #e8f5e9; padding: 20px; border-radius: 10px; margin: 10px 0;">
+                        <strong>1. BÁO CÁO KẾT QUẢ KINH DOANH</strong>
+                        <p style="margin-top: 10px;">→ Tính ra: <strong style="color: #2e7d32;">Lợi nhuận thuần</strong></p>
+                    </div>
+
+                    <p style="text-align: center; font-size: 2em; margin: 15px 0;">↓</p>
+
+                    <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin: 10px 0;">
+                        <strong>2. BÁO CÁO THU NHẬP TOÀN DIỆN</strong>
+                        <p style="margin-top: 10px;">Lấy: <strong>Lợi nhuận thuần</strong> + Thu nhập toàn diện khác<br/>
+                        → Tính ra: <strong style="color: #1976d2;">Thu nhập toàn diện</strong></p>
+                    </div>
+
+                    <p style="text-align: center; font-size: 2em; margin: 15px 0;">↓</p>
+
+                    <div style="background: #fff3e0; padding: 20px; border-radius: 10px; margin: 10px 0;">
+                        <strong>3. BÁO CÁO LỢI NHUẬN GIỮ LẠI</strong>
+                        <p style="margin-top: 10px;">Lấy: <strong>Lợi nhuận thuần</strong><br/>
+                        Lợi nhuận giữ lại đầu kỳ + Lợi nhuận thuần - Cổ tức<br/>
+                        → Tính ra: <strong style="color: #f57c00;">Lợi nhuận giữ lại cuối kỳ</strong></p>
+                    </div>
+
+                    <p style="text-align: center; font-size: 2em; margin: 15px 0;">↓</p>
+
+                    <div style="background: #f3e5f5; padding: 20px; border-radius: 10px; margin: 10px 0;">
+                        <strong>4. BÁO CÁO TÌNH HÌNH TÀI CHÍNH</strong>
+                        <p style="margin-top: 10px;">Lấy: <strong>Lợi nhuận giữ lại cuối kỳ</strong><br/>
+                        Hiển thị trong phần Vốn chủ sở hữu</p>
+                    </div>
+
+                    <p style="text-align: center; font-size: 2em; margin: 15px 0;">↓</p>
+
+                    <div style="background: #e0f2f1; padding: 20px; border-radius: 10px; margin: 10px 0;">
+                        <strong>5. BÁO CÁO LƯU CHUYỂN TIỀN TỆ</strong>
+                        <p style="margin-top: 10px;">Giải thích: Tại sao <strong>Tiền mặt</strong> thay đổi<br/>
+                        (Số dư Tiền trong BCTH tài chính)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 49: Phân tích báo cáo tài chính -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>PHÂN TÍCH BÁO CÁO TÀI CHÍNH</h2>
+                <p class="subtitle">Financial Statement Analysis</p>
+            </div>
+            <div class="content">
+                <h3>Các chỉ số quan trọng cho DN Thương mại:</h3>
+
+                <div class="key-point">
+                    <strong>1. Tỷ suất lợi nhuận gộp</strong> = Lợi nhuận gộp ÷ Doanh thu thuần
+                    <p style="margin-left: 20px;">→ Đo lường hiệu quả mua hàng và định giá</p>
+                </div>
+
+                <div class="key-point">
+                    <strong>2. Tỷ suất lợi nhuận thuần</strong> = Lợi nhuận thuần ÷ Doanh thu thuần
+                    <p style="margin-left: 20px;">→ Đo lường hiệu quả tổng thể</p>
+                </div>
+
+                <div class="key-point">
+                    <strong>3. Vòng quay hàng tồn kho</strong> = Giá vốn hàng bán ÷ Hàng tồn kho TB
+                    <p style="margin-left: 20px;">→ Đo lường tốc độ bán hàng</p>
+                </div>
+
+                <div class="key-point">
+                    <strong>4. Số ngày tồn kho</strong> = 365 ÷ Vòng quay hàng tồn kho
+                    <p style="margin-left: 20px;">→ Hàng tồn kho trung bình trong bao nhiêu ngày</p>
+                </div>
+
+                <div class="example">
+                    <h3>Ví dụ tính toán với PW Audio Supply:</h3>
+                    <table>
+                        <tr>
+                            <th>Chỉ số</th>
+                            <th>Tính toán</th>
+                            <th>Kết quả</th>
+                        </tr>
+                        <tr>
+                            <td>Tỷ suất LN gộp</td>
+                            <td>144.000 ÷ 460.000</td>
+                            <td><strong>31.3%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Tỷ suất LN thuần</td>
+                            <td>31.600 ÷ 460.000</td>
+                            <td><strong>6.9%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Vòng quay TK</td>
+                            <td>316.000 ÷ 38.000*</td>
+                            <td><strong>8.3 lần</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Số ngày tồn kho</td>
+                            <td>365 ÷ 8.3</td>
+                            <td><strong>44 ngày</strong></td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 10px; font-size: 0.9em;">*TK TB = (36.000 + 40.000) ÷ 2 = 38.000</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 50: Case study thực tế -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>CASE STUDY: CARREFOUR</h2>
+                <p class="subtitle">Real-World Example</p>
+            </div>
+            <div class="content">
+                <div class="highlight">
+                    <p><strong>Carrefour</strong> - Nhà bán lẻ lớn thứ 2 thế giới (sau Walmart)</p>
+                </div>
+
+                <h3>Thông tin công ty:</h3>
+                <ul>
+                    <li>Trụ sở: Pháp</li>
+                    <li>Gần 10.000 cửa hàng tại 32 quốc gia</li>
+                    <li>471.000 nhân viên</li>
+                    <li>Doanh thu: €112 tỷ</li>
+                </ul>
+
+                <h3>Thách thức:</h3>
+                <div class="warning">
+                    <ul>
+                        <li>Khủng hoảng nợ châu Âu → Sức mua giảm</li>
+                        <li>Cạnh tranh gay gắt (E.Leclerc)</li>
+                        <li>Thay đổi chiến lược định giá nhiều lần</li>
+                        <li>Giá cổ phiếu giảm 2/3 trong 5 năm</li>
+                    </ul>
+                </div>
+
+                <h3>Chiến lược phục hồi:</h3>
+                <div class="key-point">
+                    <ul>
+                        <li>Cải tạo 500 siêu thị tại châu Âu</li>
+                        <li>Tập trung vào thị trường tăng trưởng (Ấn Độ)</li>
+                        <li>Định giá thấp cố định thay vì khuyến mãi tạm thời</li>
+                        <li>Tăng giá trị dịch vụ để bù giá cao hơn đối thủ</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Bài học cho Thương mại điện tử:</h3>
+                    <ol>
+                        <li>Quản lý hàng tồn kho hiệu quả là then chốt</li>
+                        <li>Hiểu rõ hành vi khách hàng trong khủng hoảng</li>
+                        <li>Chiến lược định giá phải nhất quán</li>
+                        <li>Cân bằng giữa giá thấp và giá trị dịch vụ</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 51: Tổng kết -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>TỔNG KẾT</h2>
+                <p class="subtitle">Summary</p>
+            </div>
+            <div class="content">
+                <h3>Những điểm chính đã học:</h3>
+
+                <div class="key-point">
+                    <strong>1. Đặc điểm DN Thương mại</strong>
+                    <ul style="margin-left: 20px;">
+                        <li>Mua và bán hàng hóa</li>
+                        <li>Có hàng tồn kho và giá vốn hàng bán</li>
+                        <li>Tính lợi nhuận gộp</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    <strong>2. Hệ thống Kiểm kê Thường xuyên</strong>
+                    <ul style="margin-left: 20px;">
+                        <li>Theo dõi chi tiết từng giao dịch</li>
+                        <li>Ghi 2 bút toán khi bán hàng</li>
+                        <li>Kiểm soát tốt hơn</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    <strong>3. Giao dịch Mua hàng</strong>
+                    <ul style="margin-left: 20px;">
+                        <li>Ghi Nợ Hàng tồn kho</li>
+                        <li>Phí vận chuyển, trả hàng, chiết khấu đều ảnh hưởng Hàng tồn kho</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    <strong>4. Giao dịch Bán hàng</strong>
+                    <ul style="margin-left: 20px;">
+                        <li>Ghi doanh thu và giá vốn đồng thời</li>
+                        <li>Dùng tài khoản đối ứng cho trả hàng và chiết khấu</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    <strong>5. Báo cáo Tài chính</strong>
+                    <ul style="margin-left: 20px;">
+                        <li>5 báo cáo có liên hệ chặt chẽ</li>
+                        <li>Lợi nhuận gộp và tỷ suất LN gộp rất quan trọng</li>
+                        <li>Phân tích để ra quyết định</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 52: Bài tập thực hành -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>BÀI TẬP THỰC HÀNH</h2>
+                <p class="subtitle">Practice Exercise</p>
+            </div>
+            <div class="content">
+                <div class="example">
+                    <h3>Công ty Shopee Việt Nam có các giao dịch sau trong tháng 6/2024:</h3>
+                    
+                    <p><strong>01/6:</strong> Mua hàng từ nhà cung cấp 100.000.000 đ, điều khoản 2/10, n/30, FOB Shipping Point</p>
+                    <p><strong>02/6:</strong> Trả phí vận chuyển 2.000.000 đ</p>
+                    <p><strong>05/6:</strong> Trả lại hàng lỗi 10.000.000 đ</p>
+                    <p><strong>08/6:</strong> Thanh toán cho nhà cung cấp</p>
+                    <p><strong>15/6:</strong> Bán hàng cho khách 150.000.000 đ (giá vốn 80.000.000 đ), điều khoản 2/10, n/30</p>
+                    <p><strong>18/6:</strong> Khách trả hàng 15.000.000 đ (giá vốn 8.000.000 đ)</p>
+                    <p><strong>24/6:</strong> Thu tiền từ khách hàng</p>
+                </div>
+
+                <h3>Yêu cầu:</h3>
+                <ol>
+                    <li>Ghi các bút toán nhật ký</li>
+                    <li>Tính giá trị hàng tồn kho sau các giao dịch mua</li>
+                    <li>Tính doanh thu thuần</li>
+                    <li>Tính lợi nhuận gộp</li>
+                    <li>Tính tỷ suất lợi nhuận gộp</li>
+                </ol>
+
+                <div class="warning">
+                    <strong>Gợi ý:</strong> Nhớ kiểm tra xem các khoản thanh toán có trong kỳ chiết khấu không!
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 53: Đáp án bài tập -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>ĐÁP ÁN BÀI TẬP</h2>
+            </div>
+            <div class="content" style="font-size: 0.85em;">
+                <h3>1. Bút toán nhật ký:</h3>
+                <table style="font-size: 0.9em;">
+                    <tr><th>Ngày</th><th>Tài khoản</th><th>Nợ (triệu)</th><th>Có (triệu)</th></tr>
+                    <tr>
+                        <td>01/6</td>
+                        <td>Hàng tồn kho<br/>Phải trả NCC</td>
+                        <td>100<br/></td>
+                        <td><br/>100</td>
+                    </tr>
+                    <tr>
+                        <td>02/6</td>
+                        <td>Hàng tồn kho<br/>Tiền mặt</td>
+                        <td>2<br/></td>
+                        <td><br/>2</td>
+                    </tr>
+                    <tr>
+                        <td>05/6</td>
+                        <td>Phải trả NCC<br/>Hàng tồn kho</td>
+                        <td>10<br/></td>
+                        <td><br/>10</td>
+                    </tr>
+                    <tr>
+                        <td>08/6</td>
+                        <td>Phải trả NCC (100-10)<br/>Hàng tồn kho (90×2%)<br/>Tiền mặt</td>
+                        <td>90<br/><br/></td>
+                        <td><br/>1.8<br/>88.2</td>
+                    </tr>
+                    <tr>
+                        <td>15/6</td>
+                        <td>Phải thu KH<br/>Doanh thu<br/>Giá vốn<br/>Hàng tồn kho</td>
+                        <td>150<br/><br/>80<br/></td>
+                        <td><br/>150<br/><br/>80</td>
+                    </tr>
+                    <tr>
+                        <td>18/6</td>
+                        <td>Trả hàng & giảm giá<br/>Phải thu KH<br/>Hàng tồn kho<br/>Giá vốn</td>
+                        <td>15<br/><br/>8<br/></td>
+                        <td><br/>15<br/><br/>8</td>
+                    </tr>
+                    <tr>
+                        <td>24/6</td>
+                        <td>Tiền mặt<br/>Chiết khấu bán hàng (135×2%)<br/>Phải thu KH (150-15)</td>
+                        <td>132.3<br/>2.7<br/></td>
+                        <td><br/><br/>135</td>
+                    </tr>
+                </table>
+
+                <h3 style="margin-top: 20px;">2-5. Các kết quả tính toán:</h3>
+                <table>
+                    <tr><td>Giá trị HTK sau mua</td><td>100 + 2 - 10 - 1.8 = <strong>90.2 triệu</strong></td></tr>
+                    <tr><td>Doanh thu thuần</td><td>150 - 15 - 2.7 = <strong>132.3 triệu</strong></td></tr>
+                    <tr><td>Lợi nhuận gộp</td><td>132.3 - 72 = <strong>60.3 triệu</strong></td></tr>
+                    <tr><td>Tỷ suất LN gộp</td><td>60.3 ÷ 132.3 = <strong>45.6%</strong></td></tr>
+                </table>
+                <p style="margin-top: 10px; font-size: 0.95em;">*Giá vốn thuần = 80 - 8 = 72 triệu</p>
+            </div>
+        </div>
+
+        <!-- Slide 54: Câu hỏi thảo luận -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>CÂU HỎI THẢO LUẬN</h2>
+                <p class="subtitle">Discussion Questions</p>
+            </div>
+            <div class="content">
+                <div class="key-point">
+                    <strong>1. Về Chiến lược Kinh doanh:</strong>
+                    <p>Một shop online nên chọn FOB Shipping Point hay FOB Destination? Tại sao? Ảnh hưởng đến trải nghiệm khách hàng như thế nào?</p>
+                </div>
+
+                <div class="key-point">
+                    <strong>2. Về Quản lý Tồn kho:</strong>
+                    <p>Tại sao Amazon thành công hơn nhiều đối thủ? Hệ thống quản lý hàng tồn kho đóng vai trò gì?</p>
+                </div>
+
+                <div class="key-point">
+                    <strong>3. Về Chiết khấu:</strong>
+                    <p>Một DN có nên vay ngân hàng lãi suất 10%/năm để thanh toán sớm lấy chiết khấu 2/10, n/30? Phân tích chi tiết.</p>
+                </div>
+
+                <div class="key-point">
+                    <strong>4. Về Phân tích Tài chính:</strong>
+                    <p>Nếu tỷ suất lợi nhuận gộp giảm từ 35% xuống 28%, DN nên làm gì? Đề xuất 3 giải pháp cụ thể.</p>
+                </div>
+
+                <div class="key-point">
+                    <strong>5. Về Thương mại Điện tử:</strong>
+                    <p>So sánh ưu/nhược điểm của mô hình kinh doanh Shopee (marketplace) vs Tiki (bán trực tiếp) về mặt kế toán hàng tồn kho.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 55: Ứng dụng thực tế -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>ỨNG DỤNG TRONG THƯƠNG MẠI ĐIỆN TỬ</h2>
+                <p class="subtitle">E-commerce Applications</p>
+            </div>
+            <div class="content">
+                <h3>1. Quản lý Hàng tồn kho Thông minh:</h3>
+                <div class="example">
+                    <ul>
+                        <li><strong>Lazada, Shopee:</strong> Hệ thống cảnh báo tồn kho thấp tự động</li>
+                        <li><strong>Amazon:</strong> Dự đoán nhu cầu bằng AI, đặt hàng trước khi khách mua</li>
+                        <li><strong>Alibaba:</strong> Tối ưu vị trí lưu kho theo tốc độ bán</li>
+                    </ul>
+                </div>
+
+                <h3>2. Chiến lược Định giá:</h3>
+                <div class="example">
+                    <ul>
+                        <li><strong>Dynamic Pricing:</strong> Giá thay đổi theo cung cầu real-time</li>
+                        <li><strong>Flash Sale:</strong> Tạo chiết khấu ngắn hạn kích thích mua hàng</li>
+                        <li><strong>Free Shipping:</strong> Tính vào giá bán, tâm lý khách hàng tốt hơn</li>
+                    </ul>
+                </div>
+
+                <h3>3. Xử lý Trả hàng:</h3>
+                <div class="example">
+                    <ul>
+                        <li><strong>Shopee:</strong> Hoàn tiền tự động trong 15 ngày</li>
+                        <li><strong>Lazada:</strong> Đổi hàng miễn phí trong 7 ngày</li>
+                        <li><strong>Amazon:</strong> Chính sách trả hàng linh hoạt → Tăng niềm tin</li>
+                    </ul>
+                </div>
+
+                <h3>4. Phân tích Dữ liệu:</h3>
+                <div class="key-point">
+                    <ul>
+                        <li>Theo dõi tỷ suất lợi nhuận gộp theo từng danh mục</li>
+                        <li>Phân tích sản phẩm bán chạy/bán chậm</li>
+                        <li>Tối ưu hóa mix sản phẩm</li>
+                        <li>Dashboard theo dõi KPIs real-time</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 56: Xu hướng tương lai -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>XU HƯỚNG TƯƠNG LAI</h2>
+                <p class="subtitle">Future Trends</p>
+            </div>
+            <div class="content">
+                <div class="key-point">
+                    <strong>1. Tự động hóa Kế toán</strong>
+                    <ul style="margin-left: 20px;">
+                        <li>AI tự động ghi nhận giao dịch</li>
+                        <li>Blockchain cho tính minh bạch</li>
+                        <li>Smart contracts tự động thanh toán</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    <strong>2. Omnichannel Retail</strong>
+                    <ul style="margin                    <tr style="background: #f0f0f0;">
+                        <td>Giá vốn hàng bán</td>
+                        <td></td>
+                        <td>316.000</td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td>Trả hàng và giảm giá</td>
+                        <td></td>
+                        <td>12.000</td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td>Chiết khấu bán hàng</td>
+                        <td></td>
+                        <td>8.000</td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td>Chi phí hoạt động</td>
+                        <td></td>
+                        <td>114.000</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">31/12</td>
+                        <td>Tổng hợp thu nhập</td>
+                        <td>30.000</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Lợi nhuận giữ lại</td>
+                        <td></td>
+                        <td>30.000</td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td rowspan="2">31/12</td>
+                        <td>Lợi nhuận giữ lại</td>
+                        <td>15.000</td>
+                        <td></td>
+                    </tr>
+                    <tr style="background: #f0f0f0;">
+                        <td>Cổ tức</td>
+                        <td></td>
+                        <td>15.000</td>
+                    </tr>
+                </table>
+
+                <div class="key-point" style="margin-top: 20px;">
+                    <strong>Lợi nhuận thuần = 480.000 - 450.000 = 30.000€</strong>
+                </div>
+            </div>
+        </div>
