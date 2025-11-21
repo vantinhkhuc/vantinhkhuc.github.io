@@ -850,4 +850,291 @@ Hôm nay, chúng ta đang học viết CÂU - chúng ta sẽ học cách thực 
 
 Điều này cực kỳ thực tế. Cho dù các em làm việc cho Shopee, Lazada, hoặc startup của riêng mình, các em sẽ sử dụng những kỹ năng này.
 
-Sẵn sàng chưa? Hãy bắt đ
+Sẵn sàng chưa? Hãy bắt đầu!"
+
+SLIDE 22: Tổng quan Quy trình Ghi chép (5 phút)
+Kịch bản:
+"Trước khi đi vào chi tiết, để thầy/cô cho các em thấy BỨC TRANH LỚN của quy trình ghi chép.
+Mỗi giao dịch đều tuân theo BA BƯỚC. Nhìn vào màn hình:
+BƯỚC 1: PHÂN TÍCH mỗi giao dịch
+
+Điều gì đã xảy ra?
+Những tài khoản nào bị ảnh hưởng?
+Chúng tăng hay giảm?
+
+BƯỚC 2: GHI NHẬT KÝ giao dịch
+
+Viết nó vào nhật ký (sổ ghi chép ban đầu)
+Hiển thị ghi nợ và ghi có
+
+BƯỚC 3: CHUYỂN sang tài khoản sổ cái
+
+Chuyển thông tin từ nhật ký sang các tài khoản cá nhân
+Cập nhật số dư tài khoản
+
+Hãy nghĩ về nó như thế này:
+
+PHÂN TÍCH = Hiểu giao dịch
+GHI NHẬT KÝ = Viết nó xuống
+CHUYỂN = Sắp xếp nó thành các danh mục
+
+Ba bước này lặp lại cho MỌI giao dịch. Cho dù các em xử lý 10 giao dịch hay 10.000, quy trình là như nhau.
+Hôm nay chúng ta sẽ tập trung vào bước 2 và 3: Ghi nhật ký và Chuyển bút toán.
+Hãy bắt đầu với NHẬT KÝ..."
+
+SLIDE 23: Nhật ký là gì? (5 phút)
+Kịch bản:
+"NHẬT KÝ chính xác là gì?
+Định nghĩa: Một bản ghi theo thứ tự thời gian của các giao dịch. Nó còn được gọi là 'Sổ ghi chép ban đầu' vì đây là nơi chúng ta GHI NHẬN ĐẦU TIÊN các giao dịch.
+Hãy nghĩ về nhật ký như một cuốn nhật ký. Trong nhật ký cá nhân của các em, các em viết các sự kiện theo thứ tự chúng xảy ra - Thứ Hai, Thứ Ba, Thứ Tư. Giống như nhật ký kế toán! Chúng ta ghi nhận các giao dịch theo thứ tự chúng xảy ra.
+Tại sao chúng ta sử dụng nhật ký? Bốn lý do chính:
+Lý do #1: Nó hiển thị tác động HOÀN CHỈNH của một giao dịch ở MỘT nơi. Các em có thể thấy cả ghi nợ và ghi có cùng nhau.
+Lý do #2: Nó cung cấp bản ghi THEO THỜI GIAN. Các em có thể theo dõi những gì đã xảy ra vào bất kỳ ngày cụ thể nào.
+Lý do #3: Nó giúp NGĂN NGỪA và XÁC ĐỊNH lỗi. Bởi vì ghi nợ và ghi có ngay cạnh nhau, các em có thể dễ dàng kiểm tra xem chúng có bằng nhau không.
+Lý do #4: Nó bao gồm GIẢI THÍCH. Mỗi bút toán có mô tả ngắn gọn về những gì đã xảy ra.
+Để thầy/cô cho các em một phép tương tự: Hãy tưởng tượng các em là người bán hàng trực tuyến trên nhiều nền tảng - Shopee, Lazada, Facebook Marketplace. Nhật ký giống như nhật ký chính của các em nơi các em ghi nhận MỌI giao dịch bán hàng, bất kể nền tảng nào, theo thứ tự thời gian.
+Không có nhật ký, hồ sơ của các em sẽ hỗn loạn. Với nhật ký, mọi thứ được tổ chức và có thể truy xuất.
+Hiểu chưa? Câu hỏi?"
+[Dừng lại]
+
+SLIDE 24: Định dạng Nhật ký Chung (8 phút)
+Kịch bản:
+"Bây giờ hãy xem nhật ký thực sự TRÔNG NHƯ THẾ NÀO.
+Đây là định dạng của nhật ký chung. Nó có NĂM cột:
+Cột 1: NGÀY
+Giao dịch xảy ra khi nào?
+Cột 2: TÊN TÀI KHOẢN VÀ GIẢI THÍCH
+Những tài khoản nào bị ảnh hưởng? Điều gì đã xảy ra?
+Cột 3: THAM CHIẾU (Ref.)
+Số tài khoản - điền sau trong quá trình chuyển bút toán
+Cột 4: GHI NỢ
+Số tiền ghi nợ ở đây
+Cột 5: GHI CÓ
+Số tiền ghi có ở đây
+Nhìn vào ví dụ trên màn hình:
+[Chỉ vào từng phần tử]
+Ngày: 1 tháng 9, 2020
+Tài khoản: Tiền mặt (ghi nợ) và Vốn cổ phần phổ thông (ghi có)
+Số tiền: 15.000 trong cả cột ghi nợ và ghi có
+Giải thích: (Phát hành cổ phần để lấy tiền mặt)
+Chú ý nhiều điều:
+Thứ nhất: Tài khoản GHI NỢ được viết trước, ở lề trái.
+Thứ hai: Tài khoản GHI CÓ được THỤT VÀO (di chuyển sang phải).
+Thứ ba: Giải thích ở trong ngoặc đơn bên dưới tài khoản ghi có.
+Thứ tư: Số tiền ghi nợ và ghi có ở các cột riêng biệt.
+Để thầy/cô viết định dạng lên bảng:
+[Viết định dạng]
+Ngày | Tên Tài khoản         | Ref. | Nợ    | Có
+-----|------------------------|------|-------|-------
+1/9  | Tiền mặt              |      |15.000 |
+     |   Vốn cổ phần phổ thông|     |       | 15.000
+     | (Giải thích)           |      |       |
+Quy tắc định dạng chính:
+
+Tài khoản ghi nợ trước, sát lề trái
+Tài khoản ghi có thụt vào
+Giải thích trong ngoặc đơn
+Để một dòng trống giữa các bút toán
+
+Mọi người, sao chép định dạng này. Các em sẽ sử dụng nó cho mọi bút toán nhật ký.
+Có câu hỏi về định dạng không?"
+[Dừng lại để trả lời câu hỏi]
+"Hoàn hảo! Bây giờ hãy học cách thực sự LÀM các bút toán nhật ký..."
+
+SLIDE 25: Các Bước Ghi Nhật ký (6 phút)
+Kịch bản:
+"Quy trình nhập các giao dịch vào nhật ký được gọi là GHI NHẬT KÝ.
+Đây là NĂM bước để ghi nhật ký bất kỳ giao dịch nào:
+BƯỚC 1: Nhập NGÀY vào cột ngày
+
+Năm ở trên cùng, sau đó tháng, sau đó ngày
+
+BƯỚC 2: Viết tên tài khoản GHI NỢ ở lề trái
+
+Nhập số tiền ghi nợ vào cột ghi nợ
+
+BƯỚC 3: Viết tên tài khoản GHI CÓ THỤT VÀO trên dòng tiếp theo
+
+Nhập số tiền ghi có vào cột ghi có
+
+BƯỚC 4: Viết GIẢI THÍCH ngắn gọn bên dưới tài khoản ghi có
+
+Đặt nó trong ngoặc đơn
+Rõ ràng nhưng ngắn gọn
+
+BƯỚC 5: Để một DÒNG TRỐNG giữa các bút toán
+
+Điều này tách các giao dịch một cách trực quan
+
+Để thầy/cô minh họa với một ví dụ:
+1 tháng 10 - Công ty trả tiền thuê nhà ₺900
+[Viết lên bảng]
+1/10 | Chi phí Thuê nhà          | 900 |
+     |   Tiền mặt                |     | 900
+     | (Trả tiền thuê tháng 10)  |     |
+Thấy cách thầy/cô đã làm theo năm bước không?
+
+Ngày: 1/10 ✓
+Ghi nợ: Chi phí Thuê nhà 900 ✓
+Ghi có: Tiền mặt 900 (thụt vào) ✓
+Giải thích: (Trả tiền thuê tháng 10) ✓
+Dòng trống sau (cho bút toán tiếp theo) ✓
+
+Lưu ý quan trọng: Cột Ref. để TRỐNG khi ghi nhật ký. Chúng ta điền nó sau trong quá trình chuyển bút toán.
+Ngoài ra, giải thích nên CỤ THỂ. Đừng chỉ viết 'trả chi phí.' Viết loại chi phí nào và tại sao.
+Tốt: (Trả tiền thuê tháng 10)
+Tốt hơn: (Trả tiền thuê văn phòng tháng 10)
+Xấu: (Trả tiền)
+Rõ ràng, cụ thể, chuyên nghiệp.
+Mọi người, hãy thực hành. Viết bút toán này vào sổ tay của các em: 5 tháng 9 - Mua vật tư chịu 2.500.000đ.
+[Cho sinh viên 2 phút]
+Ai muốn cho xem câu trả lời của mình?
+[Xem xét câu trả lời của sinh viên]
+5/9 | Vật tư                    | 2.500.000 |
+    |   Phải trả người bán      |           | 2.500.000
+    | (Mua vật tư chịu từ _____)  |         |
+Tuyệt vời! Các em đang hiểu rồi!"
+
+SLIDE 26-40: [Tiếp tục với các slide về Journal Entry, Posting, Ledger...]
+[Do giới hạn độ dài, phần còn lại sẽ theo cùng cấu trúc với:
+
+Slide 26-30: Compound entries, ví dụ hoàn chỉnh, thực hành ghi nhật ký
+Slide 31-37: Sổ cái, định dạng tài khoản 3 cột, quy trình chuyển bút toán, bảng tài khoản
+Slide 38-40: Ví dụ quy trình ghi chép hoàn chỉnh, tóm tắt Buổi 2]**
+
+
+BUỔI 3: BẢNG CÂN ĐỐI THỬ VÀ THỰC HÀNH
+Thời lượng: 150 phút (2.5 giờ)
+
+SLIDE 41: Tiêu đề Buổi 3 (2 phút)
+Kịch bản:
+"Chào mừng các em quay lại! Đây là buổi học CUỐI CÙNG của chúng ta về Quy trình Ghi chép!
+Tóm tắt nhanh hành trình của chúng ta:
+
+Buổi 1: Tài khoản, ghi nợ và ghi có (bảng chữ cái)
+Buổi 2: Nhật ký và sổ cái (viết câu)
+Buổi 3 - HÔM NAY: Bảng cân đối thử và thực hành toàn diện (viết đoạn văn)
+
+Hôm nay là tất cả về XÁC MINH và THỰC HÀNH. Các em sẽ học cách kiểm tra công việc của mình và chứng minh rằng mọi thứ đều cân bằng.
+Đến cuối hôm nay, các em sẽ có thể:
+
+Lập bảng cân đối thử
+Phát hiện và xác định lỗi
+Hoàn thành toàn bộ quy trình ghi chép từ đầu đến cuối
+
+Đây là đỉnh cao của mọi thứ chúng ta đã học. Sẵn sàng chưa? Hãy kết thúc thật mạnh mẽ!"
+
+SLIDE 42: Bảng Cân đối Thử là gì? (6 phút)
+Kịch bản:
+"Chủ đề chính hôm nay: BẢNG CÂN ĐỐI THỬ.
+Bảng cân đối thử là gì?
+Định nghĩa: Danh sách các tài khoản và số dư của chúng tại một thời điểm nhất định.
+Hãy nghĩ về nó như một điểm kiểm tra trong trò chơi điện tử. Trước khi tiến lên phía trước, các em xác minh các em có mọi thứ cần thiết.
+Trong kế toán, trước khi lập báo cáo tài chính, các em xác minh rằng ghi nợ bằng ghi có.
+Mục đích Chính:
+CHỨNG MINH rằng ghi nợ bằng ghi có sau khi chuyển bút toán!
+Nhớ lại, theo hệ thống kê khai kép:
+
+Mỗi giao dịch có ghi nợ và ghi có bằng nhau
+Sau khi chuyển, tổng ghi nợ phải bằng tổng ghi có
+
+Bảng cân đối thử KIỂM TRA sự bằng nhau này.
+Lợi ích Bổ sung:
+Lợi ích 1: Giúp phát hiện lỗi trong ghi nhật ký và chuyển bút toán
+
+Quên chuyển cái gì đó? Bảng cân đối thử sẽ không cân bằng
+Chuyển sai số tiền? Nó sẽ không cân bằng
+Mắc lỗi toán học? Sẽ không cân bằng
+
+Lợi ích 2: Hữu ích cho việc lập báo cáo tài chính
+
+Tất cả số dư tài khoản ở một nơi
+Được tổ chức và sẵn sàng sử dụng
+Dễ dàng thấy các em có gì
+
+Lợi ích 3: Hiển thị bức tranh nhanh của tất cả các tài khoản
+
+Giống như một bức ảnh tài chính
+Chụp số dư tại một thời điểm cụ thể
+Thường được lập vào cuối tháng hoặc năm
+
+Để thầy/cô cho các em một phép tương tự:
+Bảng cân đối thử giống như kiểm tra ba lô trước kỳ thi:
+
+Các em có bút chì không? ✓
+Máy tính? ✓
+Thẻ sinh viên? ✓
+Mọi thứ cộng lại? Sẵn sàng đi!
+
+Trong kế toán:
+
+Ghi nợ có bằng ghi có không? ✓
+Tất cả tài khoản đã liệt kê? ✓
+Số dư đúng? ✓
+Mọi thứ cộng lại? Sẵn sàng cho báo cáo tài chính!
+
+Bảng cân đối thử là kiểm tra chất lượng của các em. Đừng bao giờ bỏ qua nó!
+Có câu hỏi không?"
+[Dừng lại]
+
+SLIDE 43-70: [Tiếp tục với các nội dung:]
+Slide 43-50:
+
+Định dạng bảng cân đối thử
+Các bước lập bảng cân đối thử
+Những gì bảng cân đối thử chứng minh và không chứng minh
+Hạn chế của bảng cân đối thử
+Phương pháp xác định lỗi
+
+Slide 51-54:
+
+Bài tập thực hành Campus Laundromat
+Giải pháp đầy đủ (journal entries, T-accounts, trial balance)
+
+Slide 55-60:
+
+Ứng dụng vào thương mại điện tử
+Ví dụ thực tế (Fidelity Investments)
+Các lỗi thường gặp cần tránh
+Từ bảng cân đối thử đến báo cáo tài chính
+
+Slide 61-70:
+
+Ôn tập toàn diện Chương 2
+Công thức và quy tắc chính
+Mẹo chuẩn bị thi
+Tài nguyên bổ sung
+Bài tập nhóm
+Nghiên cứu tình huống
+Đạo đức trong kế toán
+Công nghệ trong kế toán
+Bài kiểm tra nhanh
+Bài tập về nhà và kết thúc
+
+
+PHỤ LỤC: MẸO GIẢNG DẠY
+Kỹ thuật Tương tác:
+
+Think-Pair-Share: Đặt câu hỏi, cho sinh viên suy nghĩ cá nhân, thảo luận với bạn, sau đó chia sẻ với lớp
+Bảng trắng Mini: Cho sinh viên vẽ tài khoản chữ T trên giấy và giơ lên để kiểm tra nhanh
+Ví dụ Thực tế: Liên tục kết nối với thương mại điện tử (Shopee, Lazada, thanh toán online)
+Phân tích Lỗi: Cho thấy các lỗi thường gặp và cách sửa chúng
+Học theo Dự án: Tạo doanh nghiệp giả lập và ghi nhận giao dịch của nó
+
+Đánh giá:
+
+Kiểm tra nhanh: Các câu hỏi ngắn mỗi buổi học
+Bài tập: Ghi nhật ký, chuyển bút toán, lập bảng cân đối thử
+Bài thi Giữa kỳ: Sau Buổi 3
+Dự án Cuối kỳ: Ghi chép đầy đủ cho một doanh nghiệp mô phỏng
+
+Tài nguyên:
+
+Sách giáo khoa: Financial Accounting - IFRS Edition
+Bài tập thực hành trực tuyến
+Video tutorials
+Phần mềm kế toán (QuickBooks demo)
+
+
+KẾT THÚC KỊCH BẢN BÀI GIẢNG
+Lưu ý cho giảng viên: Điều chỉnh tốc độ dựa trên mức độ hiểu của sinh viên. Khuyến khích câu hỏi. Sử dụng ví dụ địa phương. Liên kết với kinh nghiệm thương mại điện tử của sinh viên.# KỊCH BẢN BÀI GIẢNG: QUY TRÌNH GHI CHÉP KÊ TOÁN
