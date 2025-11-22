@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kế Toán Hàng Tồn Kho - Nguyên Lý Kế Toán</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px;
+            position: relative;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+
+        .slide-header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .slide-header h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .slide-header h3 {
+            color: #555;
+            font-size: 1.5em;
+            font-weight: normal;
+        }
+
+        .slide-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .slide-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .slide-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .slide-content::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .slide-content ul {
+            margin-left: 30px;
+            line-height: 2;
+        }
+
+        .slide-content li {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .slide-content p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffd89b 0%, #ff9a76 100%);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .box {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .box-warning {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+        }
+
+        .box-success {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+
+        .box-info {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1em;
+        }
+
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .formula {
+            background: #e8eaf6;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.3em;
+            text-align: center;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border: 2px dashed #667eea;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .controls button {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .controls button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .controls button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .example {
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .example h4 {
+            color: #ff9800;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 0.9em;
+            color: #999;
+        }
+
+        strong {
+            color: #667eea;
+        }
+
+        .comparison {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+        }
+
+        .comparison-item {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            margin: 0 10px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .comparison-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Trang bìa -->
+        <div class="slide active">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h1>📦 KẾ TOÁN HÀNG TỒN KHO</h1>
+                <h3>Inventories Accounting</h3>
+                <h3 style="margin-top: 30px; color: #764ba2;">Chương 6</h3>
+            </div>
+            <div class="slide-content" style="text-align: center;">
+                <div style="margin-top: 50px;">
+                    <p style="font-size: 1.5em; color: #667eea;">🎯 Dành cho sinh viên năm 2</p>
+                    <p style="font-size: 1.3em; color: #764ba2;">Ngành Thương Mại Điện Tử</p>
+                    <p style="font-size: 1.2em; margin-top: 40px; color: #555;">Thời lượng: 2 buổi học (300 phút)</p>
+                </div>
+                <div style="margin-top: 80px; padding: 30px; background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%); border-radius: 15px;">
+                    <p style="font-size: 1.1em; font-style: italic; color: #555;">
+                        "Quản lý hàng tồn kho hiệu quả là chìa khóa dẫn đến hoạt động kinh doanh thành công"
+                    </p>
+                </div>
+            </div>
+            <div class="slide-number">Slide 1/65</div>
+        </div>
+
+        <!-- Slide 2: Mục tiêu học tập -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>🎯 MỤC TIÊU HỌC TẬP</h2>
+            </div>
+            <div class="slide-content">
+                <div class="box box-success">
+                    <h3 style="color: #28a745; margin-bottom: 20px;">Sau khi hoàn thành bài học, sinh viên có khả năng:</h3>
+                </div>
+                
+                <ul>
+                    <li><strong>LO 1:</strong> Phân loại và xác định hàng tồn kho
+                        <ul style="margin-top: 10px; color: #666;">
+                            <li>Phân loại các loại hàng tồn kho</li>
+                            <li>Xác định số lượng hàng tồn kho</li>
+                        </ul>
+                    </li>
+                    <li><strong>LO 2:</strong> Áp dụng các phương pháp luồng chi phí hàng tồn kho
+                        <ul style="margin-top: 10px; color: #666;">
+                            <li>Phương pháp nhận diện cụ thể</li>
+                            <li>Các giả định luồng chi phí (FIFO, Average-cost)</li>
+                            <li>Ảnh hưởng đến báo cáo tài chính và thuế</li>
+                        </ul>
+                    </li>
+                    <li><strong>LO 3:</strong> Phân tích ảnh hưởng của sai sót hàng tồn kho
+                        <ul style="margin-top: 10px; color: #666;">
+                            <li>Ảnh hưởng lên báo cáo kết quả kinh doanh</li>
+                            <li>Ảnh hưởng lên bảng cân đối kế toán</li>
+                        </ul>
+                    </li>
+                    <li><strong>LO 4:</strong> Trình bày và phân tích hàng tồn kho
+                        <ul style="margin-top: 10px; color: #666;">
+                            <li>Cách trình bày trên báo cáo tài chính</li>
+                            <li>Nguyên tắc giá thấp hơn</li>
+                            <li>Phân tích hiệu quả quản lý hàng tồn kho</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="slide-number">Slide 2/65</div>
+        </div>
+
+        <!-- Slide 3: Tổng quan về hàng tồn kho -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>📚 TỔNG QUAN VỀ HÀNG TỒN KHO</h2>
+            </div>
+            <div class="slide-content">
+                <div class="box box-info">
+                    <h3 style="color: #17a2b8; margin-bottom: 15px;">Hàng tồn kho là gì?</h3>
+                    <p><strong>Hàng tồn kho (Inventory)</strong> là tài sản mà doanh nghiệp nắm giữ để bán trong quá trình kinh doanh bình thường, đang trong quá trình sản xuất hoặc nguyên vật liệu để sử dụng trong sản xuất.</p>
+                </div>
+
+                <div class="two-column" style="margin-top: 30px;">
+                    <div class="card">
+                        <h4>🏢 Doanh nghiệp Thương mại</h4>
+                        <p>Chỉ có <span class="highlight">Hàng hóa tồn kho</span></p>
+                        <ul style="margin-top: 15px; font-size: 0.95em;">
+                            <li>Đã mua sẵn sàng để bán</li>
+                            <li>Không qua chế biến</li>
+                            <li>Ví dụ: Siêu thị, cửa hàng điện tử</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>🏭 Doanh nghiệp Sản xuất</h4>
+                        <p>Có <span class="highlight">3 loại hàng tồn kho:</span></p>
+                        <ul style="margin-top: 15px; font-size: 0.95em;">
+                            <li><strong>Nguyên vật liệu:</strong> Chưa đưa vào sản xuất</li>
+                            <li><strong>Sản phẩm dở dang:</strong> Đang sản xuất</li>
+                            <li><strong>Thành phẩm:</strong> Hoàn thành, sẵn sàng bán</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h4>💡 Ví dụ thực tế: Công ty Komatsu (Nhật Bản)</h4>
+                    <p>Komatsu - nhà sản xuất thiết bị xây dựng khổng lồ báo cáo hàng tồn kho như sau:</p>
+                    <table style="font-size: 0.9em; margin-top: 15px;">
+                        <tr>
+                            <th>Loại hàng tồn kho</th>
+                            <th>Năm 2016 (¥ triệu)</th>
+                            <th>Năm 2015 (¥ triệu)</th>
+                        </tr>
+                        <tr>
+                            <td>Thành phẩm</td>
+                            <td>¥385,623</td>
+                            <td>¥452,081</td>
+                        </tr>
+                        <tr>
+                            <td>Sản phẩm dở dang</td>
+                            <td>¥106,233</td>
+                            <td>¥121,525</td>
+                        </tr>
+                        <tr>
+                            <td>Nguyên vật liệu</td>
+                            <td>¥47,755</td>
+                            <td>¥49,270</td>
+                        </tr>
+                        <tr style="font-weight: bold; background: #f0f0f0;">
+                            <td>Tổng cộng</td>
+                            <td>¥539,611</td>
+                            <td>¥622,876</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="slide-number">Slide 3/65</div>
+        </div>
+
+        <!-- Slide 4: Tầm quan trọng của quản lý HTK -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>⚖️ TẦM QUAN TRỌNG CỦA QUẢN LÝ HÀNG TỒN KHO</h2>
+            </div>
+            <div class="slide-content">
+                <div class="box box-warning">
+                    <h3 style="color: #ff9800; margin-bottom: 15px;">🎯 Quản lý hàng tồn kho là "Con dao hai lưỡi"</h3>
+                    <p>Đòi hỏi sự cân bằng liên tục giữa hai yếu tố đối lập</p>
+                </div>
+
+                <div class="comparison">
+                    <div class="comparison-item" style="background: #e3f2fd; border: 2px solid #2196f3;">
+                        <div class="icon">📈</div>
+                        <h3 style="color: #1976d2; margin-bottom: 15px;">Hàng tồn kho CAO</h3>
+                        <h4 style="color: #28a745; margin: 15px 0;">✅ Ưu điểm:</h4>
+                        <ul style="text-align: left; font-size: 0.95em;">
+                            <li>Đáp ứng nhanh nhu cầu khách hàng</li>
+                            <li>Nhiều sự lựa chọn cho khách</li>
+                            <li>Tránh mất doanh số</li>
+                            <li>Tận dụng giảm giá mua hàng</li>
+                        </ul>
+                        <h4 style="color: #dc3545; margin: 15px 0;">❌ Nhược điểm:</h4>
+                        <ul style="text-align: left; font-size: 0.95em;">
+                            <li>Chi phí lưu kho cao</li>
+                            <li>Chi phí vốn bỏ ra lớn</li>
+                            <li>Rủi ro hàng lỗi thời</li>
+                            <li>Chi phí bảo hiểm tăng</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-item" style="background: #fff3e0; border: 2px solid #ff9800;">
+                        <div class="icon">📉</div>
+                        <h3 style="color: #e65100; margin-bottom: 15px;">Hàng tồn kho THẤP</h3>
+                        <h4 style="color: #28a745; margin: 15px 0;">✅ Ưu điểm:</h4>
+                        <ul style="text-align: left; font-size: 0.95em;">
+                            <li>Giảm chi phí lưu kho</li>
+                            <li>Giảm vốn đầu tư vào hàng</li>
+                            <li>Giảm rủi ro lỗi thời</li>
+                            <li>Tăng vòng quay hàng tồn kho</li>
+                        </ul>
+                        <h4 style="color: #dc3545; margin: 15px 0;">❌ Nhược điểm:</h4>
+                        <ul style="text-align: left; font-size: 0.95em;">
+                            <li>Thiếu hàng khi cần (stock-out)</li>
+                            <li>Mất khách hàng</li>
+                            <li>Giảm doanh thu</li>
+                            <li>Uy tín công ty bị ảnh hưởng</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="box box-success" style="margin-top: 20px;">
+                    <h4 style="color: #28a745; margin-bottom: 10px;">🎯 Mục tiêu quản lý tối ưu:</h4>
+                    <p style="font-size: 1.1em;">Duy trì mức hàng tồn kho <strong>VỪA ĐỦ</strong> để tối đa hóa lợi nhuận và giảm thiểu chi phí, đồng thời đảm bảo đáp ứng nhu cầu khách hàng.</p>
+                </div>
+            </div>
+            <div class="slide-number">Slide 4/65</div>
+        </div>
+
+        <!-- Slide 5: Just-In-Time (JIT) -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>⚡ PHƯƠNG PHÁP JUST-IN-TIME (JIT)</h2>
+            </div>
+            <div class="slide-content">
+                <div class="box box-info">
+                    <h3 style="color: #17a2b8; margin-bottom: 15px;">🔄 Just-In-Time là gì?</h3>
+                    <p><strong>Just-In-Time (JIT)</strong> là phương pháp quản lý hàng tồn kho trong đó doanh nghiệp chỉ sản xuất hoặc mua hàng <span class="highlight">khi cần thiết</span>, giảm thiểu hàng tồn kho xuống gần bằng 0.</p>
+                </div>
+
+                <div class="two-column" style="margin-top: 30px;">
+                    <div>
+                        <h3 style="color: #28a745; margin-bottom: 15px;">✅ Lợi ích của JIT</h3>
+                        <ul style="font-size: 1.05em;">
+                            <li><strong>Giảm chi phí lưu kho:</strong> Tiết kiệm không gian và chi phí bảo quản</li>
+                            <li><strong>Giảm vốn đầu tư:</strong> Không cần bỏ tiền mua hàng trước nhiều</li>
+                            <li><strong>Giảm rủi ro:</strong> Hạn chế hàng lỗi thời, hư hỏng</li>
+                            <li><strong>Tăng hiệu quả:</strong> Tập trung vào sản xuất theo đơn hàng</li>
+                            <li><strong>Cải thiện dòng tiền:</strong> Tiền không bị "đóng băng" trong hàng tồn kho</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #dc3545; margin-bottom: 15px;">⚠️ Rủi ro của JIT</h3>
+                        <ul style="font-size: 1.05em;">
+                            <li><strong>Phụ thuộc nhà cung cấp:</strong> Cần đối tác đáng tin cậy</li>
+                            <li><strong>Rủi ro gián đoạn:</strong> Thiên tai, sự cố có thể làm ngừng sản xuất</li>
+                            <li><strong>Thiếu hàng:</strong> Không đáp ứng kịp nhu cầu đột xuất</li>
+                            <li><strong>Yêu cầu cao:</strong> Cần hệ thống thông tin tốt</li>
+                            <li><strong>Chi phí vận chuyển:</strong> Có thể tăng do đặt hàng thường xuyên</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="example" style="margin-top: 30px;">
+                    <h4>💡 Ví dụ thực tế: Dell Computer (Hoa Kỳ)</h4>
+                    <p><strong>Dell</strong> nổi tiếng với hệ thống JIT hiệu quả:</p>
+                    <ul style="margin-top: 15px; font-size: 1.05em;">
+                        <li>🖥️ Sản xuất máy tính <strong>theo đơn đặt hàng</strong> của từng khách hàng</li>
+                        <li>⏱️ Lắp ráp và giao hàng trong vòng <strong>chưa đầy 48 giờ</strong></li>
+                        <li>📦 Hàng tồn kho gần như <strong>bằng 0</strong></li>
+                        <li>🔗 Tích hợp hệ thống thông tin với nhà cung cấp</li>
+                        <li>💰 Lợi thế lớn trong ngành công nghệ (hàng nhanh lỗi thời)</li>
+                    </ul>
+                </div>
+
+                <div class="box box-warning" style="margin-top: 20px;">
+                    <h4 style="color: #ff9800;">⚠️ Lưu ý quan trọng:</h4>
+                    <p>Thành công của JIT phụ thuộc vào <strong>nhà cung cấp đáng tin cậy</strong> và <strong>hệ thống thông tin tốt</strong>. Một sự cố nhỏ ở nhà cung cấp có thể gây gián đoạn toàn bộ chuỗi sản xuất.</p>
+                </div>
+            </div>
+            <div class="slide-number">Slide 5/65</div>
+        </div>
+
+        <!-- Slide 6: Phân loại hàng tồn kho -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>📋 PHÂN LOẠI HÀNG TỒN KHO</h2>
+                <h3>LO 1: Classifying Inventory</h3>
+            </div>
+            <div class="slide-content">
+                <div class="three-column">
+                    <div class="card" style="background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);">
+                        <div style="text-align: center; font-size: 3em; margin-bottom: 15px;">🏪</div>
+                        <h4 style="text-align: center; color: #ff9800;">Doanh nghiệp Thương mại</h4>
+                        <div style="margin-top: 20px;">
+                            <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                                <h4 style="color: #ff6f00;">Hàng hóa tồn kho</h4>
+                                <p style="font-size: 0.95em; margin-top: 10px;">Merchandise Inventory</p>
+                                <ul style="margin-top: 10px; font-size: 0.9em;">
+                                    <li>Đã mua sẵn sàng để bán</li>
+                                    <li>Không qua chế biến</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="example" style="margin-top: 20px; background: #fffbf0; border-color: #ff9800;">
+                            <p style="font-size: 0.9em;"><strong>Ví dụ:</strong></p>
+                            <ul style="font-size: 0.85em;">
+                                <li>Siêu thị Vinmart</li>
+                                <li>Thế Giới Di Động</li>
+                                <li>Shopee, Lazada</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);">
+                        <div style="text-align: center; font-size: 3em; margin-bottom: 15px;">🏭</div>
+                        <h4 style="text-align: center; color: #1976d2;">Doanh nghiệp Sản xuất</h4>
+                        <div style="margin-top: 20px;">
+                            <div style="background: white; padding: 12px; border-radius: 8px; margin: 8px 0;">
+                                <h4 style="color: #0277bd; font-size: 1em;">1. Nguyên vật liệu</h4>
+                                <p style="font-size: 0.85em; margin-top: 5px;">Raw Materials</p>
+                                <p style="font-size: 0.8em; color: #666;">Chưa đưa vào sản xuất</p>
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 8px; margin: 8px 0;">
+                                <h4 style="color: #0277bd; font-size: 1em;">2. Sản phẩm dở dang</h4>
+                                <p style="font-size: 0.85em; margin-top: 5px;">Work in Process</p>
+                                <p style="font-size: 0.8em; color: #666;">Đang trong quá trình sản xuất</p>
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 8px; margin: 8px 0;">
+                                <h4 style="color: #0277bd; font-size: 1em;">3. Thành phẩm</h4>
+                                <p style="font-size: 0.85em; margin-top: 5px;">Finished Goods</p>
+                                <p style="font-size: 0.8em; color: #666;">Hoàn thành, sẵn sàng bán</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);">
+                        <div style="text-align: center; font-size: 3em; margin-bottom: 15px;">📊</div>
+                        <h4 style="text-align: center; color: #7b1fa2;">Trên BCĐKT</h4>
+                        <div style="margin-top: 20px;">
+                            <div style="background: white; padding: 15px; border-radius: 8px;">
+                                <p style="font-size: 0.95em; font-weight: bold; color: #6a1b9a;">Tài sản ngắn hạn</p>
+                                <p style="font-size: 0.85em; margin-top: 10px; color: #666;">Current Assets</p>
+                                <ul style="margin-top: 15px; font-size: 0.9em;">
+                                    <li>Hiển thị ngay trên Tiền và tương đương tiền</li>
+                                    <li>Trước khoản phải thu</li>
+                                    <li>Phải công bố đầy đủ thông tin</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="box box-info" style="margin-top: 15px; padding: 12px;">
+                            <p style="font-size: 0.85em;"><strong>Lưu ý:</strong> Bất kể phân loại nào, tất cả HTK đều là tài sản ngắn hạn</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example" style="margin-top: 30px;">
+                    <h4>💡 Ví dụ minh họa: Công ty sản xuất xe đạp</h4>
+                    <div class="two-column" style="margin-top: 15px;">
+                        <div>
+                            <h4 style="color: #0277bd;">🔩 Nguyên vật liệu:</h4>
+                            <ul style="font-size: 0.95em;">
+                                <li>Khung sắt</li>
+                                <li>Lốp xe, xích</li>
+                                <li>Phanh, yên xe</li>
+                                <li>Sơn, đinh vít</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: #0277bd;">⚙️ Sản phẩm dở dang:</h4>
+                            <ul style="font-size: 0.95em;">
+                                <li>Khung xe đã hàn xong</li>
+                                <li>Xe đã lắp bánh chưa sơn</li>
+                                <li>Xe đang trong dây chuyền lắp ráp</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <h4 style="color: #0277bd;">🚲 Thành phẩm:</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li>Xe đạp hoàn chỉnh, đã qua kiểm định</li>
+                            <li>Đã đóng gói, sẵn sàng xuất kho bán</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">Slide 6/65</div>
+        </div>
+
+        <!-- Slide 7: Xác định số lượng hàng tồn kho -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>🔢 XÁC ĐỊNH SỐ LƯỢNG HÀNG TỒN KHO</h2>
+                <h3>LO 1: Determining Inventory Quantities</h3>
+            </div>
+            <div class="slide-content">
+                <div class="box box-info">
+                    <h3 style="color: #17a2b8; margin-bottom: 15px;">❓ Tại sao phải xác định số lượng HTK?</h3>
+                    <p>Cả hệ thống <strong>kê khai thường xuyên (perpetual)</strong> và <strong>kê khai định kỳ (periodic)</strong> đều cần kiểm kê thực tế cuối kỳ để:</p>
+                </div>
+
+                <div class="two-column" style="margin-top: 25px;">
+                    <div class="card" style="background: #e8f5e9;">
+                        <h4 style="color: #2e7d32;">📊 Hệ thống Perpetual</h4>
+                        <ul style="margin-top: 15px; font-size: 1em;">
+                            <li>✅ Kiểm tra tính chính xác của sổ sách</li>
+                            <li>✅ Xác định hàng bị thất thoát, hư hỏng</li>
+                            <li>✅ Phát hiện gian lận, trộm cắp</li>
+                            <li>✅ Điều chỉnh sổ sách cho chính xác</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #fff3e0;">
+                        <h4 style="color: #e65100;">📋 Hệ thống Periodic</h4>
+                        <ul style="margin-top: 15px; font-size: 1em;">
+                            <li>✅ Xác định HTK cuối kỳ trên BCĐKT</li>
+                            <li>✅ Tính toán giá vốn hàng bán</li>
+                            <li>✅ Lập báo cáo tài chính</li>
+                            <li>✅ Đánh giá hiệu quả kinh doanh</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="box" style="margin-top: 30px; background: linear-gradient(to right, #667eea20, #764ba220);">
+                    <h3 style="color: #667eea; margin-bottom: 20px;">📝 Hai bước xác định HTK:</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                        <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #667eea;">
+                            <h4 style="color: #667eea; margin-bottom: 15px;">BƯỚC 1️⃣</h4>
+                            <h4 style="margin-bottom: 10px;">Kiểm kê thực tế</h4>
+                            <p style="font-size: 0.95em; color: #555;">(Taking a Physical Inventory)</p>
+                            <ul style="margin-top: 15px; font-size: 0.95em;">
+                                <li><strong>Đếm:</strong> Số lượng sản phẩm</li>
+                                <li><strong>Cân:</strong> Hàng tính theo trọng lượng</li>
+                                <li><strong>Đo:</strong> Hàng tính theo thể tích</li>
+                            </ul>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #764ba2;">
+                            <h4 style="color: #764ba2; margin-bottom: 15px;">BƯỚC 2️⃣</h4>
+                            <h4 style="margin-bottom: 10px;">Xác định quyền sở hữu</h4>
+                            <p style="font-size: 0.95em; color: #555;">(Determining Ownership)</p>
+                            <ul style="margin-top: 15px; font-size: 0.95em;">
+                                <li><strong>Hàng đang vận chuyển</strong></li>
+                                <li><strong>Hàng ký gửi</strong></li>
+                                <li><strong>Hàng ở kho bên ngoài</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box box-warning" style="margin-top: 25px;">
+                    <h4 style="color: #ff9800; margin-bottom: 10px;">⏰ Khi nào nên kiểm kê?</h4>
+                    <ul style="font-size: 1em;">
+                        <li>🚫 <strong>Khi không có nghiệp vụ mua bán:</strong> Đảm bảo tính chính xác</li>
+                        <li>📅 <strong>Thường chọn:</strong> Cuối tháng 1 (sau mùa lễ, hàng tồn kho thấp)</li>
+                        <li>🏪 <strong>Nhiều cửa hàng:</strong> Đóng cửa sớm để kiểm kê</li>
+                        <li>💎 <strong>Ví dụ:</strong> Gitanjali Group (Ấn Độ) - ngành kim hoàn, kiểm kê cuối tháng 3</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">Slide 7/65</div>
+        </div>
+
+        <!-- Slide 8: Hàng đang vận chuyển (FOB) -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>🚚 HÀNG ĐANG VẬN CHUYỂN</h2>
+                <h3>Goods in Transit - FOB Terms</h3>
+            </div>
+            <div class="slide-content">
+                <div class="box box-info">
+                    <h3 style="color: #17a2b8; margin-bottom: 15px;">🤔 Vấn đề:</h3>
+                    <p>Hàng hóa đang trên đường vận chuyển (bằng xe tải, tàu, máy bay...) vào cuối kỳ kế toán - <strong>ai là người sở hữu?</strong></p>
+                </div>
+
+                <div style="margin: 30px 0; padding: 25px; background: linear-gradient(135deg, #fff9e6 0%, #ffe0b2 100%); border-radius: 15px; border: 3px solid #ff9800;">
+                    <h3 style="color: #e65100; text-align: center; margin-bottom: 20px;">⚖️ Nguyên tắc xác định quyền sở hữu</h3>
+                    <div class="formula" style="background: white; border-color: #ff9800;">
+                        Quyền sở hữu được xác định dựa trên<br>
+                        <strong style="font-size: 1.3em; color: #e65100;">ĐIỀU KHOẢN FOB (Free On Board)</strong>
+                    </div>
+                </div>
+
+                <div class="two-column" style="margin-top: 30px;">
+                    <div class="card" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border: 3px solid #1976d2;">
+                        <div style="text-align: center; font-size: 3em; margin-bottom: 15px;">🏭➡️📦</div>
+                        <h3 style="color: #0d47a1; text-align: center; margin-bottom: 20px;">FOB Shipping Point</h3>
+                        <p style="text-align: center; font-size: 0.9em; color: #666; margin-bottom: 20px;">(FOB điểm giao hàng)</p>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <h4 style="color: #1976d2;">📍 Chuyển quyền sở hữu:</h4>
+                            <p style="margin-top: 10px; font-size: 1.05em;">Khi hàng được <span class="highlight">giao cho đơn vị vận chuyển</span></p>
+                        </div>
+
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <h4 style="color: #1976d2;">💰 Chi phí vận chuyển:</h4>
+                            <p style="margin-top: 10px; font-size: 1.05em;"><strong>BÊN MUA</strong> chịu</p>
+                        </div>
+
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <h4 style="color: #1976d2;">📦 Hàng đang chuyển:</h4>
+                            <p style="margin-top: 10px; font-size: 1.05em;">Thuộc <strong>HTK của BÊN MUA</strong></p>
+                        </div>
+
+                        <div class="example" style="background: #e1f5fe; border-color: #0277bd; margin-top: 20px;">
+                            <h4 style="color: #01579b;">Ví dụ:</h4>
+                            <p style="margin-top: 10px; font-size: 0.95em;">Công ty A (TP.HCM) mua hàng từ công ty B (Hà Nội) điều kiện <strong>FOB Hà Nội</strong>:</p>
+                            <ul style="margin-top: 10px; font-size: 0.9em;">
+                                <li>✅ Hàng rời kho Hà Nội ➜ A sở hữu</li>
+                                <li>✅ A trả phí vận chuyển HN-HCM</li>
+                                <li>✅ Rủi ro mất mát: A chịu</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card" style="background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border: 3px solid #7b1fa2;">
+                        <div style="text-align: center; font-size: 3em; margin-bottom: 15px;">📦➡️🏪</div>
+                        <h3 style="color: #4a148c; text-align: center; margin-bottom: 20px;">FOB Destination</h3>
+                        <p style="text-align: center; font-size: 0.9em; color: #666; margin-bottom: 20px;">(FOB điểm đến)</p>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <h4 style="color: #7b1fa2;">📍 Chuyển quyền sở hữu:</h4>
+                            <p style="margin-top: 10px; font-size: 1.05em;">Khi hàng <span class="highlight">đến nơi của bên mua</span></p>
+                        </div>
+
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <h4 style="color: #7b1fa2;">💰 Chi phí vận chuyển:</h4>
+                            <p style="margin-top: 10px; font-size: 1.05em;"><strong>BÊN BÁN</strong> chịu</p>
+                        </div>
+
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <h4 style="color: #7b1fa2;">📦 Hàng đang chuyển:</h4>
+                            <p style="margin-top: 10px; font-size: 1.05em;">Thuộc <strong>HTK của BÊN BÁN</strong></p>
+                        </div>
+
+                        <div class="example" style="background: #f3e5f5; border-color: #6a1b9a; margin-top: 20px;">
+                            <h4 style="color: #4a148c;">Ví dụ:</h4>
+                            <p style="margin-top: 10px; font-size: 0.95em;">Công ty A (TP.HCM) mua hàng từ công ty B (Hà Nội) điều kiện <strong>FOB TP.HCM</strong>:</p>
+                            <ul style="margin-top: 10px; font-size: 0.9em;">
+                                <li>✅ Hàng đến HCM ➜ A mới sở hữu</li>
+                                <li>✅ B trả phí vận chuyển HN-HCM</li>
+                                <li>✅ Rủi ro mất mát: B chịu</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">Slide 8/65</div>
+        </div>
+
+        <!-- Slide 9: Ví dụ FOB -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>📝 VÍ DỤ THỰC HÀNH: HÀNG ĐANG VẬN CHUYỂN</h2>
+            </div>
+            <div class="slide-content">
+                <div class="example" style="background: linear-gradient(135deg, #fff9e6 0%, #ffe0b2 100%); border: 3px solid #ff9800;">
+                    <h4 style="color: #e65100; font-size: 1.3em;">📊 Tình huống:</h4>
+                    <p style="margin-top: 15px; font-size: 1.1em;"><strong>Công ty Hargrove Stores</strong> có hàng tồn kho tại kho vào 31/12:</p>
+                    <div style="background: white; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                        <p style="font-size: 1.2em; text-align: center;"><strong>20,000 đơn vị</strong></p>
+                    </div>
+                    <p style="font-size: 1.05em;">Ngoài ra, có các giao dịch sau vào ngày 31/12:</p>
+                </div>
+
+                <div class="two-column" style="margin-top: 30px;">
+                    <div class="card" style="background: #e3f2fd; border: 3px solid #1976d2;">
+                        <h4 style="color: #0d47a1; margin-bottom: 15px;">🚚 Giao dịch 1: Hàng BÁN</h4>
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p><strong>Số lượng:</strong> 1,500 đơn vị</p>
+                            <p><strong>Ngày giao:</strong> 31/12</p>
+                            <p><strong>Điều kiện:</strong> <span class="highlight">FOB Destination</span></p>
+                            <p style="margin-top: 10px; color: #666;">Hàng đang trên đường đến khách hàng</p>
+                        </div>
+                        <div style="background: #fff3e0; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                            <h4 style="color: #e65100;">❓ Phân tích:</h4>
+                            <ul style="margin-top: 10px; font-size: 0.95em;">
+                                <li>FOB Destination = Chưa đến nơi</li>
+                                <li>➜ <strong>Hargrove VẪN sở hữu</strong></li>
+                                <li>➜ <strong>Phải tính vào HTK</strong> ✅</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card" style="background: #f3e5f5; border: 3px solid #7b1fa2;">
+                        <h4 style="color: #4a148c; margin-bottom: 15px;">🚛 Giao dịch 2: Hàng MUA</h4>
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p><strong>Số lượng:</strong> 2,500 đơn vị</p>
+                            <p><strong>Ngày mua:</strong> 31/12</p>
+                            <p><strong>Điều kiện:</strong> <span class="highlight">FOB Shipping Point</span></p>
+                            <p style="margin-top: 10px; color: #666;">NCC đã giao hàng cho đơn vị vận chuyển</p>
+                        </div>
+                        <div style="background: #fff3e0; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                            <h4 style="color: #e65100;">❓ Phân tích:</h4>
+                            <ul style="margin-top: 10px; font-size: 0.95em;">
+                                <li>FOB Shipping Point = Đã rời kho NCC</li>
+                                <li>➜ <strong>Hargrove ĐÃ sở hữu</strong></li>
+                                <li>➜ <strong>Phải tính vào HTK</strong> ✅</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box box-success" style="margin-top: 30px; padding: 25px;">
+                    <h3 style="color: #28a745; margin-bottom: 20px;">✅ KẾT QUẢ TÍNH TOÁN:</h3>
+                    <table style="margin-top: 15px; font-size: 1.1em;">
+                        <tr>
+                            <td style="width: 70%;"><strong>Hàng tồn kho tại kho:</strong></td>
+                            <td style="text-align: right;"><strong>20,000</strong> đơn vị</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cộng:</strong> Hàng bán FOB Destination</td>
+                            <td style="text-align: right;"><strong>1,500</strong> đơn vị</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cộng:</strong> Hàng mua FOB Shipping Point</td>
+                            <td style="text-align: right;"><strong>2,500</strong> đơn vị</td>
+                        </tr>
+                        <tr style="background: #d4edda; font-size: 1.2em;">
+                            <td><strong>TỔNG HTK 31/12:</strong></td>
+                            <td style="text-align: right;"><strong>24,000</strong> đơn vị</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="box box-warning" style="margin-top: 20px;">
+                    <h4 style="color: #ff9800;">⚠️ Lỗi thường gặp:</h4>
+                    <p style="margin-top: 10px; font-size: 1.05em;">Nếu <strong>BỎ QUA</strong> hàng đang vận chuyển ➜ HTK bị <span style="color: #dc3545;"><strong>THIẾU 4,000 đơn vị</strong></span> ➜ Báo cáo tài chính SAI!</p>
+                </div>
+            </div>
+            <div class="slide-number">Slide 9/65</div>
+        </div>
+
+        <!-- Slide 10: Hàng ký gửi -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>🤝 HÀNG KÝ GỬI (CONSIGNED GOODS)</h2>
+            </div>
+            <div class="slide-content">
+                <div class="box box-info">
+                    <h3 style="color: #17a2b8; margin-bottom: 15px;">📋 Hàng ký gửi là gì?</h3>
+                    <p style="font-size: 1.1em;"><strong>Hàng ký gửi</strong> là hàng mà một bên giữ hộ và bán hộ cho bên khác, nhưng <span class="highlight">KHÔNG sở hữu hàng</span>. Bên giữ hàng chỉ nhận <strong>hoa hồng</strong> khi bán được.</p>
+                </div>
+
+                <div class="two-column" style="margin-top: 30px;">
+                    <div class="card" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border: 3px solid #388e3c;">
+                        <div style="text-align: center; font-size: 3em; margin-bottom: 15px;">🏭</div>
+                        <h3 style="color: #1b5e20; text-align: center; margin-bottom: 20px;">Bên GỬI HÀNG</h3>
+                        <p style="text-align: center; font-size: 0.9em; color: #666; margin-bottom: 20px;">(Consignor)</p>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <h4 style="color: #388e3c;">👤 Vai trò:</h4>
+                            <ul style="margin-top: 10px; font-size: 1em;">
+                                <li><strong>Chủ sở hữu</strong> hàng hóa</li>
+                                <li>Gửi hàng cho người khác bán hộ</li>
+                                <li>VẪN giữ quyền sở hữu</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <h4 style="color: #388e3c;">📦 Kế toán HTK:</h4>
+                            <p style="margin-top: 10px; font-size: 1.1em;"><strong class="highlight">TÍNH VÀO HTK ✅</strong></p>
+                            <p style="margin-top: 5px; color: #666; font-size: 0.95em;">Dù hàng ở kho người khác</p>
+                        </div>
+
+                        <div class="example" style="background: #f1f8e9; border-color: #689f38; margin-top: 15px;">
+                            <h4 style="color: #33691e;">Ví dụ:</h4>
+                            <p style="font-size: 0.95em;">Nhà xuất bản gửi sách cho nhà sách bán</p>
+                        </div>
+                    </div>
+
+                    <div class="card" style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border: 3px solid #f57c00;">
+                        <div style="text-align: center; font-size: 3em; margin-bottom: 15px;">🏪</div>
+                        <h3 style="color: #e65100; text-align: center; margin-bottom: 20px;">Bên NHẬN KÝ GỬI</h3>
+                        <p style="text-align: center; font-size: 0.9em; color: #666; margin-bottom: 20px;">(Consignee)</p>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <h4 style="color: #f57c00;">👤 Vai trò:</h4>
+                            <ul style="margin-top: 10px; font-size: 1em;">
+                                <li>Nhận hàng để <strong>bán hộ</strong></li>
+                                <li>KHÔNG sở hữu hàng</li>
+                                <li>Nhận hoa hồng khi bán được</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <h4 style="color: #f57c00;">📦 Kế toán HTK:</h4>
+                            <p style="margin-top: 10px; font-size: 1.1em;"><strong style="color: #dc3545;">KHÔNG tính vào HTK ❌</strong></p>
+                            <p style="margin-top: 5px; color: #666; font-size: 0.95em;">Vì không phải chủ sở hữu</p>
+                        </div>
+
+                        <div class="example" style="background: #fff8e1; border-color: #ffa726; margin-top: 15px;">
+                            <h4 style="color: #e65100;">Ví dụ:</h4>
+                            <p style="font-size: 0.95em;">Nhà sách nhận sách về bán hộ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example" style="margin-top: 30px; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border: 3px solid #1976d2;">
+                    <h4 style="color: #0d47a1; font-size: 1.3em;">💡 Ví dụ thực tế: Bán xe ô tô cũ</h4>
+                    <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 15px;">
+                        <p style="font-size: 1.05em; margin-bottom: 15px;">Bạn có một chiếc xe ô tô cũ muốn bán, bạn mang xe đến <strong>showroom ô tô</strong>:</p>
+                        
+                        <div class="two-column" style="margin-top: 20px;">
+                            <div>
+                                <h4 style="color: #1976d2;">🚗 Bạn (Bên gửi):</h4>
+                                <ul style="font-size: 0.95em; margin-top: 10px;">
+                                    <li>✅ VẪN là chủ xe</li>
+                                    <li>✅ Xe TÍNH VÀO tài sản của bạn</li>
+                                    <li>✅ Chịu rủi ro mất mát, hư hỏng</li>
+                                    <li>✅ Nhận tiền khi bán được (trừ hoa hồng)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 style="color: #1976d2;">🏪 Showroom (Bên nhận):</h4>
+                                <ul style="font-size: 0.95em; margin-top: 10px;">
+                                    <li>❌ KHÔNG phải chủ xe</li>
+                                    <li>❌ Xe KHÔNG tính vào HTK showroom</li>
+                                    <li>❌ Không chịu rủi ro</li>
+                                    <li>✅ Chỉ nhận hoa hồng khi bán được</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="box" style="margin-top: 20px; background: #e1f5fe; border-color: #0277bd;">
+                            <h4 style="color: #01579b;">📊 Tại sao dùng hình thức ký gửi?</h4>
+                            <ul style="margin-top: 10px; font-size: 0.95em;">
+                                <li><strong>Người bán:</strong> Tiếp cận nhiều khách hàng hơn, không cần mở cửa hàng</li>
+                                <li><strong>Người nhận:</strong> Giảm chi phí mua hàng tồn kho, giảm rủi ro</li>
+                                <li><strong>Phổ biến:</strong> Xe hơi, thuyền, đồ cổ, sách, đồ thủ công...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box box-warning" style="margin-top: 25px;">
+                    <h4 style="color: #ff9800; margin-bottom: 15px;">⚠️ Nguyên tắc quan trọng trong kiểm kê:</h4>
+                    <table style="margin-top: 15px;">
+                        <tr style="background: #fff3cd;">
+                            <th style="background: #ff9800;">Loại hàng</th>
+                            <th style="background: #ff9800;">Bên gửi hàng</th>
+                            <th style="background: #ff9800;">Bên nhận ký gửi</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Hàng ký gửi ĐI</strong></td>
+                            <td style="background: #d4edda; text-align: center;"><strong>✅ TÍNH VÀO HTK</strong></td>
+                            <td style="text-align: center;">-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hàng nhận ký gửi VỀ</strong></td>
+                            <td style="text-align: center;">-</td>
+                            <td style="background: #f8d7da; text-align: center;"><strong>❌ KHÔNG tính HTK</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="slide-number">Slide 10/65</div>
+        </div>
+
+        <!-- Slide 11: Chi phí hàng tồn kho -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>💰 CHI PHÍ HÀNG TỒN KHO</h2>
+                <h3>Inventory Costs</h3>
+            </div>
+            <div class="slide-content">
+                <div class="box box-info">
+                    <h3 style="color: #17a2b8; margin-bottom: 15px;">📊 Nguyên giá hàng tồn kho gồm những gì?</h3>
+                    <div class="formula">
+                        Nguyên giá HTK = <strong>TẤT CẢ chi phí cần thiết</strong><br>
+                        để có được hàng và đưa hàng vào trạng thái sẵn sàng bán
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="color: #667eea; margin-bottom: 20px;">✅ Các khoản TÍNH VÀO nguyên giá HTK:</h3>
+                    <div class="three-column">
+                        <div class="card" style="background: #e8f5e9;">
+                            <div style="text-align: center; font-size: 2.5em; margin-bottom: 10px;">💵</div>
+                            <h4 style="color: #2e7d32; text-align: center;">Giá mua</h4>
+                            <ul style="margin-top: 15px; font-size: 0.95em;">
+                                <li>Giá ghi trên hóa đơn</li>
+                                <li>Giá thỏa thuận với NCC</li>
+                            </ul>
+                        </div>
+
+                        <div class="card" style="background: #e3f2fd;">
+                            <div style="text-align: center; font-size: 2.5em; margin-bottom: 10px;">🚚</div>
+                            <h4 style="color: #1976d2; text-align: center;">Phí vận chuyển</h4>
+                            <ul style="margin-top: 15px; font-size: 0.95em;">
+                                <li>Chi phí vận chuyển mua hàng</li>
+                                <li>Freight-in</li>
+                            </ul>
+                        </div>
+
+                        <div class="card" style="background: #fff3e0;">
+                            <div style="text-align: center; font-size: 2.5em; margin-bottom: 10px;">🏭</div>
+                            <h4 style="color: #e65100; text-align: center;">Chi phí khác</h4>
+                            <ul style="margin-top: 15px; font-size: 0.95em;">
+                                <li>Bảo hiểm vận chuyển</li>
+                                <li>Chi phí dỡ hàng</li>
+                                <li>Thuế nhập khẩu</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="color: #dc3545; margin-bottom: 20px;">❌ Các khoản KHÔNG tính vào nguyên giá HTK:</h3>
+                    <div class="box" style="background: #f8d7da; border-color: #dc3545;">
+                        <ul style="font-size: 1.05em;">
+                            <li>🚫 <strong>Chi phí bán hàng:</strong> Phí giao hàng cho khách (Freight-out) ➜ Ghi nhận là chi phí bán hàng</li>
+                            <li>🚫 <strong>Chi phí quảng cáo:</strong> ➜ Chi phí bán hàng</li>
+                            <li>🚫 <strong>Lương nhân viên bán hàng:</strong> ➜ Chi phí bán hàng</li>
+                            <li>🚫 <strong>Chi phí lưu kho sau khi mua:</strong> ➜ Chi phí hoạt động</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="example" style="margin-top: 30px;">
+                    <h4>💡 Ví dụ: Công ty Topp Hat Shop mua mũ</h4>
+                    <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 15px;">
+                        <table style="font-size: 1em;">
+                            <tr>
+                                <th style="width: 60%;">Khoản mục</th>
+                                <th style="width: 20%; text-align: right;">Số tiền (£)</th>
+                                <th style="width: 20%; text-align: center;">Tính vào HTK?</th>
+                            </tr>
+                            <tr>
+                                <td>Giá mua ghi trên hóa đơn</td>
+                                <td style="text-align: right;">3,000</td>
+                                <td style="text-align: center;">✅</td>
+                            </tr>
+                            <tr>
+                                <td>Chiết khấu thanh toán sớm</td>
+                                <td style="text-align: right;">(30)</td>
+                                <td style="text-align: center;">✅ Trừ</td>
+                            </tr>
+                            <tr>
+                                <td>Phí vận chuyển hàng về</td>
+                                <td style="text-align: right;">80</td>
+                                <td style="text-align: center;">✅</td>
+                            </tr>
+                            <tr>
+                                <td>Chi phí đi công tác đàm phán</td>
+                                <td style="text-align: right;">130</td>
+                                <td style="text-align: center;">❌</td>
+                            </tr>
+                            <tr style="background: #e8f5e9; font-weight: bold;">
+                                <td><strong>NGUYÊN GIÁ HTK</strong></td>
+                                <td style="text-align: right;"><strong>3,050</strong></td>
+                                <td style="text-align: center;">-</td>
+                            </tr>
+                        </table>
+
+                        <div class="box" style="margin-top: 20px; background: #fff3e0; border-color: #ff9800;">
+                            <h4 style="color: #e65100;">📝 Giải thích:</h4>
+                            <ul style="font-size: 0.95em; margin-top: 10px;">
+                                <li><strong>£3,000:</strong> Giá mua ban đầu</li>
+                                <li><strong>-£30:</strong> Chiết khấu vì trả tiền sớm (giảm giá thực tế phải trả)</li>
+                                <li><strong>+£80:</strong> Chi phí cần thiết để có hàng về kho</li>
+                                <li><strong>£130:</strong> Không liên quan trực tiếp đến hàng ➜ Ghi chi phí quản lý</li>
+                                <li><strong>➜ Tổng: £2,970 + £80 = £3,050</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">Slide 11/65</div>
+        </div>
+
+        <!-- Slide 12: Phương pháp luồng chi phí - Giới thiệu -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>🔄 PHƯƠNG PHÁP LUỒNG CHI PHÍ HTK</h2>
+                <h3>LO 2: Inventory Cost Flow Methods</h3>
+            </div>
+            <div class="slide-content">
+                <div class="box box-info">
+                    <h3 style="color: #17a2b8; margin-bottom: 15px;">🤔 Vấn đề cần giải quyết:</h3>
+                    <p style="font-size: 1.1em;">Khi doanh nghiệp mua hàng <strong>nhiều lần với giá khác nhau</strong>, bán đi một số lượng hàng, cần xác định:</p>
+                    <ul style="margin-top: 15px; font-size: 1.05em;">
+                        <li>💰 <strong>Giá vốn hàng bán</strong> (Cost of Goods Sold - COGS)</li>
+                        <li>📦 <strong>Giá trị hàng tồn kho cuối kỳ</strong> (Ending Inventory)</li>
+                    </ul>
+                </div>
+
+                <div class="example" style="margin-top: 30px; background: linear-gradient(135deg, #fff9e6 0%, #ffe0b2 100%); border: 3px solid #ff9800;">
+                    <h4 style="color: #e65100; font-size: 1.3em;">📺 Tình huống minh họa:</h4>
+                    <p style="margin-top: 15px; font-size: 1.1em;"><strong>Cửa hàng điện tử Crivitz</strong> mua 3 chiếc TV 50 inch giống hệt nhau:</p>
+                    
+                    <table style="margin-top: 20px; font-size: 1.05em;">
+                        <tr>
+                            <th>Lần mua</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá (£)</th>
+                            <th>Thành tiền (£)</th>
+                        </tr>
+                        <tr>
+                            <td>Lần 1</td>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: right;">720</td>
+                            <td style="text-align: right;">720</td>
+                        </tr>
+                        <tr>
+                            <td>Lần 2</td>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: right;">750</td>
+                            <td style="text-align: right;">750</td>
+                        </tr>
+                        <tr>
+                            <td>Lần 3</td>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: right;">800</td>
+                            <td style="text-align: right;">800</td>
+                        </tr>
+                        <tr style="font-weight: bold; background: #f0f0f0;">
+                            <td><strong>Tổng</strong></td>
+                            <td style="text-align: center;"><strong>3</strong></td>
+                            <td></td>
+                            <td style="text-align: right;"><strong>2,270</strong></td>
+                        </tr>
+                    </table>
+
+                    <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                        <p style="font-size: 1.1em; margin-bottom: 15px;">📊 <strong>Trong năm, bán được 2 chiếc TV với giá £1,200/chiếc</strong></p>
+                        <div style="background: #fff3e0; padding: 15px; border-radius: 8px; border: 2px solid #ff9800;">
+                            <h4 style="color: #e65100; margin-bottom: 15px;">❓ Vấn đề đặt ra:</h4>
+                            <ul style="font-size: 1em;">
+                                <li><strong>Giá vốn hàng bán</strong> là bao nhiêu?</li>
+                                <li><strong>Giá trị TV còn lại</strong> là bao nhiêu?</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 25px; background: #e3f2fd; padding: 20px; border-radius: 10px; border: 2px solid #1976d2;">
+                        <h4 style="color: #0d47a1; margin-bottom: 15px;">🎲 Các khả năng khác nhau:</h4>
+                        <table style="font-size: 1em; background: white;">
+                            <tr>
+                                <th>Trường hợp</th>
+                                <th>2 TV bán ra</th>
+                                <th>Giá vốn (£)</th>
+                                <th>TV còn lại (£)</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Lần 1 + Lần 2</td>
+                                <td style="text-align: right;">720 + 750 = 1,470</td>
+                                <td style="text-align: right;">800</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Lần 1 + Lần 3</td>
+                                <td style="text-align: right;">720 + 800 = 1,520</td>
+                                <td style="text-align: right;">750</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Lần 2 + Lần 3</td>
+                                <td style="text-align: right;">750 + 800 = 1,550</td>
+                                <td style="text-align: right;">720</td>
+                            </tr>
+                        </table>
+                        <p style="margin-top: 15px; font-size: 1em; color: #0d47a1;"><strong>➜ Cần một phương pháp nhất quán để xác định!</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">Slide 12/65</div>
+        </div>
+
+        <!-- Slide 13: Các phương pháp luồng chi phí -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>📚 CÁC PHƯƠNG PHÁP LUỒNG CHI PHÍ</h2>
+            </div>
+            <div class="slide-content">
+                <div class="box" style="background: linear-gradient(to right, #667eea20, #764ba220); border-color: #667eea;">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">🎯 Theo IFRS, có 2 nhóm phương pháp chính:</h3>
+                </div>
+
+                <div class="three-column" style="margin-top: 30px;">
+                    <div class="card" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border: 3px solid #388e3c;">
+                        <div style="text-align: center; font-size: 3em; margin-bottom: 15px;">🎯</div>
+                        <h3 style="color: #1b5e20; text-align: center; margin-bottom: 20px;">1. Nhận diện cụ thể</h3>
+                        <p style="text-align: center; font-size: 0.9em; color: #666; margin-bottom: 15px;">Specific Identification</p>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <h4 style="color: #388e3c;">📋 Đặc điểm:</h4>
+                            <ul style="font-size: 0.95em; margin-top: 10px;">
+                                <li>Xác định chính xác từng sản phẩm</li>
+                                <li>Biết rõ giá mua của từng đơn vị bán ra</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <h4 style="color: #388e3c;">✅ Ưu điểm:</h4>
+                            <ul style="font-size: 0.9em; margin-top: 10px;">
+                                <li>Chính xác 100%</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <h4 style="color: #388e3c;">❌ Nhược điểm:</h4>
+                            <ul style="font-size: 0.9em; margin-top: 10px;">
+                                <li>Khó áp dụng cho hàng đồng nhất</li>
+                                <li>Tốn kém, phức tạp</li>
+                            </ul>
+                        </div>
+
+                        <div class="example" style="background: #f1f8e9; border-color: #689f38; margin-top: 10px; padding: 12px;">
+                            <p style="font-size: 0.85em;"><strong>Áp dụng:</strong></p>
+                            <ul style="font-size: 0.8em; margin-top: 5px;">
+                                <li>Ô tô (số khung)</li>
+                                <li>Bất động sản</li>
+                                <li>Trang sức cao cấp</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border: 3px solid #1976d2;">
+                        <div style="text-align: center; font-size: 3em; margin-bottom: 15px;">⏩</div>
+                        <h3 style="color: #0d47a1; text-align: center; margin-bottom: 20px;">2. FIFO</h3>
+                        <p style="text-align: center; font-size: 0.9em; color: #666; margin-bottom: 15px;">First-In, First-Out</p>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <h4 style="color: #1976d2;">📋 Đặc điểm:</h4>
+                            <ul style="font-size: 0.95em; margin-top: 10px;">
+                                <li><strong>Giả định:</strong> Hàng mua trước bán trước</li>
+                                <li>Hàng tồn = Giá mua gần nhất</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <h4 style="color: #1976d2;">✅ Ưu điểm:</h4>
+                            <ul style="font-size: 0.9em; margin-top: 10px;">
+                                <li>Phù hợp thực tế kinh doanh</li>
+                                <li>HTK gần với giá thị trường</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <h4 style="color: #1976d2;">📊 Khi giá tăng:</h4>
+                            <ul style="font-size: 0.9em; margin-top: 10px;">
+                                <li>Lợi nhuận cao hơn</li>
+                                <li>Thuế cao hơn</li>
+                            </ul>
+                        </div>
+
+                        <div class="example" style="background: #e1f5fe; border-color: #0277bd; margin-top: 10px; padding: 12px;">
+                            <p style="font-size: 0.85em;"><strong>Phù hợp:</strong></p>
+                            <ul style="font-size: 0.8em; margin-top: 5px;">
+                                <li>Siêu thị</li>
+                                <li>Cửa hàng thực phẩm</li>
+                                <li>Hàng có hạn sử dụng</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card" style="background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border: 3px solid #7b1fa2;">
+                        <div style="text-align: center; font-size: 3em; margin-bottom: 15px;">📊</div>
+                        <h3 style="color: #4a148c; text-align: center; margin-bottom: 20px;">3. Bình quân</h3>
+                        <p style="text-align: center; font-size: 0.9em; color: #666; margin-bottom: 15px;">Average-Cost</p>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <h4 style="color: #7b1fa2;">📋 Đặc điểm:</h4>
+                            <ul style="font-size: 0.95em; margin-top: 10px;">
+                                <li>Tính giá trung bình</li>
+                                <li>Áp dụng cho tất cả hàng</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <h4 style="color: #7b1fa2;">✅ Ưu điểm:</h4>
+                            <ul style="font-size: 0.9em; margin-top: 10px;">
+                                <li>Đơn giản, dễ tính</li>
+                                <li>Làm mượt biến động giá</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <h4 style="color: #7b1fa2;">📊 Khi giá tăng:</h4>
+                            <ul style="font-size: 0.9em; margin-top: 10px;">
+                                <li>Lợi nhuận thấp hơn FIFO</li>
+                                <li>Thuế thấp hơn FIFO</li>
+                            </ul>
+                        </div>
+
+                        <div class="example" style="background: #f3e5f5; border-color: #6a1b9a; margin-top: 10px; padding: 12px;">
+                            <p style="font-size: 0.85em;"><strong>Phù hợp:</strong></p>
+                            <ul style="font-size: 0.8em; margin-top: 5px;">
+                                <li>Hàng đồng nhất</li>
+                                <li>Xăng dầu</li>
+                                <li>Nguyên liệu</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box box-warning" style="margin-top: 30px;">
+                    <h4 style="color: #ff9800; margin-bottom: 15px;">⚠️ Lưu ý về LIFO (Last-In, First-Out):</h4>
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 10px;">
+                        <p style="font-size: 1.05em; margin-bottom: 10px;">🚫 <strong>IFRS KHÔNG cho phép sử dụng LIFO</strong></p>
+                        <ul style="font-size: 0.95em; margin-top: 10px;">
+                            <li><strong>Lý do:</strong> HTK cuối kỳ không phản ánh giá trị gần đây</li>
+                            <li><strong>Tuy nhiên:</strong> LIFO vẫn được sử dụng ở Hoa Kỳ (theo US GAAP)</li>
+                            <li><strong>LIFO:</strong> Hàng mua sau bán trước - giảm thuế khi giá tăng</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="box box-info" style="margin-top: 20px;">
+                    <h4 style="color: #17a2b8; margin-bottom: 15px;">🌍 Thống kê sử dụng phương pháp (theo IFRS):</h4>
+                    <table style="font-size: 1em; margin-top: 15px;">
+                        <tr>
+                            <th>Phương pháp</th>
+                            <th style="text-align: center;">% Doanh nghiệp sử dụng</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Average-Cost (Bình quân)</strong></td>
+                            <td style="text-align: center; background: #e1f5fe;"><strong>~60%</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>FIFO</strong></td>
+                            <td style="text-align: center; background: #f3e5f5;"><strong>~40%</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cả FIFO và Average-Cost</strong></td>
+                            <td style="text-align: center; background: #fff3e0;"><strong>~23%</strong></td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 15px; font-size: 0.95em;"><em>Ví dụ: Lenovo (CHN) dùng Average-cost, Yingli Solar (CHN) dùng cả hai</em></p>
+                </div>
+            </div>
+            <div class="slide-number">Slide 13/65</div>
+        </div>
+
+        <!-- Slide 14: Dữ liệu ví dụ -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>📊 DỮ LIỆU VÍ DỤ MINH HỌA</h2>
+                <h3>Công ty Lin Electronics - Astro Condensers</h3>
+            </div>
+            <div class="slide-content">
+                <div class="box box-info">
+                    <h3 style="color: #17a2b8; margin-bottom: 15px;">📝 Dữ liệu sẽ sử dụng xuyên suốt các slide tiếp theo:</h3>
+                    <p style="font-size: 1.05em;">Công ty Lin Electronics kinh doanh linh kiện điện tử Astro Condensers trong năm với các giao dịch sau:</p>
+                </div>
+
+                <table style="margin-top: 30px; font-size: 1.1em;">
+                    <tr style="background: #667eea;">
+                        <th style="color: white;">Ngày</th>
+                        <th style="color: white;">Giao dịch</th>
+                        <th style="color: white; text-align: center;">Số lượng</th>
+                        <th style="color: white; text-align: right;">Đơn giá (HK$)</th>
+                        <th style="color: white; text-align: right;">Thành tiền (HK$)</th>
+                    </tr>
+                    <tr style="background: #e8f5e9;">
+                        <td><strong>1 tháng 1</strong></td>
+                        <td><strong>Tồn đầu kỳ</strong></td>
+                        <td style="text-align: center;"><strong>10</strong></td>
+                        <td style="text-align: right;"><strong>100</strong></td>
+                        <td style="text-align: right;"><strong>1,000</strong></td>
+                    </tr>
+                    <tr>
+                        <td>15 tháng 4</td>
+                        <td>Mua hàng</td>
+                        <td style="text-align: center;">20</td>
+                        <td style="text-align: right;">110</td>
+                        <td style="text-align: right;">2,200</td>
+                    </tr>
+                    <tr>
+                        <td>24 tháng 8</td>
+                        <td>Mua hàng</td>
+                        <td style="text-align: center;">30</td>
+                        <td style="text-align: right;">120</td>
+                        <td style="text-align: right;">3,600</td>
+                    </tr>
+                    <tr>
+                        <td>27 tháng 11</td>
+                        <td>Mua hàng</td>
+                        <td style="text-align: center;">40</td>
+                        <td style="text-align: right;">130</td>
+                        <td style="text-align: right;">5,200</td>
+                    </tr>
+                    <tr style="background: #bbdefb; font-weight: bold;">
+                        <td colspan="2"><strong>TỔNG HÀNG CÓ THỂ BÁN</strong></td>
+                        <td style="text-align: center;"><strong>100</strong></td>
+                        <td></td>
+                        <td style="text-align: right;"><strong>12,000</strong></td>
+                    </tr>
+                </table>
+
+                <div class="two-column" style="margin-top: 30px;">
+                    <div class="box" style="background: #fff3e0; border-color: #ff9800;">
+                        <h4 style="color: #e65100; margin-bottom: 15px;">📦 Hàng bán trong năm:</h4>
+                        <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 10px; text-align: center;">
+                            <p style="font-size: 2em; color: #e65100; font-weight: bold;">55 đơn vị</p>
+                        </div>
+                    </div>
+
+                    <div class="box" style="background: #e8f5e9; border-color: #388e3c;">
+                        <h4 style="color: #2e7d32; margin-bottom: 15px;">📦 Hàng tồn cuối kỳ:</h4>
+                        <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 10px; text-align: center;">
+                            <p style="font-size: 2em; color: #2e7d32; font-weight: bold;">45 đơn vị</p>
+                            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">(100 - 55 = 45)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box" style="margin-top: 30px; background: linear-gradient(to right, #667eea20, #764ba220); border-color: #667eea;">
+                    <h3 style="color: #667eea; margin-bottom: 20px;">🎯 Nhiệm vụ:</h3>
+                    <div class="formula" style="background: white; border-color: #667eea;">
+                        Phân bổ HK$12,000 thành:
+                    </div>
+                    <div class="two-column" style="margin-top: 20px; font-size: 1.1em;">
+                        <div style="text-align: center; background: white; padding: 20px; border-radius: 10px; border: 2px solid #ff6b6b;">
+                            <h4 style="color: #dc3545; margin-bottom: 10px;">Giá vốn hàng bán</h4>
+                            <p style="font-size: 0.9em; color: #666;">(Cost of Goods Sold)</p>
+                            <p style="font-size: 1.5em; color: #dc3545; margin-top: 15px; font-weight: bold;">55 đơn vị = ?</p>
+                        </div>
+                        <div style="text-align: center; background: white; padding: 20px; border-radius: 10px; border: 2px solid #51cf66;">
+                            <h4 style="color: #28a745; margin-bottom: 10px;">Hàng tồn kho cuối</h4>
+                            <p style="font-size: 0.9em; color: #666;">(Ending Inventory)</p>
+                            <p style="font-size: 1.5em; color: #28a745; margin-top: 15px; font-weight: bold;">45 đơn vị = ?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box box-warning" style="margin-top: 20px;">
+                    <h4 style="color: #ff9800;">📌 Quan sát quan trọng:</h4>
+                    <ul style="font-size: 1.05em; margin-top: 10px;">
+                        <li>💰 Giá mua <strong>TĂNG DẦN</strong> theo thời gian: HK$100 ➜ HK$110 ➜ HK$120 ➜ HK$130</li>
+                        <li>📊 Đây là tình huống <strong>lạm phát</strong> (giá cả tăng)</li>
+                        <li>🔄 Kết quả sẽ <strong>KHÁC NHAU</strong> tùy theo phương pháp được chọn</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">Slide 14/65</div>
+        </div>
+
+        <!-- Slide 15: FIFO - Giới thiệu -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>⏩ PHƯƠNG PHÁP FIFO</h2>
+                <h3>First-In, First-Out Method</h3>
+            </div>
+            <div class="slide-content">
+                <div class="box box-info">
+                    <h3 style="color: #17a2b8; margin-bottom: 20px;">🔍 Khái niệm:</h3>
+                    <div class="formula" style="background: white; border-color: #1976d2; font-size: 1.2em;">
+                        <strong style="color: #1976d2;">FIFO (First-In, First-Out)</strong><br>
+                        = Hàng mua vào TRƯỚC ➜ Bán ra TRƯỚC
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="color: #1976d2; margin-bottom: 20px;">📋 Đặc điểm chính:</h3>
+                    <div class="two-column">
+                        <div class="card" style="background: #e3f2fd; border: 2px solid #1976d2;">
+                            <h4 style="color: #0d47a1; margin-bottom: 15px;">💡 Giả định:</h4>
+                            <ul style="font-size: 1em;">
+                                <li>Hàng cũ (mua trước) được bán trước</li>
+                                <li>Hàng còn lại = Hàng mua gần đây nhất</li>
+                                <li>Phù hợp với luồng vật lý thực tế</li>
+                            </ul>
+                        </div>
+                        <div class="card" style="background: #fff3e0; border: 2px solid #ff9800;">
+                            <h4 style="color: #e65100; margin-bottom: 15px;">🎯 Ứng dụng:</h4>
+                            <ul style="font-size: 1em;">
+                                <li><strong>Siêu thị:</strong> Hàng cũ bày phía trước</li>
+                                <li><strong>Thực phẩm:</strong> Hạn dùng sớm bán trước</li>
+                                <li><strong>Thuốc:</strong> Sắp hết hạn dùng trước</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example" style="margin-top: 30px; background: linear-gradient(135deg, #fff9e6 0%, #ffe0b2 100%); border: 3px solid #ff9800;">
+                    <h4 style="color: #e65100; font-size: 1.3em;">📦 Minh họa trực quan:</h4>
+                    <div style="margin-top: 20px; padding: 20px; background: white; border-radius: 10px;">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <h4 style="color: #1976d2;">Kho hàng (xếp theo thứ tự thời gian)</h4>
+                        </div>
+                        <div style="display: flex; justify-content: space-around; align-items: center; margin: 20px 0;">
+                            <div style="background: #ffebee; padding: 20px; border-radius: 10px; border: 3px solid #f44336; min-width: 120px; text-align: center;">
+                                <div style="font-size: 2em;">📦</div>
+                                <p style="margin-top: 10px; font-weight: bold;">Lô 1</p>
+                                <p style="font-size: 0.9em; color: #666;">Mua 1/1</p>
+                                <p style="color: #f44336; font-weight: bold;">HK$100</p>
+                            </div>
+                            <div style="font-size: 2em; color: #999;">→</div>
+                            <div style="background: #fff3e0; padding: 20px; border-radius: 10px; border: 3px solid #ff9800; min-width: 120px; text-align: center;">
+                                <div style="font-size: 2em;">📦</div>
+                                <p style="margin-top: 10px; font-weight: bold;">Lô 2</p>
+                                <p style="font-size: 0.9em; color: #666;">Mua 15/4</p>
+                                <p style="color: #ff9800; font-weight: bold;">HK$110</p>
+                            </div>
+                            <div style="font-size: 2em; color: #999;">→</div>
+                            <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; border: 3px solid #2196f3; min-width: 120px; text-align: center;">
+                                <div style="font-size: 2em;">📦</div>
+                                <p style="margin-top: 10px; font-weight: bold;">Lô 3</p>
+                                <p style="font-size: 0.9em; color: #666;">Mua 24/8</p>
+                                <p style="color: #2196f3; font-weight: bold;">HK$120</p>
+                            </div>
+                            <div style="font-size: 2em; color: #999;">→</div>
+                            <div style="background: #e8f5e9; padding: 20px; border-radius: 10px; border: 3px solid #4caf50; min-width: 120px; text-align: center;">
+                                <div style="font-size: 2em;">📦</div>
+                                <p style="margin-top: 10px; font-weight: bold;">Lô 4</p>
+                                <p style="font-size: 0.9em; color: #666;">Mua 27/11</p>
+                                <p style="color: #4caf50; font-weight: bold;">HK$130</p>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-top: 30px; padding: 20px; background: #fff3cd; border-radius: 10px; border: 2px solid #ff9800;">
+                            <h4 style="color: #e65100; margin-bottom: 15px;">⬅️ HƯỚNG BÁN HÀNG (Từ trái sang phải)</h4>
+                            <p style="font-size: 1.1em;">Khi bán 55 đơn vị ➜ Lấy từ <strong>Lô 1</strong> trước, rồi đến <strong>Lô 2</strong>, <strong>Lô 3</strong>...</p>
+                            <p style="margin-top: 10px; font-size: 1em; color: #666;">Hàng còn lại trong kho = Lô mua gần đây nhất (Lô 4 và 1 phần Lô 3)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box box-success" style="margin-top: 25px;">
+                    <h4 style="color: #28a745; margin-bottom: 15px;">✅ Ưu điểm của FIFO:</h4>
+                    <ul style="font-size: 1.05em;">
+                        <li>📊 <strong>Hàng tồn kho cuối kỳ</strong> phản ánh giá trị <span class="highlight">gần với giá thị trường hiện tại</span></li>
+                        <li>🔄 <strong>Phù hợp với luồng vật lý</strong> thực tế của hầu hết doanh nghiệp</li>
+                        <li>📈 <strong>Khi giá tăng:</strong> Lợi nhuận cao hơn (giá vốn thấp hơn)</li>
+                        <li>💼 <strong>Dễ giải thích</strong> và được chấp nhận rộng rãi</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">Slide 15/65</div>
+        </div>
+
+        <!-- Slide 16: FIFO - Tính toán -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>📊 TÍNH TOÁN THEO FIFO</h2>
+                <h3>Công ty Lin Electronics</h3>
+            </div>
+            <div class="slide-content">
+                <div class="box" style="background: linear-gradient(to right, #e3f2fd, #bbdefb); border-color: #1976d2;">
+                    <h3 style="color: #0d47a1; margin-bottom: 15px;">🎯 Mục tiêu: Tính Hàng tồn kho cuối kỳ (45 đơn vị)</h3>
+                    <p style="font-size: 1.05em;">Theo FIFO: Lấy từ những lần mua <strong>GẦN NHẤT</strong> và tính ngược lại</p>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h4 style="color: #1976d2; margin-bottom: 20px;">BƯỚC 1️⃣: Xác định hàng tồn kho cuối kỳ</h4>
+                    <table style="font-size: 1.05em;">
+                        <tr style="background: #1976d2;">
+                            <th style="color: white;">Ngày mua</th>
+                            <th style="color: white; text-align: center;">Số lượng</th>
+                            <th style="color: white; text-align: right;">Đơn giá (HK$)</th>
+                            <th style="color: white; text-align: right;">Thành tiền (HK$)</th>
+                        </tr>
+                        <tr style="background: #e8f5e9;">
+                            <td><strong>27 tháng 11</strong> (Mua gần nhất)</td>
+                            <td style="text-align: center;"><strong>40</strong></td>
+                            <td style="text-align: right;"><strong>130</strong></td>
+                            <td style="text-align: right;"><strong>5,200</strong></td>
+                        </tr>
+                        <tr style="background: #fff3e0;">
+                            <td><strong>24 tháng 8</strong> (Còn cần: 45 - 40 = 5)</td>
+                            <td style="text-align: center;"><strong>5</strong></td>
+                            <td style="text-align: right;"><strong>120</strong></td>
+                            <td style="text-align: right;"><strong>600</strong></td>
+                        </tr>
+                        <tr style="background: #c8e6c9; font-weight: bold; font-size: 1.1em;">
+                            <td><strong>TỔNG HTK CUỐI KỲ</strong></td>
+                            <td style="text-align: center;"><strong>45</strong></td>
+                            <td></td>
+                            <td style="text-align: right;"><strong>5,800</strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h4 style="color: #dc3545; margin-bottom: 20px;">BƯỚC 2️⃣: Tính giá vốn hàng bán</h4>
+                    <div class="formula" style="background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); border-color: #dc3545;">
+                        Giá vốn hàng bán = Hàng có thể bán - HTK cuối kỳ<br>
+                        = HK$12,000 - HK$5,800 = <strong style="font-size: 1.3em; color: #dc3545;">HK$6,200</strong>
+                    </div>
+                </div>
+
+                <div class="box box-success" style="margin-top: 30px;">
+                    <h4 style="color: #28a745; margin-bottom: 20px;">✅ Chứng minh (Proof):</h4>
+                    <p style="margin-bottom: 15px;">Hoặc có thể tính trực tiếp bằng cách lấy 55 đơn vị từ những lần mua CŨ NHẤT:</p>
+                    <table style="font-size: 1em; margin-top: 15px;">
+                        <tr style="background: #28a745;">
+                            <th style="color: white;">Ngày mua</th>
+                            <th style="color: white; text-align: center;">SL bán</th>
+                            <th style="color: white; text-align: right;">Đơn giá (HK$)</th>
+                            <th style="color: white; text-align: right;">Thành tiền (HK$)</th>
+                        </tr>
+                        <tr>
+                            <td>1 tháng 1</td>
+                            <td style="text-align: center;">10</td>
+                            <td style="text-align: right;">100</td>
+                            <td style="text-align: right;">1,000</td>
+                        </tr>
+                        <tr>
+                            <td>15 tháng 4</td>
+                            <td style="text-align: center;">20</td>
+                            <td style="text-align: right;">110</td>
+                            <td style="text-align: right;">2,200</td>
+                        </tr>
+                        <tr>
+                            <td>24 tháng 8</td>
+                            <td style="text-align: center;">25</td>
+                            <td style="text-align: right;">120</td>
+                            <td style="text-align: right;">3,000</td>
+                        </tr>
+                        <tr style="background: #c8e6c9; font-weight: bold;">
+                            <td><strong>TỔNG</strong></td>
+                            <td style="text-align: center;"><strong>55</strong></td>
+                            <td></td>
+                            <td style="text-align: right;"><strong>6,200</strong></td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 15px; font-size: 1.1em; text-align: center; color: #28a745;">✅ <strong>Kết quả giống nhau: HK$6,200</strong></p>
+                </div>
+
+                <div class="box" style="margin-top: 25px; background: linear-gradient(135deg, #fff9e6 0%, #ffe0b2 100%); border-color: #ff9800;">
+                    <h4 style="color: #e65100; margin-bottom: 20px;">📊 Tóm tắt kết quả FIFO:</h4>
+                    <div class="two-column">
+                        <div style="background: white; padding: 20px; border-radius: 10px; border: 2px solid #28a745; text-align: center;">
+                            <h4 style="color: #28a745;">📦 HTK cuối kỳ</h4>
+                            <p style="font-size: 2em; color: #28a745; font-weight: bold; margin-top: 15px;">HK$5,800</p>
+                            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">45 đơn vị</p>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 10px; border: 2px solid #dc3545; text-align: center;">
+                            <h4 style="color: #dc3545;">💰 Giá vốn hàng bán</h4>
+                            <p style="font-size: 2em; color: #dc3545; font-weight: bold; margin-top: 15px;">HK$6,200</p>
+                            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">55 đơn vị</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 8px;">
+                        <p style="text-align: center; font-size: 1.1em;"><strong>Tổng kiểm tra:</strong> HK$5,800 + HK$6,200 = <span style="color: #1976d2; font-weight: bold;">HK$12,000</span> ✅</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">Slide 16/65</div>
+        </div>
+
+        <!-- Slide 17: Average-Cost - Giới thiệu -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>📊 PHƯƠNG PHÁP BÌNH QUÂN</h2>
+                <h3>Average-Cost Method</h3>
+            </div>
+            <div class="slide-content">
+                <div class="box box-info">
+                    <h3 style="color: #17a2b8; margin-bottom: 20px;">🔍 Khái niệm:</h3>
+                    <div class="formula" style="background: white; border-color: #7b1fa2; font-size: 1.2em;">
+                        <strong style="color: #7b1fa2;">Average-Cost (Bình quân gia quyền)</strong><br>
+                        = Phân bổ chi phí dựa trên <strong>giá trung bình có trọng số</strong>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="color: #7b1fa2; margin-bottom: 20px;">📋 Đặc điểm chính:</h3>
+                    <div class="two-column">
+                        <div class="card" style="background: #f3e5f5; border: 2px solid #7b1fa2;">
+                            <h4 style="color: #4a148c; margin-bottom: 15px;">💡 Giả định:</h4>
+                            <ul style="font-size: 1em;">
+                                <li>Tất cả hàng có <strong>tính chất tương tự nhau</strong></li>
+                                <li>Không phân biệt hàng cũ/mới</li>
+                                <li>Dùng giá TB cho tất cả</li>
+                            </ul>
+                        </div>
+                        <div class="card" style="background: #fff3e0; border: 2px solid #ff9800;">
+                            <h4 style="color: #e65100; margin-bottom: 15px;">🎯 Ứng dụng:</h4>
+                            <ul style="font-size: 1em;">
+                                <li><strong>Xăng dầu:</strong> Trộn lẫn trong bể</li>
+                                <li><strong>Nguyên liệu:</strong> Xi măng, cát, sỏi</li>
+                                <li><strong>Hóa chất:</strong> Không thể phân biệt</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-radius: 15px; border: 3px solid #7b1fa2;">
+                    <h3 style="color: #4a148c; margin-bottom: 20px; text-align: center;">🧮 CÔNG THỨC TÍNH GIÁ BÌNH QUÂN</h3>
+                    <div class="formula" style="background: white; border-color: #7b1fa2; font-size: 1.3em;">
+                        <strong>Giá TB đơn vị =</strong><br><br>
+                        <div style="border-top: 3px solid #7b1fa2; display: inline-block; padding: 0 100px;">
+                            <div style="text-align: center; padding: 15px 0;">
+                                <strong style="color: #e65100;">Tổng giá trị hàng có thể bán</strong>
+                            </div>
+                        </div>
+                        <div style="text-align: center; padding: 15px 0;">
+                            <strong style="color: #1976d2;">Tổng số lượng hàng có thể bán</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example" style="margin-top: 30px; background: linear-gradient(135deg, #fff9e6 0%, #ffe0b2 100%); border: 3px solid #ff9800;">
+                    <h4 style="color: #e65100; font-size: 1.3em;">💡 Ví dụ đơn giản:</h4>
+                    <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 15px;">
+                        <p style="font-size: 1.05em; margin-bottom: 15px;">Bạn mua xăng cho xe 3 lần:</p>
+                        <ul style="font-size: 1em; margin-left: 20px;">
+                            <li><strong>Lần 1:</strong> 10 lít @ 25,000đ/lít = 250,000đ</li>
+                            <li><strong>Lần 2:</strong> 15 lít @ 26,000đ/lít = 390,000đ</li>
+                            <li><strong>Lần 3:</strong> 20 lít @ 27,000đ/lít = 540,000đ</li>
+                        </ul>
+                        <div style="margin-top: 20px; padding: 20px; background: #e3f2fd; border-radius: 10px;">
+                            <p style="font-size: 1.1em; text-align: center;">
+                                <strong>Giá TB:</strong> (250,000 + 390,000 + 540,000) ÷ (10 + 15 + 20)<br>
+                                = 1,180,000 ÷ 45 = <strong style="color: #1976d2; font-size: 1.3em;">26,222đ/lít</strong>
+                            </p>
+                        </div>
+                        <p style="margin-top: 15px; font-size: 1em; color: #666; text-align: center;">
+                            <em>Xăng đã trộn lẫn trong bình, không thể phân biệt xăng nào mua lần nào<br>
+                            ➜ Dùng giá trung bình cho tất cả</em>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="box box-success" style="margin-top: 25px;">
+                    <h4 style="color: #28a745; margin-bottom: 15px;">✅ Ưu điểm của Average-Cost:</h4>
+                    <ul style="font-size: 1.05em;">
+                        <li>🎯 <strong>Đơn giản, dễ tính toán</strong> - chỉ cần một công thức</li>
+                        <li>📊 <strong>Làm mượt biến động giá</strong> - tránh dao động đột ngột</li>
+                        <li>💰 <strong>Khi giá tăng:</strong> Thuế thấp hơn FIFO (lợi nhuận thấp hơn)</li>
+                        <li>⚖️ <strong>Công bằng:</strong> Không thiên vị hàng cũ hay mới</li>
+                    </ul>
+                </div>
+
+                <div class="box box-warning" style="margin-top: 20px;">
+                    <h4 style="color: #ff9800; margin-bottom: 15px;">⚠️ Lưu ý quan trọng:</h4>
+                    <ul style="font-size: 1em;">
+                        <li>❌ <strong>KHÔNG phải</strong> là trung bình cộng đơn giản của các đơn giá</li>
+                        <li>✅ <strong>PHẢI là</strong> bình quân có trọng số (weighted average)</li>
+                        <li>📊 Phải tính dựa trên <strong>số lượng</strong> từng lần mua</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">Slide 17/65</div>
+        </div>
+
+        <!-- Slide 18: Average-Cost - Tính toán -->
+        <div class="slide">
+            <div class="logo">Nguyên Lý Kế Toán</div>
+            <div class="slide-header">
+                <h2>📊 TÍNH TOÁN THEO AVERAGE-COST</h2>
+                <h3>Công ty Lin Electronics</h3>
+            </div>
+            <div class="slide-content">
+                <div class="box" style="background: linear-gradient(to right, #f3e5f5, #e1bee7); border-color: #7b1fa2;">
+                    <h3 style="color: #4a148c; margin-bottom: 15px;">🎯 Các bước tính toán:</h3>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h4 style="color: #7b1fa2; margin-bottom: 20px;">BƯỚC 1️⃣: Tính giá trung bình có trọng số</h4>
+                    <table style="font-size: 1em;">
+                        <tr style="background: #7b1fa2;">
+                            <th style="color: white;">Ngày</th>
+                            <th style="color: white; text-align: center;">Số lượng</th>
+                            <th style="color: white; text-align: right;">Đơn giá (HK$)</th>
+                            <th style="color: white; text-align: right;">Thành tiền (HK$)</th>
+                        </tr>
+                        <tr>
+                            <td>1 tháng 1</td>
+                            <td style="text-align: center;">10</td>
+                            <td style="text-align: right;">100</td>
+                            <td style="text-align: right;">1,000</td>
+                        </tr>
+                        <tr>
+                            <td>15 tháng 4</td>
+                            <td style="text-align: center;">20</td>
+                            <td style="text-align: right;">110</td>
+                            <td style="text-align: right;">2,200</td>
+                        </tr>
+                        <tr>
+                            <td>24 tháng 8</td>
+                            <td style="text-align: center;">30</td>
+                            <td style="text-align: right;">120</td>
+                            <td style="text-align: right;">3,600</td>
+                        </tr>
+                        <tr>
+                            <td>27 tháng 11</td>
+                            <td style="text-align: center;">40</td>
+                            <td style="text-align: right;">130</td>
+                            <td style="text-align: right;">5,200</td>
+                        </tr>
+                        <tr style="background: #e1bee7; font-weight: bold;">
+                            <td><strong>TỔNG</strong></td>
+                            <td style="text-align: center;"><strong>100</strong></td>
+                            <td></td>
+                            <td style="text-align: right;"><strong>12,000</strong></td>
+                        </tr>
+                    </table>
+
+                    <div class="formula" style="margin-top: 25px; background: white; border-color: #7b1fa2; font-size: 1.3em;">
+                        Giá TB đơn vị = HK$12,000 ÷ 100 = <strong style="color: #7b1fa2; font-size: 1.4em;">HK$120</strong>
+                    </div>
+                </div>
+
+                <div style="margin-top: 35px;">
+                    <h4 style="color: #7b1fa2; margin-bottom: 20px;">BƯỚC 2️⃣: Tính Hàng tồn kho cuối kỳ</h4>
+                    <div class="formula" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-color: #28a745;">
+                        HTK cuối kỳ = Số lượng còn lại × Giá TB<br>
+                        = 45 × HK$120 = <strong style="font-size: 1.4em; color: #28a745;">HK$5,400</strong>
+                    </div>
+                </div>
+
+                <div style="margin-top: 35px;">
+                    <h4 style="color: #dc3545; margin-bottom: 20px;">BƯỚC 3️⃣: Tính Giá vốn hàng bán</h4>
+                    <div class="formula" style="background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); border-color: #dc3545;">
+                        Giá vốn = Hàng có thể bán - HTK cuối kỳ<br>
+                        = HK$12,000 - HK$5,400 = <strong style="font-size: 1.4em; color: #dc3545;">HK$6,600</strong>
+                    </div>
+                </div>
+
+                <div class="box box-success" style="margin-top: 30px;">
+                    <h4 style="color: #28a745; margin-bottom: 20px;">✅ Chứng minh (Proof):</h4>
+                    <p style="margin-bottom: 15px;">Hoặc tính trực tiếp từ số lượng bán:</p>
+                    <div class="formula" style="background: white; border-color: #28a745;">
+                        Giá vốn = 55 đơn vị × HK$120 = <strong style="color: #28a745;">HK$6,600</strong> ✅
+                    </div>
+                </div>
+
+                <div class="box" style="margin-top: 25px; background: linear-gradient(135deg, #fff9e6 0%, #ffe0b2 100%); border-color: #ff9800;">
+                    <h4 style="color: #e65100; margin-bottom: 20px;">📊 Tóm tắt kết quả Average-Cost:</h4>
+                    <div class="two-column">
+                        <div style="background: white; padding: 20px; border-radius: 10px; border: 2px solid #28a745; text-align: center;">
+                            <h4 style="color: #28a745;">📦 HTK cuối kỳ</h4>
+                            <p style="font-size: 2em; color: #28a745; font-weight: bold; margin-top: 15px;">HK$5,400</p>
+                            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">45 đơn vị × HK$120</p>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 10px; border: 2px solid #dc3545; text-align: center;">
+                            <h4 style="color: #dc3545;">💰 Giá vốn hàng bán</h4>
+                            <p style="font-size: 2em; color: #dc3545; font-weight: bold; margin-top: 15px;">HK$6,600</p>
+                            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">55 đơn vị × HK$120</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 8px;">
+                        <p style="text-align: center; font-size: 1.1em;"><strong>Tổng kiểm tra:</strong> HK$5,400 + HK$6,600 = <span style="color: #1976d2; font-weight: bold;">HK$12,000</span> ✅</p>
+                    </div>
+                </div>
+
+                <div class="box box-warning" style="margin-top: 25px;">
+                    <h4 style="color: #ff9800; margin-bottom: 15px;">⚠️ Lưu ý:</h4>
+                    <p style="font-size: 1.05em;">Giá trung bình <strong>HK$120</strong> ≠ Trung bình cộng đơn giản</p>
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        <p style="font-size: 1em; color: #dc3545; text-align: center;">
+                            ❌ SAI: (100 + 110 + 120 + 130) ÷ 4 = HK$115
+                        </p>
+                        <p style="font-size: 1em; color: #28a745; text-align: center; margin-top: 10px;">
+                            ✅ ĐÚNG: 12,000 ÷ 100 = HK$120 (có tính số lượng)
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">Slide 18/65</div>
+        </div>
+
+        <!-- Navigation controls -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">⬅ Trước</button>
+            <button id="nextBtn" onclick="changeSlide(1)">Sau ➡</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            
+            // Scroll to top of slide content
+            slides[currentSlide].querySelector('.slide-content').scrollTop = 0;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
