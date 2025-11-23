@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moodle Question Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: 600px;
+        }
+        
+        .editor-panel, .preview-panel {
+            padding: 30px;
+        }
+        
+        .editor-panel {
+            border-right: 2px solid #e0e0e0;
+        }
+        
+        .panel-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .panel-title::before {
+            content: '✏️';
+        }
+        
+        .preview-panel .panel-title::before {
+            content: '👁️';
+        }
+        
+        textarea {
+            width: 100%;
+            height: 400px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+        
+        .preview-content {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 400px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .question-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .question-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+        
+        .question-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+        
+        .question-text {
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+        
+        .answer-option {
+            padding: 10px 15px;
+            margin: 8px 0;
+            background: #f3f4f6;
+            border-radius: 6px;
+            border-left: 3px solid #d1d5db;
+        }
+        
+        .answer-option.correct {
+            background: #d1fae5;
+            border-left-color: #10b981;
+        }
+        
+        .help-section {
+            background: #fff7ed;
+            border: 2px solid #fed7aa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 30px;
+        }
+        
+        .help-title {
+            font-size: 1.3em;
+            color: #ea580c;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .help-title::before {
+            content: '📖';
+        }
+        
+        .example-code {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 10px 0;
+            white-space: pre;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 20px;
+            padding: 20px 30px;
+            background: #f9fafb;
+            border-top: 2px solid #e5e7eb;
+        }
+        
+        .stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            border: 2px solid #fca5a5;
+            color: #dc2626;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .validation-box {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .validation-item {
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+        
+        .validation-item.success {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+        }
+        
+        .validation-item.warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .validation-item.error {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+        }
+        
+        .validation-icon {
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .editor-panel {
+                border-right: none;
+                border-bottom: 2px solid #e0e0e0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 Moodle Question Generator</h1>
+            <p>Chuyển đổi Markdown thành Moodle XML format - Hỗ trợ tất cả loại câu hỏi</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="editor-panel">
+                <h2 class="panel-title">Markdown Input</h2>
+                <textarea id="markdownInput" placeholder="Nhập câu hỏi theo định dạng Markdown...">## Multiple Choice
+# Question: Thủ đô của Việt Nam là gì?
+- Hà Nội [100%]
+- Hồ Chí Minh
+- Đà Nẵng
+- Huế
+
+## True/False
+# Question: Trái đất hình cầu
+- True [100%]
+- False
+
+## Short Answer
+# Question: Ai là tác giả của "Truyện Kiều"?
+= Nguyễn Du [100%]
+= Nguyen Du [100%]
+
+## Numerical
+# Question: 2 + 2 = ?
+= 4 [100%]
+
+## Matching
+# Question: Ghép các cặp sau
+@ Thủ đô Việt Nam -> Hà Nội
+@ Thủ đô Thái Lan -> Bangkok
+@ Thủ đô Nhật Bản -> Tokyo</textarea>
+                
+                <div class="button-group">
+                    <button class="btn-primary" onclick="parseMarkdown()">🔄 Parse & Preview</button>
+                    <button class="btn-success" onclick="exportXML()">📥 Export XML</button>
+                    <button class="btn-secondary" onclick="clearAll()">🗑️ Clear</button>
+                    <button class="btn-secondary" onclick="loadExample()">📝 Load Example</button>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 15px; background: #f0f9ff; border: 2px dashed #0284c7; border-radius: 8px;">
+                    <label for="fileInput" style="display: block; margin-bottom: 10px; font-weight: 600; color: #0369a1;">
+                        📁 Import Markdown File:
+                    </label>
+                    <input type="file" id="fileInput" accept=".md,.txt" onchange="handleFileUpload(event)" 
+                           style="padding: 8px; border: 1px solid #0284c7; border-radius: 6px; background: white; width: 100%;">
+                </div>
+                
+                <div id="validationResults" style="margin-top: 20px;"></div>
+            </div>
+            
+            <div class="preview-panel">
+                <h2 class="panel-title">Preview</h2>
+                <div class="preview-content" id="preview">
+                    <p style="color: #9ca3af; text-align: center; padding: 50px 20px;">
+                        Nhập markdown và nhấn "Parse & Preview" để xem trước câu hỏi
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value" id="totalQuestions">0</div>
+                <div class="stat-label">Tổng số câu hỏi</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="questionTypes">0</div>
+                <div class="stat-label">Loại câu hỏi</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="validQuestions">0</div>
+                <div class="stat-label">Câu hỏi hợp lệ</div>
+            </div>
+        </div>
+        
+        <div class="help-section">
+            <h3 class="help-title">Hướng dẫn sử dụng</h3>
+            <p><strong>Cú pháp Markdown:</strong></p>
+            <div class="example-code">## [Question Type]
+# Question: [Nội dung câu hỏi]
+- [Đáp án] [Grade%]    (Multiple Choice)
+= [Đáp án] [Grade%]    (Short Answer, Numerical)
+@ [Item] -> [Match]    (Matching)</div>
+            
+            <p style="margin-top: 15px;"><strong>Các loại câu hỏi được hỗ trợ:</strong></p>
+            <p>Multiple Choice, True/False, Short Answer, Numerical, Matching, Essay, Description, Calculated, Simple Calculated, Drag and drop (into text, markers, onto image), Embedded Answers (Cloze), Ordering, Select missing words, v.v.</p>
+            
+            <p style="margin-top: 15px;"><strong>Cú pháp nâng cao:</strong></p>
+            <div class="example-code">## Calculated
+# Question: Tính diện tích hình chữ nhật với chiều dài {a} và chiều rộng {b}
+# Formula: {a} * {b}
+# Dataset: a=5:10:1, b=3:8:1
+
+## Cloze (Embedded Answers)  
+# Question: Thủ đô của Việt Nam là {:SHORTANSWER:=Hà Nội}
+
+## Drag and Drop into Text
+# Question: Kéo từ vào chỗ trống: Ngôn ngữ [[1]] được dùng cho [[2]]
+# Choices: Python, Web Development, Machine Learning
+
+## Ordering
+# Question: Sắp xếp các bước theo thứ tự
+> Phân tích yêu cầu
+> Thiết kế hệ thống  
+> Coding
+> Testing</div>
+        </div>
+    </div>
+
+    <script>
+        let parsedQuestions = [];
+        let validationResults = [];
+
+        // Handle file upload
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('markdownInput').value = e.target.result;
+                parseMarkdown();
+            };
+            reader.readAsText(file);
+        }
+
+        function parseMarkdown() {
+            const input = document.getElementById('markdownInput').value;
+            parsedQuestions = [];
+            validationResults = [];
+            
+            const sections = input.split(/^##\s+/m).filter(s => s.trim());
+            
+            sections.forEach((section, index) => {
+                const lines = section.trim().split('\n');
+                const typeMatch = lines[0].match(/^(.+?)$/);
+                if (!typeMatch) return;
+                
+                const type = typeMatch[1].trim();
+                let question = {
+                    type: normalizeQuestionType(type),
+                    name: '',
+                    text: '',
+                    answers: [],
+                    matches: [],
+                    feedback: '',
+                    defaultGrade: 1,
+                    formula: '',
+                    dataset: '',
+                    choices: [],
+                    ordering: []
+                };
+                
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (!line) continue;
+                    
+                    // Question text
+                    if (line.startsWith('# Question:')) {
+                        question.text = line.replace('# Question:', '').trim();
+                        question.name = question.text.substring(0, 50);
+                    }
+                    // Formula for Calculated questions
+                    else if (line.startsWith('# Formula:')) {
+                        question.formula = line.replace('# Formula:', '').trim();
+                    }
+                    // Dataset for Calculated questions
+                    else if (line.startsWith('# Dataset:')) {
+                        question.dataset = line.replace('# Dataset:', '').trim();
+                    }
+                    // Choices for Drag and Drop
+                    else if (line.startsWith('# Choices:')) {
+                        question.choices = line.replace('# Choices:', '').split(',').map(c => c.trim());
+                    }
+                    // Multiple choice answer
+                    else if (line.startsWith('- ')) {
+                        const answerText = line.substring(2).trim();
+                        const gradeMatch = answerText.match(/\[(\d+)%\]$/);
+                        const text = answerText.replace(/\[\d+%\]$/, '').trim();
+                        const grade = gradeMatch ? parseInt(gradeMatch[1]) : 0;
+                        question.answers.push({ text, grade });
+                    }
+                    // Short answer / Numerical
+                    else if (line.startsWith('= ')) {
+                        const answerText = line.substring(2).trim();
+                        const gradeMatch = answerText.match(/\[(\d+)%\]$/);
+                        const text = answerText.replace(/\[\d+%\]$/, '').trim();
+                        const grade = gradeMatch ? parseInt(gradeMatch[1]) : 100;
+                        question.answers.push({ text, grade });
+                    }
+                    // Matching
+                    else if (line.startsWith('@ ')) {
+                        const matchText = line.substring(2).trim();
+                        const parts = matchText.split('->').map(p => p.trim());
+                        if (parts.length === 2) {
+                            question.matches.push({ question: parts[0], answer: parts[1] });
+                        }
+                    }
+                    // Ordering
+                    else if (line.startsWith('> ')) {
+                        question.ordering.push(line.substring(2).trim());
+                    }
+                }
+                
+                if (question.text) {
+                    parsedQuestions.push(question);
+                    validateQuestion(question, index + 1);
+                }
+            });
+            
+            displayPreview();
+            displayValidation();
+            updateStats();
+        }
+
+        function validateQuestion(question, number) {
+            const issues = [];
+            
+            // Check question text
+            if (!question.text || question.text.length < 5) {
+                issues.push({
+                    type: 'error',
+                    message: `Câu ${number}: Nội dung câu hỏi quá ngắn hoặc thiếu`
+                });
+            }
+            
+            // Validate based on question type
+            switch(question.type) {
+                case 'multichoice':
+                case 'truefalse':
+                    if (question.answers.length < 2) {
+                        issues.push({
+                            type: 'error',
+                            message: `Câu ${number}: Cần ít nhất 2 đáp án cho Multiple Choice`
+                        });
+                    }
+                    
+                    const hasCorrect = question.answers.some(a => a.grade > 0);
+                    if (!hasCorrect) {
+                        issues.push({
+                            type: 'error',
+                            message: `Câu ${number}: Không có đáp án đúng (cần ít nhất 1 đáp án có grade > 0)`
+                        });
+                    }
+                    
+                    const totalGrade = question.answers.reduce((sum, a) => sum + a.grade, 0);
+                    if (totalGrade !== 100) {
+                        issues.push({
+                            type: 'warning',
+                            message: `Câu ${number}: Tổng điểm các đáp án là ${totalGrade}% (nên là 100%)`
+                        });
+                    }
+                    break;
+                    
+                case 'shortanswer':
+                case 'numerical':
+                    if (question.answers.length === 0) {
+                        issues.push({
+                            type: 'error',
+                            message: `Câu ${number}: Cần ít nhất 1 đáp án đúng`
+                        });
+                    }
+                    break;
+                    
+                case 'matching':
+                    if (question.matches.length < 3) {
+                        issues.push({
+                            type: 'warning',
+                            message: `Câu ${number}: Nên có ít nhất 3 cặp matching`
+                        });
+                    }
+                    break;
+                    
+                case 'calculated':
+                    if (!question.formula) {
+                        issues.push({
+                            type: 'error',
+                            message: `Câu ${number}: Thiếu công thức (# Formula:)`
+                        });
+                    }
+                    if (!question.dataset) {
+                        issues.push({
+                            type: 'warning',
+                            message: `Câu ${number}: Thiếu dataset (# Dataset:)`
+                        });
+                    }
+                    break;
+                    
+                case 'ordering':
+                    if (question.ordering.length < 2) {
+                        issues.push({
+                            type: 'error',
+                            message: `Câu ${number}: Cần ít nhất 2 items để sắp xếp`
+                        });
+                    }
+                    break;
+            }
+            
+            if (issues.length === 0) {
+                validationResults.push({
+                    type: 'success',
+                    message: `Câu ${number}: ✓ Hợp lệ (${question.type})`
+                });
+            } else {
+                validationResults.push(...issues);
+            }
+        }
+
+        function displayValidation() {
+            const container = document.getElementById('validationResults');
+            
+            if (validationResults.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            let html = '<div class="validation-box"><h3 style="margin-bottom: 15px; color: #333;">📋 Validation Results</h3>';
+            
+            validationResults.forEach(result => {
+                const icon = result.type === 'success' ? '✓' : result.type === 'warning' ? '⚠' : '✗';
+                html += `<div class="validation-item ${result.type}">
+                    <span class="validation-icon">${icon}</span>
+                    <span>${result.message}</span>
+                </div>`;
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function normalizeQuestionType(type) {
+            const typeMap = {
+                'multiple choice': 'multichoice',
+                'multichoice': 'multichoice',
+                'true/false': 'truefalse',
+                'truefalse': 'truefalse',
+                'short answer': 'shortanswer',
+                'shortanswer': 'shortanswer',
+                'numerical': 'numerical',
+                'matching': 'matching',
+                'essay': 'essay',
+                'description': 'description',
+                'calculated': 'calculated',
+                'simple calculated': 'calculatedsimple',
+                'calculatedsimple': 'calculatedsimple',
+                'cloze': 'cloze',
+                'embedded answers': 'cloze',
+                'ordering': 'ordering',
+                'drag and drop': 'ddimageortext',
+                'drag and drop into text': 'ddwtos',
+                'ddwtos': 'ddwtos',
+                'drag and drop markers': 'ddmarker',
+                'drag and drop onto image': 'ddimageortext',
+                'select missing words': 'gapselect',
+                'gapselect': 'gapselect'
+            };
+            
+            const normalized = type.toLowerCase().trim();
+            return typeMap[normalized] || 'multichoice';
+        }
+
+        function displayPreview() {
+            const preview = document.getElementById('preview');
+            
+            if (parsedQuestions.length === 0) {
+                preview.innerHTML = '<div class="error-message">Không tìm thấy câu hỏi hợp lệ. Vui lòng kiểm tra định dạng Markdown.</div>';
+                return;
+            }
+            
+            let html = '';
+            parsedQuestions.forEach((q, index) => {
+                html += `<div class="question-preview">
+                    <span class="question-type">${q.type.toUpperCase()}</span>
+                    <div class="question-name">Câu ${index + 1}: ${q.name}</div>
+                    <div class="question-text">${q.text}</div>`;
+                
+                // Display formula for calculated questions
+                if (q.formula) {
+                    html += `<div style="margin-top: 10px; padding: 10px; background: #f0f9ff; border-radius: 6px;">
+                        <strong>Formula:</strong> ${q.formula}
+                    </div>`;
+                }
+                
+                if (q.dataset) {
+                    html += `<div style="margin-top: 5px; padding: 10px; background: #fef3c7; border-radius: 6px;">
+                        <strong>Dataset:</strong> ${q.dataset}
+                    </div>`;
+                }
+                
+                // Display choices for drag and drop
+                if (q.choices.length > 0) {
+                    html += `<div style="margin-top: 10px; padding: 10px; background: #f3f4f6; border-radius: 6px;">
+                        <strong>Choices:</strong> ${q.choices.join(', ')}
+                    </div>`;
+                }
+                
+                // Display ordering items
+                if (q.ordering.length > 0) {
+                    html += '<div style="margin-top: 15px;"><strong>Order:</strong>';
+                    q.ordering.forEach((item, i) => {
+                        html += `<div class="answer-option">${i + 1}. ${item}</div>`;
+                    });
+                    html += '</div>';
+                }
+                
+                if (q.answers.length > 0) {
+                    html += '<div style="margin-top: 15px;">';
+                    q.answers.forEach(a => {
+                        const isCorrect = a.grade > 0 ? 'correct' : '';
+                        html += `<div class="answer-option ${isCorrect}">
+                            ${a.text} ${a.grade > 0 ? `(${a.grade}%)` : ''}
+                        </div>`;
+                    });
+                    html += '</div>';
+                }
+                
+                if (q.matches.length > 0) {
+                    html += '<div style="margin-top: 15px;">';
+                    q.matches.forEach(m => {
+                        html += `<div class="answer-option">${m.question} ➡️ ${m.answer}</div>`;
+                    });
+                    html += '</div>';
+                }
+                
+                html += '</div>';
+            });
+            
+            preview.innerHTML = html;
+        }
+
+        function updateStats() {
+            document.getElementById('totalQuestions').textContent = parsedQuestions.length;
+            const types = new Set(parsedQuestions.map(q => q.type));
+            document.getElementById('questionTypes').textContent = types.size;
+            document.getElementById('validQuestions').textContent = parsedQuestions.filter(q => q.text && (q.answers.length > 0 || q.matches.length > 0 || q.type === 'essay' || q.type === 'description')).length;
+        }
+
+        function escapeXml(text) {
+            return text.replace(/&/g, '&amp;')
+                      .replace(/</g, '&lt;')
+                      .replace(/>/g, '&gt;')
+                      .replace(/"/g, '&quot;')
+                      .replace(/'/g, '&apos;');
+        }
+
+        function generateMoodleXML() {
+            let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<quiz>\n';
+            
+            parsedQuestions.forEach(q => {
+                xml += `  <question type="${q.type}">\n`;
+                xml += `    <name><text>${escapeXml(q.name)}</text></name>\n`;
+                xml += `    <questiontext format="html">\n`;
+                xml += `      <text><![CDATA[<p>${escapeXml(q.text)}</p>]]></text>\n`;
+                xml += `    </questiontext>\n`;
+                xml += `    <generalfeedback format="html"><text></text></generalfeedback>\n`;
+                xml += `    <defaultgrade>${q.defaultGrade}</defaultgrade>\n`;
+                xml += `    <penalty>0.1</penalty>\n`;
+                xml += `    <hidden>0</hidden>\n`;
+                
+                if (q.type === 'multichoice' || q.type === 'truefalse') {
+                    xml += `    <single>true</single>\n`;
+                    xml += `    <shuffleanswers>true</shuffleanswers>\n`;
+                    xml += `    <answernumbering>abc</answernumbering>\n`;
+                    
+                    q.answers.forEach(a => {
+                        const fraction = a.grade;
+                        xml += `    <answer fraction="${fraction}" format="html">\n`;
+                        xml += `      <text><![CDATA[${escapeXml(a.text)}]]></text>\n`;
+                        xml += `    </answer>\n`;
+                    });
+                }
+                
+                if (q.type === 'shortanswer' || q.type === 'numerical') {
+                    q.answers.forEach(a => {
+                        const fraction = a.grade;
+                        xml += `    <answer fraction="${fraction}" format="moodle_auto_format">\n`;
+                        xml += `      <text>${escapeXml(a.text)}</text>\n`;
+                        xml += `    </answer>\n`;
+                    });
+                }
+                
+                if (q.type === 'matching') {
+                    xml += `    <shuffleanswers>1</shuffleanswers>\n`;
+                    q.matches.forEach(m => {
+                        xml += `    <subquestion format="html">\n`;
+                        xml += `      <text><![CDATA[${escapeXml(m.question)}]]></text>\n`;
+                        xml += `      <answer><text>${escapeXml(m.answer)}</text></answer>\n`;
+                        xml += `    </subquestion>\n`;
+                    });
+                }
+                
+                xml += `  </question>\n`;
+            });
+            
+            xml += '</quiz>';
+            return xml;
+        }
+
+        function exportXML() {
+            if (parsedQuestions.length === 0) {
+                alert('Vui lòng parse markdown trước khi export!');
+                return;
+            }
+            
+            const xml = generateMoodleXML();
+            const blob = new Blob([xml], { type: 'application/xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'moodle_questions.xml';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function clearAll() {
+            document.getElementById('markdownInput').value = '';
+            document.getElementById('preview').innerHTML = '<p style="color: #9ca3af; text-align: center; padding: 50px 20px;">Nhập markdown và nhấn "Parse & Preview" để xem trước câu hỏi</p>';
+            parsedQuestions = [];
+            updateStats();
+        }
+
+        function loadExample() {
+            document.getElementById('markdownInput').value = `## Multiple Choice
+# Question: Python là ngôn ngữ lập trình gì?
+- Compiled language
+- Interpreted language [100%]
+- Assembly language
+- Machine language
+
+## True/False
+# Question: JavaScript và Java là cùng một ngôn ngữ
+- True
+- False [100%]
+
+## Short Answer
+# Question: Framework phổ biến nhất của Python là gì?
+= Django [100%]
+= Flask [50%]
+
+## Numerical
+# Question: Kết quả của 10 * 5 + 3 = ?
+= 53 [100%]
+
+## Matching
+# Question: Ghép ngôn ngữ với mục đích sử dụng
+@ Python -> Data Science
+@ JavaScript -> Web Development
+@ SQL -> Database Management
+@ C++ -> System Programming
+
+## Calculated
+# Question: Tính diện tích hình chữ nhật với chiều dài {a} cm và chiều rộng {b} cm
+# Formula: {a} * {b}
+# Dataset: a=5:15:1, b=3:10:1
+
+## Ordering
+# Question: Sắp xếp các bước phát triển phần mềm theo thứ tự
+> Phân tích yêu cầu
+> Thiết kế hệ thống
+> Lập trình
+> Kiểm thử
+> Triển khai
+
+## Drag and Drop into Text
+# Question: Điền từ vào chỗ trống: [[1]] là ngôn ngữ được dùng cho [[2]]
+# Choices: Python, JavaScript, Machine Learning, Web Development
+
+## Cloze
+# Question: Thủ đô của Việt Nam là {:SHORTANSWER:=Hà Nội=Ha Noi} và có dân số khoảng {:NUMERICAL:=8000000:500000} người
+
+## Essay
+# Question: Giải thích sự khác biệt giữa OOP và Functional Programming (tối thiểu 200 từ)
+
+## Description
+# Question: Đây là phần hướng dẫn cho bài tập lớn. Sinh viên cần xây dựng một ứng dụng web hoàn chỉnh sử dụng React và Node.js`;
+            parseMarkdown();
+        }
+
+        // Auto-parse on page load if there's content
+        window.addEventListener('load', () => {
+            const input = document.getElementById('markdownInput').value;
+            if (input.trim()) {
+                parseMarkdown();
+            }
+        });
+    </script>
+</body>
+</html>
