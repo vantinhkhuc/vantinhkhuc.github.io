@@ -104,6 +104,492 @@ Quay lại ví dụ Komatsu. Họ phân loại như thế nào?
 
 ---
 
+#### **Slide 9-10: Just-in-Time & Case Study**
+
+Bây giờ thầy/cô muốn giới thiệu một phương pháp quản lý tồn kho rất nổi tiếng: **Just-in-Time (JIT)**.
+
+JIT nghĩa là gì? **Chỉ sản xuất hoặc mua hàng KHI CẦN THIẾT**.
+
+**Ví dụ Dell Computer:**
+- Khách đặt hàng cấu hình máy tính cụ thể
+- Dell lắp ráp theo yêu cầu
+- Giao hàng trong vòng **48 giờ**
+- Tồn kho gần như **BẰNG KHÔNG**!
+
+Tuyệt vời phải không? Nhưng...
+
+*(Chuyển sang case study)*
+
+**Động đất ở Nhật 2007:**
+- Nhà máy sản xuất vòng pít-tông bị hỏng
+- Giá mỗi vòng chỉ $1.50
+- Nhưng không có nó thì không làm được ô tô!
+- Các hãng xe phải dừng sản xuất
+- Thiệt hại: Hàng chục nghìn xe
+
+**Bài học:** JIT tuyệt vời nhưng phải có kế hoạch dự phòng cho chuỗi cung ứng!
+
+Các em nghĩ trong TMĐT, JIT có khả thi không? Hãy thảo luận!
+
+---
+
+#### **Slide 11-12: Xác định số lượng tồn kho**
+
+Tiếp theo, làm sao để xác định chính xác số lượng hàng tồn kho?
+
+**Hai bước:**
+1. **Kiểm kê thực tế** - Đếm, cân, đo
+2. **Xác định quyền sở hữu** - Hàng nào thực sự là của mình?
+
+**Thời điểm kiểm kê:**
+- Thường là cuối năm tài chính
+- Lý tưởng nhất: Khi công ty đóng cửa hoặc ít hoạt động
+- Ví dụ: Nhiều shop thời trang kiểm kê vào **đầu tháng 1**, sau Tết, khi hàng tồn ở mức thấp nhất
+
+**Quy trình:**
+- Chuẩn bị: Phân công, chuẩn bị phiếu
+- Đếm: Từng mặt hàng
+- Ghi nhận: Vào phiếu kiểm kê
+- Kiểm tra chéo: Đảm bảo chính xác
+- Tổng hợp: Nhập hệ thống
+- Đối chiếu: So với sổ sách
+
+---
+
+#### **Slide 13-16: Hàng đang vận chuyển & FOB**
+
+Đây là phần **CỰC KỲ QUAN TRỌNG** và hay bị nhầm lẫn!
+
+Khi kiểm kê, không phải tất cả hàng trong kho đều là của mình, và không phải tất cả hàng của mình đều ở trong kho!
+
+Có hàng đang trên đường đi. Vậy hàng đó của ai?
+
+**Tùy thuộc vào điều kiện giao hàng!**
+
+**1. FOB Shipping Point** (FOB điểm xuất phát):
+- Quyền sở hữu chuyển sang người mua **KHI HÀNG RỜI KHO NGƯỜI BÁN**
+- Người mua chịu chi phí vận chuyển
+- Người mua tính vào tồn kho ngay lập tức
+
+Thầy/cô cho ví dụ: Em mua hàng từ Trung Quốc, điều kiện FOB Shipping Point. Hàng xuất kho ngày 25/12, nhưng đến Việt Nam ngày 5/1. 
+→ Ngày 31/12 kiểm kê, em **PHẢI TÍNH** hàng này vào tồn kho, dù nó đang ở giữa biển!
+
+**2. FOB Destination** (FOB điểm đến):
+- Quyền sở hữu chuyển khi hàng **ĐẾN NƠI NGƯỜI MUA**
+- Người bán chịu chi phí vận chuyển
+- Người bán vẫn tính vào tồn kho cho đến khi giao xong
+
+*(Giải thích ví dụ Hargrove Stores trên slide)*
+
+Nếu không tính đúng → Thiếu 4,000 đơn vị → Báo cáo tài chính SAI!
+
+---
+
+#### **Slide 16-17: Hàng gửi bán**
+
+**Consigned Goods** - Hàng gửi bán
+
+Ví dụ đơn giản: Em có chiếc xe ô tô cũ muốn bán. Em mang đến đại lý xe cũ:
+- Đại lý để xe trên sân bãi
+- Nếu bán được, đại lý hưởng hoa hồng
+- **NHƯNG:** Xe vẫn của em cho đến khi bán!
+
+Ngày 31/12:
+- **Người gửi (em):** TÍNH vào tồn kho
+- **Người nhận (đại lý):** KHÔNG TÍNH vào tồn kho
+
+Rất phổ biến với: Xe hơi, thuyền, đồ cổ, thời trang cao cấp...
+
+Mục đích: Giảm chi phí tồn kho và rủi ro!
+
+---
+
+#### **Slide 17: Case Study Gian lận**
+
+Bây giờ thầy/cô muốn nhấn mạnh về **đạo đức nghề nghiệp**.
+
+*(Kể case study Dally Industries)*
+
+Các em thấy không, chỉ vì muốn giữ giá cổ phiếu cao và nhận thưởng lớn, CEO đã:
+- Sửa số lượng: 20 → 220
+- Sửa đơn giá: $125 → $1,250
+
+Hậu quả: Gian lận $245,000, bị bắt, đi tù!
+
+**Bài học:** Trong nghề kế toán, đạo đức và tính chính trực là QUAN TRỌNG NHẤT. Không có ngoại lệ!
+
+---
+
+**⏰ NGHỈ GIẢI LAO 15 PHÚT**
+
+---
+
+### PHẦN 3: PHƯƠNG PHÁP TÍNH GIÁ HÀNG TỒN KHO (60 phút)
+
+#### **Slide 19-20: Giới thiệu vấn đề**
+
+Chào mừng các em quay lại!
+
+Bây giờ chúng ta vào phần cốt lõi của chương này: **Các phương pháp tính giá hàng tồn kho**.
+
+**Vấn đề:** Công ty mua cùng một sản phẩm ở nhiều thời điểm với giá khác nhau. Vậy khi tính tồn kho cuối kỳ và giá vốn hàng bán, dùng giá nào?
+
+Ví dụ đơn giản:
+- Tháng 1: Mua 10 cái @ 100 đồng
+- Tháng 6: Mua 20 cái @ 120 đồng
+- Cuối năm: Còn 15 cái trong kho
+
+Hỏi: 15 cái này giá bao nhiêu? 100? 120? Hay trung bình?
+
+**Có 3 phương pháp chính:**
+1. Specific Identification (Nhận diện cụ thể)
+2. FIFO (First-In, First-Out)
+3. Average-Cost (Giá bình quân)
+
+---
+
+#### **Slide 21: Specific Identification**
+
+**Phương pháp 1: Nhận diện cụ thể**
+
+Xác định chính xác từng đơn vị cụ thể nào đã bán, đơn vị nào còn lại.
+
+*(Giải thích ví dụ Crivitz về 3 chiếc TV)*
+
+**Ưu điểm:**
+- Chính xác nhất
+- Phản ánh đúng thực tế
+
+**Nhược điểm:**
+- Tốn kém, phức tạp
+- Chỉ phù hợp với hàng giá trị cao, số lượng ít
+- **CÓ THỂ BỊ THAO TÚNG!**
+
+Ví dụ thao túng: Cuối năm, công ty cần tăng lợi nhuận. Họ có thể chọn bán những đơn vị giá thấp để giảm giá vốn → Tăng lợi nhuận!
+
+Vì vậy, hầu hết công ty không dùng phương pháp này, mà dùng các giả định luồng chi phí.
+
+---
+
+#### **Slide 22-24: FIFO**
+
+**Phương pháp 2: FIFO (First-In, First-Out)**
+
+Giả định: Hàng mua vào đầu tiên sẽ được bán ra đầu tiên.
+
+Giống như kệ sữa trong siêu thị:
+- Nhân viên xếp hàng mới vào phía sau
+- Khách lấy hàng cũ ở phía trước
+- Đảm bảo hàng không hết hạn!
+
+**Đặc điểm quan trọng:**
+- Tồn kho cuối kỳ gồm những đơn vị mua **GẦN ĐÂY NHẤT**
+- Giá vốn hàng bán dùng giá của những đơn vị mua **LÂU NHẤT**
+
+*(Giải thích chi tiết ví dụ Lin Electronics)*
+
+**Kết quả:**
+- Tồn kho: HK$5,800 (giá mới)
+- Giá vốn: HK$6,200 (giá cũ)
+
+**Trong thời kỳ giá TĂNG:**
+- FIFO → Giá vốn THẤP (dùng giá cũ)
+- → Lợi nhuận CAO
+- → Thuế CAO
+- Nhưng tồn kho trên bảng CĐKT gần với giá trị thực tế!
+
+---
+
+#### **Slide 24: Average-Cost**
+
+**Phương pháp 3: Giá bình quân gia quyền**
+
+Giả định: Hàng hóa đồng nhất, không phân biệt mua trước hay sau.
+
+**Công thức:**
+```
+Đơn giá BQ = Tổng giá trị / Tổng số lượng
+```
+
+*(Tính toán cho Lin Electronics)*
+
+**Lưu ý quan trọng:**
+- KHÔNG PHẢI là trung bình đơn thuần của đơn giá!
+- Sai: (100+110+120+130)/4 = 115 ❌
+- Đúng: Phải tính theo số lượng (gia quyền) ✅
+
+**Kết quả:**
+- Đơn giá BQ: HK$120
+- Tồn kho: HK$5,400
+- Giá vốn: HK$6,600
+
+**Trong thời kỳ giá TĂNG:**
+- Average → Giá vốn CAO HƠN FIFO
+- → Lợi nhuận THẤP HƠN
+- → Thuế THẤP HƠN → Nhiều tiền mặt hơn!
+
+---
+
+#### **Slide 25-27: So sánh & Ảnh hưởng**
+
+Bây giờ chúng ta so sánh hai phương pháp:
+
+*(Trình bày bảng so sánh)*
+
+**Điểm chung:**
+- Tổng hàng có thể bán: GIỐNG NHAU (HK$12,000)
+
+**Khác nhau:**
+- Phân bổ vào tồn kho và giá vốn KHÁC NHAU
+- Chênh lệch HK$400
+
+**Ảnh hưởng đến báo cáo tài chính:**
+
+*(Trình bày Income Statement đầy đủ)*
+
+Các em thấy không:
+- FIFO: Lợi nhuận HK$2,310
+- Average: Lợi nhuận HK$2,030
+- Chênh lệch: HK$280
+
+Nhưng về thuế:
+- FIFO: Thuế HK$990
+- Average: Thuế HK$870
+- Tiết kiệm: HK$120 → Nhiều tiền mặt hơn!
+
+---
+
+#### **Slide 28-29: Lựa chọn phương pháp**
+
+**Tại sao công ty chọn phương pháp này mà không chọn phương pháp kia?**
+
+**Ba yếu tố chính:**
+
+**1. Ảnh hưởng đến Income Statement:**
+- Muốn lợi nhuận cao (thu hút nhà đầu tư, thưởng cao) → FIFO
+- Ví dụ: Lenovo dùng Average-Cost
+
+**2. Ảnh hưởng đến Balance Sheet:**
+- FIFO: Tồn kho gần giá thị trường → BCDKT chính xác hơn
+- Average: Tồn kho ở mức trung bình
+
+**3. Ảnh hưởng đến Thuế:**
+- Muốn tiết kiệm thuế → Average-Cost
+- Lý do: Giá vốn cao → Lợi nhuận thấp → Thuế thấp
+
+**Nguyên tắc Consistency (Nhất quán):**
+- Phải dùng CÙNG phương pháp qua các năm
+- Không được đổi tùy tiện
+- Nếu đổi: Phải công bố rõ ràng và giải thích
+
+---
+
+#### **Slide 30: LIFO & IFRS**
+
+Một lưu ý quan trọng về **LIFO** (Last-In, First-Out):
+
+LIFO giả định: Hàng mua sau cùng được bán trước.
+
+**Trạng thái:** KHÔNG ĐƯỢC PHÉP theo IFRS! 🚫
+
+Tại sao? IASB cho rằng LIFO làm tồn kho trên BCDKT không phản ánh giá trị thực.
+
+**Nhưng:** 
+- Vẫn được phép ở Mỹ (US GAAP)
+- Rất phổ biến ở Mỹ vì lợi ích thuế lớn
+
+→ Khó so sánh công ty Mỹ với công ty IFRS!
+
+Các em chỉ cần biết LIFO tồn tại, nhưng ở Việt Nam và hầu hết các nước, chúng ta KHÔNG dùng LIFO.
+
+---
+
+**⏰ KẾT THÚC BUỔI 1**
+
+**Bài tập về nhà:**
+- Làm bài tập cuối chương về FIFO và Average-Cost
+- Đọc trước phần Sai sót Hàng tồn kho
+- Chuẩn bị câu hỏi cho buổi sau
+
+---
+
+## BUỔI 2 (150 phút)
+
+### PHẦN 4: REVIEW BUỔI 1 (15 phút)
+
+Chào các em! Buổi trước chúng ta đã học:
+
+**1. Phân loại & Xác định:**
+- DN Thương mại: Hàng hóa
+- DN Sản xuất: 3 loại
+- FOB Shipping Point vs Destination
+- Hàng gửi bán
+
+**2. Phương pháp tính giá:**
+- FIFO: Nhập trước, xuất trước
+- Average-Cost: Giá bình quân
+- LIFO: Không được phép theo IFRS
+
+Có em nào có câu hỏi không?
+
+---
+
+### PHẦN 5: SAI SÓT HÀNG TỒN KHO (45 phút)
+
+#### **Slide 32-33: Giới thiệu vấn đề**
+
+Hôm nay chúng ta học một phần rất quan trọng: **Sai sót Hàng tồn kho**
+
+Tại sao lại quan trọng?
+- Sai sót có thể xảy ra do nhiều nguyên nhân
+- Ảnh hưởng rất lớn đến báo cáo tài chính
+- Ảnh hưởng đến **2 KỲ** kế toán!
+
+**Nguyên nhân:**
+- Đếm sai
+- Định giá sai
+- Không ghi nhận đúng quyền sở hữu
+- Hoặc GIAN LẬN!
+
+**Đặc điểm:**
+1. Ảnh hưởng cả Income Statement VÀ Balance Sheet
+2. Ảnh hưởng năm hiện tại VÀ năm sau
+3. Tự động điều chỉnh sau 2 năm
+
+---
+
+#### **Slide 33-34: Công thức & Ví dụ**
+
+Trước hết, nhớ lại công thức cơ bản:
+
+```
+Tồn đầu + Mua trong kỳ - Tồn cuối = Giá vốn HB
+```
+
+**Phân tích ảnh hưởng:**
+
+*(Trình bày bảng phân tích)*
+
+**Quy tắc nhớ:**
+- Tồn cuối và Lợi nhuận: **CÙNG CHIỀU**
+  - Tồn cuối THỪA → LN THỪA
+  - Tồn cuối THIẾU → LN THIẾU
+
+- Tồn đầu và Lợi nhuận: **NGƯỢC CHIỀU**
+  - Tồn đầu THỪA → LN THIẾU
+  - Tồn đầu THIẾU → LN THỪA
+
+---
+
+*(Giải thích chi tiết ví dụ Sample Company qua 2 năm)*
+
+**Điểm quan trọng:**
+
+Năm 2019: Tồn cuối THIẾU €3,000
+- → Giá vốn THỪA €3,000
+- → LN THIẾU €3,000
+
+Năm 2020: Tồn đầu THIẾU €3,000 (vì = tồn cuối 2019)
+- → Giá vốn THIẾU €3,000
+- → LN THỪA €3,000
+
+**Tổng 2 năm:**
+- Sai: €22,000 + €13,000 = €35,000
+- Đúng: €25,000 + €10,000 = €35,000
+- → LỖI TỰ TRIỆT TIÊU! ✅
+
+Nhưng từng năm riêng lẻ vẫn SAI!
+
+---
+
+#### **Slide 35-36: Ảnh hưởng BCDKT & Gian lận**
+
+**Ảnh hưởng đến Balance Sheet:**
+
+Phương trình kế toán: **Tài sản = Nợ + Vốn CSH**
+
+- Tồn kho THỪA → Tài sản THỪA → Vốn CSH THỪA
+- Tồn kho THIẾU → Tài sản THIẾU → Vốn CSH THIẾU
+- Nợ phải trả: KHÔNG ẢNH HƯỞNG
+
+**Sau 2 năm:**
+Nếu không phát hiện và sửa, các chỉ số tài chính tự động đúng lại!
+
+---
+
+*(Kể case study gian lận tồn kho thực tế)*
+
+Các em thấy không, gian lận tồn kho thường xảy ra khi:
+- Suy thoái kinh tế
+- Áp lực đạt chỉ tiêu
+- Ban quản trị muốn tăng thưởng
+
+**Hình thức:**
+- Định giá cao hơn thực tế
+- Báo cáo hàng không tồn tại
+- Phân loại hàng lỗi thành hàng tốt
+
+**Mục đích:** Tăng tồn kho → Giảm giá vốn → Tăng LN giả
+
+**Kiểm soát nội bộ cần có:**
+- Kiểm tra định kỳ
+- Đối chiếu với nhà cung cấp
+- Kiểm toán độc lập
+
+---
+
+**⏰ NGHỈ GIẢI LAO 15 PHÚT**
+
+---
+
+### PHẦN 6: TRÌNH BÀY VÀ PHÂN TÍCH (50 phút)
+
+#### **Slide 38-40: LCNRV**
+
+Chào mừng các em quay lại!
+
+Bây giờ chúng ta học về **LCNRV** - Lower of Cost or Net Realizable Value
+
+**Tình huống:** 
+Công ty mua hàng với giá 100. Cuối năm, giá thị trường chỉ còn 80. Ghi sổ bao nhiêu?
+
+Đáp án: **80!**
+
+**Nguyên tắc Prudence (Thận trọng):**
+Khi có sự lựa chọn, chọn phương án ít có khả năng làm tăng tài sản và lợi nhuận nhất.
+
+*(Kể ví dụ Ford về Palladium)*
+
+Ford mua Palladium với giá cao, sau đó giá giảm mạnh. Thiệt hại 1 tỷ USD!
+
+Vậy nên ghi giá nào? Giá gốc hay giá thị trường?
+
+**Đáp án:** Giá THẤP HƠN!
+
+---
+
+**Định nghĩa NRV:**
+
+```
+NRV = Giá bán ước tính - Chi phí ước tính để hoàn thành và bán
+```
+
+**Quy tắc:**
+```
+Giá trị ghi sổ = MIN(Giá gốc, NRV)
+```
+
+*(Giải thích bảng phân loại)*
+
+Các em thấy không, tổng tồn kho giảm từ năm 2015 sang 2016. Điều này có thể cho thấy:
+- Doanh số bán tốt
+- HOẶC công ty đang cải thiện quản lý tồn kho
+- HOẶC dự báo thị trường suy giảm nên giảm sản xuất
+
+Nhà đầu tư và nhà phân tích sẽ xem xét kỹ những con số này để đánh giá tình hình công ty!
+
+---
+
 #### **Slide 41-43: Inventory Turnover & Days in Inventory**
 
 Bây giờ chúng ta học cách **phân tích** hàng tồn kho.
@@ -721,4 +1207,4 @@ A: Phụ thuộc vào loại hàng. Nếu dropshipping thì tương tự JIT. N�
 
 ---
 
-**CHÚC GIẢNG VIÊN GIẢNG DẠY THÀNH CÔNG! 
+**CHÚC GIẢNG VIÊN GIẢNG DẠY THÀNH CÔNG! 🎓**
