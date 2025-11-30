@@ -475,6 +475,155 @@
             font-size: 1.5em;
             color: #667eea;
         }
+        
+        .category-section {
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #92400e;
+            font-size: 1.1em;
+        }
+        
+        .category-tree {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .category-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f9fafb;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .category-item:hover {
+            background: #e5e7eb;
+        }
+        
+        .category-item.selected {
+            background: #dbeafe;
+            border: 2px solid #3b82f6;
+        }
+        
+        .category-item.parent {
+            font-weight: 600;
+            background: #e0e7ff;
+        }
+        
+        .category-item .category-name {
+            flex: 1;
+        }
+        
+        .category-item .category-path {
+            font-size: 0.85em;
+            color: #6b7280;
+            margin-left: 10px;
+        }
+        
+        .category-item .question-count {
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            margin-left: 10px;
+        }
+        
+        .subcategory {
+            margin-left: 30px;
+            position: relative;
+        }
+        
+        .subcategory::before {
+            content: '└─';
+            position: absolute;
+            left: -20px;
+            color: #9ca3af;
+        }
+        
+        .category-badge {
+            background: #fbbf24;
+            color: #78350f;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideDown 0.3s;
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .close-modal {
+            font-size: 2em;
+            color: #9ca3af;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #ef4444;
+        }
 
         @media (max-width: 1024px) {
             .main-content {
@@ -566,6 +715,22 @@
                 <div class="visual-editor">
                     <h2 class="panel-title">Create/Edit Question</h2>
                     
+                    <div class="category-section">
+                        <div class="category-header">
+                            📁 Question Category
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Select Category</label>
+                            <select id="categorySelect" class="form-select">
+                                <option value="$course$/Default">Default Category</option>
+                            </select>
+                            <button class="btn-small btn-add" style="margin-top: 10px;" onclick="openCategoryModal()">+ Manage Categories</button>
+                        </div>
+                        <div id="currentCategoryDisplay" style="margin-top: 10px; padding: 10px; background: white; border-radius: 6px; font-size: 0.9em; color: #6b7280;">
+                            Current: <strong>Default Category</strong>
+                        </div>
+                    </div>
+                    
                     <div class="form-group">
                         <label class="form-label">Question Type</label>
                         <select id="questionType" class="form-select" onchange="updateEditorFields()">
@@ -647,6 +812,44 @@
             </div>
         </div>
         
+        <!-- Category Management Modal -->
+        <div id="categoryModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span>📁 Category Management</span>
+                    <span class="close-modal" onclick="closeCategoryModal()">&times;</span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Category Name *</label>
+                    <input type="text" id="newCategoryName" class="form-input" placeholder="e.g., Chapter 1: Introduction">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Parent Category</label>
+                    <select id="parentCategorySelect" class="form-select">
+                        <option value="">None (Top Level)</option>
+                        <option value="$course$/Default">Default Category</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Category Info (Optional)</label>
+                    <textarea id="categoryInfo" class="form-input form-textarea" placeholder="Description or additional information about this category..."></textarea>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button class="btn-primary" onclick="saveCategory()">💾 Save Category</button>
+                    <button class="btn-secondary" onclick="closeCategoryModal()">Cancel</button>
+                </div>
+                
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #e5e7eb;">
+                    <h3 style="margin-bottom: 15px; color: #333;">Existing Categories</h3>
+                    <div id="categoryListInModal" class="category-tree"></div>
+                </div>
+            </div>
+        </div>
+        
         <div class="stats">
             <div class="stat-item">
                 <div class="stat-value" id="totalQuestions">0</div>
@@ -701,6 +904,10 @@
         let validationResults = [];
         let visualQuestions = [];
         let currentEditingIndex = -1;
+        let categories = [
+            { name: '$course$/Default', parent: '', info: 'Default category for course questions' }
+        ];
+        let currentCategory = '$course$/Default';
 
         // Tab switching
         function switchTab(tabName) {
@@ -837,6 +1044,7 @@
         function saveQuestion() {
             const type = document.getElementById('questionType').value;
             const text = document.getElementById('questionText').value.trim();
+            const category = document.getElementById('categorySelect').value;
             
             if (!text) {
                 alert('Please enter question text!');
@@ -847,6 +1055,7 @@
                 type: type,
                 name: text.substring(0, 50),
                 text: text,
+                category: category,
                 answers: [],
                 matches: [],
                 ordering: [],
@@ -923,6 +1132,195 @@
             clearEditor();
             alert('Question saved successfully!');
         }
+        
+        // Category Management Functions
+        function openCategoryModal() {
+            document.getElementById('categoryModal').style.display = 'block';
+            updateCategoryList();
+            updateParentCategorySelect();
+        }
+        
+        function closeCategoryModal() {
+            document.getElementById('categoryModal').style.display = 'none';
+            document.getElementById('newCategoryName').value = '';
+            document.getElementById('categoryInfo').value = '';
+        }
+        
+        function saveCategory() {
+            const name = document.getElementById('newCategoryName').value.trim();
+            const parent = document.getElementById('parentCategorySelect').value;
+            const info = document.getElementById('categoryInfo').value.trim();
+            
+            if (!name) {
+                alert('Please enter category name!');
+                return;
+            }
+            
+            // Create full category path
+            let fullPath = name;
+            if (parent) {
+                fullPath = parent + '/' + name;
+            } else {
+                fullPath = '$course$/' + name;
+            }
+            
+            // Check if category already exists
+            if (categories.some(c => c.name === fullPath)) {
+                alert('Category already exists!');
+                return;
+            }
+            
+            categories.push({
+                name: fullPath,
+                parent: parent,
+                info: info
+            });
+            
+            updateCategorySelects();
+            updateCategoryList();
+            updateParentCategorySelect();
+            
+            document.getElementById('newCategoryName').value = '';
+            document.getElementById('categoryInfo').value = '';
+            
+            alert('Category created successfully!');
+        }
+        
+        function updateCategorySelects() {
+            const categorySelect = document.getElementById('categorySelect');
+            const currentValue = categorySelect.value;
+            
+            categorySelect.innerHTML = '';
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat.name;
+                option.textContent = cat.name.replace('$course$/', '');
+                categorySelect.appendChild(option);
+            });
+            
+            // Restore selection if it still exists
+            if (categories.some(c => c.name === currentValue)) {
+                categorySelect.value = currentValue;
+            }
+            
+            updateCurrentCategoryDisplay();
+        }
+        
+        function updateParentCategorySelect() {
+            const parentSelect = document.getElementById('parentCategorySelect');
+            parentSelect.innerHTML = '<option value="">None (Top Level)</option>';
+            
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat.name;
+                option.textContent = cat.name.replace('$course$/', '');
+                parentSelect.appendChild(option);
+            });
+        }
+        
+        function updateCurrentCategoryDisplay() {
+            const select = document.getElementById('categorySelect');
+            const display = document.getElementById('currentCategoryDisplay');
+            const selectedCategory = select.value.replace('$course$/', '');
+            display.innerHTML = `Current: <strong>${selectedCategory}</strong>`;
+        }
+        
+        function updateCategoryList() {
+            const container = document.getElementById('categoryListInModal');
+            
+            // Build category tree
+            const tree = buildCategoryTree();
+            let html = '';
+            
+            tree.forEach(cat => {
+                html += renderCategoryItem(cat);
+            });
+            
+            container.innerHTML = html || '<p style="color: #9ca3af; text-align: center; padding: 20px;">No categories yet.</p>';
+        }
+        
+        function buildCategoryTree() {
+            const tree = [];
+            const categoryMap = {};
+            
+            // Create map of categories
+            categories.forEach(cat => {
+                categoryMap[cat.name] = { ...cat, children: [] };
+            });
+            
+            // Build tree structure
+            categories.forEach(cat => {
+                if (cat.parent) {
+                    if (categoryMap[cat.parent]) {
+                        categoryMap[cat.parent].children.push(categoryMap[cat.name]);
+                    }
+                } else {
+                    tree.push(categoryMap[cat.name]);
+                }
+            });
+            
+            return tree;
+        }
+        
+        function renderCategoryItem(cat, level = 0) {
+            const questionCount = visualQuestions.filter(q => q.category === cat.name).length;
+            const indent = level > 0 ? `style="margin-left: ${level * 30}px;"` : '';
+            const prefix = level > 0 ? '└─ ' : '';
+            
+            let html = `<div class="category-item ${level === 0 ? 'parent' : ''}" ${indent}>
+                <div class="category-name">${prefix}${cat.name.replace('$course$/', '').split('/').pop()}</div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    ${questionCount > 0 ? `<span class="question-count">${questionCount} Q</span>` : ''}
+                    <button class="btn-small btn-danger" onclick="deleteCategory('${cat.name}', event)">Delete</button>
+                </div>
+            </div>`;
+            
+            if (cat.children && cat.children.length > 0) {
+                cat.children.forEach(child => {
+                    html += renderCategoryItem(child, level + 1);
+                });
+            }
+            
+            return html;
+        }
+        
+        function deleteCategory(categoryName, event) {
+            event.stopPropagation();
+            
+            // Check if category has questions
+            const hasQuestions = visualQuestions.some(q => q.category === categoryName);
+            if (hasQuestions) {
+                if (!confirm('This category contains questions. They will be moved to Default category. Continue?')) {
+                    return;
+                }
+                // Move questions to default category
+                visualQuestions.forEach(q => {
+                    if (q.category === categoryName) {
+                        q.category = '$course$/Default';
+                    }
+                });
+            }
+            
+            // Check if category has subcategories
+            const hasSubcategories = categories.some(c => c.parent === categoryName);
+            if (hasSubcategories) {
+                alert('Cannot delete category with subcategories. Delete subcategories first.');
+                return;
+            }
+            
+            // Prevent deleting default category
+            if (categoryName === '$course$/Default') {
+                alert('Cannot delete the default category!');
+                return;
+            }
+            
+            categories = categories.filter(c => c.name !== categoryName);
+            updateCategorySelects();
+            updateCategoryList();
+            updateQuestionList();
+        }
+        
+        document.getElementById('categorySelect').addEventListener('change', updateCurrentCategoryDisplay);
 
         function updateQuestionList() {
             const container = document.getElementById('questionListContainer');
@@ -932,18 +1330,40 @@
                 return;
             }
             
-            let html = '';
+            // Group questions by category
+            const groupedQuestions = {};
             visualQuestions.forEach((q, index) => {
-                html += `<div class="question-list-item" onclick="editQuestion(${index})">
-                    <strong>${index + 1}. ${q.type.toUpperCase()}</strong>
-                    <div style="color: #6b7280; margin-top: 5px;">${q.text.substring(0, 100)}${q.text.length > 100 ? '...' : ''}</div>
-                    <div style="margin-top: 8px; font-size: 0.9em; color: #9ca3af;">
-                        ${q.answers.length > 0 ? `${q.answers.length} answers` : ''}
-                        ${q.matches.length > 0 ? `${q.matches.length} pairs` : ''}
-                        ${q.ordering.length > 0 ? `${q.ordering.length} items` : ''}
-                    </div>
-                    <button class="btn-small btn-danger" style="margin-top: 10px;" onclick="deleteQuestion(${index}, event)">Delete</button>
-                </div>`;
+                const category = q.category || '$course$/Default';
+                if (!groupedQuestions[category]) {
+                    groupedQuestions[category] = [];
+                }
+                groupedQuestions[category].push({ question: q, index: index });
+            });
+            
+            let html = '';
+            Object.keys(groupedQuestions).sort().forEach(categoryName => {
+                const displayName = categoryName.replace('$course$/', '');
+                const questions = groupedQuestions[categoryName];
+                
+                html += `<div style="margin-bottom: 20px;">
+                    <div style="font-weight: bold; color: #667eea; margin-bottom: 10px; padding: 10px; background: #f0f9ff; border-radius: 6px;">
+                        📁 ${displayName} (${questions.length})
+                    </div>`;
+                
+                questions.forEach(({ question: q, index }) => {
+                    html += `<div class="question-list-item" onclick="editQuestion(${index})">
+                        <strong>${index + 1}. ${q.type.toUpperCase()}</strong>
+                        <div style="color: #6b7280; margin-top: 5px;">${q.text.substring(0, 100)}${q.text.length > 100 ? '...' : ''}</div>
+                        <div style="margin-top: 8px; font-size: 0.9em; color: #9ca3af;">
+                            ${q.answers.length > 0 ? `${q.answers.length} answers` : ''}
+                            ${q.matches.length > 0 ? `${q.matches.length} pairs` : ''}
+                            ${q.ordering.length > 0 ? `${q.ordering.length} items` : ''}
+                        </div>
+                        <button class="btn-small btn-danger" style="margin-top: 10px;" onclick="deleteQuestion(${index}, event)">Delete</button>
+                    </div>`;
+                });
+                
+                html += '</div>';
             });
             
             container.innerHTML = html;
