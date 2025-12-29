@@ -2,47 +2,60 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Biểu đồ nến Stock - GitHub Pages</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biểu đồ nến & Volume</title>
     <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
     <style>
-        body { margin: 0; padding: 20px; font-family: sans-serif; background-color: #131722; color: white; }
-        #chart-container { width: 100%; height: 500px; }
-        h2 { text-align: center; }
+        body { margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #131722; color: white; }
+        #chart-container { width: 100%; height: 600px; border-radius: 4px; overflow: hidden; }
+        .header { text-align: center; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
-    <h2>Biểu đồ mã cổ phiếu (Dữ liệu từ JSON)</h2>
+    <div class="header">
+        <h2>Biểu đồ Kỹ thuật Real-time</h2>
+        <p>Dữ liệu đọc từ: <code>data.json</code></p>
+    </div>
+    
     <div id="chart-container"></div>
 
     <script>
-        const chartOptions = { 
-            layout: { backgroundColor: '#131722', textColor: '#d1d4dc' },
-            grid: { vertLines: { color: '#334155' }, horzLines: { color: '#334155' } },
-            crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
-            timeScale: { borderColor: '#485c7b' }
-        };
-
         const container = document.getElementById('chart-container');
+
         // 1. Khởi tạo Chart
-        const chart = LightweightCharts.createChart(container, chartOptions);
-        
-        // 2. Thêm Candlestick Series (Cú pháp mới)
-        const candlestickSeries = chart.addSeries(LightweightCharts.CandlestickSeries, {
+        const chart = LightweightCharts.createChart(container, {
+            layout: {
+                background: { color: '#131722' },
+                textColor: '#d1d4dc',
+            },
+            grid: {
+                vertLines: { color: '#334155' },
+                horzLines: { color: '#334155' },
+            },
+            timeScale: {
+                borderColor: '#485c7b',
+                timeVisible: true,
+            },
+        });
+
+        // 2. Thêm Candlestick Series (Dùng đúng tên hàm cho bản 4.1.1)
+        const candlestickSeries = chart.addCandlestickSeries({
             upColor: '#26a69a', 
             downColor: '#ef5350', 
             borderVisible: false, 
             wickUpColor: '#26a69a', 
             wickDownColor: '#ef5350'
         });
-        
-        // 3. Thêm Volume Series (Cú pháp mới)
-        const volumeSeries = chart.addSeries(LightweightCharts.HistogramSeries, {
+
+        // 3. Thêm Volume Series
+        const volumeSeries = chart.addHistogramSeries({
+            color: '#26a69a',
             priceFormat: { type: 'volume' },
-            priceScaleId: '', 
+            priceScaleId: '', // Thang đo riêng
         });
-        
-        // Cấu hình vị trí Volume
+
+        // Đẩy Volume xuống đáy (chiếm 20% chiều cao)
         volumeSeries.priceScale().applyOptions({
             scaleMargins: {
                 top: 0.8,
@@ -50,16 +63,42 @@
             },
         });
 
-        // Hàm đọc dữ liệu từ tệp JSON
-        fetch('data.json')
-            .then(response => response.json())
-            .then(data => {
-                candlestickSeries.setData(data);
-                chart.timeScale().fitContent(); // Tự động căn chỉnh biểu đồ
+        // 4. Gọi dữ liệu từ file JSON
+        fetch('./data.json')
+            .then(res => {
+                if (!res.ok) throw new Error("Không thể tải file data.json");
+                return res.json();
             })
-            .catch(error => console.error('Lỗi khi tải dữ liệu:', error));
-            
-        // Tự động thay đổi kích thước theo trình duyệt
+            .then(data => {
+                // Sắp xếp dữ liệu theo thời gian tăng dần
+                data.sort((a, b) => new Date(a.time) - new Date(b.time));
+
+                // Chuẩn bị dữ liệu nến
+                const candleData = data.map(d => ({
+                    time: d.time,
+                    open: parseFloat(d.open),
+                    high: parseFloat(d.high),
+                    low: parseFloat(d.low),
+                    close: parseFloat(d.close)
+                }));
+                candlestickSeries.setData(candleData);
+
+                // Chuẩn bị dữ liệu volume kèm màu sắc dựa trên nến
+                const volumeData = data.map(d => ({
+                    time: d.time,
+                    value: parseFloat(d.value),
+                    color: d.close >= d.open ? 'rgba(38, 166, 154, 0.5)' : 'rgba(239, 83, 80, 0.5)'
+                }));
+                volumeSeries.setData(volumeData);
+
+                chart.timeScale().fitContent();
+            })
+            .catch(err => {
+                console.error("Lỗi:", err);
+                alert("Lỗi tải dữ liệu. Hãy kiểm tra console (F12)");
+            });
+
+        // Tự động resize
         window.addEventListener('resize', () => {
             chart.applyOptions({ width: container.clientWidth });
         });
