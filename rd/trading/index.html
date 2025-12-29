@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Biểu đồ nến Stock - GitHub Pages</title>
-    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
     <style>
         body { margin: 0; padding: 20px; font-family: sans-serif; background-color: #131722; color: white; }
         #chart-container { width: 100%; height: 500px; }
@@ -24,10 +24,30 @@
         };
 
         const container = document.getElementById('chart-container');
+        // 1. Khởi tạo Chart
         const chart = LightweightCharts.createChart(container, chartOptions);
-        const candlestickSeries = chart.addCandlestickSeries({
-            upColor: '#26a69a', downColor: '#ef5350', 
-            borderVisible: false, wickUpColor: '#26a69a', wickDownColor: '#ef5350'
+        
+        // 2. Thêm Candlestick Series (Cú pháp mới)
+        const candlestickSeries = chart.addSeries(LightweightCharts.CandlestickSeries, {
+            upColor: '#26a69a', 
+            downColor: '#ef5350', 
+            borderVisible: false, 
+            wickUpColor: '#26a69a', 
+            wickDownColor: '#ef5350'
+        });
+        
+        // 3. Thêm Volume Series (Cú pháp mới)
+        const volumeSeries = chart.addSeries(LightweightCharts.HistogramSeries, {
+            priceFormat: { type: 'volume' },
+            priceScaleId: '', 
+        });
+        
+        // Cấu hình vị trí Volume
+        volumeSeries.priceScale().applyOptions({
+            scaleMargins: {
+                top: 0.8,
+                bottom: 0,
+            },
         });
 
         // Hàm đọc dữ liệu từ tệp JSON
