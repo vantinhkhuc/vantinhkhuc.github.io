@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Biểu đồ nến Stock - GitHub Pages</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+        body { margin: 0; padding: 20px; font-family: sans-serif; background-color: #131722; color: white; }
+        #chart-container { width: 100%; height: 500px; }
+        h2 { text-align: center; }
+    </style>
+</head>
+<body>
 
+    <h2>Biểu đồ mã cổ phiếu (Dữ liệu từ JSON)</h2>
+    <div id="chart-container"></div>
+
+    <script>
+        const chartOptions = { 
+            layout: { backgroundColor: '#131722', textColor: '#d1d4dc' },
+            grid: { vertLines: { color: '#334155' }, horzLines: { color: '#334155' } },
+            crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+            timeScale: { borderColor: '#485c7b' }
+        };
+
+        const container = document.getElementById('chart-container');
+        const chart = LightweightCharts.createChart(container, chartOptions);
+        const candlestickSeries = chart.addCandlestickSeries({
+            upColor: '#26a69a', downColor: '#ef5350', 
+            borderVisible: false, wickUpColor: '#26a69a', wickDownColor: '#ef5350'
+        });
+
+        // Hàm đọc dữ liệu từ tệp JSON
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                candlestickSeries.setData(data);
+                chart.timeScale().fitContent(); // Tự động căn chỉnh biểu đồ
+            })
+            .catch(error => console.error('Lỗi khi tải dữ liệu:', error));
+            
+        // Tự động thay đổi kích thước theo trình duyệt
+        window.addEventListener('resize', () => {
+            chart.applyOptions({ width: container.clientWidth });
+        });
+    </script>
+</body>
+</html>
