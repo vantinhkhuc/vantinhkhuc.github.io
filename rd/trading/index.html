@@ -31,17 +31,23 @@
 <body>
 
     <div class="header">
-        <h2>Biểu đồ Kỹ thuật Real-time</h2>
-        <p>Dữ liệu đọc từ: <code>data.json</code></p>
+        <h2>Phân tích Kỹ thuật</h2>
+        <div style="margin-bottom: 15px;">
+            <label for="stock-select" style="margin-right: 10px;">Chọn mã cổ phiếu:</label>
+            <select id="stock-select" style="padding: 5px 15px; border-radius: 4px; background: #2a2e39; color: white; border: 1px solid #485c7b;">
+                <option value="VIC">Vingroup (VIC)</option>
+                <option value="VNM">Vinamilk (VNM)</option>
+                <option value="FPT">FPT Group (FPT)</option>
+            </select>
+        </div>
     </div>
     
     <div id="chart-container">
         <div id="legend" class="ohlc-legend"></div>
     </div>
-
+      
     <script>
-
-              
+            
         const container = document.getElementById('chart-container');
 
         // 1. Khởi tạo Chart
@@ -153,6 +159,56 @@
                 `;
             }
         });
+
+        const stockSelect = document.getElementById('stock-select');
+
+        // Hàm tải và cập nhật dữ liệu
+        function loadData(ticker) {
+            const fileName = `./${ticker}.json`;
+            
+            fetch(fileName)
+                .then(res => {
+                    if (!res.ok) throw new Error(`Không tìm thấy dữ liệu cho mã ${ticker}`);
+                    return res.json();
+                })
+                .then(data => {
+                    // 1. Sắp xếp dữ liệu
+                    data.sort((a, b) => new Date(a.time) - new Date(b.time));
+        
+                    // 2. Cập nhật Nến
+                    const candleData = data.map(d => ({
+                        time: d.time,
+                        open: parseFloat(d.open),
+                        high: parseFloat(d.high),
+                        low: parseFloat(d.low),
+                        close: parseFloat(d.close)
+                    }));
+                    candlestickSeries.setData(candleData);
+        
+                    // 3. Cập nhật Volume
+                    const volumeData = data.map(d => ({
+                        time: d.time,
+                        value: parseFloat(d.value || d.volume || 0),
+                        color: d.close >= d.open ? 'rgba(38, 166, 154, 0.5)' : 'rgba(239, 83, 80, 0.5)'
+                    }));
+                    volumeSeries.setData(volumeData);
+        
+                    // 4. Tự động căn chỉnh lại biểu đồ
+                    chart.timeScale().fitContent();
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert(`Lỗi: ${err.message}`);
+                });
+        }
+        
+        // Lắng nghe sự kiện thay đổi mã
+        stockSelect.addEventListener('change', (e) => {
+            loadData(e.target.value);
+        });
+
+// Chạy lần đầu tiên khi trang web tải xong
+loadData(stockSelect.value);
 
         // Tự động resize
         window.addEventListener('resize', () => {
