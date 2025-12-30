@@ -9,23 +9,23 @@
         body { margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #131722; color: white; }
         #chart-container { position: relative; width: 100%; height: 600px; }
     
-    .ohlc-legend {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        z-index: 10;
-        font-family: 'Courier New', Courier, monospace;
-        font-size: 14px;
-        background: rgba(19, 23, 34, 0.7);
-        padding: 5px 10px;
-        border-radius: 4px;
-        pointer-events: none; /* Không cản trở chuột tương tác với biểu đồ */
-        display: none; /* Ẩn khi không có dữ liệu */
-    }
-    .ohlc-item { margin-right: 15px; }
-    .up { color: #26a69a; }
-    .down { color: #ef5350; }
-    .header { text-align: center; margin-bottom: 20px; }
+        .ohlc-legend {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            background: rgba(19, 23, 34, 0.7);
+            padding: 5px 10px;
+            border-radius: 4px;
+            pointer-events: none; /* Không cản trở chuột tương tác với biểu đồ */
+            display: none; /* Ẩn khi không có dữ liệu */
+        }
+        .ohlc-item { margin-right: 15px; }
+        .up { color: #26a69a; }
+        .down { color: #ef5350; }
+        .header { text-align: center; margin-bottom: 20px; }
     </style>
 </head>
 <body>
@@ -41,41 +41,7 @@
 
     <script>
 
-        const legend = document.getElementById('legend');
-
-        // Hàm xử lý khi di chuyển chuột trên biểu đồ
-        chart.subscribeCrosshairMove(param => {
-            // Nếu chuột nằm ngoài biểu đồ hoặc không có dữ liệu tại điểm đó
-            if (!param.time || param.point.x < 0 || param.point.y < 0) {
-                legend.style.display = 'none';
-                return;
-            }
-        
-            // Lấy dữ liệu nến tại thời điểm di chuyển chuột
-            const candleData = param.seriesData.get(candlestickSeries);
-            const volData = param.seriesData.get(volumeSeries);
-        
-            if (candleData) {
-                legend.style.display = 'block';
-                const { open, high, low, close } = candleData;
-                const colorClass = close >= open ? 'up' : 'down';
-                
-                // Tính toán % thay đổi
-                const change = (close - open).toFixed(2);
-                const percent = ((change / open) * 100).toFixed(2);
-        
-                legend.innerHTML = `
-                    <span class="ohlc-item">O: <span class="${colorClass}">${open.toFixed(2)}</span></span>
-                    <span class="ohlc-item">H: <span class="${colorClass}">${high.toFixed(2)}</span></span>
-                    <span class="ohlc-item">L: <span class="${colorClass}">${low.toFixed(2)}</span></span>
-                    <span class="ohlc-item">C: <span class="${colorClass}">${close.toFixed(2)}</span></span>
-                    <span class="ohlc-item">Vol: <span class="${colorClass}">${volData ? volData.value.toLocaleString() : '0'}</span></span>
-                    <br>
-                    <span class="ohlc-item">Change: <span class="${colorClass}">${change} (${percent}%)</span></span>
-                `;
-            }
-        });
-        
+              
         const container = document.getElementById('chart-container');
 
         // 1. Khởi tạo Chart
