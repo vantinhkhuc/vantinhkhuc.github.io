@@ -3,104 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biểu đồ nến & Volume</title>
-    <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+    <title>Biểu đồ Kỹ thuật Chứng khoán</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <style>
-        body { margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #131722; color: white; }
-        #chart-container { position: relative; width: 100%; height: 600px; }
-    
-        .ohlc-legend {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 10;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            background: rgba(19, 23, 34, 0.7);
-            padding: 5px 10px;
-            border-radius: 4px;
-            pointer-events: none; /* Không cản trở chuột tương tác với biểu đồ */
-            display: none; /* Ẩn khi không có dữ liệu */
+        body { margin: 0; padding: 0; background-color: #131722; color: #d1d4dc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        
+        /* Giao diện Header */
+        .header-container { padding: 15px; background: #1c202e; border-bottom: 1px solid #2a2e39; }
+        .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 15px; margin-bottom: 10px; }
+        
+        #stock-input {
+            padding: 8px 12px; border-radius: 4px; background: #2a2e39; color: white;
+            border: 1px solid #485c7b; text-transform: uppercase; outline: none; width: 120px;
         }
-        .ohlc-item { margin-right: 15px; }
+        #search-btn {
+            padding: 8px 20px; border-radius: 4px; background: #2962ff; color: white;
+            border: none; cursor: pointer; font-weight: bold;
+        }
+        #search-btn:hover { background: #1e4bd8; }
+
+        /* Nút Zoom */
+        .range-container { display: flex; gap: 5px; }
+        .range-btn {
+            background: #2a2e39; color: #d1d4dc; border: 1px solid #485c7b;
+            padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;
+        }
+        .range-btn:hover { background: #363a45; }
+        .range-btn.active { background: #2962ff; color: white; border-color: #2962ff; }
+
+        /* Biểu đồ và Legend */
+        #chart-wrapper { position: relative; width: 100%; height: calc(100vh - 120px); }
+        #legend {
+            position: absolute; top: 10px; left: 10px; z-index: 10;
+            background: rgba(19, 23, 34, 0.8); padding: 8px; border-radius: 4px;
+            font-size: 13px; line-height: 1.6; pointer-events: none; display: none;
+        }
         .up { color: #26a69a; }
         .down { color: #ef5350; }
-        .header { text-align: center; margin-bottom: 20px; }
+        #loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; }
     </style>
 </head>
 <body>
 
-    <div class="header" style="padding: 10px; display: flex; align-items: center; gap: 10px; background: #1c202e;">
-        <span style="font-weight: bold;">Mã CP:</span>
-        <input type="text" id="stock-input" placeholder="Nhập mã (VD: VIC, FPT...)" 
-               style="padding: 8px 12px; border-radius: 4px; background: #2a2e39; color: white; border: 1px solid #485c7b; text-transform: uppercase; outline: none; width: 150px;">
+<div class="header-container">
+    <div class="controls">
+        <input type="text" id="stock-input" placeholder="Mã CP...">
+        <button id="search-btn">XEM BIỂU ĐỒ</button>
         
-        <button id="search-btn" style="padding: 8px 20px; border-radius: 4px; background: #2962ff; color: white; border: none; cursor: pointer; font-weight: bold; transition: 0.2s;">
-            Xem biểu đồ
-        </button>
-        
-        <div id="loading-text" style="display: none; color: #d1d4dc; font-size: 14px;">Đang tải...</div>
+        <div class="range-container">
+            <button class="range-btn" onclick="applyRange(90)">3T</button>
+            <button class="range-btn" onclick="applyRange(180)">6T</button>
+            <button class="range-btn" onclick="applyRange(365)">1N</button>
+            <button class="range-btn" onclick="applyRange(1825)">5N</button>
+            <button class="range-btn" onclick="applyFullRange()">FULL</button>
+        </div>
     </div>
-    
-    <div id="chart-container">
-        <div id="legend" class="ohlc-legend"></div>
-    </div>
-      
-    <script>
-            
-        const container = document.getElementById('chart-container');
+</div>
 
-        // 1. Khởi tạo Chart
-        const chart = LightweightCharts.createChart(container, {
-            layout: {
-                background: { color: '#131722' },
-                textColor: '#d1d4dc',
-            },
-            grid: {
-                vertLines: { color: '#334155' },
-                horzLines: { color: '#334155' },
-            },
-            timeScale: {
-                borderColor: '#485c7b',
-                timeVisible: true,
-            },
-        });
+<div id="chart-wrapper">
+    <div id="legend"></div>
+    <div id="loading">Đang tải dữ liệu...</div>
+    <div id="chart-container" style="width: 100%; height: 100%;"></div>
+</div>
 
-        // 2. Thêm Candlestick Series (Dùng đúng tên hàm cho bản 4.1.1)
-        const candlestickSeries = chart.addCandlestickSeries({
-            upColor: '#26a69a', 
-            downColor: '#ef5350', 
-            borderVisible: false, 
-            wickUpColor: '#26a69a', 
-            wickDownColor: '#ef5350'
-        });
+<script>
+    const container = document.getElementById('chart-container');
+    const legend = document.getElementById('legend');
+    const stockInput = document.getElementById('stock-input');
+    const loading = document.getElementById('loading');
 
-        // 3. Thêm Volume Series
-        const volumeSeries = chart.addHistogramSeries({
-            color: '#26a69a',
-            priceFormat: { type: 'volume' },
-            priceScaleId: '', // Thang đo riêng
-        });
+    // 1. Khởi tạo Chart
+    const chart = LightweightCharts.createChart(container, {
+        layout: { background: { color: '#131722' }, textColor: '#d1d4dc' },
+        grid: { vertLines: { color: '#2a2e39' }, horzLines: { color: '#2a2e39' } },
+        crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+        timeScale: { borderColor: '#485c7b', timeVisible: true }
+    });
 
-        // Đẩy Volume xuống đáy (chiếm 20% chiều cao)
-        volumeSeries.priceScale().applyOptions({
-            scaleMargins: {
-                top: 0.8,
-                bottom: 0,
-            },
-        });
+    // 2. Thêm Series Nến
+    const candlestickSeries = chart.addCandlestickSeries({
+        upColor: '#26a69a', downColor: '#ef5350', borderVisible: false,
+        wickUpColor: '#26a69a', wickDownColor: '#ef5350'
+    });
 
-        // 4. Gọi dữ liệu từ file JSON
-        fetch('./data.json')
+    // 3. Thêm Series Volume (Scale riêng)
+    const volumeSeries = chart.addHistogramSeries({
+        priceFormat: { type: 'volume' },
+        priceScaleId: 'volume',
+    });
+
+    chart.priceScale('volume').applyOptions({
+        scaleMargins: { top: 0.8, bottom: 0 },
+        visible: false
+    });
+
+    // 4. Hàm tải dữ liệu
+    function loadData(ticker) {
+        loading.style.display = 'block';
+        const fileName = `./${ticker.toUpperCase()}.json`;
+
+        fetch(fileName)
             .then(res => {
-                if (!res.ok) throw new Error("Không thể tải file data.json");
+                if (!res.ok) throw new Error("Không có dữ liệu cho mã này");
                 return res.json();
             })
             .then(data => {
-                // Sắp xếp dữ liệu theo thời gian tăng dần
+                // Sắp xếp dữ liệu tăng dần theo thời gian
                 data.sort((a, b) => new Date(a.time) - new Date(b.time));
 
-                // Chuẩn bị dữ liệu nến
                 const candleData = data.map(d => ({
                     time: d.time,
                     open: parseFloat(d.open),
@@ -110,133 +120,83 @@
                 }));
                 candlestickSeries.setData(candleData);
 
-                // Chuẩn bị dữ liệu volume kèm màu sắc dựa trên nến
                 const volumeData = data.map(d => ({
                     time: d.time,
-                    value: parseFloat(d.value),
+                    value: parseFloat(d.value || d.volume),
                     color: d.close >= d.open ? 'rgba(38, 166, 154, 0.5)' : 'rgba(239, 83, 80, 0.5)'
                 }));
                 volumeSeries.setData(volumeData);
 
+                // Lưu lại mã vừa xem
+                localStorage.setItem('lastTicker', ticker);
+                
                 chart.timeScale().fitContent();
+                loading.style.display = 'none';
             })
             .catch(err => {
-                console.error("Lỗi:", err);
-                alert("Lỗi tải dữ liệu. Hãy kiểm tra console (F12)");
+                alert(err.message);
+                loading.style.display = 'none';
             });
+    }
 
-        const legend = document.getElementById('legend');
-
-        // Hàm xử lý khi di chuyển chuột trên biểu đồ
-        chart.subscribeCrosshairMove(param => {
-            // Nếu chuột nằm ngoài biểu đồ hoặc không có dữ liệu tại điểm đó
-            if (!param.time || param.point.x < 0 || param.point.y < 0) {
-                legend.style.display = 'none';
-                return;
-            }
-        
-            // Lấy dữ liệu nến tại thời điểm di chuyển chuột
-            const candleData = param.seriesData.get(candlestickSeries);
-            const volData = param.seriesData.get(volumeSeries);
-        
-            if (candleData) {
-                legend.style.display = 'block';
-                const { open, high, low, close } = candleData;
-                const colorClass = close >= open ? 'up' : 'down';
-                
-                // Tính toán % thay đổi
-                const change = (close - open).toFixed(2);
-                const percent = ((change / open) * 100).toFixed(2);
-        
-                legend.innerHTML = `
-                    <span class="ohlc-item">O: <span class="${colorClass}">${open.toFixed(2)}</span></span>
-                    <span class="ohlc-item">H: <span class="${colorClass}">${high.toFixed(2)}</span></span>
-                    <span class="ohlc-item">L: <span class="${colorClass}">${low.toFixed(2)}</span></span>
-                    <span class="ohlc-item">C: <span class="${colorClass}">${close.toFixed(2)}</span></span>
-                    <span class="ohlc-item">Vol: <span class="${colorClass}">${volData ? volData.value.toLocaleString() : '0'}</span></span>
-                    <br>
-                    <span class="ohlc-item">Change: <span class="${colorClass}">${change} (${percent}%)</span></span>
-                `;
-            }
-        });
-
-        const stockInput = document.getElementById('stock-input');
-        const searchBtn = document.getElementById('search-btn');
-        const loadingText = document.getElementById('loading-text');
-        
-        // 1. Hàm xử lý chính khi người dùng muốn đổi mã
-        function performSearch() {
-            const symbol = stockInput.value.trim().toUpperCase();
-            
-            if (symbol === "") {
-                alert("Vui lòng nhập mã cổ phiếu!");
-                return;
-            }
-        
-            // Hiển thị trạng thái đang tải
-            loadingText.style.display = "block";
-            
-            // Gọi hàm loadData đã viết ở các bước trước
-            loadData(symbol);
+    // 5. Xử lý Legend khi di chuyển chuột
+    chart.subscribeCrosshairMove(param => {
+        if (!param.time || param.point.x < 0 || param.point.y < 0) {
+            legend.style.display = 'none';
+            return;
         }
-        
-        // 2. Lắng nghe sự kiện nhấn Enter
-        stockInput.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter') {
-                performSearch();
-                stockInput.blur(); // Ẩn bàn phím trên điện thoại sau khi Enter
-            }
-        });
-        
-        // 3. Lắng nghe sự kiện click nút
-        searchBtn.addEventListener('click', performSearch);
-        
-        // 4. Cải tiến hàm loadData để xử lý lỗi tốt hơn
-        function loadData(ticker) {
-            // Xóa dữ liệu cũ để tránh nhầm lẫn
-            candlestickSeries.setData([]);
-            volumeSeries.setData([]);
-        
-            fetch(`./${ticker}.json`)
-                .then(res => {
-                    if (!res.ok) throw new Error("Mã không tồn tại hoặc chưa có dữ liệu JSON!");
-                    return res.json();
-                })
-                .then(data => {
-                    loadingText.style.display = "none";
-                    
-                    // Đổ dữ liệu vào biểu đồ (giữ nguyên logic map dữ liệu cũ)
-                    const candleData = data.map(d => ({
-                        time: d.time,
-                        open: parseFloat(d.open),
-                        high: parseFloat(d.high),
-                        low: parseFloat(d.low),
-                        close: parseFloat(d.close)
-                    }));
-                    candlestickSeries.setData(candleData);
-        
-                    const volumeData = data.map(d => ({
-                        time: d.time,
-                        value: parseFloat(d.value),
-                        color: d.close >= d.open ? 'rgba(38, 166, 154, 0.5)' : 'rgba(239, 83, 80, 0.5)'
-                    }));
-                    volumeSeries.setData(volumeData);
-        
-                    chart.timeScale().fitContent();
-                })
-                .catch(err => {
-                    loadingText.style.display = "none";
-                    alert(err.message);
-                });
+
+        const candle = param.seriesData.get(candlestickSeries);
+        const vol = param.seriesData.get(volumeSeries);
+
+        if (candle) {
+            legend.style.display = 'block';
+            const colorClass = candle.close >= candle.open ? 'up' : 'down';
+            legend.innerHTML = `
+                <div style="font-weight:bold; color: #2962ff">${stockInput.value.toUpperCase()}</div>
+                O: <span class="${colorClass}">${candle.open}</span> 
+                H: <span class="${colorClass}">${candle.high}</span><br>
+                L: <span class="${colorClass}">${candle.low}</span> 
+                C: <span class="${colorClass}">${candle.close}</span><br>
+                V: <span class="${colorClass}">${vol ? (vol.value/1000000).toFixed(2) : 0}M</span>
+            `;
         }
-        
-        // Chạy lần đầu tiên khi trang web tải xong
-        loadData(stockSelect.value);
-        
-        // Tự động resize
-        window.addEventListener('resize', () => {
-            chart.applyOptions({ width: container.clientWidth });
-        });
-    </script>
+    });
+
+    // 6. Xử lý Zoom
+    window.applyRange = (days) => {
+        const data = candlestickSeries.data();
+        if (data.length === 0) return;
+        const to = data[data.length - 1].time;
+        const toDate = new Date(to);
+        const fromDate = new Date(toDate);
+        fromDate.setDate(fromDate.getDate() - days);
+        const from = fromDate.toISOString().split('T')[0];
+        chart.timeScale().setVisibleRange({ from, to });
+    };
+
+    window.applyFullRange = () => chart.timeScale().fitContent();
+
+    // 7. Sự kiện tìm kiếm
+    const search = () => {
+        const ticker = stockInput.value.trim();
+        if (ticker) loadData(ticker);
+    };
+
+    document.getElementById('search-btn').onclick = search;
+    stockInput.onkeypress = (e) => { if (e.key === 'Enter') search(); };
+
+    // 8. Tự động tải mã cũ khi khởi động
+    window.onload = () => {
+        const lastTicker = localStorage.getItem('lastTicker') || 'VIC';
+        stockInput.value = lastTicker;
+        loadData(lastTicker);
+    };
+
+    // Tự động thay đổi kích thước biểu đồ
+    window.onresize = () => {
+        chart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+    };
+</script>
 </body>
 </html>
