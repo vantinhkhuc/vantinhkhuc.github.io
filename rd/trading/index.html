@@ -30,16 +30,16 @@
 </head>
 <body>
 
-    <div class="header">
-        <h2>Phân tích Kỹ thuật</h2>
-        <div style="margin-bottom: 15px;">
-            <label for="stock-select" style="margin-right: 10px;">Chọn mã cổ phiếu:</label>
-            <select id="stock-select" style="padding: 5px 15px; border-radius: 4px; background: #2a2e39; color: white; border: 1px solid #485c7b;">
-                <option value="VIC">Vingroup (VIC)</option>
-                <option value="VNM">Vinamilk (VNM)</option>
-                <option value="FPT">FPT Group (FPT)</option>
-            </select>
-        </div>
+    <div class="header" style="padding: 10px; display: flex; align-items: center; gap: 10px; background: #1c202e;">
+        <span style="font-weight: bold;">Mã CP:</span>
+        <input type="text" id="stock-input" placeholder="Nhập mã (VD: VIC, FPT...)" 
+               style="padding: 8px 12px; border-radius: 4px; background: #2a2e39; color: white; border: 1px solid #485c7b; text-transform: uppercase; outline: none; width: 150px;">
+        
+        <button id="search-btn" style="padding: 8px 20px; border-radius: 4px; background: #2962ff; color: white; border: none; cursor: pointer; font-weight: bold; transition: 0.2s;">
+            Xem biểu đồ
+        </button>
+        
+        <div id="loading-text" style="display: none; color: #d1d4dc; font-size: 14px;">Đang tải...</div>
     </div>
     
     <div id="chart-container">
@@ -160,23 +160,52 @@
             }
         });
 
-        const stockSelect = document.getElementById('stock-select');
-
-        // Hàm tải và cập nhật dữ liệu
+        const stockInput = document.getElementById('stock-input');
+        const searchBtn = document.getElementById('search-btn');
+        const loadingText = document.getElementById('loading-text');
+        
+        // 1. Hàm xử lý chính khi người dùng muốn đổi mã
+        function performSearch() {
+            const symbol = stockInput.value.trim().toUpperCase();
+            
+            if (symbol === "") {
+                alert("Vui lòng nhập mã cổ phiếu!");
+                return;
+            }
+        
+            // Hiển thị trạng thái đang tải
+            loadingText.style.display = "block";
+            
+            // Gọi hàm loadData đã viết ở các bước trước
+            loadData(symbol);
+        }
+        
+        // 2. Lắng nghe sự kiện nhấn Enter
+        stockInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                performSearch();
+                stockInput.blur(); // Ẩn bàn phím trên điện thoại sau khi Enter
+            }
+        });
+        
+        // 3. Lắng nghe sự kiện click nút
+        searchBtn.addEventListener('click', performSearch);
+        
+        // 4. Cải tiến hàm loadData để xử lý lỗi tốt hơn
         function loadData(ticker) {
-            const fileName = `./${ticker}.json`;
-
-            console.log(ticker)
-            fetch(fileName)
+            // Xóa dữ liệu cũ để tránh nhầm lẫn
+            candlestickSeries.setData([]);
+            volumeSeries.setData([]);
+        
+            fetch(`./${ticker}.json`)
                 .then(res => {
-                    if (!res.ok) throw new Error(`Không tìm thấy dữ liệu cho mã ${ticker}`);
+                    if (!res.ok) throw new Error("Mã không tồn tại hoặc chưa có dữ liệu JSON!");
                     return res.json();
                 })
                 .then(data => {
-                    // 1. Sắp xếp dữ liệu
-                    data.sort((a, b) => new Date(a.time) - new Date(b.time));
-        
-                    // 2. Cập nhật Nến
+                    loadingText.style.display = "none";
+                    
+                    // Đổ dữ liệu vào biểu đồ (giữ nguyên logic map dữ liệu cũ)
                     const candleData = data.map(d => ({
                         time: d.time,
                         open: parseFloat(d.open),
@@ -186,31 +215,24 @@
                     }));
                     candlestickSeries.setData(candleData);
         
-                    // 3. Cập nhật Volume
                     const volumeData = data.map(d => ({
                         time: d.time,
-                        value: parseFloat(d.value || d.volume || 0),
+                        value: parseFloat(d.value),
                         color: d.close >= d.open ? 'rgba(38, 166, 154, 0.5)' : 'rgba(239, 83, 80, 0.5)'
                     }));
                     volumeSeries.setData(volumeData);
         
-                    // 4. Tự động căn chỉnh lại biểu đồ
                     chart.timeScale().fitContent();
                 })
                 .catch(err => {
-                    console.error(err);
-                    alert(`Lỗi: ${err.message}`);
+                    loadingText.style.display = "none";
+                    alert(err.message);
                 });
         }
         
-        // Lắng nghe sự kiện thay đổi mã
-        stockSelect.addEventListener('change', (e) => {
-            loadData(e.target.value);
-        });
-
-// Chạy lần đầu tiên khi trang web tải xong
-loadData(stockSelect.value);
-
+        // Chạy lần đầu tiên khi trang web tải xong
+        loadData(stockSelect.value);
+        
         // Tự động resize
         window.addEventListener('resize', () => {
             chart.applyOptions({ width: container.clientWidth });
