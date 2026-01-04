@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Chart Pro</title>
-    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
     <style>
         body { margin: 0; background: #131722; color: #d1d4dc; font-family: sans-serif; }
         .header { padding: 15px; background: #1c202e; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; border-bottom: 1px solid #2a2e39; }
@@ -42,26 +42,46 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    // Kiểm tra xem thư viện đã sẵn sàng chưa
+    if (typeof LightweightCharts === 'undefined') {
+        console.error("Thư viện LightweightCharts chưa được tải!");
+        return;
+    }
+
     const container = document.getElementById('chart-container');
     
     // Khởi tạo biểu đồ
     const chart = LightweightCharts.createChart(container, {
-        layout: { background: { color: '#131722' }, textColor: '#d1d4dc' },
-        grid: { vertLines: { color: '#2a2e39' }, horzLines: { color: '#2a2e39' } },
-        timeScale: { timeVisible: true, secondsVisible: false }
+        layout: { 
+            background: { color: '#131722' }, 
+            textColor: '#d1d4dc' 
+        },
+        grid: { 
+            vertLines: { color: '#2a2e39' }, 
+            horzLines: { color: '#2a2e39' } 
+        },
+        timeScale: { 
+            timeVisible: true, 
+            secondsVisible: false 
+        }
     });
 
-    // SỬA LỖI TẠI ĐÂY: Sử dụng cú pháp mới nếu cần hoặc kiểm tra lại đối tượng chart
+    // Tạo series nến
     const candlestickSeries = chart.addCandlestickSeries({
-        upColor: '#26a69a', downColor: '#ef5350', borderVisible: false,
-        wickUpColor: '#26a69a', wickDownColor: '#ef5350'
+        upColor: '#26a69a', 
+        downColor: '#ef5350', 
+        borderVisible: false,
+        wickUpColor: '#26a69a', 
+        wickDownColor: '#ef5350'
     });
 
+    // Tạo series volume
     const volumeSeries = chart.addHistogramSeries({
         priceFormat: { type: 'volume' },
         priceScaleId: 'volume',
     });
 
+    // Cấu hình scale cho Volume
     chart.priceScale('volume').applyOptions({
         scaleMargins: { top: 0.8, bottom: 0 },
         visible: false
