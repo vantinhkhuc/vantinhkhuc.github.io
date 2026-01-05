@@ -12,9 +12,28 @@
         select, button { padding: 8px; border-radius: 4px; cursor: pointer; background: #2a2e39; color: white; border: 1px solid #485c7b; }
         #search-btn { background: #2962ff; border: none; font-weight: bold; }
         .range-btn.active { background: #2962ff; }
-        #chart-container { width: 100%; height: calc(100vh - 80px); position: relative; }
+        /**#chart-container { width: 100%; height: calc(100vh - 80px); position: relative; }*/
         #legend { position: absolute; top: 10px; left: 10px; z-index: 10; background: rgba(19, 23, 34, 0.8); padding: 10px; border-radius: 4px; pointer-events: none; }
         .up { color: #26a69a; } .down { color: #ef5350; }
+
+        #chart-container { position: relative; width: 100%; height: 600px; }
+    
+        .ohlc-legend {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            background: rgba(19, 23, 34, 0.7);
+            padding: 5px 10px;
+            border-radius: 4px;
+            pointer-events: none; /* Không cản trở chuột tương tác với biểu đồ */
+            display: none; /* Ẩn khi không có dữ liệu */
+        }
+        .ohlc-item { margin-right: 15px; }
+        .up { color: #26a69a; }
+        .down { color: #ef5350; }
     </style>
 </head>
 <body>
@@ -37,7 +56,7 @@
 </div>
 
 <div id="chart-container">
-    <div id="legend"></div>
+    <div id="legend" class="ohlc-legend"></div>
 </div>
 
 <script>
@@ -133,6 +152,41 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(err => alert(err.message));
     };
+
+    const legend = document.getElementById('legend');
+
+    // Hàm xử lý khi di chuyển chuột trên biểu đồ
+    chart.subscribeCrosshairMove(param => {
+        // Nếu chuột nằm ngoài biểu đồ hoặc không có dữ liệu tại điểm đó
+        if (!param.time || param.point.x < 0 || param.point.y < 0) {
+            legend.style.display = 'none';
+            return;
+        }
+
+        // Lấy dữ liệu nến tại thời điểm di chuyển chuột
+        const candleData = param.seriesData.get(candlestickSeries);
+        const volData = param.seriesData.get(volumeSeries);
+
+        if (candleData) {
+            legend.style.display = 'block';
+            const { open, high, low, close } = candleData;
+            const colorClass = close >= open ? 'up' : 'down';
+            
+            // Tính toán % thay đổi
+            const change = (close - open).toFixed(2);
+            const percent = ((change / open) * 100).toFixed(2);
+
+            legend.innerHTML = `
+                <span class="ohlc-item">O: <span class="${colorClass}">${open.toFixed(2)}</span></span>
+                <span class="ohlc-item">H: <span class="${colorClass}">${high.toFixed(2)}</span></span>
+                <span class="ohlc-item">L: <span class="${colorClass}">${low.toFixed(2)}</span></span>
+                <span class="ohlc-item">C: <span class="${colorClass}">${close.toFixed(2)}</span></span>
+                <span class="ohlc-item">Vol: <span class="${colorClass}">${volData ? volData.value.toLocaleString() : '0'}</span></span>
+                <br>
+                <span class="ohlc-item">Change: <span class="${colorClass}">${change} (${percent}%)</span></span>
+            `;
+        }
+    });
 
     // Sự kiện tìm kiếm
     document.getElementById('search-btn').onclick = () => {
