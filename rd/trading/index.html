@@ -240,21 +240,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lắng nghe di chuyển chuột
     chart.subscribeCrosshairMove(param => {
-        const ticker = document.getElementById('stock-input').value || 'N/A';
-        
-        if (param.time && param.point.x >= 0) {
-            // Khi di chuột: Lấy dữ liệu tại điểm chỉ định
+        const ticker = document.getElementById('stock-input').value || 'CP';
+    
+        // Nếu chuột trong vùng biểu đồ
+        if (param.time && param.point && param.point.x >= 0) {
             const candle = param.seriesData.get(candlestickSeries);
             const vol = param.seriesData.get(volumeSeries);
             if (candle) updateLegend(candle, ticker, vol ? vol.value : 0);
-        } else {
-            // Khi không di chuột: Quay về hiển thị nến cuối cùng (mới nhất)
-            const data = candlestickSeries.data();
-            const volData = volumeSeries.data();
-            if (data.length > 0) {
-                const lastCandle = data[data.length - 1];
-                const lastVol = volData[volData.length - 1].value;
-                updateLegend(lastCandle, ticker, lastVol);
+        } 
+        // Nếu chuột ra ngoài, hiện lại nến cuối cùng
+        else {
+            const allData = candlestickSeries.data();
+            if (allData.length > 0) {
+                const last = allData[allData.length - 1];
+                const allVol = volumeSeries.data();
+                const lastVol = allVol.length > 0 ? allVol[allVol.length - 1].value : 0;
+                updateLegend(last, ticker, lastVol);
             }
         }
     });
