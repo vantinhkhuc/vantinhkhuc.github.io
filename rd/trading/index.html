@@ -232,6 +232,31 @@ document.addEventListener('DOMContentLoaded', () => {
         loadData(document.getElementById('stock-input').value.trim());
     };
 
+    // Lấy các phần tử giao diện
+    const stockInput = document.getElementById('stock-input');
+    const searchBtn = document.getElementById('search-btn');
+
+    // Hàm thực hiện tìm kiếm và hiển thị
+    function handleSearch() {
+        const ticker = stockInput.value.trim().toUpperCase();
+        if (ticker) {
+            loadData(ticker); // Gọi hàm tải dữ liệu (đã viết ở các bước trước)
+            stockInput.blur(); // Ẩn bàn phím/bỏ focus sau khi nhấn Enter
+        } else {
+            alert("Vui lòng nhập mã cổ phiếu!");
+        }
+    }
+
+    // Lắng nghe sự kiện nhấn phím Enter trên ô nhập liệu
+    stockInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    });
+
+    // Lắng nghe sự kiện nhấn nút Tìm kiếm
+    searchBtn.addEventListener('click', handleSearch);
+
     // Khởi tạo mã cũ
     const last = localStorage.getItem('lastTicker') || 'VIC';
     const lastTF = localStorage.getItem('lastTF') || '1d';
