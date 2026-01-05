@@ -13,7 +13,21 @@
         #search-btn { background: #2962ff; border: none; font-weight: bold; }
         .range-btn.active { background: #2962ff; }
         /**#chart-container { width: 100%; height: calc(100vh - 80px); position: relative; }*/
-        #legend { position: absolute; top: 10px; left: 10px; z-index: 10; background: rgba(19, 23, 34, 0.8); padding: 10px; border-radius: 4px; pointer-events: none; }
+        /*#legend { position: absolute; top: 10px; left: 10px; z-index: 10; background: rgba(19, 23, 34, 0.8); padding: 10px; border-radius: 4px; pointer-events: none; }*/
+        #legend {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+            background: rgba(19, 23, 34, 0.85); /* Nền tối trong suốt */
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #2a2e39;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            pointer-events: none; /* Để không vướng khi kéo biểu đồ */
+        }
         .up { color: #26a69a; } .down { color: #ef5350; }
 
         #chart-container { position: relative; width: 100%; height: calc(100vh - 80px) }
@@ -151,42 +165,67 @@ document.addEventListener('DOMContentLoaded', () => {
                 chart.timeScale().fitContent();
             })
             .catch(err => alert(err.message));
+        
+        // Sau khi setData thành công
+        const lastCandle = candleData[candleData.length - 1];
+        const lastVol = volumeData[volumeData.length - 1].value;
+        updateLegend(lastCandle, ticker, lastVol);
     };
 
     const legend = document.getElementById('legend');
 
-    // Hàm xử lý khi di chuyển chuột trên biểu đồ
+    // Hàm hiển thị thông tin lên Legend
+    function updateLegend(candle, ticker, volumeValue) {
+        if (!candle) return;
+        
+        const isUp = candle.close >= candle.open;
+        const colorStyle = isUp ? 'color: #26a69a;' : 'color: #ef5350;'; // Xanh hoặc Đỏ
+        const change = (candle.close - candle.open).toFixed(2);
+        const percent = ((change / candle.open) * 100).toFixed(2);
+        const sign = change > 0 ? '+' : '';
+
+        legend.innerHTML = `
+            <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px; ${colorStyle}">
+                ${ticker.toUpperCase()} 
+                <span style="font-size: 16px; font-weight: normal;">${sign}${percent}%</span>
+            </div>
+            <div style="color: #848e9c; font-size: 13px; margin-bottom: 5px;">
+                Thời gian: <span style="color: #d1d4dc;">${candle.time}</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px 20px; font-size: 14px;">
+                <div>Mở: <span style="color: #d1d4dc">${candle.open}</span></div>
+                <div>Cao: <span style="color: #d1d4dc">${candle.high}</span></div>
+                <div>Thấp: <span style="color: #d1d4dc">${candle.low}</span></div>
+                <div>Đóng: <span style="color: #d1d4dc">${candle.close}</span></div>
+            </div>
+            <div style="margin-top: 5px; font-size: 13px; color: #848e9c;">
+                Khối lượng: <span style="color: #d1d4dc">${(volumeValue / 1000000).toFixed(2)}M</span>
+            </div>
+        `;
+    }
+
+    // Lắng nghe di chuyển chuột
     chart.subscribeCrosshairMove(param => {
-        // Nếu chuột nằm ngoài biểu đồ hoặc không có dữ liệu tại điểm đó
-        if (!param.time || param.point.x < 0 || param.point.y < 0) {
-            legend.style.display = 'none';
-            return;
-        }
-
-        // Lấy dữ liệu nến tại thời điểm di chuyển chuột
-        const candleData = param.seriesData.get(candlestickSeries);
-        const volData = param.seriesData.get(volumeSeries);
-
-        if (candleData) {
-            legend.style.display = 'block';
-            const { open, high, low, close } = candleData;
-            const colorClass = close >= open ? 'up' : 'down';
-            
-            // Tính toán % thay đổi
-            const change = (close - open).toFixed(2);
-            const percent = ((change / open) * 100).toFixed(2);
-
-            legend.innerHTML = `
-                <span class="ohlc-item">O: <span class="${colorClass}">${open.toFixed(2)}</span></span>
-                <span class="ohlc-item">H: <span class="${colorClass}">${high.toFixed(2)}</span></span>
-                <span class="ohlc-item">L: <span class="${colorClass}">${low.toFixed(2)}</span></span>
-                <span class="ohlc-item">C: <span class="${colorClass}">${close.toFixed(2)}</span></span>
-                <span class="ohlc-item">Vol: <span class="${colorClass}">${volData ? volData.value.toLocaleString() : '0'}</span></span>
-                <br>
-                <span class="ohlc-item">Change: <span class="${colorClass}">${change} (${percent}%)</span></span>
-            `;
+        const ticker = document.getElementById('stock-input').value || 'N/A';
+        
+        if (param.time && param.point.x >= 0) {
+            // Khi di chuột: Lấy dữ liệu tại điểm chỉ định
+            const candle = param.seriesData.get(candlestickSeries);
+            const vol = param.seriesData.get(volumeSeries);
+            if (candle) updateLegend(candle, ticker, vol ? vol.value : 0);
+        } else {
+            // Khi không di chuột: Quay về hiển thị nến cuối cùng (mới nhất)
+            const data = candlestickSeries.data();
+            const volData = volumeSeries.data();
+            if (data.length > 0) {
+                const lastCandle = data[data.length - 1];
+                const lastVol = volData[volData.length - 1].value;
+                updateLegend(lastCandle, ticker, lastVol);
+            }
         }
     });
+
+    
 
     // Sự kiện tìm kiếm
     document.getElementById('search-btn').onclick = () => {
