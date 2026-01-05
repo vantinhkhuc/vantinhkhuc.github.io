@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hàm tải dữ liệu
     window.loadData = (ticker) => {
         const tf = document.getElementById('timeframe-select').value;
-        const fileName = `./${ticker.toUpperCase()}.json`; //_${tf}
+        const fileName = `./data/${ticker.toUpperCase()}.json`; //_${tf}
 
         fetch(fileName)
             .then(res => {
