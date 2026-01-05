@@ -151,17 +151,34 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 data.sort((a, b) => (typeof a.time === 'string' ? new Date(a.time) : a.time) - (typeof b.time === 'string' ? new Date(b.time) : b.time));
 
-                candlestickSeries.setData(data.map(d => ({
-                    time: d.time, open: d.open, high: d.high, low: d.low, close: d.close
-                })));
+                // TẠO BIẾN DỮ LIỆU BÊN TRONG KHỐI .THEN
+                const candleData = data.map(d => ({
+                    time: d.time, 
+                    open: parseFloat(d.open), 
+                    high: parseFloat(d.high), 
+                    low: parseFloat(d.low), 
+                    close: parseFloat(d.close)
+                }));
 
-                volumeSeries.setData(data.map(d => ({
-                    time: d.time, value: d.value || d.volume,
+                const volumeData = data.map(d => ({
+                    time: d.time, 
+                    value: parseFloat(d.value || d.volume),
                     color: d.close >= d.open ? 'rgba(38, 166, 154, 0.5)' : 'rgba(239, 83, 80, 0.5)'
-                })));
+                }));
 
+                // Đưa dữ liệu vào Series
+                candlestickSeries.setData(candleData);
+                volumeSeries.setData(volumeData);
+
+                // GỌI HÀM CẬP NHẬT LEGEND TẠI ĐÂY (Vì lúc này candleData mới tồn tại)
+                const lastCandle = candleData[candleData.length - 1];
+                const lastVol = volumeData[volumeData.length - 1].value;
+                updateLegend(lastCandle, ticker, lastVol);
+
+                // Lưu vào bộ nhớ (localStorage)
                 localStorage.setItem('lastTicker', ticker);
                 localStorage.setItem('lastTF', tf);
+                
                 chart.timeScale().fitContent();
             })
             .catch(err => alert(err.message));
